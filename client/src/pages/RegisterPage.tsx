@@ -81,7 +81,7 @@ const inputLabelcolor = {       //TextFieldCSS
 const ColorButton = styled(Button)(({ theme }) => ({       //ButtonCSS
     backgroundColor: '#00CACA',
     '&:hover': {
-        backgroundColor: '#D9B300',
+        backgroundColor: '	#BDB76B',
     },
     borderRadius: '10px'
 }));
@@ -173,23 +173,24 @@ const RegisterPage = () => {
 
     return (
         <>
-            <div style={{ backgroundImage: `url(${background})`, display: 'flex', backgroundSize: 'cover', width: "100vw", height: "100vh", backgroundRepeat: 'no-repeat' }}>
+            <div style={{ backgroundImage: `url(${background})`, display: 'flex', backgroundSize: 'cover', width: "100vw", height: "100vh", backgroundRepeat: 'no-repeat', alignItems: 'center', justifyContent: 'center' }}>
                 <Box sx={{
-                    width: '36%',
+                    width: '30%',
                     height: '60%',
                     textAlign: 'center',
                     borderRadius: '20px',
-                    position: 'absolute', left: '32%', top: '25%',
                     display: "flex",
                     border: '2px solid white',
                     background: 'transparent',
                     color: 'white',
                     backdropFilter: 'blur(30px)',
+                    alignItems: 'center',
+                    justifyContent: 'center'
 
                 }}>
 
-                    <Box sx={{ width: '100%', height: '100%', marginTop: '2rem' }}>
-                        <h1><b>註冊</b></h1><p />
+                    <Box sx={{ width: '100%', height: '100%', marginTop: '1rem' }}>
+                        <h1><b>註冊</b></h1>
                         <StyledTabs
                             value={value}
                             onChange={handleChange}
