@@ -1,6 +1,3 @@
-"use client";
-import { Link } from "react-router-dom";
-import "../style/LoginPage.css";
 import {
     TextField,
     Button,
