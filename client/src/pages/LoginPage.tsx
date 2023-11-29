@@ -1,6 +1,6 @@
-'use client'
+
 import { Link } from "react-router-dom";
-import "../style/LoginPage.css";
+
 import { TextField, Button, IconButton, InputAdornment, Input, InputLabel, FormControl, Box, Grid, OutlinedInput, FormControlLabel, Checkbox, backdropClasses, styled, createTheme, ThemeProvider, } from '@mui/material';
 
 
@@ -92,17 +92,13 @@ const LoginPage = () => {
 
   return (
     <>
-      <div style={{ backgroundImage: `url(${background})`, display: 'flex', backgroundSize: 'cover', width: "100%", height: "100%", backgroundRepeat: 'no-repeat' }}>
-
-        <Link to="/">回到Home</Link>
-        <h1>肌無力症病病例管理系統</h1>
+      <div style={{ backgroundImage: `url(${background})`, display: 'flex', backgroundSize: 'cover', width: "100%", height: "100vh", backgroundRepeat: 'no-repeat', alignItems: 'center', justifyContent: 'center' }}>
 
         <Box sx={{
           width: '36%',
           height: '60%',
           textAlign: 'center',
           borderRadius: '20px',
-          position: 'absolute', left: '32%', top: '25%',
           display: "flex",
           border: '2px solid white',
           background: 'transparent',
@@ -213,7 +209,7 @@ const LoginPage = () => {
             /><p />
 
 
-            <ColorButton fullWidth variant="contained" >登入</ColorButton><p />
+            <ColorButton onClick={() => { window.location.href = "./Patient" }} fullWidth variant="contained" >登入</ColorButton><p />
 
 
             <Grid sx={{ flexGrow: 1, display: "flex" }} container spacing={0} columns={4} >
