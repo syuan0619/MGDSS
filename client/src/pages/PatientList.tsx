@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
-import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -19,49 +18,10 @@ import { TextField } from "@mui/material";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link } from "react-router-dom";
-import Dialog from "@mui/material/Dialog";
-import CloseIcon from "@mui/icons-material/Close";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Slide from "@mui/material/Slide";
-import { TransitionProps } from "@mui/material/transitions";
 
-function createData(
-    registerNum: number,
-    medicalRecordStatus: string,
-    patientName: string,
-    patientSex: string,
-    patientAge: number,
-    medicalRecordNum: string,
-    identityId: string,
-    otherMark: string
-) {
-    return {
-        registerNum,
-        medicalRecordStatus,
-        patientName,
-        patientSex,
-        patientAge,
-        medicalRecordNum,
-        identityId,
-        otherMark,
-    };
-}
-const samples = [
-    createData(1, "待診", "王大明", "男", 23, "123456789A", "P228490820", "北"),
-    createData(2, "待診", "林美環", "女", 37, "123456789B", "F228123420", "中"),
-    createData(3, "待診", "黃阿美", "女", 55, "123456789C", "F222589420", "中"),
-    createData(
-        4,
-        "待診",
-        "朱小弟",
-        "男",
-        14,
-        "123456789D",
-        "F221938920",
-        "新莊"
-    ),
-];
+import Patient from "../types/Schema";
+import api from "../api";
+import { info } from "sass";
 
 function SearchPatientBar() {
     const [searchPatient, setSearchPatient] = useState("");
@@ -168,34 +128,161 @@ function ForDateChoose() {
 }
 
 function PatientList() {
-    const data = useState("");
-    const [formData, setFormData] = useState({
-        //之後連資料庫的欄位
-        registerNum: "",
-        medicalRecordStatus: "",
-        patientName: "",
-        patientSex: "",
-        patientAge: "",
-        medicalRecordNum: "",
-        identityId: "",
-        otherMark: "",
-    });
-    const Transition = React.forwardRef(function Transition( //dialog needed start
-        props: TransitionProps & {
-            children: React.ReactElement;
+    const [patient, setPatient] = useState<Patient>({
+        info: {
+            "ID#": "",
+            name: "",
+            DOB: "2023-11-29",
+            sex: "",
+            age: 0,
+            height: 0,
+            weight: 0,
+            status: "候診",
+            other: "unknown",
+            attackDate: "2023-11-29",
+            beginSymptom: "beginSymptom",
+            otherHospitalRecord: {
+                recentlyDate: "2023-11-29",
+                totalTimes: 0,
+            },
+            otherDisease: ["diseaseOne"],
+            otherMedicine: ["medicineOne"],
         },
-        ref: React.Ref<unknown>
-    ) {
-        return <Slide direction="up" ref={ref} {...props} />;
+        thymus: [
+            {
+                number: 0,
+                testDate: "2023-11-29",
+                thymusStatus: 0,
+                thymusDescription: "thymusDescription",
+            },
+        ],
+        bloodTest: [
+            {
+                number: 0,
+                testDate: "2023-11-29",
+                ACHR: 0,
+                TSH: 0,
+                freeThyroxine: 0,
+                ANA: 0,
+                uricAcid: 0,
+            },
+        ],
+        QOLtable: [
+            {
+                number: 0,
+                testDate: "2023-11-29",
+                frustration: 0,
+                eyeUsing: 0,
+                eating: 0,
+                social: 0,
+                entertainment: 0,
+                fullfillFamilyNeeds: 0,
+                plansNecessity: 0,
+                jobState: 0,
+                speaking: 0,
+                driving: 0,
+                depression: 0,
+                walking: 0,
+                beingInPublicPlaces: 0,
+                overwhelm: 0,
+                freshenUp: 0,
+                sum: 0,
+            },
+        ],
+        QMGtable: [
+            {
+                number: 0,
+                testDate: "2023-11-29",
+                doubleVision: 0,
+                ptosis: 0,
+                facialMuscle: 0,
+                swallowing: 0,
+                speakFluency: 0,
+                rightArmHeight: 0,
+                leftArmHeight: 0,
+                vitalCapacity: 0,
+                rightHandGrid: 0,
+                leftHandGrid: 0,
+                headLift: 0,
+                rightLegHeight: 0,
+                leftLegHeight: 0,
+                sum: 0,
+            },
+        ],
+        MGtable: [
+            {
+                number: 0,
+                testDate: "2023-11-29",
+                ptosis: 0,
+                doubleVision: 0,
+                eyeClosure: 0,
+                talking: 0,
+                chewing: 0,
+                swallowing: 0,
+                breathing: 0,
+                neckFlexion: 0,
+                shoulderAbduction: 0,
+                hipFlexion: 0,
+                sum: 0,
+            },
+        ],
+        ADLtable: [
+            {
+                number: 0,
+                testDate: "2023-11-29",
+                talking: 0,
+                chewing: 0,
+                swallowing: 0,
+                breathing: 0,
+                brushTeethOrCombHair: 0,
+                ariseFromChair: 0,
+                eyelid: 0,
+                sum: 0,
+            },
+        ],
+        visit: [
+            {
+                number: 0,
+                date: "2023-11-29",
+                treat: 0,
+                SBP: 0,
+                DBP: 0,
+                examination: {
+                    ptosis: 0,
+                    diplopia: 0,
+                    dysphagia: 0,
+                    dysarthria: 0,
+                    dyspnea: 0,
+                    limpWeakness: 0,
+                    MGFAclassification: 0,
+                },
+                Prescription: {
+                    pyridostigmine: 0,
+                    compesolone: 0,
+                    cellcept: 0,
+                    imuran: 0,
+                    prograf: 0,
+                },
+                selfAssessment: 0,
+                note: "note",
+            },
+        ],
     });
 
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
+    const data = async () => {
+        const response = await api.get("/readAllPatient");
+        setPatient(response.data);
     };
-    const handleClose = () => {
-        setOpen(false);
-    }; //dialog needed end
+
+    console.log(patient);
+    Object.values(patient).map((patient) =>
+        console.log(patient["info"]["name"])
+    );
+
+    useEffect(() => {
+        data();
+    }, []);
+
     return (
         <>
             <ToHome />
@@ -305,123 +392,76 @@ function PatientList() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {samples.map((sample) => (
-                                <React.Fragment>
-                                    <TableRow
-                                        key={sample.registerNum}
-                                        hover={true}
-                                        onClick={handleClickOpen}
-                                    >
-                                        <TableCell
-                                            component="th"
-                                            scope="row"
-                                            align="center"
-                                        >
-                                            {sample.registerNum}
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            <ButtonBase
-                                                focusRipple
-                                                style={{
-                                                    width: "5vw",
-                                                    height: "4vh",
-                                                    backgroundColor: "#D6E6F2",
-                                                    textAlign: "center",
-                                                    borderRadius: "5px",
-                                                }}
-                                            >
-                                                <Typography
-                                                    variant="button"
-                                                    style={{
-                                                        lineHeight: "50px",
-                                                        color: "#333",
-                                                    }}
-                                                >
-                                                    {sample.medicalRecordStatus}
-                                                </Typography>
-                                            </ButtonBase>
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            {sample.patientName}
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            {sample.patientSex}
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            {sample.patientAge}
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            {sample.medicalRecordNum}
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            {sample.identityId}
-                                        </TableCell>
-                                        <TableCell
-                                            align="left"
-                                            sx={{
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                                alignItems: "center",
+                            {Object.values(patient).map((patient, index) => (
+                                <TableRow key={index} hover={true}>
+                                    <TableCell
+                                        component="th"
+                                        scope="row"
+                                        align="center"
+                                    ></TableCell>
+                                    <TableCell align="center">
+                                        <ButtonBase
+                                            focusRipple
+                                            style={{
+                                                width: "5vw",
+                                                height: "4vh",
+                                                backgroundColor: "#D6E6F2",
+                                                textAlign: "center",
+                                                borderRadius: "5px",
                                             }}
                                         >
-                                            <ButtonBase
-                                                focusRipple
+                                            <Typography
+                                                variant="button"
                                                 style={{
-                                                    width: "5vw",
-                                                    height: "4vh",
-                                                    backgroundColor: "#FFE2E2",
-                                                    textAlign: "center",
-                                                    borderRadius: "5px",
+                                                    lineHeight: "50px",
+                                                    color: "#333",
                                                 }}
-                                            >
-                                                <Typography
-                                                    variant="button"
-                                                    style={{
-                                                        lineHeight: "50px",
-                                                        color: "#333",
-                                                    }}
-                                                >
-                                                    {sample.otherMark}
-                                                </Typography>
-                                            </ButtonBase>
-                                        </TableCell>
-                                    </TableRow>
-                                    <Dialog
-                                        fullScreen
-                                        open={open}
-                                        onClose={handleClose}
-                                        TransitionComponent={Transition}
+                                            ></Typography>
+                                        </ButtonBase>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        {patient["info"]["name"]}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        {patient["info"]["sex"]}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        {patient["info"]["age"]}
+                                    </TableCell>
+
+                                    <TableCell align="center">
+                                        {patient["info"]["id"]}
+                                    </TableCell>
+                                    <TableCell
+                                        align="left"
+                                        sx={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                        }}
                                     >
-                                        <AppBar
-                                            sx={{
-                                                position: "relative",
-                                                backgroundColor: "#222831",
+                                        <ButtonBase
+                                            focusRipple
+                                            style={{
+                                                width: "5vw",
+                                                height: "4vh",
+                                                backgroundColor: "#FFE2E2",
+                                                textAlign: "center",
+                                                borderRadius: "5px",
                                             }}
                                         >
-                                            <Toolbar>
-                                                <Typography
-                                                    sx={{ ml: 2, flex: 1 }}
-                                                    variant="h6"
-                                                    component="div"
-                                                >
-                                                    病人資訊{sample.patientName}
-                                                </Typography>
-                                                <IconButton
-                                                    edge="start"
-                                                    color="inherit"
-                                                    onClick={handleClose}
-                                                    aria-label="close"
-                                                >
-                                                    <CloseIcon
-                                                        sx={{
-                                                            fontSize: "2.5rem",
-                                                        }}
-                                                    />
-                                                </IconButton>
-                                            </Toolbar>
-                                        </AppBar>
-                                    </Dialog>
-                                </React.Fragment>
+                                            <Typography
+                                                variant="button"
+                                                style={{
+                                                    lineHeight: "50px",
+                                                    color: "#333",
+                                                }}
+                                            >
+                                                {patient["info"]["other"]}
+                                            </Typography>
+                                        </ButtonBase>
+                                    </TableCell>
+                                </TableRow>
                             ))}
                         </TableBody>{" "}
                     </Table>
