@@ -81,7 +81,7 @@ const inputLabelcolor = {       //TextFieldCSS
 const ColorButton = styled(Button)(({ theme }) => ({       //ButtonCSS
     backgroundColor: '#00CACA',
     '&:hover': {
-        backgroundColor: '	#BDB76B',
+        backgroundColor: '	#008888',
     },
     borderRadius: '10px'
 }));
@@ -154,8 +154,6 @@ const fromControltheme = createTheme({       //fromControl的CSS
 
 
 
-
-
 const RegisterPage = () => {
 
     const [value, setValue] = React.useState(0);     //Tab
@@ -173,14 +171,24 @@ const RegisterPage = () => {
 
     return (
         <>
-            <div style={{ backgroundImage: `url(${background})`, display: 'flex', backgroundSize: 'cover', width: "100vw", height: "100vh", backgroundRepeat: 'no-repeat', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{
+                backgroundImage: `url(${background})`,
+                display: 'flex',
+                backgroundSize: 'cover',
+                width: "100vw",
+                height: "100vh",
+                backgroundRepeat: 'no-repeat',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+
                 <Box sx={{
                     width: '30%',
-                    height: '60%',
+                    height: '65%',
                     textAlign: 'center',
                     borderRadius: '20px',
                     display: "flex",
-                    border: '2px solid white',
+                    border: '2px solid rgba(255, 255, 255, 0.7)',
                     background: 'transparent',
                     color: 'white',
                     backdropFilter: 'blur(30px)',

@@ -8,6 +8,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import * as React from 'react'
 import background from '../assets/bgim2.png'
+import fjuicon from '../assets/fju.png'
+import { useState } from "react";
 
 const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -72,11 +74,10 @@ const fromControltheme = createTheme({       //fromControl的CSS
 const ColorButton = styled(Button)(({ theme }) => ({
   backgroundColor: '#00CACA',
   '&:hover': {
-    backgroundColor: '		#BDB76B',
+    backgroundColor: '	#008888',
   },
   borderRadius: '10px'
 }));
-
 
 
 
@@ -89,18 +90,43 @@ const LoginPage = () => {
 
 
 
+  const [form, setForm] = useState({
+    account: "",
+    password: ""
+  });
+
+
+  const loginInput = (event: { target: { name: any; value: any; }; }) => {
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  function onSubmit() {
+    console.log([form, setForm]);
+  }
+
+
 
   return (
     <>
-      <div style={{ backgroundImage: `url(${background})`, display: 'flex', backgroundSize: 'cover', width: "100vw", height: "100vh", backgroundRepeat: 'no-repeat', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{
+        backgroundImage: `url(${background})`,
+        display: 'flex',
+        backgroundSize: 'cover',
+        width: "100vw",
+        height: "100vh",
+        backgroundRepeat: 'no-repeat',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
 
         <Box sx={{
           width: '30%',
-          height: '60%',
+          height: '68%',
           textAlign: 'center',
           borderRadius: '20px',
           display: "flex",
-          border: '2px solid white',
+          border: '2px solid rgba(255, 255, 255, 0.7)',
           background: 'transparent',
           color: 'white',
           backdropFilter: 'blur(30px)',
@@ -111,14 +137,16 @@ const LoginPage = () => {
             textAlign: 'center',
             width: '100%',
             height: "100%",
-            marginLeft: "1rem",
-            marginRight: "1rem",
+            marginLeft: "3rem",
+            marginRight: "3rem",
             color: 'white',
             marginTop: '2rem'
 
           }}>
 
-
+            <div>
+              <img src={fjuicon} width={'60rem'}></img><p />
+            </div>
             <h1><b>登入</b></h1>
             <CssTextField
               inputProps={{
@@ -127,13 +155,14 @@ const LoginPage = () => {
               InputLabelProps={{
                 sx: { ...inputLabelcolor }
               }}
-              fullWidth label="帳號" variant="outlined" id="account" size="small" /><p />
+              fullWidth label="帳號" variant="outlined" id="account" size="small" name="account" value={form.account} onChange={loginInput} /><p />
 
 
             <ThemeProvider theme={fromControltheme}>
               <FormControl fullWidth variant="outlined" size="small">
                 <InputLabel htmlFor="outlined-adornment-password" sx={{ ...inputLabelcolor }}>密碼</InputLabel>
                 <OutlinedInput
+                  name="password" value={form.password} onChange={loginInput}
                   inputProps={{
                     sx: { ...inputTextColor }
                   }}
@@ -209,18 +238,18 @@ const LoginPage = () => {
             /><p />
 
 
-            <ColorButton onClick={() => { window.location.href = "./Patient" }} fullWidth variant="contained" >登入</ColorButton><p />
+            <ColorButton onClick={onSubmit} fullWidth variant="contained" >登入</ColorButton><p />
 
 
             <Grid sx={{ flexGrow: 1, display: "flex" }} container spacing={0} columns={4} >
-              <Grid item xs={1} sx={{ alignItems: "center" }}>
+              <Grid item xs={1} sx={{ alignItems: "left" }}>
                 忘記密碼<p />
               </Grid>
               <Grid item xs={2}>
 
 
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={1} sx={{ alignItems: "right" }}>
                 <Link to="/register" >註冊</Link>
               </Grid>
             </Grid>
