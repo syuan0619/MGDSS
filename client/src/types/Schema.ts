@@ -37,7 +37,7 @@ export default interface Patient {
             uricAcid: number;
         }
     ];
-    QOLtable: [
+    QOL: [
         {
             number: number;
             testDate: string;
@@ -59,7 +59,7 @@ export default interface Patient {
             sum: number;
         }
     ];
-    QMGtable: [
+    QMG: [
         {
             number: number;
             testDate: string;
@@ -79,7 +79,7 @@ export default interface Patient {
             sum: number;
         }
     ];
-    MGtable: [
+    MG: [
         {
             number: number;
             testDate: string;
@@ -96,7 +96,7 @@ export default interface Patient {
             sum: number;
         }
     ];
-    ADLtable: [
+    ADL: [
         {
             number: number;
             testDate: string;

@@ -275,9 +275,7 @@ function PatientList() {
     };
 
     console.log(patient);
-    Object.values(patient).map((patient) =>
-        console.log(patient["info"]["name"])
-    );
+    Object.values(patient).map((patient) => console.log(patient["info"]));
 
     useEffect(() => {
         data();
