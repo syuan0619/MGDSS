@@ -17,118 +17,115 @@ import InputBase from "@mui/material/InputBase";
 import { TextField } from "@mui/material";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import HomeIcon from "@mui/icons-material/Home";
-import { Link } from "react-router-dom";
 
 import Patient from "../types/Schema";
 import api from "../api";
 import { info } from "sass";
 
 function SearchPatientBar() {
-    const [searchPatient, setSearchPatient] = useState("");
-    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchPatient(e.target.value);
-    };
-    const SearchName = () => {
-        console.log({ searchPatient });
-    };
-    return (
-        <>
-            <Paper
-                component="form"
-                sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    width: "13rem",
-                    height: "2.5rem",
-                    borderRadius: "0.7rem",
-                    "&:hover": {
-                        backgroundColor: "#DDDDDD",
-                    },
-                    marginLeft: "36rem",
-                    marginTop: "-0.6rem",
-                    backgroundColor: "#F3F3F3",
-                    boxShadow: "0",
-                }}
-            >
-                <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="搜尋病患"
-                    inputProps={{ "aria-label": "搜尋病患" }}
-                    value={searchPatient}
-                    onChange={handleSearch}
-                />
-                <IconButton
-                    type="button"
-                    sx={{ p: "10px" }}
-                    aria-label="search"
-                    onClick={SearchName}
-                >
-                    <SearchIcon />
-                </IconButton>
-            </Paper>
-        </>
-    );
+  const [searchPatient, setSearchPatient] = useState("");
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchPatient(e.target.value);
+  };
+  const SearchName = () => {
+    console.log({ searchPatient });
+  };
+  return (
+    <>
+      <Paper
+        component="form"
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          width: "13rem",
+          height: "2.5rem",
+          borderRadius: "0.7rem",
+          "&:hover": {
+            backgroundColor: "#DDDDDD",
+          },
+          marginLeft: "2.5rem",
+          marginTop: "-0.6rem",
+          backgroundColor: "#F3F3F3",
+          boxShadow: "0",
+        }}
+      >
+        <InputBase
+          sx={{ ml: 1, flex: 1 }}
+          placeholder="搜尋病患"
+          inputProps={{ "aria-label": "搜尋病患" }}
+          value={searchPatient}
+          onChange={handleSearch}
+        />
+        <IconButton
+          type="button"
+          sx={{ p: "10px", cursor: "pointer" }}
+          aria-label="search"
+          onClick={SearchName}
+        >
+          <SearchIcon />
+        </IconButton>
+      </Paper>
+    </>
+  );
 }
 function ToHome() {
-    return (
-        <Link to="/Home.tsx">
-            <Paper sx={{ borderRadius: "0rem" }}>
-                <IconButton color="primary" sx={{ marginLeft: "0.5rem" }}>
-                    <HomeIcon
-                        sx={{
-                            fontSize: "2.3rem",
-                            backgroundColor: "#569DAA",
-                            border: "solid 0.17rem #577D86",
-                            color: "white",
-                            borderRadius: "0.4rem",
-                            width: "3rem",
-                            height: "2.4rem",
-                            position: "fixed",
-                            top: "0.7rem",
-                            left: "0.7rem",
-                        }}
-                    />
-                </IconButton>
-            </Paper>
-        </Link>
-    );
+  return (
+    <Paper sx={{ borderRadius: "0rem" }}>
+      <IconButton color="primary" sx={{ marginLeft: "0.5rem" }}>
+        <HomeIcon
+          sx={{
+            fontSize: "2.3rem",
+            backgroundColor: "#569DAA",
+            border: "solid 0.17rem #577D86",
+            color: "white",
+            borderRadius: "0.4rem",
+            width: "3rem",
+            height: "2.4rem",
+            position: "fixed",
+            top: "0.7rem",
+            left: "0.7rem",
+            cursor: "pointer",
+          }}
+        />
+      </IconButton>
+    </Paper>
+  );
 }
 function ForDateChoose() {
-    const [dateChoose, setDateChoose] = useState("");
-    const dateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDateChoose(e.target.value);
-    };
-    const dateSubmit = () => {};
-    useEffect(() => {
-        console.log({ dateChoose });
-    }, [dateChoose]);
+  const [dateChoose, setDateChoose] = useState("");
+  const dateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDateChoose(e.target.value);
+  };
+  const dateSubmit = () => {};
+  useEffect(() => {
+    console.log({ dateChoose });
+  }, [dateChoose]);
 
-    return (
-        <Box sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
-            <form noValidate>
-                <TextField
-                    id="date"
-                    type="date"
-                    variant="standard"
-                    value={dateChoose}
-                    onChange={dateChange}
-                    onClick={dateSubmit}
-                    sx={{ width: "10rem" }}
-                    InputProps={{
-                        sx: {
-                            color: "white",
-                            borderBottom: "0.1rem solid white",
-                        },
-                    }}
-                />
-            </form>
-        </Box>
-    );
+  return (
+    <Box sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
+      <form noValidate>
+        <TextField
+          id="date"
+          type="date"
+          variant="standard"
+          value={dateChoose}
+          onChange={dateChange}
+          onClick={dateSubmit}
+          sx={{ width: "10rem" }}
+          InputProps={{
+            sx: {
+              borderBottom: "0.1rem solid white",
+            },
+          }}
+        />
+      </form>
+    </Box>
+  );
 }
 
 function PatientList() {
-    const [patients, setPatients] = useState<Patient[]>([
+  const [patients, setPatients] = useState<Patient[]>([
     // 不用初始值也可以跑 看妳們要不要留著
     // {
     //     info: {
@@ -270,208 +267,179 @@ function PatientList() {
     //         },
     //     ],
     // }
-]);
+  ]);
 
-    const data = async () => {
-        const response = await api.get("/readAllPatient");
-        setPatients(response.data);
-    };
+  const data = async () => {
+    const response = await api.get("/readAllPatient");
+    setPatients(response.data);
+  };
 
-    console.log(patients);
-    patients.map((patient) => console.log(patient["info"]));
+  console.log(patients);
+  patients.map((patient) => console.log(patient["info"]));
 
-    useEffect(() => {
-        data();
-    }, []);
+  useEffect(() => {
+    data();
+  }, []);
 
-    return (
-        <>
-            <ToHome />
-            <TableContainer
-                component={Paper}
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    boxShadow: "0",
-                }}
+  return (
+    <>
+      <ToHome />
+      <TableContainer
+        component={Paper}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          boxShadow: "0",
+        }}
+      >
+        <Box sx={{ width: "90vw", height: "100vh", marginTop: "0.7rem" }}>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginBottom: "1.5rem",
+              }}
             >
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <MedicalServicesIcon sx={{ color: "#3081D0" }} />
+              </Box>
+              <Box
+                sx={{
+                  marginLeft: "0.3rem",
+                  fontSize: "0.95rem",
+                }}
+              >
+                <p>醫生姓名</p>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "1.5rem",
+              }}
+            >
+              <h2>病患清單</h2>
+              <Box
+                sx={{
+                  display: "flex",
+                  height: "4rem",
+                  alignItems: "center",
+                  paddindLeft: "1.5rem",
+                  backgroundColor: "",
+                  borderRadius: "1.8rem",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <ForDateChoose />
                 <Box
-                    sx={{ width: "90vw", height: "100vh", marginTop: "0.7rem" }}
+                  sx={{
+                    marginTop: "1.7rem",
+                    display: "flex",
+                  }}
                 >
-                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                height: "4rem",
-                                alignItems: "center",
-                                marginBottom: "2rem",
-                                paddindLeft: "1.5rem",
-                                backgroundColor: "#07689F",
-                                borderRadius: "1.8rem",
-                            }}
-                        >
-                            <ForDateChoose />
-                            <Box
-                                sx={{
-                                    marginTop: "1.7rem",
-                                    display: "flex",
-                                }}
-                            >
-                                <Box>
-                                    <MedicalServicesIcon
-                                        sx={{ color: "white" }}
-                                    />
-                                </Box>
-                                <Box
-                                    sx={{
-                                        marginLeft: "0.3rem",
-                                        fontSize: "0.95rem",
-                                        color: "white",
-                                    }}
-                                >
-                                    <p>醫生姓名</p>
-                                </Box>
-                                <SearchPatientBar />
-                            </Box>
-                        </Box>
-                        <Box sx={{ display: "flex" }}>
-                            <h3>病患清單</h3>
-                        </Box>
-                    </Box>
-
-                    <Table aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell
-                                    align="center"
-                                    sx={{ color: "#9E9FA5" }}
-                                >
-                                    報到號碼
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    sx={{ color: "#9E9FA5" }}
-                                >
-                                    看診狀態
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    sx={{ color: "#9E9FA5" }}
-                                >
-                                    姓名
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    sx={{ color: "#9E9FA5" }}
-                                >
-                                    性別
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    sx={{ color: "#9E9FA5" }}
-                                >
-                                    年齡&nbsp;(歲)
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    sx={{ color: "#9E9FA5" }}
-                                >
-                                    病歷號
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    sx={{ color: "#9E9FA5" }}
-                                >
-                                    身分證字號
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    sx={{ color: "#9E9FA5" }}
-                                >
-                                    其他註記
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {patients.map((patient, index) => (
-                                <TableRow key={index} hover={true}>
-                                    <TableCell
-                                        component="th"
-                                        scope="row"
-                                        align="center"
-                                    ></TableCell>
-                                    <TableCell align="center">
-                                        <ButtonBase
-                                            focusRipple
-                                            style={{
-                                                width: "5vw",
-                                                height: "4vh",
-                                                backgroundColor: "#D6E6F2",
-                                                textAlign: "center",
-                                                borderRadius: "5px",
-                                            }}
-                                        >
-                                            <Typography
-                                                variant="button"
-                                                style={{
-                                                    lineHeight: "50px",
-                                                    color: "#333",
-                                                }}
-                                            ></Typography>
-                                        </ButtonBase>
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {patient["info"]["status"]}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {patient["info"]["name"]}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {patient["info"]["sex"]}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {patient["info"]["age"]}
-                                    </TableCell>
-
-                                    <TableCell align="center">
-                                        {patient["info"]["ID#"]}
-                                    </TableCell>
-                                    <TableCell
-                                        align="left"
-                                        sx={{
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                            alignItems: "center",
-                                        }}
-                                    >
-                                        <ButtonBase
-                                            focusRipple
-                                            style={{
-                                                width: "5vw",
-                                                height: "4vh",
-                                                backgroundColor: "#FFE2E2",
-                                                textAlign: "center",
-                                                borderRadius: "5px",
-                                            }}
-                                        >
-                                            <Typography
-                                                variant="button"
-                                                style={{
-                                                    lineHeight: "50px",
-                                                    color: "#333",
-                                                }}
-                                            >
-                                                {patient["info"]["other"]}
-                                            </Typography>
-                                        </ButtonBase>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>{" "}
-                    </Table>
+                  <SearchPatientBar />
                 </Box>
-            </TableContainer>
-        </>
-    );
+              </Box>
+            </Box>
+          </Box>
+
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  看診狀態
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  姓名
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  性別
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  年齡&nbsp;(歲)
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  病歷號
+                </TableCell>
+
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  其他註記
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody sx={{ cursor: "pointer" }}>
+              {patients.map((patient, index) => (
+                <TableRow key={index} hover={true}>
+                  <TableCell align="center">
+                    <ButtonBase
+                      focusRipple
+                      style={{
+                        width: "auto",
+                        minWidth: "5rem",
+                        paddingInline: "1.2rem",
+                        height: "4vh",
+                        backgroundColor: "#D6E6F2",
+                        textAlign: "center",
+                        borderRadius: "0.5rem",
+                      }}
+                    >
+                      {patient["info"]["status"]}
+                      <Typography
+                        variant="button"
+                        style={{
+                          lineHeight: "50px",
+                          color: "#333",
+                        }}
+                      ></Typography>
+                    </ButtonBase>
+                  </TableCell>
+                  <TableCell align="center">
+                    {patient["info"]["name"]}
+                  </TableCell>
+                  <TableCell align="center">{patient["info"]["sex"]}</TableCell>
+                  <TableCell align="center">{patient["info"]["age"]}</TableCell>
+                  <TableCell align="center">{patient["info"]["ID#"]}</TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <ButtonBase
+                      focusRipple
+                      style={{
+                        width: "auto",
+                        minWidth: "5rem",
+                        paddingInline: "1.2rem",
+                        height: "4vh",
+                        backgroundColor: "#FFE2E2",
+                        textAlign: "center",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      <Typography
+                        variant="button"
+                        style={{
+                          lineHeight: "50px",
+                          color: "#333",
+                        }}
+                      >
+                        {patient["info"]["other"]}
+                      </Typography>
+                    </ButtonBase>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>{" "}
+          </Table>
+        </Box>
+      </TableContainer>
+    </>
+  );
 }
 export default PatientList;
