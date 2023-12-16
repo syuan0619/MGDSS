@@ -44,35 +44,62 @@ const Records = () => {
   };
   return (
     <>
-      {/* <div className="container"> */}
-      <div className="Sideheader">hello</div>
+      {/* <div className="Sideheader">hello</div>
       <div className="wrapper">
         <div className="Sideleft">
-          <Box sx={{ width: "100%" }}>
-            <Box
-              sx={{
-                borderBottom: 1,
-                borderColor: "divider",
-                textAlign: "center",
-              }}
-            >
-              <Tabs value={value} onChange={handleChange} centered>
-                <Tab label="病患資料" {...a11yProps(0)} />
-                <Tab label="身分設定" {...a11yProps(1)} />
-              </Tabs>
-            </Box>
-          </Box>
+          <h1>病患資料</h1>
+          <p />
+          <p>ID:</p>
+          <p>姓名:</p>
+          <p>生日:</p>
+          <p>性別:</p>
+          <p>年齡:</p>
+          <p>身高:</p>
+          <p>體重:</p>
+          <p>狀態:</p>
+          <p>其他:</p>
+          <p>初診日期:</p>
+          <p>初始症狀:</p>
+          <p>其他醫院病歷:</p>
+          <p>其他疾病:</p>
+          <p>其他藥物:</p>
+
         </div>
         <div className="Sideright">
           <div className="card">1</div>
-          <div className="card">2</div>
-          <div className="card">3</div>
-          <div className="card">4</div>
         </div>
       </div>
-      <div className="claerfix"></div>
-      {/* </div> */}
-      {/* <div className="Sidefooter"></div> */}
+      <div className="claerfix"></div> */}
+      <div className="container">
+        <div className="top">
+          <div className="context"></div>
+        </div>
+
+        <div className="left">
+          <div className="context">
+            <h1>病患資料</h1>
+            <p />
+            <p>ID:</p>
+            <p>姓名:</p>
+            <p>生日:</p>
+            <p>性別:</p>
+            <p>年齡:</p>
+            <p>身高:</p>
+            <p>體重:</p>
+            <p>狀態:</p>
+            <p>其他:</p>
+            <p>初診日期:</p>
+            <p>初始症狀:</p>
+            <p>其他醫院病歷:</p>
+            <p>其他疾病:</p>
+            <p>其他藥物:</p>
+          </div>
+        </div>
+        <div className="right">
+          <div className="context"></div>
+        </div>
+        <div className="clearfix"></div>
+      </div>
     </>
   );
 };
