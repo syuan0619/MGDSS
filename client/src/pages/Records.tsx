@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Grid,
   Paper,
   styled,
@@ -54,32 +55,6 @@ const Records = () => {
   };
   return (
     <>
-      {/* <div className="Sideheader">hello</div>
-      <div className="wrapper">
-        <div className="Sideleft">
-          <h1>病患資料</h1>
-          <p />
-          <p>ID:</p>
-          <p>姓名:</p>
-          <p>生日:</p>
-          <p>性別:</p>
-          <p>年齡:</p>
-          <p>身高:</p>
-          <p>體重:</p>
-          <p>狀態:</p>
-          <p>其他:</p>
-          <p>初診日期:</p>
-          <p>初始症狀:</p>
-          <p>其他醫院病歷:</p>
-          <p>其他疾病:</p>
-          <p>其他藥物:</p>
-
-        </div>
-        <div className="Sideright">
-          <div className="card">1</div>
-        </div>
-      </div>
-      <div className="claerfix"></div> */}
       <div className="container">
         <div className="top">
           <div className="context">
@@ -87,6 +62,14 @@ const Records = () => {
               <ArrowBackRounded
                 sx={{ fontSize: "3rem", color: "#0080FF" }}
               ></ArrowBackRounded>
+
+              {/* <Button
+                variant="contained"
+                size="small"
+                sx={{ backgroundColor: "#FF8000" }}
+              >
+                新增電生理訊號量表
+              </Button> */}
             </div>
           </div>
         </div>
@@ -97,150 +80,187 @@ const Records = () => {
               <h1>病患資料</h1>
               <p />
               <p>
-                ID:
                 <TextField
-                  required
-                  id="id"
+                  label="ID:"
+                  id="ID#"
                   defaultValue="#ID"
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                姓名:
                 <TextField
-                  required
-                  id="id"
+                  label="姓名:"
+                  id="name"
                   defaultValue="name"
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                生日:
                 <TextField
-                  required
-                  id="id"
+                  id="DOB"
                   defaultValue="2000/01/01"
                   size="small"
-                  sx={{ width: "5rem" }}
+                  label="生日:"
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                性別:
                 <TextField
-                  required
-                  id="id"
-                  defaultValue="不方便透漏"
+                  label="性別:"
+                  id="sex"
+                  defaultValue=" "
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                年齡:
                 <TextField
-                  required
-                  id="id"
+                  label="年齡:"
+                  id="age"
                   defaultValue="10"
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                身高:
                 <TextField
-                  required
-                  id="id"
+                  label="身高:"
+                  id="height"
                   defaultValue="170"
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                體重:
                 <TextField
-                  required
-                  id="id"
+                  label="體重:"
+                  id="weight"
                   defaultValue="50"
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                狀態:
                 <TextField
-                  required
-                  id="id"
+                  label="狀態:"
+                  id="status"
                   defaultValue=""
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                其他:
                 <TextField
-                  required
-                  id="id"
+                  label="其他:"
+                  id="other"
                   defaultValue=""
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                初診日期:
                 <TextField
-                  required
-                  id="id"
+                  label="初診日期:"
+                  id="attackDate"
                   defaultValue="2020/01/01"
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                初始症狀:
                 <TextField
-                  required
-                  id="id"
+                  label="初始症狀:"
+                  id="beginSymptom"
                   defaultValue=""
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                其他醫院病歷:
                 <TextField
-                  required
-                  id="id"
+                  label="其他醫院病歷:"
+                  id="otherHospitalRecord"
                   defaultValue=""
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                其他疾病:
                 <TextField
-                  required
-                  id="id"
+                  label="其他疾病:"
+                  id="otherDisease"
                   defaultValue=""
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
               <p>
-                其他藥物:
                 <TextField
-                  required
-                  id="id"
+                  label="其他藥物:"
+                  id="otherMedicine"
                   defaultValue=""
                   size="small"
-                  sx={{ width: "5rem" }}
+                  sx={{ width: "10rem" }}
                 />
               </p>
             </div>
           </div>
         </div>
         <div className="right">
-          <div className="context"></div>
+          <div className="context">
+            <Paper
+              elevation={0}
+              variant="outlined"
+              sx={{ width: "100%", height: "100%", borderRadius: "10px" }}
+            >
+              <h1>Bloodtest</h1>
+              <TextField
+                label="測試日期:"
+                id="testDate"
+                defaultValue=""
+                sx={{ width: "20rem" }}
+              />
+              <p />
+              <TextField
+                label="ACHR:"
+                id="ACHR"
+                defaultValue=""
+                sx={{ width: "20rem" }}
+              />
+              <p />
+              <TextField
+                label="TSH:"
+                id="TSH"
+                defaultValue=""
+                sx={{ width: "20rem" }}
+              />
+              <p />
+              <TextField
+                label="Free Thyroxine:"
+                id="freeThyroxine"
+                defaultValue=""
+                sx={{ width: "20rem" }}
+              />
+              <p />
+              <TextField
+                label="ANA:"
+                id="ANA"
+                defaultValue=""
+                sx={{ width: "20rem" }}
+              />
+              <p />
+
+              <TextField
+                label="UricAcid:"
+                id="uricAcid"
+                defaultValue=""
+                sx={{ width: "20rem" }}
+              />
+              <p />
+            </Paper>
+          </div>
         </div>
         <div className="clearfix"></div>
       </div>
