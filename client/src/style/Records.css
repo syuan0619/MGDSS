@@ -49,6 +49,8 @@
   text-align: center;
   box-sizing: border-box;
   padding: 1rem;
+  font-size: 3vh;
+  font-family: "JhengHei";
 }
 
 .innercontext {
@@ -56,6 +58,8 @@
   height: 100%;
   overflow: auto;
   text-align: center;
+  font-size: 3vh;
+  font-family: "JhengHei";
 }
 
 .topinnercontext {
