@@ -251,10 +251,11 @@ const LoginPage = () => {
               label="醫事卡"
             />
             <p />
-
-            <ColorButton onClick={onSubmit} fullWidth variant="contained">
-              登入
-            </ColorButton>
+            <Link to="/patient">
+              <ColorButton onClick={onSubmit} fullWidth variant="contained">
+                登入
+              </ColorButton>
+            </Link>
             <p />
 
             <Grid

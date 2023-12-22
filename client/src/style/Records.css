@@ -51,7 +51,6 @@
   padding: 1rem;
   font-size: 3vh;
   font-family: "JhengHei";
-  overflow: auto;
 }
 
 .innercontext {
@@ -61,6 +60,7 @@
   text-align: center;
   font-size: 2.5vh;
   font-family: "JhengHei";
+  overflow: auto;
 }
 
 .topinnercontext {
@@ -68,6 +68,9 @@
   height: 100%;
   text-align: center;
   margin-left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .topcontext {
@@ -77,5 +80,11 @@
   border-radius: 20px;
   text-align: center;
   box-sizing: border-box;
-  padding: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.basicdata {
+  margin-right: 20%;
+  text-align: right;
 }
