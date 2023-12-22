@@ -25,6 +25,7 @@ import * as React from "react";
 import background from "../assets/bgim2.png";
 import fjuicon from "../assets/fju.png";
 import { useState } from "react";
+import "../style/LoginPage.css";
 
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -115,42 +116,9 @@ const LoginPage = () => {
 
   return (
     <>
-      <div
-        style={{
-          backgroundImage: `url(${background})`,
-          display: "flex",
-          backgroundSize: "cover",
-          width: "100vw",
-          height: "100vh",
-          backgroundRepeat: "no-repeat",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Box
-          sx={{
-            width: "30%",
-            height: "68%",
-            textAlign: "center",
-            borderRadius: "20px",
-            display: "flex",
-            border: "2px solid rgba(255, 255, 255, 0.7)",
-            background: "transparent",
-            color: "white",
-            backdropFilter: "blur(30px)",
-          }}
-        >
-          <Box
-            sx={{
-              textAlign: "center",
-              width: "100%",
-              height: "100%",
-              marginLeft: "3rem",
-              marginRight: "3rem",
-              color: "white",
-              marginTop: "2rem",
-            }}
-          >
+      <div className="background">
+        <div className="loginbox">
+          <div className="loginconcext">
             <div>
               <img src={fjuicon} width={"60rem"}></img>
               <p />
@@ -304,8 +272,8 @@ const LoginPage = () => {
                 <Link to="/register">註冊</Link>
               </Grid>
             </Grid>
-          </Box>
-        </Box>
+          </div>
+        </div>
       </div>
     </>
   );

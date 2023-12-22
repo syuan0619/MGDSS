@@ -53,24 +53,28 @@ import { useEffect, useState } from "react";
 // }
 
 const Records = () => {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   const [patients, setPatients] = useState<Patient[]>([]);
-  const data = async () => {
-    const response = await api.get("/readAllPatient");
-    setPatients(response.data);
-  };
 
-  console.log(patients);
-  patients.map((patient) => console.log(patient["info"]));
+  // const data = async () => {
+  //   const response = await api.get("/readAllPatient");
+  //   setPatients(response.data);
+  // };
 
-  useEffect(() => {
-    data();
-  }, []);
+  // let p1;
+  // patients.map((p, index) =>
+  //   // console.log(p["info"]["name"], p["bloodTest"][0])
+  //   index == 0 ? (p1 = p["info"]) : console.log("error");
+  //   console.log(p1);
+  // );
+
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     await data();
+  //     patients.map((p1) => console.log(p1["info"]["name"], p1["bloodTest"][0]));
+  //   };
+  //   getData();
+  // }, []);
+
   return (
     <>
       <div className="container">
@@ -96,132 +100,133 @@ const Records = () => {
           <div className="context">
             <div className="innercontext">
               <h1>病患資料</h1>
-              {patients.map((patient) => (
-                <>
-                  <p>
-                    ID:
-                    <TextField
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                      defaultValue={patient["info"]["ID#"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
+              {/* {patients.map((p1) => ( */}
+              <>
+                <p>
+                  ID:
+                  <TextField
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                    defaultValue="003217310F"
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
 
-                  <p>
-                    姓名:
-                    <TextField
-                      defaultValue={patient["info"]["name"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    生日:
-                    <TextField
-                      defaultValue={patient["info"]["DOB"]}
-                      size="small"
-                      label="生日:"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    性別:
-                    <TextField
-                      defaultValue={patient["info"]["sex"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    年齡:
-                    <TextField
-                      defaultValue={patient["info"]["age"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    身高:
-                    <TextField
-                      defaultValue={patient["info"]["height"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    體重:
-                    <TextField
-                      defaultValue={patient["info"]["weight"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    狀態:
-                    <TextField
-                      defaultValue={patient["info"]["status"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    其他:
-                    <TextField
-                      defaultValue={patient["info"]["other"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    初診日期:
-                    <TextField
-                      defaultValue={patient["info"]["attackDate"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    初始症狀:
-                    <TextField
-                      defaultValue={patient["info"]["beginSymptom"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    其他醫院病歷:
-                    <TextField
-                      defaultValue={patient["info"]["otherHospitalRecord"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    其他疾病:
-                    <TextField
-                      defaultValue={patient["info"]["otherDisease"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                  <p>
-                    其他藥物:
-                    <TextField
-                      defaultValue={patient["info"]["otherMedicine"]}
-                      size="small"
-                      sx={{ width: "10rem" }}
-                    />
-                  </p>
-                </>
-              ))}
+                <p>
+                  姓名:
+                  <TextField
+                    defaultValue="盧林春雪"
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  生日:
+                  <TextField
+                    defaultValue="2023-11-29"
+                    size="small"
+                    label="生日:"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  性別:
+                  <TextField
+                    defaultValue="女"
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  年齡:
+                  <TextField
+                    defaultValue="56"
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  身高:
+                  <TextField
+                    defaultValue="150"
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  體重:
+                  <TextField
+                    defaultValue="50"
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  狀態:
+                  <TextField
+                    defaultValue="候診"
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  其他:
+                  <TextField
+                    defaultValue=""
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  初診日期:
+                  <TextField
+                    defaultValue="2023-11-29"
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  初始症狀:
+                  <TextField
+                    defaultValue="beginSymptom"
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  其他醫院病歷:
+                  <TextField
+                    defaultValue=""
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  其他疾病:
+                  <TextField
+                    defaultValue=""
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+                <p>
+                  其他藥物:
+                  <TextField
+                    defaultValue=""
+                    size="small"
+                    sx={{ width: "10rem" }}
+                  />
+                </p>
+              </>
+              {/* ))} */}
             </div>
           </div>
         </div>
         <div className="right">
           <div className="context">
+            {/* {patients.map((patient) => ( */}
             <Paper
               elevation={0}
               variant="outlined"
@@ -230,7 +235,7 @@ const Records = () => {
               <h1>Bloodtest</h1>
               <TextField
                 label="測試日期:"
-                defaultValue=""
+                defaultValue="2023-11-29"
                 sx={{ width: "20rem" }}
               />
               <p />
@@ -258,6 +263,7 @@ const Records = () => {
               />
               <p />
             </Paper>
+            {/* ))} */}
           </div>
         </div>
         <div className="clearfix"></div>
