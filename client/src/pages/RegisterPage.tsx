@@ -301,10 +301,11 @@ const RegisterPage = () => {
                   size="small"
                 />
                 <p />
-
-                <ColorButton fullWidth variant="contained">
-                  以醫生身分註冊
-                </ColorButton>
+                <Link to="/">
+                  <ColorButton fullWidth variant="contained">
+                    以醫生身分註冊
+                  </ColorButton>
+                </Link>
                 <p />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
@@ -384,10 +385,11 @@ const RegisterPage = () => {
                   size="small"
                 />
                 <p />
-
-                <ColorButton fullWidth variant="contained">
-                  以護士身分註冊
-                </ColorButton>
+                <Link to="/">
+                  <ColorButton fullWidth variant="contained">
+                    以護士身分註冊
+                  </ColorButton>
+                </Link>
                 <p />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={2}>
@@ -467,10 +469,11 @@ const RegisterPage = () => {
                   size="small"
                 />
                 <p />
-
-                <ColorButton fullWidth variant="contained">
-                  預留欄位
-                </ColorButton>
+                <Link to="/">
+                  <ColorButton fullWidth variant="contained">
+                    預留欄位
+                  </ColorButton>
+                </Link>
                 <p />
               </CustomTabPanel>
             </div>
