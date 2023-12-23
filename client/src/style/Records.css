@@ -50,7 +50,7 @@
   box-sizing: border-box;
   padding: 1rem;
   font-size: 3vh;
-  font-family: "JhengHei";
+  font-family: "Helvetica";
 }
 
 .innercontext {
@@ -59,7 +59,7 @@
 
   text-align: center;
   font-size: 2.5vh;
-  font-family: "JhengHei";
+  font-family: "Helvetica";
   overflow: auto;
 }
 
@@ -87,4 +87,36 @@
 .basicdata {
   margin-right: 20%;
   text-align: right;
+}
+
+.topinnercontextleft {
+  width: 50%;
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  font-size: 3vh;
+}
+
+.topinnercontextright {
+  width: 50%;
+  height: 100%;
+  float: right;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.numbox {
+  width: 10%;
+  height: 50%;
+  background-color: #0080ff;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 2vw;
 }

@@ -50,13 +50,16 @@ const Records = () => {
         <div className="top">
           <div className="topcontext">
             <div className="topinnercontext">
-              <Link to="/patient">
-                <Button>
-                  <ArrowBackRounded
-                    sx={{ fontSize: "3rem", color: "#0080FF" }}
-                  ></ArrowBackRounded>
-                </Button>
-              </Link>
+              <div className="topinnercontextleft">
+                <Link to="/patient">
+                  <Button>
+                    <ArrowBackRounded
+                      sx={{ fontSize: "3rem", color: "#0080FF" }}
+                    ></ArrowBackRounded>
+                  </Button>
+                </Link>
+                <div className="numbox"></div>
+              </div>
 
               <Link to="/OCR">
                 <Button variant="contained" sx={{ backgroundColor: "#FF8000" }}>

@@ -179,7 +179,7 @@ const LoginPage = () => {
               <p />
             </ThemeProvider>
 
-            <Grid
+            {/* <Grid
               sx={{ flexGrow: 1, display: "flex" }}
               container
               spacing={1}
@@ -235,7 +235,7 @@ const LoginPage = () => {
                   <p />
                 </ThemeProvider>
               </Grid>
-            </Grid>
+            </Grid> */}
 
             <FormControlLabel
               control={

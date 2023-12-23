@@ -32,6 +32,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import * as React from "react";
 import "../style/RegisterPage.css";
 import fjuicon from "../assets/fju.png";
+import { useState } from "react";
 
 const StyledTabs = styled(
   (
@@ -179,7 +180,7 @@ const fromControltheme = createTheme({
 const RegisterPage = () => {
   const [value, setValue] = React.useState(0); //Tab
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (event: any, newValue: React.SetStateAction<number>) => {
     setValue(newValue);
   };
 
@@ -188,6 +189,20 @@ const RegisterPage = () => {
   const handleMouseDownPassword = (event: { preventDefault: () => void }) => {
     event.preventDefault();
   };
+
+  const [form, setForm] = useState({
+    account: "",
+    password: "",
+  });
+
+  const loginInput = (event: { target: { name: any; value: any } }) => {
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  function onSubmit() {
+    console.log([form, setForm]);
+  }
 
   return (
     <>
@@ -235,8 +250,10 @@ const RegisterPage = () => {
                   fullWidth
                   label="帳號"
                   variant="outlined"
-                  id="account"
                   size="small"
+                  name="account"
+                  value={form.account}
+                  onChange={loginInput}
                 />
                 <p />
 
@@ -249,6 +266,9 @@ const RegisterPage = () => {
                       密碼
                     </InputLabel>
                     <OutlinedInput
+                      name="password"
+                      value={form.password}
+                      onChange={loginInput}
                       inputProps={{
                         sx: { ...inputTextColor },
                       }}
@@ -302,7 +322,7 @@ const RegisterPage = () => {
                 />
                 <p />
                 <Link to="/">
-                  <ColorButton fullWidth variant="contained">
+                  <ColorButton fullWidth variant="contained" onClick={onSubmit}>
                     以醫生身分註冊
                   </ColorButton>
                 </Link>
@@ -319,8 +339,10 @@ const RegisterPage = () => {
                   fullWidth
                   label="帳號"
                   variant="outlined"
-                  id="account"
                   size="small"
+                  name="account"
+                  value={form.account}
+                  onChange={loginInput}
                 />
                 <p />
 
@@ -333,6 +355,9 @@ const RegisterPage = () => {
                       密碼
                     </InputLabel>
                     <OutlinedInput
+                      name="password"
+                      value={form.password}
+                      onChange={loginInput}
                       inputProps={{
                         sx: { ...inputTextColor },
                       }}
@@ -386,7 +411,7 @@ const RegisterPage = () => {
                 />
                 <p />
                 <Link to="/">
-                  <ColorButton fullWidth variant="contained">
+                  <ColorButton fullWidth variant="contained" onClick={onSubmit}>
                     以護士身分註冊
                   </ColorButton>
                 </Link>
@@ -403,8 +428,10 @@ const RegisterPage = () => {
                   fullWidth
                   label="帳號"
                   variant="outlined"
-                  id="account"
                   size="small"
+                  name="account"
+                  value={form.account}
+                  onChange={loginInput}
                 />
                 <p />
 
@@ -417,6 +444,9 @@ const RegisterPage = () => {
                       密碼
                     </InputLabel>
                     <OutlinedInput
+                      name="password"
+                      value={form.password}
+                      onChange={loginInput}
                       inputProps={{
                         sx: { ...inputTextColor },
                       }}
@@ -470,8 +500,8 @@ const RegisterPage = () => {
                 />
                 <p />
                 <Link to="/">
-                  <ColorButton fullWidth variant="contained">
-                    預留欄位
+                  <ColorButton fullWidth variant="contained" onClick={onSubmit}>
+                    以研究生身分欄位
                   </ColorButton>
                 </Link>
                 <p />
