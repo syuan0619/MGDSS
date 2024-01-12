@@ -1,5 +1,6 @@
 .container {
   width: 100vw;
+  height: 100vh;
   background-color: rgb(240, 240, 240);
 }
 .top {
@@ -48,18 +49,21 @@
   border-radius: 20px;
   text-align: center;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 1vh;
   font-size: 3vh;
-  font-family: "Helvetica";
+  font-family: "Helvetica", sans-serif;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .innercontext {
   width: 100%;
   height: 100%;
-
   text-align: center;
   font-size: 2.5vh;
-  font-family: "Helvetica";
+  font-family: "Helvetica", sans-serif;
   overflow: auto;
 }
 
@@ -85,8 +89,9 @@
 }
 
 .basicdata {
-  margin-right: 20%;
+  margin-right: 10%;
   text-align: right;
+  display: flex;
 }
 
 .topinnercontextleft {
@@ -97,6 +102,7 @@
   align-items: center;
   justify-content: left;
   font-size: 3vh;
+  font-family: "Helvetica", sans-serif;
 }
 
 .topinnercontextright {
@@ -119,4 +125,32 @@
   align-items: center;
   justify-content: center;
   margin: 2vw;
+}
+
+.button {
+  width: 8vw;
+  height: 6vh;
+  background-color: #0080ff;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5vh;
+  border: #0080ff;
+}
+
+.tablebox {
+  width: 20vw;
+  height: 20vh;
+  background-color: aqua;
+  transition: 2s;
+}
+
+.tablebox:hover {
+  width: 100%;
+  height: 100%;
+  background-color: aqua;
+  transition: 2s;
 }

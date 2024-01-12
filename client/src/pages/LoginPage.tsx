@@ -5,15 +5,10 @@ import {
   Button,
   IconButton,
   InputAdornment,
-  Input,
   InputLabel,
   FormControl,
-  Box,
   Grid,
   OutlinedInput,
-  FormControlLabel,
-  Checkbox,
-  backdropClasses,
   styled,
   createTheme,
   ThemeProvider,
@@ -22,7 +17,6 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import * as React from "react";
-import background from "../assets/bgim2.png";
 import fjuicon from "../assets/fju.png";
 import { useState } from "react";
 import "../style/LoginPage.css";
@@ -85,7 +79,7 @@ const fromControltheme = createTheme({
   },
 });
 
-const ColorButton = styled(Button)(({ theme }) => ({
+const ColorButton = styled(Button)(() => ({
   backgroundColor: "#00CACA",
   "&:hover": {
     backgroundColor: "	#008888",
@@ -94,6 +88,15 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 const LoginPage = () => {
+  //PreLoading Animation
+  // const [loading, setloading] = useState(false);
+  // const router = router();
+  // useEffect(() => {
+  //   setloading(true);
+  //   setTimeout(() => {
+  //     setloading(false);
+  //   }, 600);
+  // }, []);
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event: { preventDefault: () => void }) => {
@@ -117,6 +120,10 @@ const LoginPage = () => {
   return (
     <>
       <div className="background">
+        <div className="spinnerwapper">
+          <div className="spinner"></div>
+        </div>
+
         <div className="loginbox">
           <div className="loginconcext">
             <div>
@@ -136,7 +143,6 @@ const LoginPage = () => {
               fullWidth
               label="帳號"
               variant="outlined"
-              id="account"
               size="small"
               name="account"
               value={form.account}
@@ -179,98 +185,44 @@ const LoginPage = () => {
               <p />
             </ThemeProvider>
 
-            {/* <Grid
-              sx={{ flexGrow: 1, display: "flex" }}
-              container
-              spacing={1}
-              columns={2}
-            >
-              <Grid item xs={1}>
-                <CssTextField
-                  inputProps={{
-                    sx: { ...inputTextColor },
-                  }}
-                  InputLabelProps={{
-                    sx: { ...inputLabelcolor },
-                  }}
-                  fullWidth
-                  label="醫師編號"
-                  variant="outlined"
-                  id="account"
-                  size="small"
-                />
-                <p />
-              </Grid>
-
-              <Grid item xs={1}>
-                <ThemeProvider theme={fromControltheme}>
-                  <FormControl fullWidth variant="outlined" size="small">
-                    <InputLabel
-                      htmlFor="outlined-adornment-password"
-                      sx={{ ...inputLabelcolor }}
-                    >
-                      醫師授權碼
-                    </InputLabel>
-                    <OutlinedInput
-                      inputProps={{
-                        sx: { ...inputTextColor },
-                      }}
-                      type={showPassword ? "text" : "password"}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            sx={{ ...inputLabelcolor }}
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      label="Password"
-                    />
-                  </FormControl>
-                  <p />
-                </ThemeProvider>
-              </Grid>
-            </Grid> */}
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  sx={{
-                    color: "#A6FFFF",
-                    "&.Mui-checked": {
-                      color: "#A6FFFF",
-                    },
-                  }}
-                />
-              }
-              label="醫事卡"
-            />
             <p />
-            <Link to="/patient">
-              <ColorButton onClick={onSubmit} fullWidth variant="contained">
-                登入
-              </ColorButton>
-            </Link>
+            <ColorButton onClick={onSubmit} fullWidth variant="contained">
+              登入
+            </ColorButton>
             <p />
 
             <Grid
               sx={{ flexGrow: 1, display: "flex" }}
               container
               spacing={0}
-              columns={4}
+              columns={2}
             >
-              <Grid item xs={1} sx={{ alignItems: "left" }}>
-                忘記密碼
-                <p />
+              <Grid
+                item
+                xs={1}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "1vh",
+                  justifyContent: "left",
+                }}
+              >
+                <p className="text">忘記密碼</p>
               </Grid>
-              <Grid item xs={2}></Grid>
-              <Grid item xs={1} sx={{ alignItems: "right" }}>
-                <Link to="/register">註冊</Link>
+
+              <Grid
+                item
+                xs={1}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "1vh",
+                  justifyContent: "right",
+                }}
+              >
+                <Link to="/register" style={{ textDecoration: "none" }}>
+                  <p className="text">註冊</p>
+                </Link>
               </Grid>
             </Grid>
           </div>

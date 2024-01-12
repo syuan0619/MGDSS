@@ -1,143 +1,217 @@
-export default interface Patient {
-    info: {
-        "ID#": string;
-        name: string;
-        DOB: string;
-        sex: string;
-        age: number;
-        height: number;
-        weight: number;
-        status: string;
-        other: string;
-        attackDate: string;
-        beginSymptom: string;
-        otherHospitalRecord: {
-            recentlyDate: string;
-            totalTimes: number;
-        };
-        otherDisease: [string];
-        otherMedicine: [string];
-    };
-    thymus: [
-        {
-            number: number;
-            testDate: string;
-            thymusStatus: number;
-            thymusDescription: string;
-        }
-    ];
-    bloodTest: [
-        {
-            number: number;
-            testDate: string;
-            ACHR: number;
-            TSH: number;
-            freeThyroxine: number;
-            ANA: number;
-            uricAcid: number;
-        }
-    ];
-    QOL: [
-        {
-            number: number;
-            testDate: string;
-            frustration: number;
-            eyeUsing: number;
-            eating: number;
-            social: number;
-            entertainment: number;
-            fullfillFamilyNeeds: number;
-            plansNecessity: number;
-            jobState: number;
-            speaking: number;
-            driving: number;
-            depression: number;
-            walking: number;
-            beingInPublicPlaces: number;
-            overwhelm: number;
-            freshenUp: number;
-            sum: number;
-        }
-    ];
-    QMG: [
-        {
-            number: number;
-            testDate: string;
-            doubleVision: number;
-            ptosis: number;
-            facialMuscle: number;
-            swallowing: number;
-            speakFluency: number;
-            rightArmHeight: number;
-            leftArmHeight: number;
-            vitalCapacity: number;
-            rightHandGrid: number;
-            leftHandGrid: number;
-            headLift: number;
-            rightLegHeight: number;
-            leftLegHeight: number;
-            sum: number;
-        }
-    ];
-    MG: [
-        {
-            number: number;
-            testDate: string;
-            ptosis: number;
-            doubleVision: number;
-            eyeClosure: number;
-            talking: number;
-            chewing: number;
-            swallowing: number;
-            breathing: number;
-            neckFlexion: number;
-            shoulderAbduction: number;
-            hipFlexion: number;
-            sum: number;
-        }
-    ];
-    ADL: [
-        {
-            number: number;
-            testDate: string;
-            talking: number;
-            chewing: number;
-            swallowing: number;
-            breathing: number;
-            brushTeethOrCombHair: number;
-            ariseFromChair: number;
-            eyelid: number;
-            sum: number;
-        }
-    ];
-    visit: [
-        {
-            number: number;
-            date: string;
-            treat: number;
-            SBP: number;
-            DBP: number;
-            examination: {
-                ptosis: number;
-                diplopia: number;
-                dysphagia: number;
-                dysarthria: number;
-                dyspnea: number;
-                limpWeakness: number;
-                MGFAclassification: number;
-            };
-            Prescription: {
-                pyridostigmine: number;
-                compesolone: number;
-                cellcept: number;
-                imuran: number;
-                prograf: number;
-            };
-            selfAssessment: number;
-            note: string;
-        }
-    ];
-}
+export type PATIENT = {
+  info: INFO;
+  visit: VISIT[];
+  QOL: QOL[];
+  IMAGE: IMAGE[];
+};
+
+export type INFO = {
+  "ID#": string;
+  name: string;
+  DOB: string;
+  sex: string;
+  age: number;
+  height: number;
+  weight: number;
+  status: string;
+  other: string;
+  attackDate: string;
+  beginSymptom: string;
+};
+
+export type VISIT = {
+  date: string;
+  treat: number;
+  SBP: number;
+  DBP: number;
+  selfAssessment: number;
+  note: string;
+  prescription: {
+    pyridostigmine: number;
+    compesolone: number;
+    cellcept: number;
+    imuran: number;
+    prograf: number;
+  };
+  examination: {
+    ptosis: number;
+    diplopia: number;
+    dysphagia: number;
+    dysarthria: number;
+    dyspnea: number;
+    limpWeakness: number;
+    MGFAclassification: number;
+  };
+};
+
+export type QOL = {
+  frustration: number;
+  eyeUsing: number;
+  eating: number;
+  social: number;
+  entertainment: number;
+  fullfillFamilyNeeds: number;
+  plansNecessity: number;
+  jobState: number;
+  speaking: number;
+  driving: number;
+  depression: number;
+  walking: number;
+  beingInPublicPlaces: number;
+  overwhelm: number;
+  freshenUp: number;
+  sum: number;
+};
+
+export type IMAGE = {
+  imageUrl: string;
+  date: string;
+};
+
+////////////////////////////////////
+
+// export default interface Patient {
+//   info: {
+//     "ID#": string;
+//     name: string;
+//     DOB: string;
+//     sex: string;
+//     age: number;
+//     height: number;
+//     weight: number;
+//     status: string;
+//     other: string;
+//     attackDate: string;
+//     beginSymptom: string;
+//     otherHospitalRecord: {
+//       recentlyDate: string;
+//       totalTimes: number;
+//     };
+//     otherDisease: [string];
+//     otherMedicine: [string];
+//   };
+//   thymus: [
+//     {
+//       number: number;
+//       testDate: string;
+//       thymusStatus: number;
+//       thymusDescription: string;
+//     }
+//   ];
+//   bloodTest: [
+//     {
+//       number: number;
+//       testDate: string;
+//       ACHR: number;
+//       TSH: number;
+//       freeThyroxine: number;
+//       ANA: number;
+//       uricAcid: number;
+//     }
+//   ];
+//   QOL: [
+//     {
+//       number: number;
+//       // testDate: string;
+//       frustration: number;
+//       eyeUsing: number;
+//       eating: number;
+//       social: number;
+//       entertainment: number;
+//       fullfillFamilyNeeds: number;
+//       plansNecessity: number;
+//       jobState: number;
+//       speaking: number;
+//       driving: number;
+//       depression: number;
+//       walking: number;
+//       beingInPublicPlaces: number;
+//       overwhelm: number;
+//       freshenUp: number;
+//       sum: number;
+//     }
+//   ];
+//   QMG: [
+//     {
+//       number: number;
+//       testDate: string;
+//       doubleVision: number;
+//       ptosis: number;
+//       facialMuscle: number;
+//       swallowing: number;
+//       speakFluency: number;
+//       rightArmHeight: number;
+//       leftArmHeight: number;
+//       vitalCapacity: number;
+//       rightHandGrid: number;
+//       leftHandGrid: number;
+//       headLift: number;
+//       rightLegHeight: number;
+//       leftLegHeight: number;
+//       sum: number;
+//     }
+//   ];
+//   MG: [
+//     {
+//       number: number;
+//       testDate: string;
+//       ptosis: number;
+//       doubleVision: number;
+//       eyeClosure: number;
+//       talking: number;
+//       chewing: number;
+//       swallowing: number;
+//       breathing: number;
+//       neckFlexion: number;
+//       shoulderAbduction: number;
+//       hipFlexion: number;
+//       sum: number;
+//     }
+//   ];
+//   ADL: [
+//     {
+//       number: number;
+//       testDate: string;
+//       talking: number;
+//       chewing: number;
+//       swallowing: number;
+//       breathing: number;
+//       brushTeethOrCombHair: number;
+//       ariseFromChair: number;
+//       eyelid: number;
+//       sum: number;
+//     }
+//   ];
+//   visit: [
+//     {
+//       number: number;
+//       date: string;
+//       treat: number;
+//       SBP: number;
+//       DBP: number;
+//       examination: {
+//         ptosis: number;
+//         diplopia: number;
+//         dysphagia: number;
+//         dysarthria: number;
+//         dyspnea: number;
+//         limpWeakness: number;
+//         MGFAclassification: number;
+//       };
+//       Prescription: {
+//         pyridostigmine: number;
+//         compesolone: number;
+//         cellcept: number;
+//         imuran: number;
+//         prograf: number;
+//       };
+//       selfAssessment: number;
+//       note: string;
+//     }
+//   ];
+// }
+
+/////////////////////////////
 
 // default settings
 // {
