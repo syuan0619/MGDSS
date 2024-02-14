@@ -231,15 +231,15 @@ const VisitPage = () => {
               </button>
             </Grid>
           </div>
-          <div className="tableboxBack">
-            87
-            <TuneRounded
-              onClick={() => cardUnRotate("qolTable")}
-              id="buttonClose"
-            >
-              回復
-            </TuneRounded>
-          </div>
+        </div>
+        <div className="tableboxBack">
+          87
+          <TuneRounded
+            onClick={() => cardUnRotate("qolTable")}
+            id="buttonClose"
+          >
+            回復
+          </TuneRounded>
         </div>
       </div>
     );
