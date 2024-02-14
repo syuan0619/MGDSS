@@ -63,6 +63,28 @@ export type QOL = {
   sum: number;
 };
 
+export type MG = {
+  ptosis: number;
+  doubleVision: number;
+  eyeClosure: number;
+  talking: number;
+  chewing: number;
+  swallowing: number;
+  breathing: number;
+  neckFlexion: number;
+  shoulderAbduction: number;
+  hipFlexion: number;
+  sum: number;
+};
+
+export type bloodTest = {
+  ACHR: number;
+  TSH: number;
+  freeThyroxine: number;
+  ANA: number;
+  uricAcid: number;
+};
+
 export type IMAGE = {
   imageUrl: string;
   date: string;
