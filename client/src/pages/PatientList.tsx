@@ -11,118 +11,24 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
-import { TextField } from "@mui/material";
-import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
-import HomeIcon from "@mui/icons-material/Home";
 
+import { Button, IconButton } from "@mui/material";
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import Patient from "../types/Schema";
 import api from "../api";
 import { info } from "sass";
-
-function SearchPatientBar() {
-  const [searchPatient, setSearchPatient] = useState("");
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchPatient(e.target.value);
-  };
-  const SearchName = () => {
-    console.log({ searchPatient });
-  };
-  return (
-    <>
-      <Paper
-        component="form"
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          width: "13rem",
-          height: "2.5rem",
-          borderRadius: "0.7rem",
-          "&:hover": {
-            backgroundColor: "#DDDDDD",
-          },
-          marginLeft: "2.5rem",
-          marginTop: "-0.6rem",
-          backgroundColor: "#F3F3F3",
-          boxShadow: "0",
-        }}
-      >
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="搜尋病患"
-          inputProps={{ "aria-label": "搜尋病患" }}
-          value={searchPatient}
-          onChange={handleSearch}
-        />
-        <IconButton
-          type="button"
-          sx={{ p: "10px", cursor: "pointer" }}
-          aria-label="search"
-          onClick={SearchName}
-        >
-          <SearchIcon />
-        </IconButton>
-      </Paper>
-    </>
-  );
-}
-function ToHome() {
-  return (
-    <Paper sx={{ borderRadius: "0rem" }}>
-      <IconButton color="primary" sx={{ marginLeft: "0.5rem" }}>
-        <HomeIcon
-          sx={{
-            fontSize: "2.3rem",
-            backgroundColor: "#569DAA",
-            border: "solid 0.17rem #577D86",
-            color: "white",
-            borderRadius: "0.4rem",
-            width: "3rem",
-            height: "2.4rem",
-            position: "fixed",
-            top: "0.7rem",
-            left: "0.7rem",
-            cursor: "pointer",
-          }}
-        />
-      </IconButton>
-    </Paper>
-  );
-}
-function ForDateChoose() {
-  const [dateChoose, setDateChoose] = useState("");
-  const dateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDateChoose(e.target.value);
-  };
-  const dateSubmit = () => {};
-  useEffect(() => {
-    console.log({ dateChoose });
-  }, [dateChoose]);
-
-  return (
-    <Box sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
-      <form noValidate>
-        <TextField
-          id="date"
-          type="date"
-          variant="standard"
-          value={dateChoose}
-          onChange={dateChange}
-          onClick={dateSubmit}
-          sx={{ width: "10rem" }}
-          InputProps={{
-            sx: {
-              borderBottom: "0.1rem solid white",
-            },
-          }}
-        />
-      </form>
-    </Box>
-  );
-}
+import * as React from "react";
+import SearchName from "../components/SearchName";
+import PatientStatus from "../components/PatientStatus";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  MenuItem,
+  TextField,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 function PatientList() {
   const [patients, setPatients] = useState<Patient[]>([
@@ -281,9 +187,41 @@ function PatientList() {
     data();
   }, []);
 
+  // Timer
+  const [time, setTime] = useState(new Date());
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  //新增病患dialog
+  const [addPatient, setAddPatient] = useState<INFO>({
+    "ID#": "",
+    name: "",
+    DOB: "",
+    sex: "",
+    height: 0,
+    weight: 0,
+    status: "無",
+    other: "無",
+    attackDate: `${new Date().toLocaleDateString("en-CA")}`,
+    beginSymptom: "無",
+  });
+  const [addPatientStatus, setAddPatientStatus] = useState(false);
+  const addPatientDialogOpen = () => {
+    setAddPatientStatus(true);
+  };
+  const addPatientDialogHide = () => {
+    setAddPatientStatus(false);
+  };
+  const changeAddPatient = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddPatient({ ...addPatient, [e.target.name]: e.target.value });
+  };
+
   return (
     <>
-      <ToHome />
       <TableContainer
         component={Paper}
         sx={{
@@ -292,33 +230,21 @@ function PatientList() {
           boxShadow: "0",
         }}
       >
-        <Box sx={{ width: "90vw", height: "100vh", marginTop: "0.7rem" }}>
+        <Box sx={{ width: "90vw", height: "100vh", marginTop: "2rem" }}>
+          <Box
+            sx={{
+              marginLeft: "0.3rem",
+              marginTop: "1rem",
+              fontSize: "0.95rem",
+            }}
+          ></Box>
+
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "flex-end",
-                marginBottom: "1.5rem",
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <MedicalServicesIcon sx={{ color: "#3081D0" }} />
-              </Box>
-              <Box
-                sx={{
-                  marginLeft: "0.3rem",
-                  fontSize: "0.95rem",
-                }}
-              >
-                <p>醫生姓名</p>
-              </Box>
-            </Box>
-
-            <Box
-              sx={{
-                display: "flex",
                 justifyContent: "space-between",
-                marginBottom: "1.5rem",
+                marginBottom: "2rem",
               }}
             >
               <h2>病患清單</h2>
@@ -328,19 +254,80 @@ function PatientList() {
                   height: "4rem",
                   alignItems: "center",
                   paddindLeft: "1.5rem",
-                  backgroundColor: "",
-                  borderRadius: "1.8rem",
                   justifyContent: "flex-end",
                 }}
               >
-                <ForDateChoose />
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    marginTop: "1rem",
+                    marginRight: "2rem",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: "0.3rem",
+                    }}
+                  >
+                    <MedicalServicesIcon sx={{ color: "#3081D0" }} />
+                  </Box>
+                  <Box
+                    sx={{
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    <p>醫生姓名</p>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    marginRight: "2.5rem",
+                    marginTop: "1rem",
+                  }}
+                >
+                  {`現在時間：${time.toLocaleDateString()} ${time.getHours()}時${time.getMinutes()}分`}
+                </Box>
+                <Button
+                  sx={{
+                    width: "6rem",
+                    marginTop: "1rem",
+                    marginRight: "1.5rem",
+                    backgroundColor: "#4E3636",
+                    color: "white",
+                    borderRadius: "0.7rem",
+                    "&:hover": {
+                      color: "#4E3636",
+                    },
+                  }}
+                >
+                  建立模型
+                </Button>
+                <Button
+                  sx={{
+                    width: "6rem",
+                    marginTop: "1rem",
+                    backgroundColor: "#0081C9",
+                    color: "white",
+                    borderRadius: "0.7rem",
+                    "&:hover": {
+                      color: "#0081C9",
+                    },
+                  }}
+                  onClick={addPatientDialogOpen}
+                >
+                  新增病患
+                </Button>
+
                 <Box
                   sx={{
                     marginTop: "1.7rem",
                     display: "flex",
                   }}
                 >
-                  <SearchPatientBar />
+                  <SearchName />
                 </Box>
               </Box>
             </Box>
@@ -374,27 +361,7 @@ function PatientList() {
               {patients.map((patient, index) => (
                 <TableRow key={index} hover={true}>
                   <TableCell align="center">
-                    <ButtonBase
-                      focusRipple
-                      style={{
-                        width: "auto",
-                        minWidth: "5rem",
-                        paddingInline: "1.2rem",
-                        height: "4vh",
-                        backgroundColor: "#D6E6F2",
-                        textAlign: "center",
-                        borderRadius: "0.5rem",
-                      }}
-                    >
-                      {patient["info"]["status"]}
-                      <Typography
-                        variant="button"
-                        style={{
-                          lineHeight: "50px",
-                          color: "#333",
-                        }}
-                      ></Typography>
-                    </ButtonBase>
+                    <PatientStatus />
                   </TableCell>
                   <TableCell align="center">
                     {patient["info"]["name"]}
@@ -408,6 +375,7 @@ function PatientList() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-evenly",
+                      height: "3rem",
                     }}
                   >
                     <ButtonBase
@@ -415,17 +383,16 @@ function PatientList() {
                       style={{
                         width: "auto",
                         minWidth: "5rem",
-                        paddingInline: "1.2rem",
-                        height: "4vh",
+                        paddingInline: "1em",
+                        height: "6vh",
                         backgroundColor: "#FFE2E2",
                         textAlign: "center",
-                        borderRadius: "5px",
+                        borderRadius: "0.6rem",
                       }}
                     >
                       <Typography
                         variant="button"
                         style={{
-                          lineHeight: "50px",
                           color: "#333",
                         }}
                       >
@@ -439,6 +406,191 @@ function PatientList() {
           </Table>
         </Box>
       </TableContainer>
+      <Dialog
+        open={addPatientStatus}
+        onClose={addPatientDialogHide}
+        aria-labelledby="新增病患"
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "1rem",
+            width: "31vh",
+            height: "70vh",
+            paddingTop: "2vh",
+            paddingBottom: "1vh",
+            paddingLeft: "5vh",
+            paddingRight: "5vh",
+          },
+          "& .MuiSvgIcon-root": {
+            fill: "white",
+          },
+          "&:hover .MuiSvgIcon-root": {
+            backgroundColor: "transparent",
+          },
+          "& .MuiButtonBase-root": {
+            borderRadius: "0.7rem",
+            backgroundColor: "#40A2D8",
+          },
+        }}
+      >
+        <DialogTitle sx={{}}>新增病患</DialogTitle>
+        <DialogContent sx={{ margingTop: "5vh" }}>
+          <TextField
+            label="病歷號"
+            variant="outlined"
+            name="ID#"
+            value={addPatient["ID#"]}
+            onChange={changeAddPatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+          <p />
+          <TextField
+            label="姓名"
+            variant="outlined"
+            name="name"
+            value={addPatient.name}
+            onChange={changeAddPatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+          <p />
+          <TextField
+            type="date"
+            label="生日"
+            variant="outlined"
+            name="DOB"
+            value={addPatient.DOB}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+            required
+            onChange={changeAddPatient}
+          />
+          <p />
+          <TextField
+            label="性別"
+            variant="outlined"
+            name="sex"
+            value={addPatient.sex}
+            required
+            select
+            onChange={changeAddPatient}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+          >
+            <MenuItem value="男">男</MenuItem>
+            <MenuItem value="女">女</MenuItem>
+          </TextField>
+          <p />
+          <TextField
+            label="身高(cm)"
+            variant="outlined"
+            name="height"
+            value={addPatient.height}
+            required
+            onChange={changeAddPatient}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+          <p />
+          <TextField
+            label="體重(kg)"
+            variant="outlined"
+            name="weight"
+            value={addPatient.weight}
+            required
+            onChange={changeAddPatient}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+
+          <p />
+          <TextField
+            type="date"
+            label="初診日期"
+            variant="outlined"
+            name="attackDate"
+            defaultValue={new Date().toLocaleDateString("en-CA")}
+            InputProps={{
+              readOnly: true,
+            }}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+            onChange={changeAddPatient}
+          />
+          <p />
+          <TextField
+            label="初始症狀"
+            variant="outlined"
+            name="beginSymptom"
+            value={addPatient.beginSymptom}
+            onChange={changeAddPatient}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+          <p />
+
+          <TextField
+            label="其他註記"
+            variant="outlined"
+            name="other"
+            value={addPatient.other}
+            onChange={changeAddPatient}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <IconButton
+            aria-label="close"
+            onClick={addPatientDialogHide}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <Button variant="contained" color="primary">
+            新增
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
