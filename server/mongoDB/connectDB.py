@@ -1,5 +1,9 @@
 import pymongo
+<<<<<<< Updated upstream
 from cv22md import img_to_code
+=======
+from server.OCR.ImgToWord import img_to_code
+>>>>>>> Stashed changes
 import json
 
 client = pymongo.MongoClient(
