@@ -12,7 +12,7 @@
 .container {
   width: 100vw;
   height: 100vh;
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(245, 245, 245);
 }
 .top {
   height: 15vh;
@@ -34,7 +34,7 @@
   padding-right: 1rem;
   padding-left: 2rem;
   padding-bottom: 2rem;
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(245, 245, 245);
 }
 
 .right {
@@ -43,7 +43,7 @@
   float: right;
   box-sizing: border-box;
   display: flex;
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(245, 245, 245);
   padding-right: 1rem;
 }
 .claerfix {
@@ -206,4 +206,68 @@
   width: 100%;
   height: 90%;
   overflow: hidden;
+}
+
+.addNewScaleButton,
+.predictButton {
+  width: 5rem;
+  height: 50%;
+  background-color: #0080ff;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5vw;
+  font-size: 1rem;
+  font-family: "Helvetica", sans-serif;
+  transition: 0.3s;
+}
+
+.addNewScaleButton:hover,
+.predictButton:hover {
+  background-color: #0066cc;
+}
+
+.finishButton {
+  width: 5rem;
+  height: 50%;
+  background-color: #ff5151;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5vw;
+  font-size: 1rem;
+  font-family: "Helvetica", sans-serif;
+  transition: 0.3s;
+}
+
+.finishButton:hover {
+  background-color: #ce0000;
+}
+
+.addRNSButton {
+  width: 10rem;
+  height: 50%;
+  background-color: #ff8000;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5vw;
+  font-size: 1rem;
+  font-family: "Helvetica", sans-serif;
+  transition: 0.3s;
+}
+.addRNSButton:hover {
+  background-color: #d94600;
 }

@@ -330,22 +330,12 @@ const VisitPage = () => {
                 {`${patient?.info.name}/${patient?.info.sex}/${patient?.info["ID#"]}`}
               </div>
               <div className="topinnercontextright">
-                <Button variant="contained" sx={{ backgroundColor: "#46A3FF" }}>
-                  新增量表
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: "#FF8000" }}
-                  onClick={handleClickOpen}
-                >
+                <button className="addNewScaleButton">新增量表</button>
+                <button className="addRNSButton" onClick={handleClickOpen}>
                   新增電生理訊號量表
-                </Button>
-                <Button variant="contained" sx={{ backgroundColor: "#46A3FF" }}>
-                  病情預測
-                </Button>
-                <Button variant="contained" sx={{ backgroundColor: "red" }}>
-                  結束看診
-                </Button>
+                </button>
+                <button className="predictButton">病情預測</button>
+                <button className="finishButton">結束看診</button>
               </div>
             </div>
           </div>
@@ -359,19 +349,6 @@ const VisitPage = () => {
               <>
                 <div className="basicdata">
                   <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={6}>
-                      ID:
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        defaultValue={patient?.info["ID#"]}
-                        size="small"
-                        fullWidth
-                      />
-                    </Grid>
                     <Grid item xs={6}>
                       姓名:
                     </Grid>
