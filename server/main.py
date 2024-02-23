@@ -1,14 +1,11 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-<<<<<<< Updated upstream
 from fastapi.responses import JSONResponse
 from mongoDB.connectDB import ReadAllPatient
-from cv22md import img_to_code
-=======
-from server.OCR.ImgToWord import recognize
->>>>>>> Stashed changes
+from OCR.ImgToWord import recognize
 
 app = FastAPI()
+
 
 @app.get("/")
 async def root():
@@ -16,20 +13,34 @@ async def root():
     headers = {}
     return JSONResponse(content=content, headers=headers)
 
+
 @app.get("/readAllPatient")
 async def test():
     respodse = ReadAllPatient()
     return respodse
 
+
 @app.post("/upload")
-async def upload(file: UploadFile = File(...)):
+async def upload(file: UploadFile=File(...)):
     with open("./images/" + file.filename, 'wb') as image:
         image.write(file.file.read())
         image.close()
         
-    output = code_to_md(img_to_code("./images/" + file.filename))
+    output = recognize(recognize("./images/" + file.filename))
     print("output: ", output)
     return {"type": file.content_type, "filename": file.filename, "output": output}
+
+
+@app.post("/recognize")
+async def recognize_text(file: UploadFile=File(...)):
+    with open("./images/" + file.filename, 'wb') as image:
+        image.write(file.file.read())
+    output = recognize("./images/" + file.filename)
+    
+    print("output: ", output)
+    return {"output": output}
+
+
 
 origins = [
     'http://localhost:5173'
@@ -41,39 +52,4 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-<<<<<<< Updated upstream
 )
-=======
-)
-
-
-@app.get("/")
-async def root():
-    content = {"message": "Hello World"}
-    return content
-
-
-@app.get("/readAllPatient")
-async def test():
-    response = ReadAllPatient()
-    return response
-
-
-@app.post("/upload")
-async def upload(file: UploadFile = File(...)):
-    with open("./images/" + file.filename, 'wb') as image:
-        image.write(file.file.read())
-
-    output = recognize("./images/" + file.filename)
-    return {"type": file.content_type, "filename": file.filename, "output": output}
-
-
-@app.post("/recognize")
-async def recognize_text(file: UploadFile = File(...)):
-    with open("./images/" + file.filename, 'wb') as image:
-        image.write(file.file.read())
-
-    output = recognize("./images/" + file.filename)
-
-    return {"output": output}
->>>>>>> Stashed changes

@@ -5,12 +5,14 @@ import cv2
 import re
 import json
 
+
 def recognize(image_path):
     image = Image.open(image_path)
+    print(image_path)
 
-    crop_dimensions = [
-        (720, 105, 700, 395),
-    ]
+    # crop_dimensions = [
+    #     (720, 105, 700, 395),
+    # ]
 
     target_words = ["Nasalis", "Trapezius", "Adb"]
     new_dpi = (400, 400)
@@ -34,6 +36,9 @@ def recognize(image_path):
                 nonspe_code = code.strip()
                 str_code = re.split('[\n:]+', nonspe_code)
                 results[target_word] = str_code
+                print(results)
 
     return json.dumps(results, ensure_ascii=False)
 
+
+print(recognize("C:/Users/User/Desktop/MDDGSS/server/images/2.png"))
