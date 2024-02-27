@@ -9,10 +9,14 @@ import json
 def recognize(image_path):
     image = Image.open(image_path)
     print(image_path)
+    image = np.array(image)
 
-    # crop_dimensions = [
-    #     (720, 105, 700, 395),
-    # ]
+    cv2.imshow('Image',image)
+    cv2.waitKey(0)
+
+    crop_dimensions = [
+        (720, 105, 700, 395),
+    ]
 
     target_words = ["Nasalis", "Trapezius", "Adb"]
     new_dpi = (400, 400)
