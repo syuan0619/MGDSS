@@ -233,7 +233,6 @@ const VisitPage = () => {
           </div>
         </div>
         <div className="tableboxBack">
-          87
           <TuneRounded
             onClick={() => cardUnRotate("qolTable")}
             id="buttonClose"

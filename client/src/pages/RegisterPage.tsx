@@ -54,7 +54,7 @@ const StyledTabs = styled(
   "& .MuiTabs-indicatorSpan": {
     maxWidth: 50,
     width: "100%",
-    backgroundColor: "#FFD306",
+    backgroundColor: "	#0080FF",
   },
 });
 
@@ -65,9 +65,9 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
     fontWeight: theme.typography.fontWeightRegular,
     fontSize: theme.typography.pxToRem(18),
     marginRight: theme.spacing(1),
-    color: "rgba(255, 255, 255, 0.7)",
+    color: "	#84C1FF",
     "&.Mui-selected": {
-      color: "#A6FFFF",
+      color: "#46A3FF",
     },
     "&.Mui-focusVisible": {
       backgroundColor: "rgba(100, 95, 228, 0.32)",
@@ -77,39 +77,39 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
-    color: "#A6FFFF", //輸入時上面的字
+    color: "#73cfff", //輸入時上面的字
   },
   "& .MuiInput-underline:after": {
     borderBottomColor: "blue",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      borderColor: "white", //原本的框
+      borderColor: "	#46A3FF", //原本的框
     },
     "&:hover fieldset": {
-      borderColor: "#A6FFFF", //滑鼠移到上面的效果
+      borderColor: "#73cfff", //滑鼠移到上面的效果
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#A6FFFF", //輸入時的框
+      borderColor: "#73cfff", //輸入時的框
     },
   },
 });
 
 const inputTextColor = {
   //TextFieldCSS
-  color: "#A6FFFF",
+  color: "#46A3FF",
 };
 
 const inputLabelcolor = {
   //TextFieldCSS
-  color: "white",
+  color: "	#46A3FF",
 };
 
 const ColorButton = styled(Button)(({ theme }) => ({
   //ButtonCSS
-  backgroundColor: "#00CACA",
+  backgroundColor: "	#46A3FF",
   "&:hover": {
-    backgroundColor: "	#008888",
+    backgroundColor: "	#73cfff",
   },
   borderRadius: "10px",
 }));
@@ -154,7 +154,7 @@ const fromControltheme = createTheme({
       styleOverrides: {
         root: {
           "& label.Mui-focused": {
-            color: "#A6FFFF", //輸入時上面的字
+            color: "#73cfff", //輸入時上面的字
           },
           "& .MuiInput-underline:after": {
             borderBottomColor: "blue",
@@ -162,13 +162,13 @@ const fromControltheme = createTheme({
 
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
-              borderColor: "white", //原本的框
+              borderColor: "#46A3FF", //原本的框
             },
             "&:hover fieldset": {
-              borderColor: "#A6FFFF", //滑鼠移到上面的效果
+              borderColor: "#73cfff", //滑鼠移到上面的效果
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#A6FFFF", //輸入時的框
+              borderColor: "#73cfff", //輸入時的框
             },
           },
         },
@@ -231,11 +231,6 @@ const RegisterPage = () => {
                 icon={<LocalHospitalRoundedIcon />}
                 iconPosition="start"
                 label="護士"
-              />
-              <StyledTab
-                icon={<RecentActorsRoundedIcon />}
-                iconPosition="start"
-                label="備用"
               />
             </StyledTabs>
             <div className="inputcontext">
@@ -413,95 +408,6 @@ const RegisterPage = () => {
                 <Link to="/">
                   <ColorButton fullWidth variant="contained" onClick={onSubmit}>
                     以護士身分註冊
-                  </ColorButton>
-                </Link>
-                <p />
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={2}>
-                <CssTextField
-                  inputProps={{
-                    sx: { ...inputTextColor },
-                  }}
-                  InputLabelProps={{
-                    sx: { ...inputLabelcolor },
-                  }}
-                  fullWidth
-                  label="帳號"
-                  variant="outlined"
-                  size="small"
-                  name="account"
-                  value={form.account}
-                  onChange={loginInput}
-                />
-                <p />
-
-                <ThemeProvider theme={fromControltheme}>
-                  <FormControl fullWidth variant="outlined" size="small">
-                    <InputLabel
-                      htmlFor="outlined-adornment-password"
-                      sx={{ ...inputLabelcolor }}
-                    >
-                      密碼
-                    </InputLabel>
-                    <OutlinedInput
-                      name="password"
-                      value={form.password}
-                      onChange={loginInput}
-                      inputProps={{
-                        sx: { ...inputTextColor },
-                      }}
-                      type={showPassword ? "text" : "password"}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            sx={{ ...inputLabelcolor }}
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      label="Password"
-                    />
-                  </FormControl>
-                  <p />
-                </ThemeProvider>
-
-                <CssTextField
-                  inputProps={{
-                    sx: { ...inputTextColor },
-                  }}
-                  InputLabelProps={{
-                    sx: { ...inputLabelcolor },
-                  }}
-                  fullWidth
-                  label="編號"
-                  variant="outlined"
-                  id="account"
-                  size="small"
-                />
-                <p />
-
-                <CssTextField
-                  inputProps={{
-                    sx: { ...inputTextColor },
-                  }}
-                  InputLabelProps={{
-                    sx: { ...inputLabelcolor },
-                  }}
-                  fullWidth
-                  label="授權碼"
-                  variant="outlined"
-                  id="account"
-                  size="small"
-                />
-                <p />
-                <Link to="/">
-                  <ColorButton fullWidth variant="contained" onClick={onSubmit}>
-                    以研究生身分欄位
                   </ColorButton>
                 </Link>
                 <p />

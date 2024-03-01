@@ -23,30 +23,30 @@ import "../style/LoginPage.css";
 
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
-    color: "#A6FFFF", //輸入時上面的字
+    color: "#73cfff", //輸入時上面的字
   },
   "& .MuiInput-underline:after": {
     borderBottomColor: "blue",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      borderColor: "white", //原本的框
+      borderColor: "	#46A3FF", //原本的框
     },
     "&:hover fieldset": {
-      borderColor: "#A6FFFF", //滑鼠移到上面的效果
+      borderColor: "#73cfff", //滑鼠移到上面的效果
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#A6FFFF", //輸入時的框
+      borderColor: "#73cfff", //輸入時的框
     },
   },
 });
 
 const inputTextColor = {
-  color: "#A6FFFF",
+  color: "#46A3FF",
 };
 
 const inputLabelcolor = {
-  color: "white",
+  color: "	#46A3FF",
 };
 
 const fromControltheme = createTheme({
@@ -56,7 +56,7 @@ const fromControltheme = createTheme({
       styleOverrides: {
         root: {
           "& label.Mui-focused": {
-            color: "#A6FFFF", //輸入時上面的字
+            color: "#73cfff", //輸入時上面的字
           },
           "& .MuiInput-underline:after": {
             borderBottomColor: "blue",
@@ -64,13 +64,13 @@ const fromControltheme = createTheme({
 
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
-              borderColor: "white", //原本的框
+              borderColor: "	#46A3FF", //原本的框
             },
             "&:hover fieldset": {
-              borderColor: "#A6FFFF", //滑鼠移到上面的效果
+              borderColor: "#73cfff", //滑鼠移到上面的效果
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#A6FFFF", //輸入時的框
+              borderColor: "#73cfff", //輸入時的框
             },
           },
         },
@@ -80,9 +80,9 @@ const fromControltheme = createTheme({
 });
 
 const ColorButton = styled(Button)(() => ({
-  backgroundColor: "#00CACA",
+  backgroundColor: "	#46A3FF",
   "&:hover": {
-    backgroundColor: "	#008888",
+    backgroundColor: "#73cfff",
   },
   borderRadius: "10px",
 }));
