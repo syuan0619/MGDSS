@@ -49,6 +49,8 @@ def resize(image):
 def perform_ocr(image):
     code = pytesseract.image_to_string(image)
     data = pytesseract.image_to_data(image, output_type=pytesseract.Output.DICT)
+    cv2.imshow("image_2", image)
+    cv2.waitKey(0)
 
     target_words = ["Right Nasalis", "Left Nasalis", "Right Trapezius", "Left Trapezius", "Right Adb", "Left Adb"]
     results = []
