@@ -8,41 +8,81 @@ import json
 
 def recognize(image_path):
     image = Image.open(image_path)
-    print(image_path)
-    image = np.array(image)
-
-    cv2.imshow('Image',image)
-    cv2.waitKey(0)
-
-    crop_dimensions = [
-        (720, 105, 700, 395),
-    ]
-
-    target_words = ["Nasalis", "Trapezius", "Adb"]
-    new_dpi = (400, 400)
-
-    results = {}
-
-    for target_word in target_words:
-        data = pytesseract.image_to_data(image, output_type=pytesseract.Output.DICT)
-
-        for j, word in enumerate(data['text']):
-            if word == target_word:
-                x, y, w, h = data['left'][j], data['top'][j], data['width'][j], data['height'][j]
-
-                crop_img = image.crop((x, y, x + w, y + h))
-                img_array = np.array(crop_img)
-
-                img_resized = cv2.resize(img_array, None, fx=0.9, fy=0.9, interpolation=cv2.INTER_CUBIC)
-                img_resized = cv2.resize(img_resized, (int(image.width * new_dpi[0] / image.width), int(image.height * new_dpi[1] / image.height)))
-
-                code = pytesseract.image_to_string(img_resized)
-                nonspe_code = code.strip()
-                str_code = re.split('[\n:]+', nonspe_code)
-                results[target_word] = str_code
-                print(results)
-
-    return json.dumps(results, ensure_ascii=False)
+    scaled_images = scale(image)
+    results = []
+    for scaled_image in scaled_images:
+        resized_image = resize(scaled_image)
+        result = perform_ocr(resized_image)
+        results.append(result)
+    return results
 
 
-print(recognize("C:/Users/User/Desktop/MDDGSS/server/images/2.png"))
+crop_main = [ 
+# (720, 700, 700, 300),  
+(720, 105, 700, 395),
+(720, 200, 700, 610),
+(720, 150, 700, 810),
+]  
+
+crop_dimensions_2 = [
+    (70, 50, 150, 230),
+]
+new_dpi = (400, 400)
+new_dpi_2 = (30, 300)
+
+
+def scale(image):
+    cropped_images = []
+    for i, (w, h, x, y) in enumerate(crop_main, start=1):
+        crop_image = image.crop((x, y, x + w, y + h))
+        image_array = np.array(crop_image)
+        cropped_images.append(image_array)
+    return cropped_images
+
+
+def resize(image):
+    resized_image = cv2.resize(image, None, fx=1, fy=3, interpolation=cv2.INTER_CUBIC)
+    resized_image = cv2.resize(resized_image, (int(resized_image.shape[1] * new_dpi[0] / resized_image.shape[0]), int(resized_image.shape[0] * new_dpi[1] / resized_image.shape[1])))
+    return resized_image
+
+
+def perform_ocr(image):
+    code = pytesseract.image_to_string(image)
+    data = pytesseract.image_to_data(image, output_type=pytesseract.Output.DICT)
+
+    target_words = ["Right Nasalis", "Left Nasalis", "Right Trapezius", "Left Trapezius", "Right Adb", "Left Adb"]
+    results = []
+
+    for phrase in target_words:
+        match = re.search(r'\b' + re.escape(phrase) + r'\b', code, re.IGNORECASE)
+        if match:
+            start_idx = match.start()
+            end_idx = match.end()
+            x, y = data['left'][start_idx], data['top'][start_idx]
+            for j, (a, b, c, d) in enumerate(crop_dimensions_2, start=1):
+
+                crop_image_2 = image[y + a:y - b, x + c:x + d ]
+                image_2 = cv2.resize(crop_image_2, None, fx=1, fy=1, interpolation=cv2.INTER_CUBIC)
+                image_2 = cv2.resize(image_2, (int(image.shape[1] * new_dpi_2[0] / image.shape[0]), int(image.shape[0] * new_dpi_2[1] / image.shape[1])))  
+                image_2 = cv2.resize(crop_image_2, None, fx=3, fy=3, interpolation=cv2.INTER_CUBIC)
+                code_2 = pytesseract.image_to_string(image_2)
+                nonspe_code = code_2.strip()
+                str_code_2 = re.split('[\n:]+', nonspe_code)
+                json_string_2 = json.dumps([str_code_2], ensure_ascii=False)  
+
+                result = {
+                    # "target_phrase": phrase,
+                    "result_data": json_string_2,
+                    # "text": code[start_idx:end_idx]  # Include the matched text here
+                }
+                results.append(result)
+    return results
+
+# Test the OCR recognition
+# image_path = r'C:\Users\User\Desktop\gitkrakon\printScreen\圖片1.png'  # Update with the path to your test image
+# results = recognize(image_path)
+
+# # Print the OCR results
+# for result in results:
+#     print(result)
+
