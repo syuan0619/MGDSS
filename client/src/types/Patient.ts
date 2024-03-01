@@ -30,7 +30,6 @@ type Info = {
 };
 
 type Visit = {
-    number: number;
     date: string;
     treat: number;
     SBP: number;
@@ -73,7 +72,6 @@ type BloodTest = {
 };
 
 type QOL = {
-    number: number;
     testDate: string;
     frustration: number;
     eyeUsing: number;
@@ -94,7 +92,6 @@ type QOL = {
 };
 
 type QMG = {
-    number: number;
     testDate: string;
     doubleVision: number;
     ptosis: number;
@@ -113,7 +110,6 @@ type QMG = {
 };
 
 type MG = {
-    number: number;
     testDate: string;
     ptosis: number;
     doubleVision: number;
@@ -129,7 +125,6 @@ type MG = {
 };
 
 type ADL = {
-    number: number;
     testDate: string;
     talking: number;
     chewing: number;
@@ -143,9 +138,9 @@ type ADL = {
 
 type EMG = {
     testDate: string;
-    imgLocation: string;
+    imgPath: string;
     RNS: {
-        part: string;
+        musclePart: string;
         preActivation: [];
         postActivation: [];
     };
