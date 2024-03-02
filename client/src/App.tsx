@@ -7,6 +7,7 @@ import OCRPage from "./pages/OCRPage";
 import VisitPage from "./pages/VisitPage";
 
 import "./style/App.css";
+import UploadOCR from "./pages/uploadOCR";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/patient" element={<PatientList />}></Route>
         <Route path="/OCR" element={<OCRPage />}></Route>
         <Route path="/visit" element={<VisitPage />}></Route>
+        <Route path="/upload" element={<UploadOCR />}></Route>
       </Routes>
     </BrowserRouter>
   );
