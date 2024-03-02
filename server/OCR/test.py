@@ -85,10 +85,10 @@ def perform_ocr(image):
 
 
 # Test the OCR recognition
-# image_path = r'C:\Users\User\Desktop\gitkrakon\printScreen\圖片1.png'  # Update with the path to your test image
-# results = recognize(image_path)
+image_path = r'C:\Users\曾澤軒\Desktop\Git\MDGSS\server\images\1.png ' # Update with the path to your test image
+results = recognize(image_path)
 
-# # Print the OCR results
-# for result in results:
-#     print(result)
+# Print the OCR results
+for result in results:
+    print(result)
 
