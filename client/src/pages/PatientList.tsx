@@ -20,7 +20,6 @@ import HomeIcon from "@mui/icons-material/Home";
 
 import Patient from "../types/Schema";
 import api from "../api";
-import { info } from "sass";
 
 function SearchPatientBar() {
   const [searchPatient, setSearchPatient] = useState("");
