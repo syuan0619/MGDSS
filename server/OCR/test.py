@@ -85,10 +85,16 @@ def perform_ocr(image):
 
 
 # Test the OCR recognition
-image_path = r'C:\Users\曾澤軒\Desktop\Git\MDGSS\server\images\1.png ' # Update with the path to your test image
+image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'  # Update with the path to your test image
 results = recognize(image_path)
 
 # Print the OCR results
 for result in results:
     print(result)
 
+# 以第一個辨識文字為(0,0)
+# #第一排文字PRE(352,80)(370,133)
+# 第二排受側肌肉[0,424]
+# #第二排文字PRE(550,503)(469,558)
+# #第二排文字PRE(995,503)(1112,558)
+# #第三排文字POST{(137,875)(254,930),(351,875)(469,930),(563,875)(684,931),}
