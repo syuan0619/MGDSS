@@ -1,5 +1,5 @@
 .background {
-  background-image: url("../assets/loginwp.jpg");
+  background-image: url("../assets/Loginnew2.png");
   display: flex;
   background-size: cover;
   width: 100vw;
@@ -10,20 +10,23 @@
 }
 
 .loginbox {
+  margin-right: -40vw;
   justify-content: center;
   align-items: center;
   text-align: center;
   border-radius: 20px;
   border: 2px solid #84c1ff;
+  background-color: #66b3ff;
   display: flex;
-  background: transparent;
-  color: #46a3ff;
+  /* background: transparent; */
+  color: white;
   backdrop-filter: blur(30px);
   padding-left: 3vw;
   padding-right: 3vw;
   padding-top: 5vh;
   padding-bottom: 5vh;
   box-sizing: border-box;
+  box-shadow: -5px 5px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .logincontext {
@@ -37,7 +40,7 @@
 .text {
   font-family: "Helvetica", sans-serif;
   font-size: 2vh;
-  color: #46a3ff;
+  color: white;
 }
 
 /* .spinnerwapper {

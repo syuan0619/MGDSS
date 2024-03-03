@@ -1,5 +1,5 @@
 .background {
-  background-image: url("../assets/loginwp.jpg");
+  background-image: url("../assets/Loginnew2.png");
   display: flex;
   background-size: cover;
   width: 100vw;
@@ -10,27 +10,30 @@
 }
 
 .registerbox {
+  margin-right: -40vw;
   justify-content: center;
   align-items: center;
   text-align: center;
   border-radius: 20px;
   border: 2px solid #84c1ff;
+  background-color: #66b3ff;
   display: flex;
-  background: transparent;
-  color: #46a3ff;
+  /* background: transparent; */
+  color: white;
   backdrop-filter: blur(30px);
   padding-left: calc(3vw - 24px);
   padding-right: calc(3vw - 24px);
   padding-top: 5vh;
   padding-bottom: 5vh;
   box-sizing: border-box;
+  box-shadow: -5px 5px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .registercontext {
   text-align: center;
   width: 100%;
   height: 100%;
-  color: #46a3ff;
+  color: white;
 }
 
 .inputcontext {
@@ -38,5 +41,5 @@
   height: 100%;
   padding-left: 0;
   padding-right: 0;
-  color: #46a3ff;
+  color: white;
 }

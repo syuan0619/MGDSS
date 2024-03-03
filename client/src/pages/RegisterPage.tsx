@@ -54,7 +54,7 @@ const StyledTabs = styled(
   "& .MuiTabs-indicatorSpan": {
     maxWidth: 50,
     width: "100%",
-    backgroundColor: "	#0080FF",
+    backgroundColor: "	white",
   },
 });
 
@@ -65,9 +65,9 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
     fontWeight: theme.typography.fontWeightRegular,
     fontSize: theme.typography.pxToRem(18),
     marginRight: theme.spacing(1),
-    color: "	#84C1FF",
+    color: "	#D2E9FF",
     "&.Mui-selected": {
-      color: "#46A3FF",
+      color: "white",
     },
     "&.Mui-focusVisible": {
       backgroundColor: "rgba(100, 95, 228, 0.32)",
@@ -77,37 +77,37 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
-    color: "#73cfff", //輸入時上面的字
+    color: "white", //輸入時上面的字
   },
   "& .MuiInput-underline:after": {
     borderBottomColor: "blue",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      borderColor: "	#46A3FF", //原本的框
+      borderColor: "white", //原本的框
     },
     "&:hover fieldset": {
-      borderColor: "#73cfff", //滑鼠移到上面的效果
+      borderColor: "white", //滑鼠移到上面的效果
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#73cfff", //輸入時的框
+      borderColor: "white", //輸入時的框
     },
   },
 });
 
 const inputTextColor = {
   //TextFieldCSS
-  color: "#46A3FF",
+  color: "white",
 };
 
 const inputLabelcolor = {
   //TextFieldCSS
-  color: "	#46A3FF",
+  color: "	white",
 };
 
 const ColorButton = styled(Button)(({ theme }) => ({
   //ButtonCSS
-  backgroundColor: "	#46A3FF",
+  backgroundColor: "	#97CBFF",
   "&:hover": {
     backgroundColor: "	#73cfff",
   },
@@ -154,7 +154,7 @@ const fromControltheme = createTheme({
       styleOverrides: {
         root: {
           "& label.Mui-focused": {
-            color: "#73cfff", //輸入時上面的字
+            color: "white", //輸入時上面的字
           },
           "& .MuiInput-underline:after": {
             borderBottomColor: "blue",
@@ -162,13 +162,13 @@ const fromControltheme = createTheme({
 
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
-              borderColor: "#46A3FF", //原本的框
+              borderColor: "white", //原本的框
             },
             "&:hover fieldset": {
-              borderColor: "#73cfff", //滑鼠移到上面的效果
+              borderColor: "white", //滑鼠移到上面的效果
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#73cfff", //輸入時的框
+              borderColor: "white", //輸入時的框
             },
           },
         },

@@ -353,6 +353,8 @@ const VisitPage = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        disabled
+                        variant="filled"
                         defaultValue={patient?.info.name}
                         size="small"
                         fullWidth
@@ -363,6 +365,8 @@ const VisitPage = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        disabled
+                        variant="filled"
                         defaultValue={patient?.info.DOB}
                         size="small"
                         fullWidth
@@ -373,6 +377,8 @@ const VisitPage = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        disabled
+                        variant="filled"
                         defaultValue={patient?.info.sex}
                         size="small"
                         fullWidth
@@ -383,6 +389,8 @@ const VisitPage = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        disabled
+                        variant="filled"
                         defaultValue={patient?.info.age}
                         size="small"
                         fullWidth
@@ -393,6 +401,8 @@ const VisitPage = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        disabled
+                        variant="filled"
                         defaultValue={patient?.info.height}
                         size="small"
                         fullWidth
@@ -403,6 +413,8 @@ const VisitPage = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        disabled
+                        variant="filled"
                         defaultValue={patient?.info.weight}
                         size="small"
                         fullWidth
@@ -413,6 +425,8 @@ const VisitPage = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        disabled
+                        variant="filled"
                         defaultValue={patient?.info.status}
                         size="small"
                         fullWidth
@@ -424,6 +438,8 @@ const VisitPage = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        disabled
+                        variant="filled"
                         defaultValue={patient?.info.other}
                         size="small"
                         fullWidth
@@ -434,6 +450,8 @@ const VisitPage = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        disabled
+                        variant="filled"
                         defaultValue={patient?.info.attackDate}
                         size="small"
                         fullWidth
@@ -444,6 +462,8 @@ const VisitPage = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        disabled
+                        variant="filled"
                         defaultValue={patient?.info.beginSymptom}
                         size="small"
                         fullWidth

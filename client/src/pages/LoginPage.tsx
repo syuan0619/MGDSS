@@ -21,32 +21,44 @@ import fjuicon from "../assets/fju.png";
 import { useState } from "react";
 import "../style/LoginPage.css";
 
+const white = {
+  color: "	#FFFFFF",
+};
+
+const darkColor = {
+  color: "#46A3FF",
+};
+
+const lightColor = {
+  color: "#73cfff",
+};
+
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
-    color: "#73cfff", //輸入時上面的字
+    color: "white", //輸入時上面的字
   },
   "& .MuiInput-underline:after": {
     borderBottomColor: "blue",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      borderColor: "	#46A3FF", //原本的框
+      borderColor: "white", //原本的框
     },
     "&:hover fieldset": {
-      borderColor: "#73cfff", //滑鼠移到上面的效果
+      borderColor: "white", //滑鼠移到上面的效果
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#73cfff", //輸入時的框
+      borderColor: "white", //輸入時的框
     },
   },
 });
 
 const inputTextColor = {
-  color: "#46A3FF",
+  color: "white",
 };
 
 const inputLabelcolor = {
-  color: "	#46A3FF",
+  color: "white",
 };
 
 const fromControltheme = createTheme({
@@ -56,7 +68,7 @@ const fromControltheme = createTheme({
       styleOverrides: {
         root: {
           "& label.Mui-focused": {
-            color: "#73cfff", //輸入時上面的字
+            color: "white", //輸入時上面的字
           },
           "& .MuiInput-underline:after": {
             borderBottomColor: "blue",
@@ -64,13 +76,13 @@ const fromControltheme = createTheme({
 
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
-              borderColor: "	#46A3FF", //原本的框
+              borderColor: "white", //原本的框
             },
             "&:hover fieldset": {
-              borderColor: "#73cfff", //滑鼠移到上面的效果
+              borderColor: "white", //滑鼠移到上面的效果
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#73cfff", //輸入時的框
+              borderColor: "white", //輸入時的框
             },
           },
         },
@@ -80,7 +92,7 @@ const fromControltheme = createTheme({
 });
 
 const ColorButton = styled(Button)(() => ({
-  backgroundColor: "	#46A3FF",
+  backgroundColor: "	#97CBFF",
   "&:hover": {
     backgroundColor: "#73cfff",
   },
