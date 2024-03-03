@@ -37,8 +37,8 @@ async def recognize_text(file: UploadFile=File(...)):
         image.write(file.file.read())
     output = recognize("./images/" + file.filename)
     
-    print("output: ", output)
-    return {"output": output}
+    # print("output: ", output)
+    return output
 
 
 
