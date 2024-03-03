@@ -1,13 +1,18 @@
 import { useState } from "react";
 
-function FileInputWithPreview() {
-  const [selectedFile, setSelectedFile] = useState<string>("");
-  const [previewUrl, setPreviewUrl] = useState<string>("");
+function FileInputWithPreview({
+  setUploadedFile,
+}: {
+  setUploadedFile: React.Dispatch<React.SetStateAction<File | undefined>>;
+}) {
+  const [selectedFile, setSelectedFile] = useState<string>();
+  const [previewUrl, setPreviewUrl] = useState<string>();
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
       setSelectedFile(file.name);
+      setUploadedFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         if (typeof reader.result === "string") {
@@ -27,6 +32,7 @@ function FileInputWithPreview() {
         accept="image/*"
         onChange={fileSelectedHandler}
         style={{ marginLeft: "5rem" }}
+        id="fileInput"
       />
       {previewUrl && (
         <div>

@@ -4,8 +4,18 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Link } from "react-router-dom";
 import "../style/UploadOCR.css";
 import FileInputWithPreview from "../components/OCRPreview";
+import { useState } from "react";
+import api from "../api";
 
-const VisitPage = () => {
+const UploadOCR = () => {
+  const [uploadedFile, setUploadedFile] = useState<File>();
+
+  const getRecognized = async () => {
+    return await api.post("/recognize", uploadedFile);
+  };
+  const recognizedData = getRecognized();
+  console.log(recognizedData);
+
   return (
     <>
       <div className="container">
@@ -20,7 +30,7 @@ const VisitPage = () => {
                         fontSize: "3rem",
                         color: "#0080FF",
                       }}
-                    ></ArrowBackRounded>
+                    />
                   </Button>
                 </Link>
                 <div className="numbox">001</div>
@@ -108,47 +118,52 @@ const VisitPage = () => {
             </div>
           </div>
         </div>
+
         <div className="right">
           <div className="rightBg">
             <div className="head">
               <p>電生理訊號</p>
             </div>
-            <div className="recog">
-              <div className="contextLeftBg">
-                <div className="uploadArea">
-                  <div className="title">
-                    <label htmlFor="pic" id="pic">
-                      檔案上傳/預覽
-                    </label>
-                    <AddCircleIcon
-                      style={{
-                        fill: "#89b9ad",
-                        fontSize: "2rem",
-                      }}
-                    />
+
+            <div className="middle">
+              <div className="recog">
+                <div className="contextLeftBg">
+                  <div className="uploadArea">
+                    <div className="title">
+                      <label htmlFor="pic" id="pic">
+                        檔案上傳/預覽
+                      </label>
+                      <AddCircleIcon
+                        style={{
+                          fill: "#89b9ad",
+                          fontSize: "2rem",
+                        }}
+                      />
+                    </div>
+                    <FileInputWithPreview setUploadedFile={setUploadedFile} />
                   </div>
-                  <FileInputWithPreview />
                 </div>
               </div>
-              <div className="contextRightBg">
-                <h3 id="headResult">辨識結果 : </h3>
-                <input type="text" id="result" readOnly />
+              <div>
+                <div className="contextRightBg">
+                  <h3>辨識結果 : </h3>
+                  <input type="text" id="result" readOnly />
+                </div>
+                <div className="modify">
+                  <h3>手動修正 :</h3>
+                  <input type="text" id="modifyCon" />
+                </div>
               </div>
             </div>
-            <div className="modify">
-              <h3 id="headModify">手動修正 :</h3>
-              <input type="text" id="modifyCon" />
-            </div>
+
             <div className="forButton">
               <button id="submitButton">將結果加入病歷</button>
             </div>
           </div>
         </div>
-
-        <div className="clearfix"></div>
       </div>
     </>
   );
 };
 
-export default VisitPage;
+export default UploadOCR;
