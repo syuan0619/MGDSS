@@ -145,4 +145,4 @@ type EMG = {
         postActivation: [];
     };
 };
-export type { Patient };
+export type { Patient, Info };
