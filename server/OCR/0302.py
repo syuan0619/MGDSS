@@ -4,7 +4,7 @@ import cv2
 import pytesseract
 import re
 
-image = Image.open(r'C:\Users\曾澤軒\Desktop\專題\printScreen\1.png')
+image = Image.open(r'C:\Users\User\Desktop\MDDGSS\server\images\1.png')
 image_array = np.array(image)
 resized_image = cv2.resize(image_array, (1920, 1080))  # 調整為寬度為1920，高度為1080
 # cv2.imshow("Cropped Image", resized_image)
