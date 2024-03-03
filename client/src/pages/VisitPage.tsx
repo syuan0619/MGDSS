@@ -19,16 +19,14 @@ import {
   AssessmentRounded,
   CloseFullscreenRounded,
   OpenInFullRounded,
-  TrendingUpRounded,
   TuneRounded,
 } from "@mui/icons-material";
 import * as React from "react";
 
 // import PropTypes from "prop-types";
-import { bloodTest, MG, PATIENT } from "../types/Schema";
+import { PATIENT } from "../types/Schema";
 import { QOL } from "../types/Schema";
-import api from "../api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../style/Records.css";
 import { TransitionProps } from "@mui/material/transitions";

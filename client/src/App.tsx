@@ -8,6 +8,7 @@ import Backstage from "./pages/Backstage";
 import VisitPage from "./pages/VisitPage";
 
 import "./style/App.css";
+import UploadOCR from "./pages/UploadOCR";
 
 function App() {
     return (
@@ -17,8 +18,9 @@ function App() {
                 <Route path="/register" element={<RegisterPage />}></Route>
                 <Route path="/patient" element={<PatientList />}></Route>
                 <Route path="/OCR" element={<OCRPage />}></Route>
-                <Route path="/backstage" element={<Backstage />}></Route>
                 <Route path="/visit" element={<VisitPage />}></Route>
+                <Route path="/backstage" element={<Backstage />}></Route>
+                <Route path="/upload" element={<UploadOCR />}></Route>
             </Routes>
         </BrowserRouter>
     );
