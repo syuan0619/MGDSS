@@ -14,106 +14,25 @@
   height: 100vh;
   background-color: rgb(245, 245, 245);
 }
-.top {
+.header {
+  width: 100%;
   height: 15vh;
   box-sizing: border-box;
   display: flex;
-  padding-top: 2rem;
-  padding-right: 2rem;
-  padding-left: 2rem;
-  padding-bottom: 1rem;
-}
-
-.left {
-  width: 30vw;
-  height: 85vh;
-  float: left;
-  box-sizing: border-box;
-  display: flex;
-  padding-top: 1rem;
-  padding-right: 1rem;
-  padding-left: 2rem;
-  padding-bottom: 2rem;
-  background-color: rgb(245, 245, 245);
-}
-
-.right {
-  width: 70vw;
-  height: 85vh;
-  float: right;
-  box-sizing: border-box;
-  display: flex;
-  background-color: rgb(245, 245, 245);
-  padding-right: 1rem;
-}
-.claerfix {
-  clear: both;
-}
-
-.context {
-  width: 100%;
-  height: 100%;
-  background-color: rgb(255, 255, 255);
-  border-radius: 20px;
-  text-align: center;
-  box-sizing: border-box;
-  padding: 1vh;
-  font-size: 3vh;
-  font-family: "Helvetica", sans-serif;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
+  padding: 2rem;
   align-items: center;
+  justify-content: center;
 }
 
-.innercontext {
+.headinner {
   width: 100%;
   height: 100%;
-  text-align: center;
-  font-size: 2.5vh;
-  font-family: "Helvetica", sans-serif;
-  overflow: auto;
-}
-
-.rightinnercontext {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  font-size: 2.5vh;
-  font-family: "Helvetica", sans-serif;
-  overflow: var(--rightinner-overflow);
-  display: flex;
-  box-sizing: border-box;
-  padding-bottom: 2rem;
-}
-
-.topinnercontext {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  margin-left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.topcontext {
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
   text-align: center;
   box-sizing: border-box;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.basicdata {
-  margin-right: 10%;
-  text-align: right;
   display: flex;
 }
 
-.topinnercontextleft {
+.headerinnerleft {
   width: 50%;
   height: 100%;
   float: left;
@@ -124,13 +43,69 @@
   font-family: "Helvetica", sans-serif;
 }
 
-.topinnercontextright {
+.headerinnerright {
   width: 50%;
   height: 100%;
   float: right;
   display: flex;
   align-items: center;
   justify-content: right;
+  font-size: 3vh;
+  font-family: "Helvetica", sans-serif;
+}
+
+.footer {
+  width: 100vw;
+  height: 85vh;
+}
+
+.leftblock {
+  width: 30%;
+  height: 100%;
+  float: left;
+  box-sizing: border-box;
+  padding: 2rem 1rem 2rem 2rem;
+}
+
+.context {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+  border: 0.5rem solid white;
+  border-radius: 20px;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 1vh;
+  font-size: 2.5vh;
+  font-family: "Helvetica", sans-serif;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.basicdata {
+  margin-right: 10%;
+  text-align: right;
+  display: flex;
+}
+
+.rightblock {
+  width: 70%;
+  height: 100%;
+  float: right;
+  box-sizing: border-box;
+  padding: 1rem 2rem 1rem 1rem;
+}
+.rightcontext {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 2.5vh;
+  font-family: "Helvetica", sans-serif;
+  overflow: var(--rightinner-overflow);
+  display: flex;
+  box-sizing: border-box;
 }
 
 .numbox {
@@ -179,17 +154,6 @@
   background-color: rgb(255, 255, 255);
   transform: rotateY(var(--rotate-y));
   transition: 2s;
-  position: absolute;
-  backface-visibility: hidden;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-.tableboxBack {
-  background-color: rgb(255, 255, 255);
-  transition: 2s;
-  border-radius: 10px;
-  transform: rotateY(var(--rotate-back));
   position: absolute;
   backface-visibility: hidden;
   padding: 1rem;
