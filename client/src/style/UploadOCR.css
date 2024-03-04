@@ -13,7 +13,7 @@
 
 .left {
   width: 30vw;
-  height: 85vh;
+  height: 87vh;
   float: left;
   box-sizing: border-box;
   display: flex;
@@ -34,16 +34,14 @@
 }
 
 .rightBg {
-  width: 96%;
-  height: 93%;
+  width: 100%;
+  height: 95%;
   margin-top: 1rem;
   margin-left: 1rem;
   background-color: rgb(255, 255, 255);
-  border-radius: 2rem;
-  text-align: center;
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
 .head {
@@ -56,18 +54,8 @@
 
 .contextLeftBg {
   width: 30vw;
+  height: 65vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.uploadArea {
-  width: 20vw;
-  height: 30vh;
-  background: #eeeeee;
-  border-radius: 1.2rem;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -116,11 +104,14 @@
   border-radius: 0.9rem;
 }
 
-.forButton {
+.submit {
   display: flex;
+  flex-direction: row;
+  height: 12vh;
   justify-content: flex-end;
   align-items: center;
 }
+
 #submitButton {
   width: 14vw;
   height: 5.5vh;
@@ -130,7 +121,6 @@
   font-weight: bold;
   border-radius: 1.2rem;
   border: 0;
-  margin-right: 4rem;
 }
 #submitButton:hover {
   background-color: white;
@@ -349,8 +339,11 @@
 
 .middle {
   display: flex;
-  flex: 1 40%;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+}
+
+.middle-rigjt {
+  height: 68vh;
 }

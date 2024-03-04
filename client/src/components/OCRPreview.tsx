@@ -1,9 +1,12 @@
 import { useState } from "react";
+import "../style/OCRPreview.css";
 
 function FileInputWithPreview({
   setUploadedFile,
+  inputRef,
 }: {
   setUploadedFile: React.Dispatch<React.SetStateAction<File | undefined>>;
+  inputRef: React.RefObject<HTMLInputElement>;
 }) {
   const [selectedFile, setSelectedFile] = useState<string>();
   const [previewUrl, setPreviewUrl] = useState<string>();
@@ -23,28 +26,24 @@ function FileInputWithPreview({
     }
   };
 
+  const buttonHandler = () => {
+    inputRef.current?.click();
+  };
+
   console.log("Selected File:", selectedFile);
 
   return (
-    <div>
+    <div className="fileInput">
       <input
         type="file"
         accept="image/*"
         onChange={fileSelectedHandler}
-        style={{ marginLeft: "5rem" }}
-        id="fileInput"
+        ref={inputRef}
       />
-      {previewUrl && (
-        <div>
-          <img
-            src={previewUrl}
-            alt="Preview"
-            style={{
-              maxWidth: "18vw",
-              maxHeight: "17vh",
-            }}
-          />
-        </div>
+      {previewUrl ? (
+        <img src={previewUrl} alt="Preview" />
+      ) : (
+        <button onClick={buttonHandler}>檔案上傳/預覽</button>
       )}
     </div>
   );

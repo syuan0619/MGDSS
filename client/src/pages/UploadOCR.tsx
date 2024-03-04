@@ -1,13 +1,13 @@
 import { Button, Grid, TextField } from "@mui/material";
 import { ArrowBackRounded } from "@mui/icons-material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Link } from "react-router-dom";
 import "../style/UploadOCR.css";
 import FileInputWithPreview from "../components/OCRPreview";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import api from "../api";
 
 const UploadOCR = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [uploadedFile, setUploadedFile] = useState<File>();
 
   const getRecognized = async (formData: FormData) => {
@@ -24,6 +24,7 @@ const UploadOCR = () => {
       });
     }
   }, [uploadedFile]);
+
   return (
     <>
       <div className="container">
@@ -134,38 +135,25 @@ const UploadOCR = () => {
             </div>
 
             <div className="middle">
-              <div className="recog">
-                <div className="contextLeftBg">
-                  <div className="uploadArea">
-                    <div className="title">
-                      <label htmlFor="pic" id="pic">
-                        檔案上傳/預覽
-                      </label>
-                      <AddCircleIcon
-                        style={{
-                          fill: "#89b9ad",
-                          fontSize: "2rem",
-                        }}
-                      />
-                    </div>
-                    <FileInputWithPreview setUploadedFile={setUploadedFile} />
-                  </div>
-                </div>
+              <div className="contextLeftBg">
+                <FileInputWithPreview
+                  setUploadedFile={setUploadedFile}
+                  inputRef={inputRef}
+                />
               </div>
-              <div>
+              <div className="middle-right">
                 <div className="contextRightBg">
-                  <h3>辨識結果 : </h3>
+                  <h3 className="h3">辨識結果 : </h3>
                   <input type="text" id="result" readOnly />
                 </div>
                 <div className="modify">
-                  <h3>手動修正 :</h3>
+                  <h3 className="h3">手動修正 :</h3>
                   <input type="text" id="modifyCon" />
                 </div>
+                <div className="submit">
+                  <button id="submitButton">將結果加入病歷</button>
+                </div>
               </div>
-            </div>
-
-            <div className="forButton">
-              <button id="submitButton">將結果加入病歷</button>
             </div>
           </div>
         </div>
