@@ -147,8 +147,7 @@ const UploadOCR = () => {
               <div className="middle-right">
                 <div className="contextRightBg">
                   <h3 className="h3">辨識結果 : </h3>
-                  <input
-                    type="text"
+                  <textarea
                     id="result"
                     defaultValue={recognizedResult}
                     readOnly
@@ -156,7 +155,7 @@ const UploadOCR = () => {
                 </div>
                 <div className="modify">
                   <h3 className="h3">手動修正 :</h3>
-                  <input type="text" id="modifyCon" value={modifiedResult} />
+                  <textarea id="modifyCon" value={modifiedResult} />
                 </div>
                 <div className="submit">
                   <button id="submitButton">將結果加入病歷</button>

@@ -76,7 +76,6 @@
 #result {
   width: 25vw;
   height: 20vh;
-  margin-left: 2rem;
   background-color: #eeeeee;
   border: 0;
   border-radius: 0.9rem;
@@ -97,13 +96,15 @@
 #modifyCon {
   width: 25vw;
   height: 20vh;
-  margin-left: 2rem;
   font-size: 1.3rem;
   background-color: #eeeeee;
   border: 0;
   border-radius: 0.9rem;
+  padding-top: 0.5em;
 }
-
+#modifyCon:focus {
+  outline: 0.15rem solid #7c7b7b;
+}
 .submit {
   display: flex;
   flex-direction: row;
