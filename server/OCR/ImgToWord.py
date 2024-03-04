@@ -6,8 +6,8 @@ import re
 import json
 
 
-def recognize(image_path):
-    image = Image.open(image_path)
+def recognize(uploadImage):
+    image = Image.open(uploadImage)
     scaled_images = scale(image)
     resized_image = resize(scaled_images)
     results = perform_ocr(resized_image)
@@ -33,8 +33,8 @@ def scale(image):
     for i, (w, h, x, y) in enumerate(crop_main, start=1):
         crop_image = image.crop((x, y, x + w, y + h))
         image_array = np.array(crop_image)
-        cv2.imshow("image_2", image_array)
-        cv2.waitKey(0)
+        # cv2.imshow("image_2", image_array)
+        # cv2.waitKey(0)
 
     return image_array
 
@@ -83,10 +83,10 @@ def perform_ocr(image):
     return result
 
 
-# Test the OCR recognition
-image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'  # Update with the path to your test image
-results = recognize(image_path)
+# # Test the OCR recognition
+# image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'  # Update with the path to your test image
+# results = recognize(image_path)
 
-# Print the OCR results
-for result in results:
-    print(result)
+# # Print the OCR results
+# for result in results:
+#     print(result)

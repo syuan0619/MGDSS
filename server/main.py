@@ -33,9 +33,10 @@ async def upload(file: UploadFile=File(...)):
 
 @app.post("/recognize")
 async def recognize_text(file: UploadFile=File(...)):
-    with open("./images/" + file.filename, 'wb') as image:
-        image.write(file.file.read())
-    output = recognize("./images/" + file.filename)
+    # with open("./images/" + file.filename, 'wb') as image:
+    #     image.write(file.file.read())
+    # print("file: ", file)
+    output = recognize(file.file)
     
     # print("output: ", output)
     return output
