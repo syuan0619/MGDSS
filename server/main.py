@@ -37,15 +37,17 @@ async def recognize_text(file: UploadFile=File(...)):
     # print("file: ", file)
     output = recognize(file.file)
     # print("output: ", output)
-
+    response = []
     for result in output:
-        print("muscle part: ", result.get("target_phrase"))
-        print("result data: ", json.loads(result.get("result_data")[0]))
+        # print("muscle part: ", result["target_phrase"])
+        # print("result data: ", [ json.loads(activation) for activation in result['result_data']])
+        response.append({
+            "musclePart": result["target_phrase"],
+            "preActivation": [ json.loads(activation) for activation in result['result_data']]
+            # "postActivation":
+        })
 
-    response = {
-        
-    }
-    return output
+    return response
 
 
 
