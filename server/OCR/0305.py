@@ -8,8 +8,8 @@ import re
 
 def recognize(image_path):
     croped_image = Image.open(image_path)
-    results_data = perform_ocr(croped_image)
-    return results_data
+    result_data = perform_ocr(croped_image)
+    return result_data
 
 
 def crop(image_path):
@@ -36,39 +36,40 @@ crop_dimensions_data = [(125, 55, 352, 80), (125, 55, 350, 503),
 
 
 def perform_ocr(resized_image):
-    results = []
-
+    result = []
     code = pytesseract.image_to_string(resized_image)
-    data = pytesseract.image_to_data(resized_image, output_type=pytesseract.Output.DICT)
-    target_words = ["Right Nasalis", "Left Nasalis", "Right Trapezius", "Left Trapezius", "Right Adb", "Left Adb"]
-
+    data = pytesseract.image_to_data(
+        resized_image, output_type=pytesseract.Output.DICT)
+    target_words = ["Right Nasalis", "Left Nasalis",
+                    "Right Trapezius", "Left Trapezius", "Right Adb", "Left Adb"]
     for phrase in target_words:
-        match = re.search(r'\b' + re.escape(phrase) + r'\b', code, re.IGNORECASE)
+        match = re.search(r'\b' + re.escape(phrase) +
+                          r'\b', code, re.IGNORECASE)
         if match:
             start_idx = match.start()
             end_idx = match.end()
             x, y = data['left'][start_idx], data['top'][start_idx]
-
             for i, (w, h, x, y) in enumerate(crop_dimensions_data, start=1):
                 result_image = resized_image[y:y + h, x:x + w]
-                cv2.rectangle(result_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv2.rectangle(result_image, (x, y),
+                              (x + w, y + h), (0, 255, 0), 2)
 
-                result_image_cropped = cv2.resize(result_image, None, fx=4, fy=4, interpolation=cv2.INTER_CUBIC)
-                extracted_text = pytesseract.image_to_string(result_image_cropped)
-                extracted_text = extracted_text.strip()
-                split_text = re.split('[\n:]+', extracted_text)
-                json_string = json.dumps(split_text, ensure_ascii=False)
+                result_image_croped = cv2.resize(
+                    result_image, None, fx=4, fy=4, interpolation=cv2.INTER_CUBIC)
+                deta = pytesseract.image_to_string(result_image_croped)
+                nonspe_code = deta.strip()
+                str_code_2 = re.split('[\n:]+', nonspe_code)
+                json_string = json.dumps(str_code_2, ensure_ascii=False)
+                cv2.rectangle(resized_image, (x, y),
+                              (x+w, y+h), (0, 255, 0), 2)
 
-                results.append({
+                result.append({
                     "target_phrase": phrase,
                     "result_data": json_string
+                    # "text": code[start_idx:end_idx]  # Include the matched text here
                 })
+    return result
 
-    response = {
-        "results": results
-    }
-
-    return response
 
 # Update with the path to your test image
 # image_path = r'C:\Users\曾澤軒\Desktop\Git\MDGSS\server\images\1.png'
