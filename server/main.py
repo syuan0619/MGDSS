@@ -1,3 +1,4 @@
+import json
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -33,12 +34,17 @@ async def upload(file: UploadFile=File(...)):
 
 @app.post("/recognize")
 async def recognize_text(file: UploadFile=File(...)):
-    # with open("./images/" + file.filename, 'wb') as image:
-    #     image.write(file.file.read())
     # print("file: ", file)
     output = recognize(file.file)
-    
     # print("output: ", output)
+
+    for result in output:
+        print("muscle part: ", result.get("target_phrase"))
+        print("result data: ", json.loads(result.get("result_data")[0]))
+
+    response = {
+        
+    }
     return output
 
 
