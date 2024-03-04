@@ -51,9 +51,13 @@ def perform_ocr(resized_image):
 
             for i, (w, h, x, y) in enumerate(crop_dimensions_data, start=1):
                 result_image = resized_image[y:y + h, x:x + w]
+
                 cv2.rectangle(result_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
                 result_image_cropped = cv2.resize(result_image, None, fx=4, fy=4, interpolation=cv2.INTER_CUBIC)
+                cv2.imshow("result_image", result_image)
+                cv2.waitKey(0)
+
                 extracted_text = pytesseract.image_to_string(result_image_cropped)
                 extracted_text = extracted_text.strip()
                 split_text = re.split('[\n:]+', extracted_text)
@@ -64,17 +68,14 @@ def perform_ocr(resized_image):
                     "result_data": json_string
                 })
 
-    response = {
-        "results": results
-    }
-
-    return response
+    return results
 
 # Update with the path to your test image
-# image_path = r'C:\Users\曾澤軒\Desktop\Git\MDGSS\server\images\1.png'
+image_path = r'C:\Users\曾澤軒\Desktop\Git\MDGSS\server\images\1.png'
 
-# crop_image = crop(image_path)
-# result = perform_ocr(crop_image)
-# print(result)
-# cv2.imshow("Cropped Image", crop_image)
-# cv2.waitKey(0)
+crop_image = crop(image_path)
+result = perform_ocr(crop_image)
+for result in result:
+    print(result)
+cv2.imshow("Cropped result_image", crop_image)
+cv2.waitKey(0)
