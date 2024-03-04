@@ -9,6 +9,8 @@ import api from "../api";
 const UploadOCR = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploadedFile, setUploadedFile] = useState<File>();
+  const [recognizedResult, setRecognizedResult] = useState<string>("");
+  const [modifiedResult, setModifiedResult] = useState<string>("");
 
   const getRecognized = async (formData: FormData) => {
     return await api.post("/recognize", formData);
@@ -19,8 +21,9 @@ const UploadOCR = () => {
       const image = uploadedFile;
       formData.append("file", image);
       getRecognized(formData).then((res) => {
-        const result = res.data;
-        console.log(result);
+        console.log(res.data);
+        setRecognizedResult(res.data);
+        setModifiedResult(res.data);
       });
     }
   }, [uploadedFile]);
@@ -144,11 +147,16 @@ const UploadOCR = () => {
               <div className="middle-right">
                 <div className="contextRightBg">
                   <h3 className="h3">辨識結果 : </h3>
-                  <input type="text" id="result" readOnly />
+                  <input
+                    type="text"
+                    id="result"
+                    defaultValue={recognizedResult}
+                    readOnly
+                  />
                 </div>
                 <div className="modify">
                   <h3 className="h3">手動修正 :</h3>
-                  <input type="text" id="modifyCon" />
+                  <input type="text" id="modifyCon" value={modifiedResult} />
                 </div>
                 <div className="submit">
                   <button id="submitButton">將結果加入病歷</button>
