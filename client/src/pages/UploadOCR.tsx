@@ -4,17 +4,21 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Link } from "react-router-dom";
 import "../style/UploadOCR.css";
 import FileInputWithPreview from "../components/OCRPreview";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../api";
 
 const UploadOCR = () => {
   const [uploadedFile, setUploadedFile] = useState<File>();
 
   const getRecognized = async () => {
-    return await api.post("/recognize", uploadedFile);
+    return await api.post("/recognize", uploadedFile).then((res) => {
+      console.log(res.data);
+    });
   };
-  const recognizedData = getRecognized();
-  console.log(recognizedData);
+  useEffect(() => {
+    getRecognized();
+    console.log(uploadedFile);
+  }, [uploadedFile]);
 
   return (
     <>
