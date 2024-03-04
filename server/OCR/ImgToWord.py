@@ -9,34 +9,31 @@ import json
 def recognize(uploadImage):
     image = Image.open(uploadImage)
     scaled_images = scale(image)
-    resized_image = resize(scaled_images)
-    results = perform_ocr(resized_image)
+    resized_images = [resize(img) for img in scaled_images]
+    results = perform_ocr(resized_images)
     return results
 
 
 crop_main = [ 
-# (720, 700, 700, 300),
-(720, 105, 700, 395),
-# (720, 200, 700, 610),
-# (720, 150, 700, 810),
-]  
+    (720, 105, 700, 395),
+]
 
 crop_dimensions_2 = [
     (70, 50, 150, 230),
     (70, 50, 150, 230),
 ]
+
 new_dpi = (400, 400)
 new_dpi_2 = (30, 300)
 
 
 def scale(image):
+    scaled_images = []
     for i, (w, h, x, y) in enumerate(crop_main, start=1):
         crop_image = image.crop((x, y, x + w, y + h))
         image_array = np.array(crop_image)
-        # cv2.imshow("image_2", image_array)
-        # cv2.waitKey(0)
-
-    return image_array
+        scaled_images.append(image_array)
+    return scaled_images
 
 
 def resize(image):
@@ -45,41 +42,35 @@ def resize(image):
     return resized_image
 
 
-def perform_ocr(image):
-    code = pytesseract.image_to_string(image)
-    data = pytesseract.image_to_data(image, output_type=pytesseract.Output.DICT)
-
-    # cv2.imshow("image_2", image)
-    # cv2.waitKey(0)
-
+def perform_ocr(resized_images):
     result = []
-    target_words = ["Right Nasalis", "Left Nasalis", "Right Trapezius", "Left Trapezius", "Right Adb", "Left Adb"]
 
-    for phrase in target_words:
-        match = re.search(r'\b' + re.escape(phrase) + r'\b', code, re.IGNORECASE)
-        if match:
-            start_idx = match.start()
-            end_idx = match.end()
-            x, y = data['left'][start_idx], data['top'][start_idx]
-            for j, (a, b, c, d) in enumerate(crop_dimensions_2, start=1):
+    for i, resized_image in enumerate(resized_images, start=1):
+        code = pytesseract.image_to_string(resized_image)
+        data = pytesseract.image_to_data(resized_image, output_type=pytesseract.Output.DICT)
 
-                crop_image_2 = image[y + a:y - b, x + c:x + d ]
-                # image_2 = cv2.resize(crop_image_2, None, fx=1, fy=1, interpolation=cv2.INTER_CUBIC)
-                # image_2 = cv2.resize(image_2, (int(image.shape[1] * new_dpi_2[0] / image.shape[0]), int(image.shape[0] * new_dpi_2[1] / image.shape[1])))  
-                image_2 = cv2.resize(crop_image_2, None, fx=3, fy=3, interpolation=cv2.INTER_CUBIC)
-                # cv2.imshow("image_2", image_2)
-                # cv2.waitKey(0)
+        target_words = ["Right Nasalis", "Left Nasalis", "Right Trapezius", "Left Trapezius", "Right Adb", "Left Adb"]
 
-                code_2 = pytesseract.image_to_string(image_2)
-                nonspe_code = code_2.strip()
-                str_code_2 = re.split('[\n:]+', nonspe_code)
-                json_string_2 = json.dumps([str_code_2], ensure_ascii=False)  
+        for phrase in target_words:
+            match = re.search(r'\b' + re.escape(phrase) + r'\b', code, re.IGNORECASE)
+            if match:
+                start_idx = match.start()
+                end_idx = match.end()
+                x, y = data['left'][start_idx], data['top'][start_idx]
+                for j, (a, b, c, d) in enumerate(crop_dimensions_2, start=1):
+                    crop_image_2 = resized_image[y + a:y - b, x + c:x + d]
+                    image_2 = cv2.resize(crop_image_2, None, fx=3, fy=3, interpolation=cv2.INTER_CUBIC)
+                    code_2 = pytesseract.image_to_string(image_2)
+                    nonspe_code = code_2.strip()
+                    if nonspe_code:  # Check if the extracted text is not empty
+                        str_code_2 = re.split('[\n:]+', nonspe_code)
+                        json_string_2 = json.dumps(str_code_2, ensure_ascii=False)
+                        result.append({
+                            "target_phrase": phrase,
+                            "result_data": [json_string_2 ,json_string_2 ,json_string_2]
+                            # "text": code[start_idx:end_idx]  # Include the matched text here
+                        })
 
-                result = {
-                    "target_phrase": phrase,
-                    "result_data": json_string_2,
-                    # "text": code[start_idx:end_idx]  # Include the matched text here
-                }
     return result
 
 
