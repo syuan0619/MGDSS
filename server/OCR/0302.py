@@ -29,6 +29,8 @@ for i, (w, h, x, y) in enumerate(crop_dimensions_main, start=1):
     
     # Use pytesseract for text recognition
     code = pytesseract.image_to_string(image_2)
+    cv2.imshow("image_2", image_2)
+    cv2.waitKey(0)
 
     # Find the positions of target words
     for phrase in target_words:
