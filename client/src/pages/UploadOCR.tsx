@@ -10,16 +10,20 @@ import api from "../api";
 const UploadOCR = () => {
   const [uploadedFile, setUploadedFile] = useState<File>();
 
-  const getRecognized = async () => {
-    return await api.post("/recognize", uploadedFile).then((res) => {
-      console.log(res.data);
-    });
+  const getRecognized = async (formData: FormData) => {
+    return await api.post("/recognize", formData);
   };
   useEffect(() => {
-    getRecognized();
-    console.log(uploadedFile);
+    if (uploadedFile) {
+      const formData = new FormData();
+      const image = uploadedFile;
+      formData.append("file", image);
+      getRecognized(formData).then((res) => {
+        const result = res.data;
+        console.log(result);
+      });
+    }
   }, [uploadedFile]);
-
   return (
     <>
       <div className="container">
