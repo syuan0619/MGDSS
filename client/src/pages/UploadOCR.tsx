@@ -195,7 +195,17 @@ const UploadOCR = () => {
                                     />
                                 </div>
                                 <div className="submit">
-                                    <button id="submitButton">
+                                    <button
+                                        id="submitButton"
+                                        onClick={() => {
+                                            if (confirm("確定送出結果嗎?")) {
+                                                console.log(
+                                                    "送出結果：",
+                                                    recognizedResult
+                                                );
+                                            }
+                                        }}
+                                    >
                                         將結果加入病歷
                                     </button>
                                 </div>
