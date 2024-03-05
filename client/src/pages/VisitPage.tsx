@@ -230,14 +230,6 @@ const VisitPage = () => {
             </Grid>
           </div>
         </div>
-        <div className="tableboxBack">
-          <TuneRounded
-            onClick={() => cardUnRotate("qolTable")}
-            id="buttonClose"
-          >
-            回復
-          </TuneRounded>
-        </div>
       </div>
     );
 
@@ -309,38 +301,35 @@ const VisitPage = () => {
         </Dialog>
       </React.Fragment>
       <div className="container">
-        <div className="top">
-          <div className="topcontext">
-            <div className="topinnercontext">
-              <div className="topinnercontextleft">
-                <Link to="/patient">
-                  <Button>
-                    <ArrowBackRounded
-                      sx={{
-                        fontSize: "3rem",
-                        color: "#0080FF",
-                      }}
-                    ></ArrowBackRounded>
-                  </Button>
-                </Link>
-                <div className="numbox">001</div>
-                {`${patient?.info.name}/${patient?.info.sex}/${patient?.info["ID#"]}`}
-              </div>
-              <div className="topinnercontextright">
-                <button className="addNewScaleButton">新增量表</button>
-                <button className="addRNSButton" onClick={handleClickOpen}>
-                  新增電生理訊號量表
-                </button>
-                <button className="predictButton">病情預測</button>
-                <button className="finishButton">結束看診</button>
-              </div>
+        <div className="header">
+          <div className="headinner">
+            <div className="headerinnerleft">
+              <Link to="/patient">
+                <Button>
+                  <ArrowBackRounded
+                    sx={{
+                      fontSize: "3rem",
+                      color: "#0080FF",
+                    }}
+                  ></ArrowBackRounded>
+                </Button>
+              </Link>
+              <div className="numbox">001</div>
+              {`${patient?.info.name}/${patient?.info.sex}/${patient?.info["ID#"]}`}
+            </div>
+            <div className="headerinnerright">
+              <button className="addNewScaleButton">新增量表</button>
+              <button className="addRNSButton" onClick={handleClickOpen}>
+                新增電生理訊號量表
+              </button>
+              <button className="predictButton">病情預測</button>
+              <button className="finishButton">結束看診</button>
             </div>
           </div>
         </div>
-
-        <div className="left">
-          <div className="context">
-            <div className="innercontext">
+        <div className="footer">
+          <div className="leftblock">
+            <div className="context">
               <h1>病患資料</h1>
 
               <>
@@ -349,7 +338,7 @@ const VisitPage = () => {
                     <Grid item xs={6}>
                       姓名:
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <TextField
                         disabled
                         variant="filled"
@@ -361,7 +350,7 @@ const VisitPage = () => {
                     <Grid item xs={6}>
                       生日:
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <TextField
                         disabled
                         variant="filled"
@@ -373,7 +362,7 @@ const VisitPage = () => {
                     <Grid item xs={6}>
                       性別:
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <TextField
                         disabled
                         variant="filled"
@@ -385,7 +374,7 @@ const VisitPage = () => {
                     <Grid item xs={6}>
                       年齡:
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <TextField
                         disabled
                         variant="filled"
@@ -397,7 +386,7 @@ const VisitPage = () => {
                     <Grid item xs={6}>
                       身高:
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <TextField
                         disabled
                         variant="filled"
@@ -409,7 +398,7 @@ const VisitPage = () => {
                     <Grid item xs={6}>
                       體重:
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <TextField
                         disabled
                         variant="filled"
@@ -421,7 +410,7 @@ const VisitPage = () => {
                     <Grid item xs={6}>
                       狀態:
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <TextField
                         disabled
                         variant="filled"
@@ -434,7 +423,7 @@ const VisitPage = () => {
                     <Grid item xs={6}>
                       其他:
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <TextField
                         disabled
                         variant="filled"
@@ -446,7 +435,7 @@ const VisitPage = () => {
                     <Grid item xs={6}>
                       發病日期:
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <TextField
                         disabled
                         variant="filled"
@@ -458,7 +447,7 @@ const VisitPage = () => {
                     <Grid item xs={6}>
                       初始症狀:
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <TextField
                         disabled
                         variant="filled"
@@ -472,14 +461,12 @@ const VisitPage = () => {
               </>
             </div>
           </div>
-        </div>
-        <div className="right">
-          <div className="rightinnercontext" id="rightinnercontext">
-            {qol()}
+          <div className="rightblock">
+            <div className="rightcontext" id="rightinnercontext">
+              {qol()}
+            </div>
           </div>
         </div>
-
-        <div className="clearfix"></div>
       </div>
     </>
     //   )}
