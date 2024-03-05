@@ -30,11 +30,9 @@ const UploadOCR = () => {
                     }) => {
                         recognizedString += `測試部位: ${result.musclePart}\n`;
                         recognizedString += "測試結果(Amp, Area): \n";
-                        result.preActivation.forEach((value) => {
-                            recognizedString += `1~5: (${value[0]})\n`;
-                            recognizedString += `#1: (${value[1]})\n`;
-                            recognizedString += `#5: (${value[2]})\n\n`;
-                        });
+                        recognizedString += `1~5: (${result.preActivation[0]})\n`;
+                        recognizedString += `#1: (${result.preActivation[1]})\n`;
+                        recognizedString += `#5: (${result.preActivation[2]})\n\n`;
                     }
                 );
                 setRecognizedResult(recognizedString);
