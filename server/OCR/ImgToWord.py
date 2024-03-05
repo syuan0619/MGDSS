@@ -7,14 +7,14 @@ import re
 
 
 def recognize(image_path):
-    croped_image = Image.open(image_path)
+    origin_image = Image.open(image_path)
+    croped_image = crop(origin_image)
     results_data = perform_ocr(croped_image)
-    return results_data
+        
+    return  results_data
 
 
-def crop(image_path):
-    # Read the image
-    image = Image.open(image_path)
+def crop(image):
     image_array = np.array(image)
 
     # Resize the image
@@ -50,19 +50,21 @@ def perform_ocr(resized_image):
             x, y = data['left'][start_idx], data['top'][start_idx]
 
             for i, (w, h, x, y) in enumerate(crop_dimensions_data, start=1):
+
                 result_image = resized_image[y:y + h, x:x + w]
 
-                cv2.rectangle(result_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                # cv2.rectangle(result_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-                result_image_cropped = cv2.resize(result_image, None, fx=4, fy=4, interpolation=cv2.INTER_CUBIC)
-                cv2.imshow("result_image", result_image)
-                cv2.waitKey(0)
+                result_image_cropped = cv2.resize(result_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+                # cv2.imshow("result_image", result_image_cropped)
+                # cv2.waitKey(0)
 
                 extracted_text = pytesseract.image_to_string(result_image_cropped)
                 extracted_text = extracted_text.strip()
                 split_text = re.split('[\n:]+', extracted_text)
                 json_string = json.dumps(split_text, ensure_ascii=False)
 
+                print(json_string)
                 results.append({
                     "target_phrase": phrase,
                     "result_data": json_string
@@ -71,11 +73,11 @@ def perform_ocr(resized_image):
     return results
 
 # Update with the path to your test image
-image_path = r'C:\Users\曾澤軒\Desktop\Git\MDGSS\server\images\1.png'
+# image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'
 
-crop_image = crop(image_path)
-result = perform_ocr(crop_image)
-for result in result:
-    print(result)
-cv2.imshow("Cropped result_image", crop_image)
-cv2.waitKey(0)
+# crop_image = crop(image_path)
+# results = perform_ocr(crop_image)
+# for result in results:
+#     print(result)
+# cv2.imshow("Cropped result_image", crop_image)
+# cv2.waitKey(0)

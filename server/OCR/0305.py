@@ -72,10 +72,10 @@ def perform_ocr(resized_image):
 
 
 # Update with the path to your test image
-# image_path = r'C:\Users\曾澤軒\Desktop\Git\MDGSS\server\images\1.png'
+image_path = r'C:\Users\曾澤軒\Desktop\Git\MDGSS\server\images\1.png'
 
-# crop_image = crop(image_path)
-# result = perform_ocr(crop_image)
-# print(result)
-# cv2.imshow("Cropped Image", crop_image)
-# cv2.waitKey(0)
+crop_image = crop(image_path)
+result = perform_ocr(crop_image)
+print(result)
+cv2.imshow("Cropped Image", crop_image)
+cv2.waitKey(0)

@@ -75,7 +75,7 @@ def perform_ocr(resized_images):
 
 
 # Test the OCR recognition
-image_path = r'C:\Users\曾澤軒\Desktop\Git\MDGSS\server\images\1.png'  # Update with the path to your test image
+image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'  # Update with the path to your test image
 results = recognize(image_path)
 
 # Print the OCR results
