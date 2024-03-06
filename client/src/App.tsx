@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import PatientList from "./pages/PatientList";
-import OCRPage from "./pages/OCRPage";
-import Records from "./pages/Records";
-
-import "./style/App.css";
+import LoginPage from "./pages/loginPage/LoginPage";
+import RegisterPage from "./pages/registerPage/RegisterPage";
+import PatientList from "./pages/patientListPage/PatientList";
+import Backstage from "./pages/backstagePage/Backstage";
+import VisitPage from "./pages/visitPage/VisitPage";
+import UploadOCR from "./pages/visitPage/components/UploadOCR";
+import "./App.css";
 
 function App() {
     return (
@@ -15,8 +15,9 @@ function App() {
                 <Route path="/" element={<LoginPage />}></Route>
                 <Route path="/register" element={<RegisterPage />}></Route>
                 <Route path="/patient" element={<PatientList />}></Route>
-                <Route path="/OCR" element={<OCRPage />}></Route>
-                <Route path="/records" element={<Records />}></Route>
+                <Route path="/visit" element={<VisitPage />}></Route>
+                <Route path="/backstage" element={<Backstage />}></Route>
+                <Route path="/upload" element={<UploadOCR />}></Route>
             </Routes>
         </BrowserRouter>
     );

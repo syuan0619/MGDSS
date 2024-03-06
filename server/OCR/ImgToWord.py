@@ -6,8 +6,8 @@ import cv2
 import re
 
 
-def recognize(image_path):
-    origin_image = Image.open(image_path)
+def recognize(uploadImage):
+    origin_image = Image.open(uploadImage)
     croped_image = crop(origin_image)
     cv2.imshow("Cropped result_image", croped_image)
     cv2.waitKey(0)
