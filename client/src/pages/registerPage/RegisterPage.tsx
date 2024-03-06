@@ -99,7 +99,7 @@ const inputLabelcolor = {
     color: "	white",
 };
 
-const ColorButton = styled(Button)(({ theme }) => ({
+const ColorButton = styled(Button)(() => ({
     //ButtonCSS
     backgroundColor: "	#97CBFF",
     "&:hover": {
