@@ -1,10 +1,10 @@
 import { Button, Grid, TextField } from "@mui/material";
 import { ArrowBackRounded } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import "../style/UploadOCR.css";
-import FileInputWithPreview from "../components/OCRPreview";
+import "./UploadOCR.css";
+import FileInputWithPreview from "./OCRPreview";
 import { useEffect, useState, useRef } from "react";
-import api from "../api";
+import api from "../../../api";
 
 const UploadOCR = () => {
     const inputRef = useRef<HTMLInputElement>(null);
