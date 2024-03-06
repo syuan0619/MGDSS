@@ -30,9 +30,10 @@ def crop(image):
     return resized_image
 
 
-crop_dimensions_data = [(125, 55, 352, 80), (125, 55, 350, 503),
-                        (125, 55, 145, 503), (125, 55, 135, 875), (
-                        125, 55, 350, 875), (122, 55, 563, 875)]
+crop_dimensions_data_1 = [(125, 55, 352, 80)]
+crop_dimensions_data_2 = [(125, 55, 350, 503),
+                        (125, 55, 145, 503), (125, 55, 135, 875),
+                        (125, 55, 350, 875), (122, 55, 563, 875)]
 
 
 def perform_ocr(resized_image):
@@ -42,22 +43,18 @@ def perform_ocr(resized_image):
     data = pytesseract.image_to_data(resized_image, output_type=pytesseract.Output.DICT)
     target_words = ["Right Nasalis", "Left Nasalis", "Right Trapezius", "Left Trapezius", "Right Adb", "Left Adb"]
 
-    for phrase in target_words:
-        match = re.search(r'\b' + re.escape(phrase) + r'\b', code, re.IGNORECASE)
+    for target_words_idx, target_words in enumerate(target_words):
+        match = re.search(r'\b' + re.escape(target_words) + r'\b', code, re.IGNORECASE)
         if match:
             start_idx = match.start()
             end_idx = match.end()
             x, y = data['left'][start_idx], data['top'][start_idx]
+            crop_dimensions = crop_dimensions_data_1 if target_words_idx == 0 else crop_dimensions_data_2
 
-            for i, (w, h, x, y) in enumerate(crop_dimensions_data, start=1):
-
+            for i, (w, h, x, y) in enumerate(crop_dimensions, start=1):
                 result_image = resized_image[y:y + h, x:x + w]
-
-                # cv2.rectangle(result_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
                 result_image_cropped = cv2.resize(result_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
-                # cv2.imshow("result_image", result_image_cropped)
-                # cv2.waitKey(0)
+                result_image_gray = cv2.cvtColor(result_image_cropped, cv2.COLOR_BGR2GRAY)
 
                 extracted_text = pytesseract.image_to_string(result_image_cropped)
                 extracted_text = extracted_text.strip()
@@ -66,18 +63,21 @@ def perform_ocr(resized_image):
 
                 print(json_string)
                 results.append({
-                    "target_phrase": phrase,
+                    "target_target_words": target_words,
                     "result_data": json_string
                 })
-
+                cv2.imshow("result_image", result_image_cropped)
+                cv2.waitKey(0)
+        
     return results
 
-# Update with the path to your test image
-# image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'
 
-# crop_image = crop(image_path)
-# results = perform_ocr(crop_image)
-# for result in results:
-#     print(result)
+# Update with the path to your test image
+image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'  # Update with the path to your test image
+results = recognize(image_path)
+
+# Print the OCR results
+for result in results:
+    print(result)
 # cv2.imshow("Cropped result_image", crop_image)
 # cv2.waitKey(0)
