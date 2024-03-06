@@ -9,6 +9,8 @@ import re
 def recognize(image_path):
     origin_image = Image.open(image_path)
     croped_image = crop(origin_image)
+    cv2.imshow("Cropped result_image", croped_image)
+    cv2.waitKey(0)
     results_data = perform_ocr(croped_image)
         
     return  results_data
@@ -32,7 +34,7 @@ def crop(image):
 
 crop_dimensions_data_1 = [(125, 55, 352, 80)]
 crop_dimensions_data_2 = [(125, 55, 350, 503),
-                        (125, 55, 145, 503), (125, 55, 135, 875),
+                        (125, 55, 990, 503), (125, 55, 135, 875),
                         (125, 55, 350, 875), (122, 55, 563, 875)]
 
 
@@ -56,7 +58,7 @@ def perform_ocr(resized_image):
                 result_image_cropped = cv2.resize(result_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
                 result_image_gray = cv2.cvtColor(result_image_cropped, cv2.COLOR_BGR2GRAY)
 
-                extracted_text = pytesseract.image_to_string(result_image_cropped)
+                extracted_text = pytesseract.image_to_string(result_image_gray)
                 extracted_text = extracted_text.strip()
                 split_text = re.split('[\n:]+', extracted_text)
                 json_string = json.dumps(split_text, ensure_ascii=False)
