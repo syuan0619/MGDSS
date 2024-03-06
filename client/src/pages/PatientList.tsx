@@ -416,7 +416,7 @@ function PatientList() {
                                     </TableCell>
                                 </TableRow>
                             ))}
-                        </TableBody>{" "}
+                        </TableBody>
                     </Table>
                 </Box>
             </TableContainer>
