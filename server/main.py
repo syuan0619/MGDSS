@@ -47,7 +47,11 @@ async def recognize_text(file: UploadFile=File(...)):
             # "preActivation": [ json.loads(activation) for activation in result['result_data']]
             # "postActivation":
         })
+<<<<<<< Updated upstream
 
+=======
+        print("muscle part: ", result["target_words"])
+>>>>>>> Stashed changes
     return response
 
 
