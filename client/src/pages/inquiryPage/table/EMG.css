@@ -1,0 +1,103 @@
+.inquiry-table-EMG-all {
+  width: 70vw;
+  height: 85vh;
+  float: right;
+  display: flex;
+}
+
+.inquiry-table-EMG-head-content {
+  width: 100%;
+  height: 95%;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  background-color: rgb(255, 255, 255);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.inquiry-table-EMG-head {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.inquiry-table-EMG-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.inquiry-table-EMG-content-left {
+  width: 30vw;
+  height: 65vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inquiry-table-EMG-content-right {
+  height: 68vh;
+}
+
+.inquiry-table-EMG-content-right-recognized-result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.inquiry-table-EMG-content-right-modify {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.inquiry-table-EMG-content-right-submit {
+  display: flex;
+  flex-direction: row;
+  height: 12vh;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#result {
+  width: 25vw;
+  height: 20vh;
+  font-size: 1.3rem;
+
+  background-color: #eeeeee;
+  border: 0;
+  border-radius: 0.9rem;
+}
+#result:focus {
+  outline: 0.15rem solid #7c7b7b;
+}
+#modifyCon {
+  width: 25vw;
+  height: 20vh;
+  font-size: 1.3rem;
+  background-color: #eeeeee;
+  border: 0;
+  border-radius: 0.9rem;
+  padding-top: 0.5em;
+}
+#modifyCon:focus {
+  outline: 0.15rem solid #7c7b7b;
+}
+#submitButton {
+  width: 14vw;
+  height: 5.5vh;
+  background-color: #89b9ad;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 1.2rem;
+  border: 0;
+}
+#submitButton:hover {
+  background-color: white;
+  color: #89b9ad;
+  border: 0.15rem solid #89b9ad;
+}

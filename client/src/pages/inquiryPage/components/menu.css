@@ -1,0 +1,126 @@
+.inquiry-menu-all {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100vw;
+  margin: 0 1rem 0 1rem;
+}
+
+.inquiry-menu-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inquiry-menu-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inquiry-menu-numbox {
+  width: 6rem;
+  height: 2.6rem;
+  background-color: #4dbff9;
+  border-radius: 1rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2vw;
+  font-size: 2rem;
+  cursor: default;
+}
+
+.inquiry-menu-button:nth-child(1) {
+  background-color: white;
+  color: #6c3428;
+  width: 7rem;
+  height: 2.6rem;
+  border-radius: 0.9rem;
+  font-weight: bold;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5vw;
+  font-size: 1rem;
+  font-family: "Helvetica", sans-serif;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.inquiry-menu-button:nth-child(1):hover {
+  background-color: #f4dfc8;
+}
+
+.inquiry-menu-button:nth-child(2) {
+  width: 12rem;
+  height: 2.6rem;
+  background-color: #ffa41b;
+  border-radius: 0.9rem;
+  font-weight: bold;
+  border: none;
+  color: white;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5vw;
+  font-size: 1rem;
+  font-family: "Helvetica", sans-serif;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.inquiry-menu-button:nth-child(2):hover {
+  background-color: #fb7645;
+}
+
+.inquiry-menu-button:nth-child(3) {
+  width: 7rem;
+  height: 2.6rem;
+  background-color: #103074;
+  border-radius: 0.9rem;
+  font-weight: bold;
+  border: none;
+  color: white;
+  display: flex;
+  text-align: center;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5vw;
+  font-size: 1rem;
+  font-family: "Helvetica", sans-serif;
+  transition: 0.3s;
+}
+
+.inquiry-menu-button:nth-child(3):hover {
+  background-color: #b6c9f0;
+}
+
+.inquiry-menu-button:nth-child(4) {
+  width: 7rem;
+  height: 2.6rem;
+  background-color: #e74646;
+  border-radius: 0.9rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5vw;
+  font-size: 1rem;
+  font-family: "Helvetica", sans-serif;
+  transition: 0.3s;
+}
+
+.inquiry-menu-button:nth-child(4):hover {
+  background-color: #ce0000;
+}

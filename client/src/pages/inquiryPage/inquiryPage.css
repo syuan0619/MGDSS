@@ -1,0 +1,33 @@
+.inquiry-all {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(245, 245, 245);
+}
+
+.inquiry-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 15vh;
+  width: 100vw;
+}
+
+.inquiry-left-right-flex {
+  display: flex;
+  flex-direction: row;
+  height: 85vh;
+  width: 100vw;
+}
+
+.inquiry-left {
+  height: 85vh;
+  width: 30vw;
+  background-color: grey;
+}
+
+.inquiry-right {
+  height: 85vh;
+  width: 70vw;
+}
