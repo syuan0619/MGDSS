@@ -66,11 +66,7 @@ def perform_ocr(resized_image):
 
                 print(json_string)
                 results.append({
-<<<<<<< Updated upstream
-                    "target_phrase": phrase,
-=======
                     "target_words": target_words,
->>>>>>> Stashed changes
                     "result_data": json_string
                 })
 
