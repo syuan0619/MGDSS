@@ -2,6 +2,7 @@ import { CloseFullscreenRounded, OpenInFullRounded } from "@mui/icons-material";
 import { Grid, Slider, Typography } from "@mui/material";
 import { useState } from "react";
 import { QOL } from "../../../types/Schema";
+import "../Visit.css";
 
 const marks = [
   {
@@ -27,7 +28,7 @@ function valueLabelFormat(value: number) {
 }
 
 //QOLComponent
-const qol = () => {
+function QOLSchema() {
   //enlargeButton
   const onEnlarge = (tableName: string) => {
     document
@@ -126,9 +127,9 @@ const qol = () => {
       </>
     ));
 
-  const qolExp = (
+  return (
     <div className="tablebox" id="qolTable">
-      <div className="tableboxFront">
+      <div className="tableboxfront">
         <div className="tableboxtop">
           <OpenInFullRounded
             onClick={() => onEnlarge("qolTable")}
@@ -154,8 +155,6 @@ const qol = () => {
       </div>
     </div>
   );
+}
 
-  return qolExp;
-};
-
-export default qol;
+export default QOLSchema;

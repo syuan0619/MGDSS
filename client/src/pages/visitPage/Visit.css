@@ -1,11 +1,11 @@
-/* :root {
+:root {
   --rightinner-overflow: hidden;
   --position-tablebox: relative;
   --size-tableboxWidth: 50%;
   --size-tableboxHeight: 50%;
   --overflow-tablebox: hidden;
   --z-index-tablebox: 0;
-} */
+}
 
 .container {
   width: 100vw;
@@ -101,13 +101,14 @@
 }
 .rightcontext {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 1rem);
   text-align: center;
   font-size: 2.5vh;
   font-family: "Helvetica", sans-serif;
   overflow: var(--rightinner-overflow);
   display: flex;
   box-sizing: border-box;
+  padding-bottom: 1rem;
 }
 
 .numbox {
@@ -142,7 +143,6 @@
   width: var(--size-tableboxWidth);
   height: var(--size-tableboxHeight);
   background-color: rgb(255, 255, 255);
-
   overflow-y: var(--overflow-tablebox);
   overflow-x: hidden;
   margin: 1rem;
@@ -152,10 +152,9 @@
   box-sizing: border-box;
 }
 
-.tableboxFront {
+.tableboxfront {
   background-color: rgb(255, 255, 255);
   transform: rotateY(var(--rotate-y));
-
   position: absolute;
   backface-visibility: hidden;
   padding: 1rem;

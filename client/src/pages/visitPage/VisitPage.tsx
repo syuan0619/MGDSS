@@ -7,8 +7,9 @@ import { PATIENT } from "../../types/Schema";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Visit.css";
-import basic from "./components/BasicInfo";
-import qol from "./components/QOL";
+
+import BasicInfo from "./components/BasicInfo";
+import QOLSchema from "./components/QOL";
 
 const VisitPage = () => {
   const [patient, setPatient] = useState<PATIENT>();
@@ -45,12 +46,12 @@ const VisitPage = () => {
             <div className="context">
               <h2>病患資料</h2>
 
-              {basic()}
+              <BasicInfo />
             </div>
           </div>
           <div className="rightblock">
-            <div className="rightcontext" id="rightinnercontext">
-              {qol()}
+            <div className="rightcontext" id="rightcontext">
+              <QOLSchema />
             </div>
           </div>
         </div>

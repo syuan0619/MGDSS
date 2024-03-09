@@ -1,46 +1,47 @@
 .background {
-    background-image: url("../../assets/Loginnew2.png");
-    display: flex;
-    background-size: cover;
-    width: 100vw;
-    height: 100vh;
-    background-repeat: no-repeat;
-    align-items: center;
-    justify-content: center;
+  background-image: url("../../assets/Loginnew2.png");
+  display: flex;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  align-items: center;
+  justify-content: center;
+  background-position: left bottom;
 }
 
 .loginbox {
-    margin-right: -40vw;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border-radius: 20px;
-    border: 2px solid #84c1ff;
-    background-color: #66b3ff;
-    display: flex;
-    /* background: transparent; */
-    color: white;
-    backdrop-filter: blur(30px);
-    padding-left: 3vw;
-    padding-right: 3vw;
-    padding-top: 5vh;
-    padding-bottom: 5vh;
-    box-sizing: border-box;
-    box-shadow: -5px 5px 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-.logincontext {
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    color: #46a3ff;
-    font-family: "Helvetica", sans-serif;
+  width: 25vw;
+  height: 72vh;
+  max-width: 500px;
+  max-height: 700px;
+  min-width: 350px;
+  min-height: 500px;
+  margin-right: -40vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 20px;
+  background-color: #338cc1;
+  flex-direction: column;
+  color: white;
+  box-sizing: border-box;
+  padding: 5rem;
+  gap: 1rem;
 }
 
 .text {
-    font-family: "Helvetica", sans-serif;
-    font-size: 2vh;
-    color: white;
+  font-family: "Helvetica", sans-serif;
+  font-size: 2vh;
+  color: white;
+}
+
+.loginboxbottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* .spinnerwapper {

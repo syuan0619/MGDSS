@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../Visit.css";
 
 //basic data component
-const basic = () => {
+function BasicInfo() {
   const [change, setChange] = useState({
     patientName: "",
     birth: "",
@@ -31,7 +31,7 @@ const basic = () => {
     setReadOnly((prevReadOnly) => !prevReadOnly);
   };
 
-  const basicInfo = (
+  return (
     <>
       <div className="basicinfo">
         <div>
@@ -147,7 +147,6 @@ const basic = () => {
       </button>
     </>
   );
-  return basicInfo;
-};
+}
 
-export default basic;
+export default BasicInfo;
