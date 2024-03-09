@@ -43,7 +43,7 @@ const VisitPage = () => {
         </div>
         <div className="footer">
           <div className="leftblock">
-            <div className="context">
+            <div className="leftbolckcontext">
               <h2>病患資料</h2>
 
               <BasicInfo />
