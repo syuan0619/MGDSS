@@ -1,0 +1,48 @@
+.inquiry-table-QOL,
+.inquiry-table-QOL-header,
+.inquiry-table-QOL-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inquiry-table-QOL {
+  flex-direction: column;
+  height: 100%;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.inquiry-table-QOL-header {
+  height: 15%;
+  font-size: 2rem;
+}
+
+.inquiry-table-QOL-content {
+  height: 85%;
+  box-sizing: border-box;
+  padding: 0 3rem 0 3rem;
+}
+
+.inquiry-table-QOL-content-sliderbox {
+  width: 100%;
+  height: 3rem;
+}
+
+.MuiSlider-root {
+  color: blue;
+  height: 8px;
+}
+.MuiSlider-thumb {
+  height: 24px;
+  width: 24px;
+  background-color: "#fff";
+  border: "2px solid currentColor";
+}
+
+.MuiSlider-thumb :focus,
+.MuiSlider-thumb:hover,
+.Mui-active,
+.Mui-focusVisible {
+  box-shadow: "inherit";
+}
