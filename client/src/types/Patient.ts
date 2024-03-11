@@ -38,7 +38,7 @@ type Visit = {
     DBP: number;
     selfAssessment: number; // 0 ~ 2
     note: string;
-    Prescription: {
+    prescription: {
         // 0 ~ 9
         pyridostigmine: number;
         compesolone: number;
@@ -150,6 +150,6 @@ type EMG = {
         musclePart: string;
         preActivation: [];
         postActivation: [];
-    };
+    }[];
 };
 export type { Patient, Info, Visit, Thymus, BloodTest, QOL, QMG, MG, ADL, EMG };
