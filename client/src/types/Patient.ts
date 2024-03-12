@@ -10,6 +10,7 @@ type Patient = {
     EMG: EMG[];
 };
 
+// 基本資料
 type Info = {
     "ID#": string;
     name: string;
@@ -25,16 +26,28 @@ type Info = {
         recentlyDate: string;
         totalTimes: number;
     };
-    otherDisease: [string];
-    otherMedicine: [string];
+    otherDisease: string[];
+    otherMedicine: string[];
 };
 
+// 看診紀錄
 type Visit = {
     date: string;
-    treat: number;
+    treat: number; // 0 ~ 4
     SBP: number;
     DBP: number;
+    selfAssessment: number; // 0 ~ 2
+    note: string;
+    prescription: {
+        // 0 ~ 9
+        pyridostigmine: number;
+        compesolone: number;
+        cellcept: number;
+        imuran: number;
+        prograf: number;
+    };
     examination: {
+        // 0 or 1 except MGFAclassification
         ptosis: number;
         diplopia: number;
         dysphagia: number;
@@ -43,34 +56,25 @@ type Visit = {
         limpWeakness: number;
         MGFAclassification: number;
     };
-    Prescription: {
-        pyridostigmine: number;
-        compesolone: number;
-        cellcept: number;
-        imuran: number;
-        prograf: number;
-    };
-    selfAssessment: number;
-    note: string;
 };
 
+// 胸腺掃描
 type Thymus = {
     testDate: string;
-    number: number;
-    thymusStatus: number;
+    thymusStatus: number; // 0 ~ 3
     thymusDescription: string;
 };
 
+// 血液檢查
 type BloodTest = {
     testDate: string;
-    number: number;
     ACHR: number;
     TSH: number;
     freeThyroxine: number;
     ANA: number;
     uricAcid: number;
 };
-
+// 0 ~ 2 except testDate, sum
 type QOL = {
     testDate: string;
     frustration: number;
@@ -91,6 +95,7 @@ type QOL = {
     sum: number;
 };
 
+// 0 ~ 3 except testDate, sum
 type QMG = {
     testDate: string;
     doubleVision: number;
@@ -109,6 +114,7 @@ type QMG = {
     sum: number;
 };
 
+// 0 ~ 3 except testDate, sum
 type MG = {
     testDate: string;
     ptosis: number;
@@ -124,6 +130,7 @@ type MG = {
     sum: number;
 };
 
+// 0 ~ 3 except testDate, sum
 type ADL = {
     testDate: string;
     talking: number;
@@ -143,6 +150,6 @@ type EMG = {
         musclePart: string;
         preActivation: [];
         postActivation: [];
-    };
+    }[];
 };
-export type { Patient, Info };
+export type { Patient, Info, Visit, Thymus, BloodTest, QOL, QMG, MG, ADL, EMG };
