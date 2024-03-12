@@ -36,9 +36,38 @@
   width: fit-content;
   height: 2rem;
   margin-right: 1rem;
+  font-size: 1rem;
+  border-radius: 0.6rem;
+  border: 0;
+  padding-inline: 1rem;
+  cursor: pointer;
+  background-color: white;
+  outline: 0.15rem solid #67c6e3;
+  color: #67c6e3;
+}
+
+.inquiry-right-to-table-button:hover {
+  transform: translateY(-0.2rem);
 }
 
 .inquiry-right-to-chart-button {
   width: fit-content;
   height: 2rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-radius: 0.6rem;
+  border: 0;
+  padding-inline: 1rem;
+  background-color: white;
+  color: #67c6e3;
+}
+
+.inquiry-right-to-chart-button:hover {
+  transform: translateY(-0.25rem);
+}
+
+.chartIcon {
+  color: "#67c6e3";
+  cursor: pointer;
+  font-size: 2.6rem;
 }

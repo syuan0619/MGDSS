@@ -1,0 +1,138 @@
+.inquiry-table-ADL-all {
+  width: 68vw;
+  height: 85vh;
+  display: flex;
+}
+.inquiry-table-ADL-bg {
+  width: 100%;
+  height: 95%;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  background-color: rgb(255, 255, 255);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.inquiry-table-ADL-head {
+  height: 20vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.inquiry-table-ADL-content {
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.inquiry-table-ADL-content-row {
+  width: 58vw;
+  height: 12vh;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.inquiry-table-ADL-content-row-testdate {
+  display: flex;
+  flex-direction: column;
+}
+.inquiry-table-ADL-content-row-talking {
+  display: flex;
+  flex-direction: column;
+}
+.inquiry-table-ADL-content-row-chewing,
+.inquiry-table-ADL-content-row-swallowing,
+.inquiry-table-ADL-content-row-breathing,
+.inquiry-table-ADL-content-row-brushTeethOrCombHair,
+.inquiry-table-ADL-content-row-ariseFromChair,
+.inquiry-table-ADL-content-row-eyelid {
+  display: flex;
+  flex-direction: column;
+}
+
+.inquiry-table-ADL-content-row-sum {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.inquiry-table-ADL-content-row-sum input {
+  border-radius: 0.7rem;
+  background-color: white;
+  border: 0;
+  height: 5vh;
+  font-size: 2rem;
+  width: 5vw;
+  margin-left: 1rem;
+}
+.inquiry-table-ADL-content-row-sum input:focus {
+  outline: 0;
+}
+
+.inquiry-table-ADL-content-row-testdate input {
+  background-color: #eeeeee;
+  border: 0;
+  border-radius: 0.7rem;
+  padding: 0.3rem;
+  width: 12vw;
+  height: 4vh;
+  margin-top: 0.2rem;
+}
+.inquiry-table-ADL-content-row-testdate input:focus {
+  outline: 0.15rem solid #7c7b7b;
+}
+
+input {
+  width: 10rem;
+  height: 2rem;
+}
+input:hover {
+  cursor: pointer;
+}
+
+datalist {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  width: 16vw;
+  font-size: 1rem;
+}
+
+option {
+  padding: 0;
+}
+
+input[type="range"] {
+  width: 16vw;
+  margin: 0;
+}
+
+.inquiry-table-ADL-submit {
+  height: 15vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 4rem;
+}
+.inquiry-table-ADL-submit button {
+  width: 10vw;
+  height: 5vh;
+  background-color: #cae7f8;
+  color: #0c537b;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 1.2rem;
+  border: 0;
+}
+.inquiry-table-ADL-submit button:hover {
+  background-color: white;
+  color: #0c537b;
+  border: 0.15rem solid #0c537b;
+  cursor: pointer;
+}

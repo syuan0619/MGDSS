@@ -7,6 +7,7 @@ import QMG from "../chart/QMG";
 import QOL from "../chart/QOL";
 import Thymus from "../chart/Thymus";
 import Visit from "../chart/Visit";
+import { GiChart } from "react-icons/gi";
 
 const Right = ({
   setReplaceComponent,
@@ -36,7 +37,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("ADL")}
             >
-              toADLchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <ADL />
@@ -53,7 +54,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("BloodTest")}
             >
-              toBloodTestchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <BloodTest />
@@ -72,7 +73,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("EMG")}
             >
-              toEMGchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <EMG />
@@ -89,7 +90,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("MG")}
             >
-              toMGchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <MG />
@@ -108,7 +109,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("QMG")}
             >
-              toQMGchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <QMG />
@@ -125,7 +126,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("QOL")}
             >
-              toQOLchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <QOL />
@@ -144,7 +145,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("Thymus")}
             >
-              toThymuschart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <Thymus />
@@ -161,7 +162,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("Visit")}
             >
-              toVisitchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <Visit />
