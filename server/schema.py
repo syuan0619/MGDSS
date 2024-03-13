@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Dict
+from datetime import datetime
 
 class OtherHospitalRecord(BaseModel):
 	recentlyDate: str
@@ -39,7 +39,7 @@ class Examination(BaseModel):
 
 # 看診紀錄
 class Visit(BaseModel):
-	date: str
+	date: datetime
 	treat: int
 	SBP: float
 	DBP: float
@@ -50,13 +50,13 @@ class Visit(BaseModel):
 
 # 胸腺掃描
 class Thymus(BaseModel):
-	testDate: str
+	testDate: datetime
 	thymusStatus: int
 	thymusDescription: str
 
 # 血液檢查
 class BloodTest(BaseModel):
-	testDate: str
+	testDate: datetime
 	ACHR: float
 	TSH: float
 	freeThyroxine: float
@@ -65,7 +65,7 @@ class BloodTest(BaseModel):
 
 # QOL
 class QOL(BaseModel):
-	testDate: str
+	testDate: datetime
 	frustration: int
 	eyeUsing: int
 	eating: int
@@ -85,7 +85,7 @@ class QOL(BaseModel):
 
 # QMG
 class QMG(BaseModel):
-	testDate: str	
+	testDate: datetime	
 	doubleVision: int
 	ptosis: int
 	facialMuscle: int
@@ -103,7 +103,7 @@ class QMG(BaseModel):
 
 # MG
 class MG(BaseModel):
-	testDate: str
+	testDate: datetime
 	ptosis: int
 	doubleVision: int
 	eyeClosure: int
@@ -118,7 +118,7 @@ class MG(BaseModel):
 
 # ADL
 class ADL(BaseModel):
-	testDate: str
+	testDate: datetime
 	talking: int
 	chewing: int
 	swallowing: int
@@ -135,6 +135,18 @@ class RNS(BaseModel):
 
 # 電生理訊號
 class EMG(BaseModel):
-	testDate: str
+	testDate: datetime
 	imgPath: str
 	RNS: list[RNS]
+
+# 病患資料
+class Patient(BaseModel):
+	info: Info
+	visit: list[Visit]
+	thymus: list[Thymus]
+	bloodTest: list[BloodTest]
+	QOL: list[QOL]
+	QMG: list[QMG]
+	MG: list[MG]
+	ADL: list[ADL]
+	EMG: list[EMG]

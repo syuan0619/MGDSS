@@ -2,7 +2,8 @@ import json
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from mongoDB.connectDB import ReadAllPatient
+from mongoDB.connectDB import ReadAllPatient, getPatientById
+from bson.objectid import ObjectId
 from OCR.ImgToWord import recognize
 
 app = FastAPI()
@@ -50,7 +51,10 @@ async def recognize_text(file: UploadFile=File(...)):
         print("muscle part: ", result["target_words"])
     return response
 
-
+@app.post("/inquiry/")
+async def inquiry_visit(patientId: str):
+    patient = getPatientById(ObjectId(patientId))
+    return {patient: patient}
 
 origins = [
     'http://localhost:5173'
