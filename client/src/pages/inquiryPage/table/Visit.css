@@ -3,7 +3,8 @@
   height: 85vh;
   float: right;
   display: flex;
-  overflow-x: hidden;
+  background-color: rgb(255, 255, 255);
+  overflow-y: auto;
 }
 .inquiry-table-Visit-head {
   height: 10vh;
@@ -18,7 +19,6 @@
   height: 95%;
   margin-top: 1rem;
   margin-left: 1rem;
-  background-color: rgb(255, 255, 255);
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
