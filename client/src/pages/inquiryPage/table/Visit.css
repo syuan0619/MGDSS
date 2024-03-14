@@ -22,9 +22,8 @@
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
-.inquiry-table-Visit-{
+.inquiry-table-Visit- {
   text-align: center;
 }
 
@@ -35,7 +34,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 50px;
-  flex-wrap: wrap; /* 允许换行 */
+  flex-wrap: wrap;
 }
 
 .inquiry-table-Visit-left-row,
@@ -50,12 +49,31 @@
 
 .inquiry-table-Visit-left-slider,
 .inquiry-table-Visit-right-slider {
-  width: 60% !important;
+  width: 70% !important;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
+.inquiry-table-Visit-note {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inquiry-table-Visit-textArea {
+  width: 50%;
+  height: 30vh;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  resize: vertical;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+
 .inquiry-table-Visit-content-submit {
   display: flex;
   flex-direction: row;
