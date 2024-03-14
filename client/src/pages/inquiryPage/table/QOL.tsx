@@ -1,5 +1,4 @@
 import { Slider } from "@mui/material";
-import { number } from "prop-types";
 import * as React from "react";
 import { useState } from "react";
 import "./QOL.css";
@@ -55,6 +54,60 @@ const QOL = ({
   const onSubmitQolScore = () => {
     console.log(qolScore);
   };
+
+  const blockLeft = Object.keys(qolScore)
+    .slice(0, 5)
+    .map((item) => (
+      <>
+        <div className="inquiry-table-QOL-content-sliderbox">
+          {item}
+          <Slider
+            valueLabelDisplay="auto"
+            defaultValue={0}
+            max={2}
+            marks={marks}
+            onChange={scoreQolInput}
+            name={item}
+          />
+        </div>
+      </>
+    ));
+
+  const blockMid = Object.keys(qolScore)
+    .slice(5, 10)
+    .map((item) => (
+      <>
+        <div className="inquiry-table-QOL-content-sliderbox">
+          {item}
+          <Slider
+            valueLabelDisplay="auto"
+            defaultValue={0}
+            max={2}
+            marks={marks}
+            onChange={scoreQolInput}
+            name={item}
+          />
+        </div>
+      </>
+    ));
+
+  const blockRight = Object.keys(qolScore)
+    .slice(10, -1)
+    .map((item) => (
+      <>
+        <div className="inquiry-table-QOL-content-sliderbox">
+          {item}
+          <Slider
+            valueLabelDisplay="auto"
+            defaultValue={0}
+            max={2}
+            marks={marks}
+            onChange={scoreQolInput}
+            name={item}
+          />
+        </div>
+      </>
+    ));
   return (
     <>
       <div className="inquiry-table-QOL">
@@ -70,152 +123,20 @@ const QOL = ({
                 type="date"
               />
             </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Frustration
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-                onChange={scoreQolInput}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Eye Using
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Eating
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Social
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Entertainment
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
+            {blockLeft}
           </div>
           <div className="inquiry-table-QOL-content-block">
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Full Fill Family Needs
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Plans Necessity
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Job State
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Speaking
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Driving
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
+            {blockMid}
             <div className="inquiry-table-QOL-content-sliderbox">
               <input
                 className="inquiry-table-QOL-content-block-textfield"
                 disabled
+                value={qolScore["sum"]}
               />
             </div>
           </div>
           <div className="inquiry-table-QOL-content-block">
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Depression
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Walking
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Being In Public Places
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Overwhelm
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
-            <div className="inquiry-table-QOL-content-sliderbox">
-              Freshen Up
-              <Slider
-                valueLabelDisplay="auto"
-                defaultValue={0}
-                max={2}
-                marks={marks}
-              />
-            </div>
+            {blockRight}
             <div className="inquiry-table-QOL-content-sliderbox">
               <button
                 className="inquiry-table-QOL-content-block-buttom"
