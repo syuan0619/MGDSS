@@ -241,7 +241,7 @@ const Visit = ({
             <Slider
               className="inquiry-table-Visit-left-slider"
               value={dysphagia}
-              max={9}
+              max={1}
               min={0}
               aria-label="Default"
               valueLabelDisplay="auto"
@@ -258,7 +258,7 @@ const Visit = ({
             <Slider
               className="inquiry-table-Visit-left-slider"
               value={dysarthria}
-              max={2}
+              max={1}
               min={0}
               aria-label="Default"
               valueLabelDisplay="auto"
@@ -276,7 +276,7 @@ const Visit = ({
             <Slider
               className="inquiry-table-Visit-left-slider"
               value={dyspnea}
-              max={9}
+              max={1}
               min={0}
               aria-label="Default"
               valueLabelDisplay="auto"
@@ -293,7 +293,7 @@ const Visit = ({
             <Slider
               className="inquiry-table-Visit-left-slider"
               value={limpWeakness}
-              max={9}
+              max={1}
               min={0}
               aria-label="Default"
               valueLabelDisplay="auto"
@@ -311,7 +311,7 @@ const Visit = ({
             <Slider
               className="inquiry-table-Visit-left-slider"
               value={MGFAclassification}
-              max={9}
+              max={5}
               min={0}
               aria-label="Default"
               valueLabelDisplay="auto"
