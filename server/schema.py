@@ -7,7 +7,7 @@ class OtherHospitalRecord(BaseModel):
 
 # 基本資料
 class Info(BaseModel):
-	"ID#": str
+	ID: str
 	name : str
 	DOB: str
 	sex: str
@@ -141,12 +141,12 @@ class EMG(BaseModel):
 
 # 病患資料
 class Patient(BaseModel):
-	info: Info
-	visit: list[Visit]
-	thymus: list[Thymus]
-	bloodTest: list[BloodTest]
-	QOL: list[QOL]
-	QMG: list[QMG]
-	MG: list[MG]
-	ADL: list[ADL]
-	EMG: list[EMG]
+	info: Info = None
+	visit: list[Visit] = []
+	thymus: list[Thymus] = []
+	bloodTest: list[BloodTest] = []
+	QOL: list[QOL] = []
+	QMG: list[QMG] = []
+	MG: list[MG]  = []
+	ADL: list[ADL] = []
+	EMG: list[EMG] = []

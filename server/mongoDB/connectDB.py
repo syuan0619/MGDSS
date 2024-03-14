@@ -1,6 +1,7 @@
 import pymongo
 from bson.objectid import ObjectId
-import json
+from schema import Patient ,Info
+
 
 client = pymongo.MongoClient(
 "mongodb+srv://testMember:1234@schoolproject.tsw5n6e.mongodb.net/?retryWrites=true&w=majority")
@@ -14,7 +15,7 @@ def ReadAllPatient():
     originOutput = collection.find()
     for eachOutput in originOutput:
         popElement = eachOutput.pop('_id')
-        myList.append(eachOutput)
+        myList.append({"ObjectId": str(popElement),"patient":eachOutput})
 
     return myList
 
@@ -26,5 +27,12 @@ def ReadAllPatient():
 
 #     return  json.dumps(output_info, ensure_ascii=False)
 
-def getPatientById(patientId: ObjectId):
-    return patientCollection.find_one({"_id": patientId})
+def getPatientById(patientId):
+    patient = patientCollection.find_one({"_id": ObjectId(patientId)})
+    response = patient.pop('_id')
+    return patient
+
+def addNewPatient(newPatientInfo: Info):
+    newPatient = Patient(info= newPatientInfo)
+    newPatientId = patientCollection.insert_one(newPatient.dict()).inserted_id
+    return newPatientId
