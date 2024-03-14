@@ -121,6 +121,7 @@ type MG = {
   shoulderAbduction: number;
   hipFlexion: number;
   sum: number;
+  [key: string]: string | number;
 };
 
 type ADL = {
@@ -145,4 +146,4 @@ type EMG = {
     postActivation: [];
   };
 };
-export type { Patient, Info, ADL, BloodTest };
+export type { Patient, Info, ADL, BloodTest, MG };

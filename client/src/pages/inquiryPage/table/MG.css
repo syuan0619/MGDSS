@@ -1,9 +1,12 @@
-.inquiry-table-ADL-all {
+input[type="range"]::-webkit-slider-thumb {
+  border: 12px solid black;
+}
+.inquiry-table-MG-all {
   width: 68vw;
   height: 85vh;
   display: flex;
 }
-.inquiry-table-ADL-bg {
+.inquiry-table-MG-bg {
   width: 100%;
   height: 95%;
   margin-top: 1rem;
@@ -14,18 +17,18 @@
   flex-direction: column;
 }
 
-.ADL-backToRight {
+.MG-backToRight {
   border: 0;
   background-color: white;
   font-size: 3.7rem;
   color: #c7c8cc;
   margin-left: -5rem;
 }
-.ADL-backToRight:hover {
+.MG-backToRight:hover {
   cursor: pointer;
   color: #b4b4b8;
 }
-.inquiry-table-ADL-head {
+.inquiry-table-MG-head {
   height: 20vh;
   display: flex;
   justify-content: space-around;
@@ -33,67 +36,61 @@
   font-size: 2rem;
 }
 
-.inquiry-table-ADL-head p {
+.inquiry-table-MG-head p {
   margin-left: 8rem;
 }
 
-.inquiry-table-ADL-content {
-  height: 65vh;
+.inquiry-table-MG-content {
+  height: 45vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: auto;
 }
-.inquiry-table-ADL-content-row {
+.inquiry-table-MG-content-row {
   width: 58vw;
-  height: 12vh;
+  height: 20vh;
   font-size: 1.6rem;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
-.inquiry-table-ADL-content-row-talking {
+.inquiry-table-MG-content-row-testdate,
+.inquiry-table-MG-content-row-ptosis,
+.inquiry-table-MG-content-row-doubleVision,
+.inquiry-table-MG-content-row-eyeClosure,
+.inquiry-table-MG-content-row-talking,
+.inquiry-table-MG-content-row-chewing,
+.inquiry-table-MG-content-row-swallowing,
+.inquiry-table-MG-content-row-breathing,
+.inquiry-table-MG-content-row-neckFlexion,
+.inquiry-table-MG-content-row-shoulderAbduction,
+.inquiry-table-MG-content-row-hipFlexion {
   display: flex;
   flex-direction: column;
 }
-.inquiry-table-ADL-content-row-testdate,
-.inquiry-table-ADL-content-row-chewing,
-.inquiry-table-ADL-content-row-swallowing,
-.inquiry-table-ADL-content-row-eyelid {
-  display: flex;
-  flex-direction: column;
+.inquiry-table-MG-content-row-ptosis {
+  margin-right: 0.5rem;
 }
-.inquiry-table-ADL-content-row-breathing {
-  display: flex;
-  flex-direction: column;
-  margin-left: 4.5rem;
-}
-
-.inquiry-table-ADL-content-row-brushTeethOrCombHair {
-  display: flex;
-  flex-direction: column;
-  margin-left: 4rem;
+.inquiry-table-MG-content-row-hipFlexion {
+  margin-right: 21rem;
 }
 
-.inquiry-table-ADL-content-row-ariseFromChair {
-  display: flex;
-  flex-direction: column;
-  margin-left: 0.5rem;
-}
-.inquiry-table-ADL-content-row-sum {
+.inquiry-table-MG-content-row-sum {
   font-size: 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.inquiry-table-ADL-content-row input[type="range"] {
+.inquiry-table-MG-content-row input[type="range"] {
   width: 16vw;
   margin: 0;
 }
 
-.inquiry-table-ADL-content-row-sum input {
+.inquiry-table-MG-content-row-sum input {
   border-radius: 0.7rem;
   background-color: white;
   border: 0;
@@ -102,34 +99,36 @@
   width: 5vw;
   margin-left: 1rem;
 }
-.inquiry-table-ADL-content-row-sum input:focus {
+.inquiry-table-MG-content-row-sum input:focus {
   outline: 0;
 }
 
-.inquiry-table-ADL-content-row-testdate input {
+.inquiry-table-MG-content-row-testdate input {
   background-color: #eeeeee;
   border: 0;
   border-radius: 0.7rem;
+  padding: 0.3rem;
+  width: 12vw;
+  height: 4vh;
   margin-top: 0.2rem;
 }
-
-.inquiry-table-ADL-content-row input[type="date"] {
-  width: 16vw;
-  height: 6vh;
-  font-size: 1.3rem;
-}
-.inquiry-table-ADL-content-row-testdate input:focus {
+.inquiry-table-MG-content-row-testdate input:focus {
   outline: 0.15rem solid #7c7b7b;
 }
 
-.inquiry-table-ADL-content-row input {
+.inquiry-table-MG-content-row input {
   width: 10rem;
   height: 2rem;
 }
-.inquiry-table-ADL-content-row input:hover {
+.inquiry-table-MG-content-row input:hover {
   cursor: pointer;
 }
 
+.inquiry-table-MG-content-row input[type="date"] {
+  width: 16vw;
+  height: 5vh;
+  font-size: 1.3rem;
+}
 datalist {
   display: flex;
   flex-direction: column;
@@ -144,14 +143,14 @@ option {
   padding: 0;
 }
 
-.inquiry-table-ADL-submit {
+.inquiry-table-MG-submit {
   height: 15vh;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   margin-right: 4rem;
 }
-.inquiry-table-ADL-submit button {
+.inquiry-table-MG-submit button {
   width: 10vw;
   height: 5vh;
   background-color: #cae7f8;
@@ -161,7 +160,7 @@ option {
   border-radius: 1.2rem;
   border: 0;
 }
-.inquiry-table-ADL-submit button:hover {
+.inquiry-table-MG-submit button:hover {
   background-color: white;
   color: #0c537b;
   border: 0.15rem solid #0c537b;
