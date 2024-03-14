@@ -1,8 +1,11 @@
 import pymongo
+from bson.objectid import ObjectId
 import json
 
 client = pymongo.MongoClient(
 "mongodb+srv://testMember:1234@schoolproject.tsw5n6e.mongodb.net/?retryWrites=true&w=majority")
+db = client["SchoolProject"]
+patientCollection = db["Patient"]
 
 def ReadAllPatient():
     myList = []
@@ -22,3 +25,6 @@ def ReadAllPatient():
 #     popElement = output_info.pop('_id')
 
 #     return  json.dumps(output_info, ensure_ascii=False)
+
+def getPatientById(patientId: ObjectId):
+    return patientCollection.find_one({"_id": patientId})
