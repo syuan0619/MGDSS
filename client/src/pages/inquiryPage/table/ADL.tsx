@@ -1,18 +1,13 @@
 import "./ADL.css";
 import { useState } from "react";
 import { ADL as typeADL } from "../../../types/Patient";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
 
 const ADL = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
-  //const [sliderValue, setSliderValue] = useState<number>(0);
-  // const handleSliderChange = (event: Event, newValue: number | number[]) => {
-  //   setSliderValue(newValue as number);
-  //   console.log(newValue);
-  // };
-
   const [ADLscore, setADLScore] = useState<typeADL>({
     testDate: "",
     talking: 0,
@@ -46,8 +41,11 @@ const ADL = ({
     <div className="inquiry-table-ADL-all">
       <div className="inquiry-table-ADL-bg">
         <div className="inquiry-table-ADL-head">
-          <button onClick={() => setReplaceComponent("right")}>
-            backtoright
+          <button
+            className="ADL-backToRight"
+            onClick={() => setReplaceComponent("right")}
+          >
+            <IoIosArrowDropleftCircle />
           </button>
           <p>ADL</p>
           <div className="inquiry-table-ADL-content-row-sum">

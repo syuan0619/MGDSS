@@ -63,7 +63,6 @@ type Thymus = {
 
 type BloodTest = {
   testDate: string;
-  number: number;
   ACHR: number;
   TSH: number;
   freeThyroxine: number;
@@ -146,4 +145,4 @@ type EMG = {
     postActivation: [];
   };
 };
-export type { Patient, Info, ADL };
+export type { Patient, Info, ADL, BloodTest };

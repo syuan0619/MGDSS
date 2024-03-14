@@ -13,12 +13,28 @@
   display: flex;
   flex-direction: column;
 }
+
+.ADL-backToRight {
+  border: 0;
+  background-color: white;
+  font-size: 3.7rem;
+  color: #c7c8cc;
+  margin-left: -5rem;
+}
+.ADL-backToRight:hover {
+  cursor: pointer;
+  color: #b4b4b8;
+}
 .inquiry-table-ADL-head {
   height: 20vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
   font-size: 2rem;
+}
+
+.inquiry-table-ADL-head p {
+  margin-left: 8rem;
 }
 
 .inquiry-table-ADL-content {
@@ -35,29 +51,46 @@
   align-items: center;
   justify-content: space-evenly;
 }
-.inquiry-table-ADL-content-row-testdate {
-  display: flex;
-  flex-direction: column;
-}
+
 .inquiry-table-ADL-content-row-talking {
   display: flex;
   flex-direction: column;
+  margin-left: 2.8rem;
 }
+.inquiry-table-ADL-content-row-testdate,
 .inquiry-table-ADL-content-row-chewing,
 .inquiry-table-ADL-content-row-swallowing,
-.inquiry-table-ADL-content-row-breathing,
-.inquiry-table-ADL-content-row-brushTeethOrCombHair,
-.inquiry-table-ADL-content-row-ariseFromChair,
 .inquiry-table-ADL-content-row-eyelid {
   display: flex;
   flex-direction: column;
 }
+.inquiry-table-ADL-content-row-breathing {
+  display: flex;
+  flex-direction: column;
+  margin-left: 3rem;
+}
 
+.inquiry-table-ADL-content-row-brushTeethOrCombHair {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2.8rem;
+}
+
+.inquiry-table-ADL-content-row-ariseFromChair {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem;
+}
 .inquiry-table-ADL-content-row-sum {
   font-size: 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.inquiry-table-ADL-content-row input[type="range"] {
+  width: 16vw;
+  margin: 0;
 }
 
 .inquiry-table-ADL-content-row-sum input {
@@ -86,14 +119,17 @@
   outline: 0.15rem solid #7c7b7b;
 }
 
-input {
+.inquiry-table-ADL-content-row input {
   width: 10rem;
   height: 2rem;
 }
-input:hover {
+.inquiry-table-ADL-content-row input:hover {
   cursor: pointer;
 }
 
+.inquiry-table-ADL-content-row input[type="date"] {
+  font-size: 1.2rem;
+}
 datalist {
   display: flex;
   flex-direction: column;
@@ -106,11 +142,6 @@ datalist {
 
 option {
   padding: 0;
-}
-
-input[type="range"] {
-  width: 16vw;
-  margin: 0;
 }
 
 .inquiry-table-ADL-submit {
