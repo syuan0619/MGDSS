@@ -1,0 +1,83 @@
+.inquiry-table-Visit-all {
+  width: 70vw;
+  height: 85vh;
+  float: right;
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  overflow-y: auto;
+}
+.inquiry-table-Visit-head {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.inquiry-table-Visit-head-content {
+  width: 100%;
+  height: 95%;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.inquiry-table-Visit- {
+  text-align: center;
+}
+
+.inquiry-table-Visit-row {
+  width: 100%;
+  height: 20vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.inquiry-table-Visit-left-row,
+.inquiry-table-Visit-right-row {
+  width: 45%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.inquiry-table-Visit-left-slider,
+.inquiry-table-Visit-right-slider {
+  width: 70% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.inquiry-table-Visit-note {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inquiry-table-Visit-textArea {
+  width: 50%;
+  height: 30vh;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  resize: vertical;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+
+.inquiry-table-Visit-content-submit {
+  display: flex;
+  flex-direction: row;
+  height: 12vh;
+  justify-content: center;
+  align-items: center;
+}
