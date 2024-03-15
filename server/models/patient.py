@@ -1,5 +1,4 @@
-from pydantic import BaseModel
-from datetime import datetime
+from pydantic import BaseModel, Field
 
 class OtherHospitalRecord(BaseModel):
 	recentlyDate: str
@@ -7,7 +6,7 @@ class OtherHospitalRecord(BaseModel):
 
 # 基本資料
 class Info(BaseModel):
-	"ID#": str
+	ID: str = Field(alias="ID#")
 	name : str
 	DOB: str
 	sex: str
@@ -39,7 +38,7 @@ class Examination(BaseModel):
 
 # 看診紀錄
 class Visit(BaseModel):
-	date: datetime
+	date: str
 	treat: int
 	SBP: float
 	DBP: float
@@ -50,13 +49,13 @@ class Visit(BaseModel):
 
 # 胸腺掃描
 class Thymus(BaseModel):
-	testDate: datetime
+	testDate: str
 	thymusStatus: int
 	thymusDescription: str
 
 # 血液檢查
 class BloodTest(BaseModel):
-	testDate: datetime
+	testDate: str
 	ACHR: float
 	TSH: float
 	freeThyroxine: float
@@ -65,7 +64,7 @@ class BloodTest(BaseModel):
 
 # QOL
 class QOL(BaseModel):
-	testDate: datetime
+	testDate: str
 	frustration: int
 	eyeUsing: int
 	eating: int
@@ -85,7 +84,7 @@ class QOL(BaseModel):
 
 # QMG
 class QMG(BaseModel):
-	testDate: datetime	
+	testDate: str	
 	doubleVision: int
 	ptosis: int
 	facialMuscle: int
@@ -103,7 +102,7 @@ class QMG(BaseModel):
 
 # MG
 class MG(BaseModel):
-	testDate: datetime
+	testDate: str
 	ptosis: int
 	doubleVision: int
 	eyeClosure: int
@@ -118,7 +117,7 @@ class MG(BaseModel):
 
 # ADL
 class ADL(BaseModel):
-	testDate: datetime
+	testDate: str
 	talking: int
 	chewing: int
 	swallowing: int
@@ -135,18 +134,18 @@ class RNS(BaseModel):
 
 # 電生理訊號
 class EMG(BaseModel):
-	testDate: datetime
+	testDate: str
 	imgPath: str
 	RNS: list[RNS]
 
 # 病患資料
 class Patient(BaseModel):
-	info: Info
-	visit: list[Visit]
-	thymus: list[Thymus]
-	bloodTest: list[BloodTest]
-	QOL: list[QOL]
-	QMG: list[QMG]
-	MG: list[MG]
-	ADL: list[ADL]
-	EMG: list[EMG]
+	info: Info 
+	visit: list[Visit] = Field(default=[])
+	thymus: list[Thymus] = Field(default=[])
+	bloodTest: list[BloodTest] = Field(default=[])
+	qol: list[QOL] = Field(default=[], alias="QOL")
+	qmg: list[QMG] = Field(default=[], alias="QMG")
+	mg: list[MG]  = Field(default=[], alias="MG")
+	adl: list[ADL] = Field(default=[], alias="ADL")
+	emg: list[EMG] = Field(default=[], alias="EMG")
