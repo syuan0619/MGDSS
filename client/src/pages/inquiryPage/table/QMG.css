@@ -18,10 +18,8 @@
 }
 
 .inquiry-table-QMG-content {
-  width: 100%;
   height: 85%;
   box-sizing: border-box;
-  padding: 0 3rem 0 3rem;
   display: flex;
   flex-direction: row;
   grid-row: 3;
