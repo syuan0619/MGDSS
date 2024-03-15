@@ -1,0 +1,73 @@
+.inquiry-table-QMG,
+.inquiry-table-QMG-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inquiry-table-QMG {
+  flex-direction: column;
+  height: 100%;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.inquiry-table-QMG-header {
+  height: 15%;
+  font-size: 2rem;
+}
+
+.inquiry-table-QMG-content {
+  height: 85%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  grid-row: 3;
+}
+
+.inquiry-table-QMG-content-block {
+  width: 100%;
+  height: 100%;
+}
+
+.inquiry-table-QMG-content-sliderbox {
+  height: 3rem;
+  margin: 2rem 4rem 2rem 4rem;
+}
+
+.inquiry-table-QMG-content-block-textfield {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background-color: rgb(240, 240, 240);
+  border: 2px solid rgb(240, 240, 240);
+  font-size: 2vh;
+}
+
+.inquiry-table-QMG-content-block-textfield:focus {
+  outline-color: #26cfff;
+}
+
+.inquiry-table-QMG-content-block-buttom {
+  width: 5rem;
+  height: 3rem;
+  background-color: #26cfff;
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  border: 0;
+}
+.inquiry-table-QMG-closebutton {
+  color: #717171;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  padding-right: 0.5rem;
+}
+.inquiry-table-QMG-closebutton-item {
+  color: #717171;
+  border: none;
+  background-color: white;
+  margin: 1rem 0 1rem 0;
+}

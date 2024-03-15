@@ -102,9 +102,7 @@ const Right = ({
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("QMG")}
-            >
-              toQMGtable
-            </button>
+            ></button>
             <button
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("QMG")}
@@ -119,9 +117,7 @@ const Right = ({
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("QOL")}
-            >
-              toQOLtable
-            </button>
+            ></button>
             <button
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("QOL")}

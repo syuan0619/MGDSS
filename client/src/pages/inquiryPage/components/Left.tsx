@@ -1,4 +1,7 @@
+import BasicInfo from "./BasicInfo";
+import "./Left.css";
+
 const Left = () => {
-  return <div></div>;
+  return <BasicInfo />;
 };
 export default Left;
