@@ -4,6 +4,7 @@ import { BloodTest as typeBloodTest } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import api from "../../../api";
 
 const BloodTest = ({
   setReplaceComponent,
@@ -71,6 +72,21 @@ const BloodTest = ({
     } else {
       // 设置对应输入框的错误消息
       setErrors({ ...errors, [name]: "請輸入有效的數字！" });
+    }
+  };
+
+  const handleSubmit = async () => {
+    const confirmResult = confirm("確定送出結果嗎?");
+    if (confirmResult) {
+      console.log(BloodTestScore);
+      await api
+        .post(
+          `/inquiry/${"6567477ac1d120c47468dcdf"}/bloodTest`,
+          BloodTestScore
+        )
+        .then((res) => {
+          console.log(res.data);
+        });
     }
   };
 
@@ -229,16 +245,7 @@ const BloodTest = ({
           </div>
         </div>
         <div className="inquiry-table-BloodTest-submit">
-          <button
-            onClick={() => {
-              if (confirm("確定送出結果嗎?")) {
-                console.log("送出結果：", BloodTestScore);
-              }
-              setReplaceComponent("right");
-            }}
-          >
-            儲存
-          </button>
+          <button onClick={handleSubmit}>儲存</button>
         </div>
       </div>
     </div>

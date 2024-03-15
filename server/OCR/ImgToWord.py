@@ -13,6 +13,11 @@ def recognize(uploadImage):
         
     return  results_data
 
+def getWhite(uploadImage):
+    origin_image = Image.open(uploadImage)
+    croped_image = crop(origin_image)
+    print("croped_image type: ", type(croped_image))
+    return Image.fromarray(croped_image)
 
 def crop(image):
     image_array = np.array(image)
@@ -20,10 +25,13 @@ def crop(image):
     # Resize the image
     resized_image = cv2.resize(image_array, (1920, 1080))
 
-    crop_dimensions_main = [(600, 620, 750, 400)]
-    for i, (w, h, x, y) in enumerate(crop_dimensions_main, start=1):
+    # crop_dimensions_main = [(600, 620, 750, 400)]
+    # for i, (w, h, x, y) in enumerate(crop_dimensions_main, start=1):
         # Crop the image
-        crop_image = resized_image[y:y + h, x:x + w]
+        # crop_image = resized_image[y:y + h, x:x + w]
+        
+    crop_image = resized_image[400:1020, 750:1350]
+
     resized_image = cv2.resize(
         crop_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
 
@@ -64,7 +72,7 @@ def perform_ocr(resized_image):
                 split_text = re.split('[\n:]+', extracted_text)
                 json_string = json.dumps(split_text, ensure_ascii=False)
 
-                print(json_string)
+                # print(json_string)
                 results.append({
                     "target_words": target_words,
                     "result_data": json_string

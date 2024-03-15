@@ -128,7 +128,6 @@ type MG = {
   shoulderAbduction: number;
   hipFlexion: number;
   sum: number;
-  [key: string]: string | number;
 };
 
 // 0 ~ 3 except testDate, sum
@@ -142,7 +141,6 @@ type ADL = {
   ariseFromChair: number;
   eyelid: number;
   sum: number;
-  [key: string]: string | number;
 };
 
 type EMG = {
