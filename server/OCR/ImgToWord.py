@@ -73,11 +73,7 @@ def perform_ocr(resized_image):
 
                 # print(json_string)
                 results.append({
-<<<<<<< HEAD
-                    "target_target_words": target_words,
-=======
                     "target_words": target_words,
->>>>>>> main
                     "result_data": json_string
                 })
                 # cv2.imshow("result_image", result_image_cropped)
