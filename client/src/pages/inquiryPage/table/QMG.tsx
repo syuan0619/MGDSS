@@ -1,28 +1,7 @@
-import { Button, Slider } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 import "./QMG.css";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
-const marks = [
-  {
-    value: 0,
-    label: "0",
-  },
-  {
-    value: 1,
-    label: "1",
-  },
-  {
-    value: 2,
-    label: "2",
-  },
-  {
-    value: 3,
-    label: "3",
-  },
-];
-
 const QMG = ({
   setReplaceComponent,
 }: {
@@ -43,6 +22,7 @@ const QMG = ({
     rightLegHeight: 0,
     leftLegHeight: 0,
     sum: 0,
+    testDate: "",
   });
 
   const scoreQMGInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,13 +38,13 @@ const QMG = ({
 
   let qmgSum = 0;
   Object.values(qmgScore)
-    .slice(0, -1)
-    .map((item) => (qmgSum += item));
+    .slice(0, -2)
+    .map((item) => (qmgSum += item as number));
   qmgScore["sum"] = qmgSum;
 
   const blockLeft = Object.keys(qmgScore)
     .slice(0, 6)
-    .map((item, index) => (
+    .map((item) => (
       <>
         <div className="inquiry-table-QMG-content-sliderbox">
           {item}
@@ -90,8 +70,8 @@ const QMG = ({
     ));
 
   const blockRight = Object.keys(qmgScore)
-    .slice(6, -1)
-    .map((item, index) => (
+    .slice(6, -2)
+    .map((item) => (
       <>
         <div className="inquiry-table-QMG-content-sliderbox">
           {item}
@@ -140,6 +120,9 @@ const QMG = ({
                   className="inquiry-table-QMG-content-block-textfield"
                   type="date"
                   id="qmgDate"
+                  value={qmgScore.testDate}
+                  onChange={scoreQMGInput}
+                  name="testDate"
                 />
               </div>
               {blockLeft}
@@ -152,7 +135,7 @@ const QMG = ({
             <button
               onClick={() => {
                 if (confirm("確定送出結果嗎?")) {
-                  console.log("送出結果：", onSubmitQMGScore);
+                  console.log("送出結果：", qmgScore);
                 }
                 setReplaceComponent("right");
               }}

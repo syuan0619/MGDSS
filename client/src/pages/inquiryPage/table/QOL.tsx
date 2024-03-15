@@ -1,8 +1,6 @@
-import { Button, Slider } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 import "./QOL.css";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 
 const QOL = ({
@@ -27,6 +25,7 @@ const QOL = ({
     overwhelm: 0,
     freshenUp: 0,
     sum: 0,
+    testDate: "",
   });
 
   const scoreQolInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,13 +34,9 @@ const QOL = ({
 
   let qolSum = 0;
   Object.values(qolScore)
-    .slice(0, -1)
+    .slice(0, -2)
     .map((item) => (qolSum += item as number));
   qolScore["sum"] = qolSum;
-
-  const onSubmitQolScore = () => {
-    console.log(qolScore);
-  };
 
   const blockLeft = Object.keys(qolScore)
     .slice(0, 7)
@@ -70,7 +65,7 @@ const QOL = ({
     ));
 
   const blockRight = Object.keys(qolScore)
-    .slice(7, -1)
+    .slice(7, -2)
     .map((item) => (
       <>
         <div className="inquiry-table-QOL-content-sliderbox">
@@ -117,6 +112,9 @@ const QOL = ({
                 <input
                   className="inquiry-table-QOL-content-block-textfield"
                   type="date"
+                  value={qolScore.testDate}
+                  onChange={scoreQolInput}
+                  name="testDate"
                 />
               </div>
               {blockLeft}
