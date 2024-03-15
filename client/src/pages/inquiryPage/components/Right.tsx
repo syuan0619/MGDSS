@@ -7,9 +7,7 @@ import QMG from "../chart/QMG";
 import QOL from "../chart/QOL";
 import Thymus from "../chart/Thymus";
 import Visit from "../chart/Visit";
-import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
-import AssessmentRoundedIcon from "@mui/icons-material/AssessmentRounded";
-import { Button } from "@mui/material";
+import { GiChart } from "react-icons/gi";
 
 const Right = ({
   setReplaceComponent,
@@ -39,7 +37,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("ADL")}
             >
-              toADLchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <ADL />
@@ -56,7 +54,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("BloodTest")}
             >
-              toBloodTestchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <BloodTest />
@@ -75,7 +73,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("EMG")}
             >
-              toEMGchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <EMG />
@@ -92,7 +90,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("MG")}
             >
-              toMGchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <MG />
@@ -104,14 +102,12 @@ const Right = ({
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("QMG")}
-            >
-              <TuneRoundedIcon />
-            </button>
+            ></button>
             <button
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("QMG")}
             >
-              <AssessmentRoundedIcon />
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <QMG />
@@ -121,14 +117,12 @@ const Right = ({
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("QOL")}
-            >
-              <TuneRoundedIcon />
-            </button>
+            ></button>
             <button
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("QOL")}
             >
-              <AssessmentRoundedIcon />
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <QOL />
@@ -147,7 +141,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("Thymus")}
             >
-              toThymuschart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <Thymus />
@@ -164,7 +158,7 @@ const Right = ({
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("Visit")}
             >
-              toVisitchart
+              <GiChart className="chartIcon" />
             </button>
           </div>
           <Visit />
