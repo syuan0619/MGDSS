@@ -1,9 +1,8 @@
-import json
-from fastapi import FastAPI, UploadFile, File
+import models
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
-from models.patient import Info, Visit, Thymus, BloodTest
 from mongoDB.connectDB import getAllPatients, addNewPatient, updatePatient
 from OCR.ImgToWord import recognize
 from routers import inquiry
@@ -18,9 +17,9 @@ async def get_all_patients():
 
 # POST /patients/ -> add new patient
 @app.post("/patients/", tags=["patients"])
-async def add_new_patient(newPatientInfo: Info):
+async def add_new_patient(newPatientInfo: models.Info):
     try:
-        newPatient = addNewPatient(newPatientInfo)
+        newPatient = addNewPatient(newPatientInfo.model_dump(by_alias=True))
         return {"message": "Success add new patient", "newPatient": newPatient}
     except ValidationError as e:
         print("error: ", str(e))

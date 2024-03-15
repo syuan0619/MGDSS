@@ -1,5 +1,4 @@
 from pydantic import BaseModel, Field
-from datetime import datetime
 
 class OtherHospitalRecord(BaseModel):
 	recentlyDate: str
@@ -39,7 +38,7 @@ class Examination(BaseModel):
 
 # 看診紀錄
 class Visit(BaseModel):
-	date: datetime
+	date: str
 	treat: int
 	SBP: float
 	DBP: float
@@ -50,13 +49,13 @@ class Visit(BaseModel):
 
 # 胸腺掃描
 class Thymus(BaseModel):
-	testDate: datetime
+	testDate: str
 	thymusStatus: int
 	thymusDescription: str
 
 # 血液檢查
 class BloodTest(BaseModel):
-	testDate: datetime
+	testDate: str
 	ACHR: float
 	TSH: float
 	freeThyroxine: float
@@ -65,7 +64,7 @@ class BloodTest(BaseModel):
 
 # QOL
 class QOL(BaseModel):
-	testDate: datetime
+	testDate: str
 	frustration: int
 	eyeUsing: int
 	eating: int
@@ -85,7 +84,7 @@ class QOL(BaseModel):
 
 # QMG
 class QMG(BaseModel):
-	testDate: datetime	
+	testDate: str	
 	doubleVision: int
 	ptosis: int
 	facialMuscle: int
@@ -103,7 +102,7 @@ class QMG(BaseModel):
 
 # MG
 class MG(BaseModel):
-	testDate: datetime
+	testDate: str
 	ptosis: int
 	doubleVision: int
 	eyeClosure: int
@@ -118,7 +117,7 @@ class MG(BaseModel):
 
 # ADL
 class ADL(BaseModel):
-	testDate: datetime
+	testDate: str
 	talking: int
 	chewing: int
 	swallowing: int
@@ -135,7 +134,7 @@ class RNS(BaseModel):
 
 # 電生理訊號
 class EMG(BaseModel):
-	testDate: datetime
+	testDate: str
 	imgPath: str
 	RNS: list[RNS]
 
