@@ -2,6 +2,7 @@ import "./MG.css";
 import { useState } from "react";
 import { MG as typeMG } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import api from "../../../api";
 
 const MG = ({
   setReplaceComponent,
@@ -22,10 +23,11 @@ const MG = ({
     hipFlexion: 0,
     sum: 0,
   });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "testDate") {
-      setMGScore({ ...MGscore, testDate: value });
+      setMGScore({ ...MGscore, [name]: value });
     } else {
       const numericValue = parseInt(value, 10);
       setMGScore({
@@ -35,13 +37,19 @@ const MG = ({
       });
     }
   };
-  let sum = 0;
-  for (const key in MGscore) {
-    if (typeof MGscore[key] === "number") {
-      sum += MGscore[key] as number;
+
+  const handleSubmit = async () => {
+    const confirmResult = confirm("確定送出結果嗎?");
+    if (confirmResult) {
+      console.log(MGscore);
+      await api
+        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/MG`, MGscore)
+        .then((res) => {
+          console.log(res.data);
+        });
     }
-  }
-  const MGTotal = sum;
+  };
+
   return (
     <div className="inquiry-table-MG-all">
       <div className="inquiry-table-MG-bg">
@@ -55,7 +63,13 @@ const MG = ({
           <p>MG</p>
           <div className="inquiry-table-MG-content-row-sum">
             <label htmlFor="sum">總分 : </label>
-            <input type="text" id="sum" value={MGTotal} name="sum" readOnly />
+            <input
+              type="text"
+              id="sum"
+              value={MGscore.sum}
+              name="sum"
+              readOnly
+            />
           </div>
         </div>
         <div className="inquiry-table-MG-content">
@@ -293,16 +307,7 @@ const MG = ({
           </div>
         </div>
         <div className="inquiry-table-MG-submit">
-          <button
-            onClick={() => {
-              if (confirm("確定送出結果嗎?")) {
-                console.log("送出結果：", MGscore);
-              }
-              setReplaceComponent("right");
-            }}
-          >
-            儲存
-          </button>
+          <button onClick={handleSubmit}>儲存</button>
         </div>
       </div>
     </div>

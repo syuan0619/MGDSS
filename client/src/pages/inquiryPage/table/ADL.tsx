@@ -2,6 +2,7 @@ import "./ADL.css";
 import { useState } from "react";
 import { ADL as typeADL } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import api from "../../../api";
 
 const ADL = ({
   setReplaceComponent,
@@ -19,6 +20,7 @@ const ADL = ({
     eyelid: 0,
     sum: 0,
   });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "testDate") {
@@ -34,13 +36,17 @@ const ADL = ({
     }
   };
 
-  let sum = 0;
-  for (const key in ADLscore) {
-    if (typeof ADLscore[key] === "number") {
-      sum += ADLscore[key] as number;
+  const handleSubmit = async () => {
+    const confirmResult = confirm("確定送出結果嗎?");
+    if (confirmResult) {
+      console.log(ADLscore);
+      await api
+        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/ADL`, ADLscore)
+        .then((res) => {
+          console.log(res.data);
+        });
     }
-  }
-  const adlTotal = sum;
+  };
 
   return (
     <div className="inquiry-table-ADL-all">
@@ -55,7 +61,13 @@ const ADL = ({
           <p>ADL</p>
           <div className="inquiry-table-ADL-content-row-sum">
             <label htmlFor="sum">總分 : </label>
-            <input type="text" id="sum" value={adlTotal} name="sum" readOnly />
+            <input
+              type="text"
+              id="sum"
+              value={ADLscore.sum}
+              name="sum"
+              readOnly
+            />
           </div>
         </div>
         <div className="inquiry-table-ADL-content">
@@ -226,16 +238,7 @@ const ADL = ({
           </div>
         </div>
         <div className="inquiry-table-ADL-submit">
-          <button
-            onClick={() => {
-              if (confirm("確定送出結果嗎?")) {
-                console.log("送出結果：", ADLscore);
-              }
-              setReplaceComponent("right");
-            }}
-          >
-            儲存
-          </button>
+          <button onClick={handleSubmit}>儲存</button>
         </div>
       </div>
     </div>
