@@ -21,8 +21,12 @@ const ADL = ({
     sum: 0,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    beforeChangedParam: number
+  ) => {
     const { name, value } = e.target;
+
     if (name === "testDate") {
       setADLScore({ ...ADLscore, testDate: value });
     } else {
@@ -31,13 +35,14 @@ const ADL = ({
       setADLScore({
         ...ADLscore,
         [name]: numericValue,
-        sum: ADLscore.sum + numericValue,
+        sum: ADLscore.sum + numericValue - beforeChangedParam,
       });
     }
   };
 
   const handleSubmit = async () => {
     const confirmResult = confirm("確定送出結果嗎?");
+
     if (confirmResult) {
       console.log(ADLscore);
       await api
@@ -79,14 +84,14 @@ const ADL = ({
                 id="testDate"
                 name="testDate"
                 value={ADLscore.testDate}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, 0)}
               />
             </div>
             <div className="inquiry-table-ADL-content-row-talking">
               <label htmlFor="talking">talking</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.talking)}
                 type="range"
                 id="talking"
                 name="talking"
@@ -109,7 +114,7 @@ const ADL = ({
               <label htmlFor="chewing">chewing</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.chewing)}
                 type="range"
                 id="chewing"
                 name="chewing"
@@ -130,7 +135,7 @@ const ADL = ({
               <label htmlFor="swallowing">swallowing</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.swallowing)}
                 type="range"
                 id="swallowing"
                 name="swallowing"
@@ -153,7 +158,7 @@ const ADL = ({
               <label htmlFor="breathing">breathing</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.breathing)}
                 type="range"
                 id="breathing"
                 name="breathing"
@@ -174,7 +179,7 @@ const ADL = ({
               <label htmlFor="brushTeethOrCombHair">brushTeethOrCombHair</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.brushTeethOrCombHair)}
                 type="range"
                 id="brushTeethOrCombHair"
                 name="brushTeethOrCombHair"
@@ -197,7 +202,7 @@ const ADL = ({
               <label htmlFor="ariseFromChair">ariseFromChair</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.ariseFromChair)}
                 type="range"
                 id="ariseFromChair"
                 name="ariseFromChair"
@@ -218,7 +223,7 @@ const ADL = ({
               <label htmlFor="eyelid">eyelid</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.eyelid)}
                 type="range"
                 id="eyelid"
                 name="eyelid"
