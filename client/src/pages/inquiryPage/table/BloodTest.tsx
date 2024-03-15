@@ -10,7 +10,7 @@ const BloodTest = ({
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
-  const [BloodTestscore, setBloodTestScore] = useState<typeBloodTest>({
+  const [BloodTestScore, setBloodTestScore] = useState<typeBloodTest>({
     testDate: "",
     ACHR: 0,
     TSH: 0,
@@ -60,7 +60,7 @@ const BloodTest = ({
         setWarnings({ ...warnings, [name]: "" });
       }
       // 无论是否超过范围，都设置血液检测分数
-      setBloodTestScore({ ...BloodTestscore, [name]: numericValue });
+      setBloodTestScore({ ...BloodTestScore, [name]: numericValue });
     } else {
       // 设置对应输入框的错误消息
       setErrors({ ...errors, [name]: "請輸入有效的數字！" });
@@ -87,7 +87,7 @@ const BloodTest = ({
                 type="date"
                 id="testDate"
                 name="testDate"
-                value={BloodTestscore.testDate}
+                value={BloodTestScore.testDate}
                 onChange={handleChange}
               />
             </div>
@@ -113,7 +113,7 @@ const BloodTest = ({
                 {errors.ACHR && (
                   <div className="BloodTest-alert-input">{errors.ACHR}</div>
                 )}
-                {!BloodTestscore.ACHR && (
+                {!BloodTestScore.ACHR && (
                   <div className="BloodTest-placeholder">(nmol/mL)</div>
                 )}
               </div>
@@ -142,7 +142,7 @@ const BloodTest = ({
                 {errors.TSH && (
                   <div className="BloodTest-alert-input">{errors.TSH}</div>
                 )}
-                {!BloodTestscore.TSH && (
+                {!BloodTestScore.TSH && (
                   <div className="BloodTest-placeholder"> (uIU/mL)</div>
                 )}
               </div>
@@ -171,7 +171,7 @@ const BloodTest = ({
                     {errors.freeThyroxine}
                   </div>
                 )}
-                {!BloodTestscore.freeThyroxine && (
+                {!BloodTestScore.freeThyroxine && (
                   <div className="BloodTest-placeholder"> (ng/dL)</div>
                 )}
               </div>
@@ -224,7 +224,7 @@ const BloodTest = ({
                 {errors.uricAcid && (
                   <div className="BloodTest-alert-input">{errors.uricAcid}</div>
                 )}
-                {!BloodTestscore.uricAcid && (
+                {!BloodTestScore.uricAcid && (
                   <div className="BloodTest-placeholder"> (mg/dL)</div>
                 )}
               </div>
@@ -235,7 +235,7 @@ const BloodTest = ({
           <button
             onClick={() => {
               if (confirm("確定送出結果嗎?")) {
-                console.log("送出結果：", BloodTestscore);
+                console.log("送出結果：", BloodTestScore);
               }
               setReplaceComponent("right");
             }}

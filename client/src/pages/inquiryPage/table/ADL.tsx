@@ -25,10 +25,15 @@ const ADL = ({
       setADLScore({ ...ADLscore, testDate: value });
     } else {
       const numericValue = parseInt(value, 10);
-      setADLScore({ ...ADLscore, [name]: numericValue });
+
+      setADLScore({
+        ...ADLscore,
+        [name]: numericValue,
+        sum: ADLscore.sum + numericValue,
+      });
     }
   };
-  const adlKeys = Object.keys(ADLscore);
+
   let sum = 0;
   for (const key in ADLscore) {
     if (typeof ADLscore[key] === "number") {

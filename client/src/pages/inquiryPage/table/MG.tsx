@@ -28,10 +28,13 @@ const MG = ({
       setMGScore({ ...MGscore, testDate: value });
     } else {
       const numericValue = parseInt(value, 10);
-      setMGScore({ ...MGscore, [name]: numericValue });
+      setMGScore({
+        ...MGscore,
+        [name]: numericValue,
+        sum: MGscore.sum + numericValue,
+      });
     }
   };
-  const MGKeys = Object.keys(MGscore);
   let sum = 0;
   for (const key in MGscore) {
     if (typeof MGscore[key] === "number") {
