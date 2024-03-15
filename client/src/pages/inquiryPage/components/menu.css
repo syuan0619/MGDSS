@@ -22,8 +22,8 @@
 
 .inquiry-menu-numbox {
   width: 6rem;
-  height: 2.6rem;
-  background-color: #4dbff9;
+  height: 2.8rem;
+  background-color: #008dda;
   border-radius: 1rem;
   color: white;
   display: flex;
@@ -53,7 +53,9 @@
 }
 
 .inquiry-menu-button:nth-child(1):hover {
-  background-color: #f4dfc8;
+  background-color: white;
+  outline: 0.15rem solid #6c3428;
+  transition: 0.2s;
 }
 
 .inquiry-menu-button:nth-child(2) {
@@ -76,7 +78,7 @@
 }
 
 .inquiry-menu-button:nth-child(2):hover {
-  background-color: #fb7645;
+  background-color: #ff8911;
 }
 
 .inquiry-menu-button:nth-child(3) {
@@ -99,7 +101,7 @@
 }
 
 .inquiry-menu-button:nth-child(3):hover {
-  background-color: #b6c9f0;
+  background-color: #0c359e;
 }
 
 .inquiry-menu-button:nth-child(4) {
