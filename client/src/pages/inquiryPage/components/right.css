@@ -30,15 +30,23 @@
   align-items: flex-end;
   padding-right: 1rem;
   height: 3rem;
+  color: #717171;
 }
 
 .inquiry-right-to-table-button {
   width: fit-content;
   height: 2rem;
   margin-right: 1rem;
+  border: none;
+  color: #717171;
+  background-color: white;
 }
 
 .inquiry-right-to-chart-button {
   width: fit-content;
   height: 2rem;
+  margin-right: 1rem;
+  border: none;
+  color: #717171;
+  background-color: white;
 }

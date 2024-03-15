@@ -122,9 +122,12 @@ const QMG = ({
     <>
       <div className="inquiry-table-QMG">
         <div className="inquiry-table-QMG-closebutton">
-          <Button onClick={() => setReplaceComponent("right")}>
+          <button
+            onClick={() => setReplaceComponent("right")}
+            className="inquiry-table-QMG-closebutton-item"
+          >
             <CloseRoundedIcon />
-          </Button>
+          </button>
         </div>
         <div className="inquiry-table-QMG-header">QMG</div>
         <div className="inquiry-table-QMG-content">

@@ -34,7 +34,7 @@
 
 .inquiry-table-QMG-content-sliderbox {
   height: 3rem;
-  margin: 3rem;
+  margin: 2rem 4rem 2rem 4rem;
 }
 
 .inquiry-table-QMG-content-block-textfield {
@@ -64,4 +64,12 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  box-sizing: border-box;
+  padding-right: 0.5rem;
+}
+.inquiry-table-QMG-closebutton-item {
+  color: #717171;
+  border: none;
+  background-color: white;
+  margin: 1rem 0 1rem 0;
 }

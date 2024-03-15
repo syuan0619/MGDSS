@@ -1,7 +1,9 @@
-import { Slider } from "@mui/material";
+import { Button, Slider } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 import "./QOL.css";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+
 const marks = [
   {
     value: 0,
@@ -111,9 +113,14 @@ const QOL = ({
   return (
     <>
       <div className="inquiry-table-QOL">
-        <button onClick={() => setReplaceComponent("right")}>
-          backtoright
-        </button>
+        <div className="inquiry-table-QOL-closebutton">
+          <button
+            onClick={() => setReplaceComponent("right")}
+            className="inquiry-table-QOL-closebutton-item"
+          >
+            <CloseRoundedIcon />
+          </button>
+        </div>
         <div className="inquiry-table-QOL-header">QOL</div>
         <div className="inquiry-table-QOL-content">
           <div className="inquiry-table-QOL-content-block">

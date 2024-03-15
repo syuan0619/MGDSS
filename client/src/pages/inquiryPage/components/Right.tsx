@@ -7,6 +7,9 @@ import QMG from "../chart/QMG";
 import QOL from "../chart/QOL";
 import Thymus from "../chart/Thymus";
 import Visit from "../chart/Visit";
+import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
+import AssessmentRoundedIcon from "@mui/icons-material/AssessmentRounded";
+import { Button } from "@mui/material";
 
 const Right = ({
   setReplaceComponent,
@@ -102,13 +105,13 @@ const Right = ({
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("QMG")}
             >
-              toQMGtable
+              <TuneRoundedIcon />
             </button>
             <button
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("QMG")}
             >
-              toQMGchart
+              <AssessmentRoundedIcon />
             </button>
           </div>
           <QMG />
@@ -119,13 +122,13 @@ const Right = ({
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("QOL")}
             >
-              toQOLtable
+              <TuneRoundedIcon />
             </button>
             <button
               className="inquiry-right-to-chart-button"
               onClick={() => buttonToChart("QOL")}
             >
-              toQOLchart
+              <AssessmentRoundedIcon />
             </button>
           </div>
           <QOL />
