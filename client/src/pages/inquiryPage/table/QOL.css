@@ -5,16 +5,69 @@
   align-items: center;
   justify-content: center;
 }
-.inquiry-table-QOL {
-  flex-direction: column;
+
+.inquiry-table-QOL-bg {
+  width: 100%;
   height: 100%;
-  background-color: white;
-  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.inquiry-table-QOL-header {
-  height: 15%;
+.inquiry-table-QOL {
+  flex-direction: column;
+  height: 95%;
+  width: 95%;
+  background-color: white;
+  border-radius: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.inquiry-table-QOL-head {
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 2rem;
+}
+
+.QOL-backToRight {
+  border: 0;
+  background-color: white;
+  font-size: 3.7rem;
+  color: #c7c8cc;
+  margin-left: -5rem;
+  position: absolute;
+  top: 20%;
+  left: 40%;
+}
+.QOL-backToRight:hover {
+  cursor: pointer;
+  color: #b4b4b8;
+}
+
+.inquiry-table-QOL-content-row-sum {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  top: 22%;
+  right: 5%;
+}
+
+.inquiry-table-QOL-content-row-sum input {
+  border-radius: 0.7rem;
+  background-color: white;
+  border: 0;
+  height: 5vh;
+  font-size: 2rem;
+  width: 5vw;
+  margin-left: 1rem;
+}
+.inquiry-table-QOL-content-row-sum input:focus {
+  outline: 0;
 }
 
 .inquiry-table-QOL-content {
@@ -22,21 +75,30 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
+  overflow-y: auto;
 }
 
-.inquiry-table-QOL-content-block {
+.inquiry-table-QOL-content-block-left {
   width: 100%;
   height: 100%;
+  margin: 0 2rem 0 4rem;
+}
+
+.inquiry-table-QOL-content-block-right {
+  width: 100%;
+  height: 100%;
+  margin: 0 4rem 0 2rem;
 }
 
 .inquiry-table-QOL-content-sliderbox {
-  height: 3rem;
-  margin: 2rem 4rem 2rem 4rem;
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .inquiry-table-QOL-content-block-textfield {
   width: 100%;
-  height: 100%;
+  height: 9vh;
   border-radius: 5px;
   background-color: rgb(240, 240, 240);
   border: 2px solid rgb(240, 240, 240);
@@ -71,4 +133,29 @@
   border: none;
   background-color: white;
   margin: 1rem 0 1rem 0;
+}
+.inquiry-table-QOL-submit {
+  width: 100%;
+  height: 15vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 4rem;
+  box-sizing: border-box;
+}
+.inquiry-table-QOL-submit button {
+  width: 10vw;
+  height: 5vh;
+  background-color: #cae7f8;
+  color: #0c537b;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 1.2rem;
+  border: 0;
+}
+.inquiry-table-QOL-submit button:hover {
+  background-color: white;
+  color: #0c537b;
+  border: 0.15rem solid #0c537b;
+  cursor: pointer;
 }
