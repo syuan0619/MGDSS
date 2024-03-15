@@ -3,11 +3,20 @@ import models
 from fastapi import APIRouter, UploadFile, File
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
-from mongoDB.connectDB import updatePatient, updateEntirePatient
+from mongoDB.connectDB import updatePatient, updateEntirePatient, getPatientById
 from OCR.ImgToWord import recognize
 
 router = APIRouter(prefix="/inquiry", tags=["inquiry"])
 
+@router.get("/{patientId}", summary="Get patient by id")
+async def get_patient_by_id(patientId: str):
+    try:
+        patient = getPatientById(patientId)
+        return patient
+    except Exception as e:
+        print("error: ", str(e))
+        return JSONResponse(status_code=500, content={"message": "Internal server error"})
+    
 @router.post("/{patientId}/patient", summary="Update entire patient info", description="request body: patient")
 async def inquiry_update_entire_patient(patientId: str, table: models.Patient):
     try:

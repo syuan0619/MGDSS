@@ -3,11 +3,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
-from mongoDB.connectDB import getAllPatients, addNewPatient, updatePatient
-from OCR.ImgToWord import recognize
+from mongoDB.connectDB import getAllPatients, addNewPatient
 from routers import inquiry
 
 app = FastAPI()
+# routers/inquiry.py
 app.include_router(inquiry.router)
 
 # GET /patients/ -> return all patients
