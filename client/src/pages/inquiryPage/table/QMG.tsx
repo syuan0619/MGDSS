@@ -32,8 +32,8 @@ const QMG = ({
     });
   };
 
-  const onSubmitQMGScore = () => {
-    console.log(qmgScore);
+  const dateQMGInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQMGScore({ ...qmgScore, [e.target.name]: e.target.value });
   };
 
   let qmgSum = 0;
@@ -121,7 +121,7 @@ const QMG = ({
                   type="date"
                   id="qmgDate"
                   value={qmgScore.testDate}
-                  onChange={scoreQMGInput}
+                  onChange={dateQMGInput}
                   name="testDate"
                 />
               </div>

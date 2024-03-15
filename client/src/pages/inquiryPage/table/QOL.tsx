@@ -32,6 +32,10 @@ const QOL = ({
     setQolScore({ ...qolScore, [e.target.name]: parseFloat(e.target.value) });
   };
 
+  const dateQolInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQolScore({ ...qolScore, [e.target.name]: e.target.value });
+  };
+
   let qolSum = 0;
   Object.values(qolScore)
     .slice(0, -2)
@@ -113,7 +117,7 @@ const QOL = ({
                   className="inquiry-table-QOL-content-block-textfield"
                   type="date"
                   value={qolScore.testDate}
-                  onChange={scoreQolInput}
+                  onChange={dateQolInput}
                   name="testDate"
                 />
               </div>
