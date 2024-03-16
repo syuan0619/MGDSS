@@ -1,18 +1,9 @@
 .inquiry-table-Thymus-all {
-  width: 70vw;
+  width: 68vw;
   height: 85vh;
-  float: right;
   display: flex;
 }
-.inquiry-table-Thymus-head {
-  height: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.6rem;
-}
-
-.inquiry-table-Thymus-head-content {
+.inquiry-table-Thymus-bg {
   width: 100%;
   height: 95%;
   margin-top: 1rem;
@@ -21,49 +12,159 @@
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
-.inquiry-table-Thymus-content-text {
-  width: 100%;
+.Thymus-backToRight {
+  border: 0;
+  background-color: white;
+  font-size: 3.7rem;
+  color: #c7c8cc;
+  margin-left: -17rem;
+}
+.Thymus-backToRight:hover {
+  cursor: pointer;
+  color: #b4b4b8;
+}
+.inquiry-table-Thymus-head {
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.inquiry-table-Thymus-head p {
+  margin-left: 12rem;
+}
+.inquiry-table-Thymus-content {
   height: 65vh;
   display: flex;
-  justify-self: center;
+  flex-direction: column;
   align-items: center;
-  flex-direction: column;
-  padding-bottom: 50px;
+  justify-content: space-around;
+  margin-left: 4rem;
 }
-.inquiry-table-Thymus-content-slider {
-  width: 50% !important;
+.inquiry-table-Thymus-content-row {
+  width: 58vw;
+  height: 20vh;
+  font-size: 1.6rem;
   display: flex;
-  justify-content: center;
-  align-items: left;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 3rem;
 }
 
-
-
-.inquiry-table-Thymus-content-description {
-  width: 50% !important;
+.inquiry-table-Thymus-content-row-Note {
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  width: 20vw;
+  height: 16vh;
 }
-
-.inquiry-table-Thymus-textArea {
-  width: 100%;
-  height: 30vh;
+.inquiry-table-Thymus-content-row-Note-head {
+  display: flex;
+  align-items: center;
+}
+.inquiry-table-Thymus-content-row-input-Note {
+  width: 20rem !important;
+  height: 10rem !important;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
   font-size: 16px;
-  resize: vertical; 
-  box-sizing: border-box; 
+  resize: vertical;
+  box-sizing: border-box;
+  flex-direction: column;
 }
-.inquiry-table-Thymus-content-submit {
+
+
+
+.Thymus-alert-input {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  color: red;
+  font-size: 1.3rem;
+
+}
+
+.Thymus-placeholder {
+  position: absolute;
+  top: 1.2rem;
+  right: 5rem;
+  color: rgb(81, 80, 80);
+  font-size: 1.2rem;
+}
+
+.MuiAlert-message {
+  font-size: 0.98rem;
+}
+.MuiAlert-root {
+  margin-top: 0.5rem;
+}
+
+.inquiry-table-Thymus-content-row {
+  width: 58vw;
+  height: 20vh;
+  font-size: 1.6rem;
   display: flex;
-  flex-direction: row;
-  height: 12vh;
-  justify-content: center;
   align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 3rem;
+}
+
+.inquiry-table-Thymus-content-row-head {
+  display: flex;
+  align-items: center;
+}
+.inquiry-table-Thymus-content-row input[type="date"] {
+  font-size: 1.2rem;
+}
+.inquiry-table-Thymus-content-row input[type="text"] {
+  font-size: 1.7rem;
+  align-items: center ;
+
+}
+
+.inquiry-table-Thymus-content-row input {
+  background-color: #eeeeee;
+  border: 0;
+  border-radius: 0.7rem;
+  padding: 0.3rem;
+  width: 14vw;
+  height: 5vh;
+  margin-top: 0.2rem;
+  align-items: center ;
+
+}
+
+.inquiry-table-Thymus-content-row input:hover {
+  cursor: pointer;
+}
+
+.inquiry-table-Thymus-content-row input:focus {
+  outline: 0.15rem solid #7c7b7b;
+}
+
+.inquiry-table-Thymus-submit {
+  height: 15vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 4rem;
+}
+.inquiry-table-Thymus-submit button {
+  width: 10vw;
+  height: 5vh;
+  background-color: #cae7f8;
+  color: #0c537b;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 1.2rem;
+  border: 0;
+}
+.inquiry-table-Thymus-submit button:hover {
+  background-color: white;
+  color: #0c537b;
+  border: 0.15rem solid #0c537b;
+  cursor: pointer;
 }

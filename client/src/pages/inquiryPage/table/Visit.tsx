@@ -83,9 +83,7 @@ const Visit = ({
         setVisit({ ...Visit, [name]: numericValue });
       }
     } else {
-      // Set error message for invalid input
       setErrors({ ...errors, [name]: "請輸入有效的數字！" });
-      // Clear existing warning for the input
       setWarnings({ ...warnings, [name]: "" });
     }
   };
@@ -157,9 +155,9 @@ const Visit = ({
             </div>
           </div>
           <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-SBP">
+          <div className="inquiry-table-Visit-content-row-SBP">
               <div className="inquiry-table-Visit-content-row-SBP-head">
-                <label htmlFor="TSH">SBP</label>
+                <label htmlFor="SBP">SBP</label>
               </div>
               <div style={{ position: "relative" }}>
                 <input
@@ -170,11 +168,11 @@ const Visit = ({
                   name="SBP"
                 />
                 {errors.SBP && (
-                  <div className="Visit-alert-input">{errors.SBP}</div>
+                  <div className="Visit-alert-input">{errors.DBP}</div>
                 )}
                 <Stack>
                   {warnings.SBP && (
-                    <Alert severity="info">{warnings.SBP}</Alert>
+                    <Alert severity="info">{warnings.DBP}</Alert>
                   )}
                 </Stack>
                 {!Visit.SBP && <div className="Visit-placeholder"> (mmHg)</div>}
@@ -204,10 +202,12 @@ const Visit = ({
               </div>
             </div>
           </div>
-
+          <h3 style={{ textAlign: "center", color: "#0c537b" }}>
+            prescription
+          </h3>
           <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-left">
-              <label htmlFor="eyeClosure">pyridostigmine</label>
+              <label htmlFor="pyridostigmine">pyridostigmine</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -234,7 +234,7 @@ const Visit = ({
               </datalist>
             </div>
             <div className="inquiry-table-Visit-content-row-left">
-              <label htmlFor="eyeClosure">compesolone</label>
+              <label htmlFor="compesolone">compesolone</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -263,7 +263,7 @@ const Visit = ({
           </div>
           <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-left">
-              <label htmlFor="swallowing">cellcept</label>
+              <label htmlFor="cellcept">cellcept</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -290,7 +290,7 @@ const Visit = ({
               </datalist>
             </div>
             <div className="inquiry-table-Visit-content-row-right">
-              <label htmlFor="breathing">imuran</label>
+              <label htmlFor="imuran">imuran</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -319,7 +319,7 @@ const Visit = ({
           </div>
           <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-left">
-              <label htmlFor="eyeClosure">prograf</label>
+              <label htmlFor="prograf">prograf</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -346,9 +346,11 @@ const Visit = ({
               </datalist>
             </div>
           </div>
+          <h3 style={{ textAlign: "center", color: "#0c537b" }}>examination</h3>
+
           <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-left">
-              <label htmlFor="swallowing">ptosis</label>
+              <label htmlFor="ptosis">ptosis</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -367,7 +369,7 @@ const Visit = ({
               </datalist>
             </div>
             <div className="inquiry-table-Visit-content-row-right">
-              <label htmlFor="breathing">diplopia</label>
+              <label htmlFor="diplopia">diplopia</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -388,7 +390,7 @@ const Visit = ({
           </div>
           <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-left">
-              <label htmlFor="swallowing">dysphagia</label>
+              <label htmlFor="dysphagia">dysphagia</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -407,7 +409,7 @@ const Visit = ({
               </datalist>
             </div>
             <div className="inquiry-table-Visit-content-row-right">
-              <label htmlFor="breathing">dysarthria</label>
+              <label htmlFor="dysarthria">dysarthria</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -428,7 +430,7 @@ const Visit = ({
           </div>
           <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-left">
-              <label htmlFor="swallowing">dyspnea</label>
+              <label htmlFor="dyspnea">dyspnea</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -447,7 +449,7 @@ const Visit = ({
               </datalist>
             </div>
             <div className="inquiry-table-Visit-content-row-right">
-              <label htmlFor="breathing">limpWeakness</label>
+              <label htmlFor="limpWeakness">limpWeakness</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -467,8 +469,8 @@ const Visit = ({
             </div>
           </div>
           <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-single">
-              <label htmlFor="swallowing">MGFAclassification</label>
+            <div className="inquiry-table-Visit-content-row-left">
+              <label htmlFor="MGFAclassification">MGFAclassification</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
@@ -493,7 +495,7 @@ const Visit = ({
           <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-SBP">
               <div className="inquiry-table-Visit-content-row-SBP-head">
-                <label htmlFor="TSH">note</label>
+                <label htmlFor="note">note</label>
               </div>
               <div style={{ position: "relative" }}>
                 <input
