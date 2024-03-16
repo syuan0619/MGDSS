@@ -8,6 +8,7 @@ import QOL from "../chart/QOL";
 import Thymus from "../chart/Thymus";
 import Visit from "../chart/Visit";
 import { GiChart } from "react-icons/gi";
+import TuneIcon from "@mui/icons-material/Tune";
 
 const Right = ({
   setReplaceComponent,
@@ -98,12 +99,13 @@ const Right = ({
       </div>
       <div className="inquiry-right-set">
         <div className="inquiry-right-each">
+          QMG
           <div className="inquiry-right-table-chart-container">
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("QMG")}
             >
-              toQMGtable
+              <TuneIcon />
             </button>
             <button
               className="inquiry-right-to-chart-button"
@@ -115,12 +117,13 @@ const Right = ({
           <QMG />
         </div>
         <div className="inquiry-right-each">
+          QOL
           <div className="inquiry-right-table-chart-container">
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("QOL")}
             >
-              toQOLtable
+              <TuneIcon />
             </button>
             <button
               className="inquiry-right-to-chart-button"

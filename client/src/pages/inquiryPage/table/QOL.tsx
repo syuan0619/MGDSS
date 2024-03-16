@@ -1,23 +1,7 @@
-import { Button, Slider } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 import "./QOL.css";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-
-const marks = [
-  {
-    value: 0,
-    label: "0",
-  },
-  {
-    value: 1,
-    label: "1",
-  },
-  {
-    value: 2,
-    label: "2",
-  },
-];
+import { IoIosArrowDropleftCircle } from "react-icons/io";
 
 const QOL = ({
   setReplaceComponent,
@@ -41,117 +25,119 @@ const QOL = ({
     overwhelm: 0,
     freshenUp: 0,
     sum: 0,
+    testDate: "",
   });
 
   const scoreQolInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQolScore({ ...qolScore, [e.target.name]: parseFloat(e.target.value) });
+  };
+
+  const dateQolInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQolScore({ ...qolScore, [e.target.name]: e.target.value });
   };
 
   let qolSum = 0;
   Object.values(qolScore)
-    .slice(0, -1)
-    .map((item) => (qolSum += item));
+    .slice(0, -2)
+    .map((item) => (qolSum += item as number));
   qolScore["sum"] = qolSum;
 
-  const onSubmitQolScore = () => {
-    console.log(qolScore);
-  };
-
   const blockLeft = Object.keys(qolScore)
-    .slice(0, 5)
+    .slice(0, 7)
     .map((item) => (
       <>
         <div className="inquiry-table-QOL-content-sliderbox">
           {item}
-          <Slider
-            valueLabelDisplay="auto"
-            defaultValue={0}
-            max={2}
-            marks={marks}
+          <input
+            defaultValue="0"
             onChange={scoreQolInput}
+            type="range"
             name={item}
+            min="0"
+            max="2"
+            step="1"
+            list="tickmarks"
           />
-        </div>
-      </>
-    ));
 
-  const blockMid = Object.keys(qolScore)
-    .slice(5, 10)
-    .map((item) => (
-      <>
-        <div className="inquiry-table-QOL-content-sliderbox">
-          {item}
-          <Slider
-            valueLabelDisplay="auto"
-            defaultValue={0}
-            max={2}
-            marks={marks}
-            onChange={scoreQolInput}
-            name={item}
-          />
+          <datalist id="tickmarks">
+            <option value="0" label="0"></option>
+            <option value="1" label="1"></option>
+            <option value="2" label="2"></option>
+          </datalist>
         </div>
       </>
     ));
 
   const blockRight = Object.keys(qolScore)
-    .slice(10, -1)
+    .slice(7, -2)
     .map((item) => (
       <>
         <div className="inquiry-table-QOL-content-sliderbox">
           {item}
-          <Slider
-            valueLabelDisplay="auto"
-            defaultValue={0}
-            max={2}
-            marks={marks}
+          <input
+            defaultValue="0"
             onChange={scoreQolInput}
+            type="range"
             name={item}
+            min="0"
+            max="2"
+            step="1"
+            list="tickmarks"
           />
+
+          <datalist id="tickmarks">
+            <option value="0" label="0"></option>
+            <option value="1" label="1"></option>
+            <option value="2" label="2"></option>
+          </datalist>
         </div>
       </>
     ));
   return (
     <>
-      <div className="inquiry-table-QOL">
-        <div className="inquiry-table-QOL-closebutton">
-          <button
-            onClick={() => setReplaceComponent("right")}
-            className="inquiry-table-QOL-closebutton-item"
-          >
-            <CloseRoundedIcon />
-          </button>
-        </div>
-        <div className="inquiry-table-QOL-header">QOL</div>
-        <div className="inquiry-table-QOL-content">
-          <div className="inquiry-table-QOL-content-block">
-            <div className="inquiry-table-QOL-content-sliderbox">
-              <input
-                className="inquiry-table-QOL-content-block-textfield"
-                type="date"
-              />
-            </div>
-            {blockLeft}
-          </div>
-          <div className="inquiry-table-QOL-content-block">
-            {blockMid}
-            <div className="inquiry-table-QOL-content-sliderbox">
-              <input
-                className="inquiry-table-QOL-content-block-textfield"
-                disabled
-                value={qolScore["sum"]}
-              />
+      <div className="inquiry-table-QOL-bg">
+        <div className="inquiry-table-QOL">
+          <div className="inquiry-table-QOL-head">
+            <button
+              className="QOL-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+            <p>QOL</p>
+            <div className="inquiry-table-QOL-content-row-sum">
+              <label htmlFor="sum">總分 : </label>
+              <input type="text" id="sum" value={qolSum} name="sum" readOnly />
             </div>
           </div>
-          <div className="inquiry-table-QOL-content-block">
-            {blockRight}
-            <div className="inquiry-table-QOL-content-sliderbox">
-              <button
-                className="inquiry-table-QOL-content-block-buttom"
-                onClick={onSubmitQolScore}
-              >
-                確定
-              </button>
+          <div className="inquiry-table-QOL-content">
+            <div className="inquiry-table-QOL-content-block-left">
+              <div className="inquiry-table-QOL-content-sliderbox">
+                <input
+                  className="inquiry-table-QOL-content-block-textfield"
+                  type="date"
+                  value={qolScore.testDate}
+                  onChange={dateQolInput}
+                  name="testDate"
+                />
+              </div>
+              {blockLeft}
             </div>
+            <div className="inquiry-table-QOL-content-block-right">
+              {blockRight}
+            </div>
+          </div>
+          <div className="inquiry-table-QOL-submit">
+            <button
+              onClick={() => {
+                if (confirm("確定送出結果嗎?")) {
+                  console.log("送出結果：", qolScore);
+                }
+                setReplaceComponent("right");
+              }}
+            >
+              儲存
+            </button>
           </div>
         </div>
       </div>
