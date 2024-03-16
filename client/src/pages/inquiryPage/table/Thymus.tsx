@@ -36,7 +36,7 @@ const Thymus = ({
           >
             <IoIosArrowDropleftCircle />
           </button>
-          <p>BloodTest</p>
+          <p>Thymus</p>
         </div>
         <div className="inquiry-table-Thymus-content">
           <div className="inquiry-table-BloodTest-content-row">

@@ -9,6 +9,10 @@ const Visit = ({
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    return currentDate.toISOString().slice(0, 10);
+  };
   const [Visit, setVisit] = useState<typeVisit>({
     treat: 0,
     date: "",
@@ -34,6 +38,7 @@ const Visit = ({
       MGFAclassification: 0,
     },
   });
+  
   const maxValues: { [key: string]: number } = {
     SBP: 120,
     DBP: 80,
@@ -91,6 +96,7 @@ const Visit = ({
     const confirmResult = confirm("確定送出結果嗎?");
     if (confirmResult) {
       console.log(Visit);
+      console.log("Date", getCurrentDate());
     }
   };
 
