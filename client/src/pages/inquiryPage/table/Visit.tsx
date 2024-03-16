@@ -1,15 +1,19 @@
 import "./Visit.css";
 import { useState } from "react";
-import { Slider } from "@mui/material";
+import { Visit as typeVisit } from "../../../types/Patient";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { Alert, Stack } from "@mui/material";
 
 const Visit = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
-  const [formData, setFormData] = useState({
+  const [Visit, setVisit] = useState<typeVisit>({
     treat: 0,
-    sliderValueSelfAssessment: 0,
+    date: "",
+
+    selfAssessment: 0,
     note: "",
     SBP: 0,
     DBP: 0,
@@ -30,425 +34,485 @@ const Visit = ({
       MGFAclassification: 0,
     },
   });
-
-  const getCurrentDate = () => {
-    const currentDate = new Date();
-    return currentDate.toISOString().slice(0, 10);
+  const maxValues: { [key: string]: number } = {
+    SBP: 120,
+    DBP: 80,
   };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (confirm("確定送出結果嗎?")) {
-      console.log("Form Data:", formData);
-      console.log("Date", getCurrentDate());
-      setReplaceComponent("right");
+  const [errors, setErrors] = useState<{ [key: string]: string }>({
+    SBP: "",
+    DBP: "",
+  });
+
+  const [warnings, setWarnings] = useState<{ [key: string]: string }>({
+    SBP: "",
+    DBP: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    const numericValue = value.trim() !== "" ? parseFloat(value) : 0;
+
+    if (!isNaN(numericValue) || value === "") {
+      if (name in maxValues && numericValue > maxValues[name]) {
+        setWarnings({
+          ...warnings,
+          [name]: `正常範圍到 ${maxValues[name]}, 請確認！`,
+        });
+      } else {
+        setErrors({ ...errors, [name]: "" });
+        setWarnings({ ...warnings, [name]: "" });
+      }
+
+      if (name === "date" || name === "note") {
+        setVisit({ ...Visit, [name]: value });
+      } else if (name in Visit.prescription) {
+        const updatedPrescription = {
+          ...Visit.prescription,
+          [name]: numericValue,
+        };
+        setVisit({ ...Visit, prescription: updatedPrescription });
+      } else if (name in Visit.examination) {
+        const updatedExamination = {
+          ...Visit.examination,
+          [name]: numericValue,
+        };
+        setVisit({ ...Visit, examination: updatedExamination });
+      } else {
+        setVisit({ ...Visit, [name]: numericValue });
+      }
+    } else {
+      // Set error message for invalid input
+      setErrors({ ...errors, [name]: "請輸入有效的數字！" });
+      // Clear existing warning for the input
+      setWarnings({ ...warnings, [name]: "" });
+    }
+  };
+  const handleSubmit = async () => {
+    const confirmResult = confirm("確定送出結果嗎?");
+    if (confirmResult) {
+      console.log(Visit);
     }
   };
 
-  const marks0to4 = [
-    { value: 0, label: 0 },
-    { value: 1, label: 1 },
-    { value: 2, label: 2 },
-    { value: 3, label: 3 },
-    { value: 4, label: 4 },
-  ];
-
-  const marks0to2 = [
-    { value: 0, label: 0 },
-    { value: 1, label: 1 },
-    { value: 2, label: 1 },
-  ];
-
-  const marks0to5 = [
-    { value: 0, label: 0 },
-    { value: 1, label: 1 },
-    { value: 2, label: 2 },
-    { value: 3, label: 3 },
-    { value: 4, label: 4 },
-    { value: 5, label: 5 },
-  ];
-
-  const marks0to9 = [
-    { value: 0, label: 0 },
-    { value: 3, label: 3 },
-    { value: 6, label: 6 },
-    { value: 9, label: 9 },
-  ];
-
   return (
     <div className="inquiry-table-Visit-all">
-      <div className="inquiry-table-Visit-head-content">
+      <div className="inquiry-table-Visit-bg">
         <div className="inquiry-table-Visit-head">
-          <h3>看診紀錄</h3>
+          <button
+            className="Visit-backToRight"
+            onClick={() => setReplaceComponent("right")}
+          >
+            <IoIosArrowDropleftCircle />
+          </button>
+          <p>看診紀錄</p>
+          <div className="inquiry-table-Visit-content-row-sum">
+            <label></label>
+          </div>
         </div>
-        <form onSubmit={onSubmit}>
-          <div className="inquiry-table-Visit-row">
-            <div className="inquiry-table-Visit-left-row">
-              <h3>住院治療方式 </h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.treat}
-                max={4}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to4}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    treat: Number(value),
-                  });
-                }}
+        <div className="inquiry-table-Visit-content">
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-left">
+              <label htmlFor="doubleVision">treat</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="treat"
+                name="treat"
+                min="0"
+                max="4"
+                step="1"
+                list="treat"
               />
+
+              <datalist id="tickmarks">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+                <option value="4" label="4"></option>
+              </datalist>
             </div>
-            <div className="inquiry-table-Visit-right-row">
-              <div className="inquiry-table-Visit-row-"></div>
-              <h3>自覺嚴重程度</h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.sliderValueSelfAssessment}
-                max={2}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to2}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    sliderValueSelfAssessment: Number(value),
-                  });
-                }}
+            <div className="inquiry-table-Visit-content-row-right">
+              <label htmlFor="ptosis">selfAssessment</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="selfAssessment"
+                name="selfAssessment"
+                min="0"
+                max="2"
+                step="1"
+                list="selfAssessment"
               />
+
+              <datalist id="selfAssessment">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+              </datalist>
             </div>
-            <div className="inquiry-table-Visit-row">
-              <div className="inquiry-table-Visit-left-row">
-                <h3>SBP </h3>
-                <div className="inquiry-table-Visit-content-description">
-                  <input
-                    type="number"
-                    className="inquiry-table-Visit-textInput"
-                    aria-label="SBP"
-                    onChange={(event) => {
-                      const value = (event.target as HTMLInputElement).value;
-                      setFormData({
-                        ...formData,
-                        SBP: Number(value),
-                      });
-                    }}
-                  />
-                </div>
+          </div>
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-SBP">
+              <div className="inquiry-table-Visit-content-row-SBP-head">
+                <label htmlFor="TSH">SBP</label>
               </div>
-              <div className="inquiry-table-Visit-right-row">
-                <h3>DBP </h3>
-                <div className="inquiry-table-Visit-content-description">
-                  <input
-                    className="inquiry-table-Visit-textInput"
-                    aria-label="DBP"
-                    onChange={(event) => {
-                      const value = (event.target as HTMLInputElement).value;
-                      setFormData({
-                        ...formData,
-                        DBP: Number(value),
-                      });
-                    }}
-                  />
-                </div>
+              <div style={{ position: "relative" }}>
+                <input
+                  defaultValue="0"
+                  onChange={handleChange}
+                  type="text"
+                  id="SBP"
+                  name="SBP"
+                />
+                {errors.SBP && (
+                  <div className="Visit-alert-input">{errors.SBP}</div>
+                )}
+                <Stack>
+                  {warnings.SBP && (
+                    <Alert severity="info">{warnings.SBP}</Alert>
+                  )}
+                </Stack>
+                {!Visit.SBP && <div className="Visit-placeholder"> (mmHg)</div>}
               </div>
             </div>
-          </div>
-          <h4 style={{ textAlign: "center" }}>處方</h4>
-          <div className="inquiry-table-Visit-row">
-            <div className="inquiry-table-Visit-left-row">
-              <h3>大力丸用藥量 </h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.prescription.pyridostigmine}
-                max={9}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to9}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    prescription: {
-                      ...formData.prescription,
-                      pyridostigmine: Number(value),
-                    },
-                  });
-                }}
-              />
-            </div>
-            <div className="inquiry-table-Visit-right-row">
-              <div className="inquiry-table-Visit-row-"></div>
-              <h3>類固醇用藥量</h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.prescription.compesolone}
-                max={9}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to9}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    prescription: {
-                      ...formData.prescription,
-                      compesolone: Number(value),
-                    },
-                  });
-                }}
-              />
+            <div className="inquiry-table-Visit-content-row-DBP">
+              <div className="inquiry-table-Visit-content-row-DBP-head">
+                <label htmlFor="freeThyroxine">DBP</label>
+              </div>
+              <div style={{ position: "relative" }}>
+                <input
+                  defaultValue="0"
+                  onChange={handleChange}
+                  type="text"
+                  id="freeThyroxine"
+                  name="freeThyroxine"
+                />
+                {errors.DBP && (
+                  <div className="Visit-alert-input">{errors.DBP}</div>
+                )}
+                <Stack>
+                  {warnings.DBP && (
+                    <Alert severity="info">{warnings.DBP}</Alert>
+                  )}
+                </Stack>
+                {!Visit.DBP && <div className="Visit-placeholder"> (mmHg)</div>}
+              </div>
             </div>
           </div>
-          <div className="inquiry-table-Visit-row">
-            <div className="inquiry-table-Visit-left-row">
-              <h3>山喜多用藥量 </h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.prescription.cellcept}
-                max={9}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to9}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    prescription: {
-                      ...formData.prescription,
-                      cellcept: Number(value),
-                    },
-                  });
-                }}
+
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-left">
+              <label htmlFor="eyeClosure">pyridostigmine</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="pyridostigmine"
+                name="pyridostigmine"
+                min="0"
+                max="9"
+                step="1"
+                list="pyridostigmine"
               />
+
+              <datalist id="pyridostigmine">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+                <option value="4" label="4"></option>
+                <option value="5" label="5"></option>
+                <option value="6" label="6"></option>
+                <option value="7" label="7"></option>
+                <option value="8" label="8"></option>
+                <option value="9" label="9"></option>
+              </datalist>
             </div>
-            <div className="inquiry-table-Visit-right-row">
-              <div className="inquiry-table-Visit-row-"></div>
-              <h3>移護寧用藥量</h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.prescription.imuran}
-                max={9}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to9}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    prescription: {
-                      ...formData.prescription,
-                      imuran: Number(value),
-                    },
-                  });
-                }}
+            <div className="inquiry-table-Visit-content-row-left">
+              <label htmlFor="eyeClosure">compesolone</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="compesolone"
+                name="compesolone"
+                min="0"
+                max="9"
+                step="1"
+                list="compesolone"
               />
-            </div>
-          </div>
-          <div className="inquiry-table-Visit-row">
-            <div className="inquiry-table-Visit-left-row">
-              <h3>普洛可用藥量</h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.prescription.prograf}
-                max={9}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to9}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    prescription: {
-                      ...formData.prescription,
-                      prograf: Number(value),
-                    },
-                  });
-                }}
-              />
+
+              <datalist id="compesolone">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+                <option value="4" label="4"></option>
+                <option value="5" label="5"></option>
+                <option value="6" label="6"></option>
+                <option value="7" label="7"></option>
+                <option value="8" label="8"></option>
+                <option value="9" label="9"></option>
+              </datalist>
             </div>
           </div>
-          <h4 style={{ textAlign: "center" }}>檢測</h4>
-          <div className="inquiry-table-Visit-row">
-            <div className="inquiry-table-Visit-left-row">
-              <h3>眼瞼下垂 </h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.examination.ptosis}
-                max={1}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to5}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    examination: {
-                      ...formData.examination,
-                      ptosis: Number(value),
-                    },
-                  });
-                }}
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-left">
+              <label htmlFor="swallowing">cellcept</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="cellcept"
+                name="cellcept"
+                min="0"
+                max="9"
+                step="1"
+                list="cellcept"
               />
+
+              <datalist id="cellcept">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+                <option value="4" label="4"></option>
+                <option value="5" label="5"></option>
+                <option value="6" label="6"></option>
+                <option value="7" label="7"></option>
+                <option value="8" label="8"></option>
+                <option value="9" label="9"></option>
+              </datalist>
             </div>
-            <div className="inquiry-table-Visit-right-row">
-              <div className="inquiry-table-Visit-row-"></div>
-              <h3>複視</h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.examination.diplopia}
-                max={1}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to5}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    examination: {
-                      ...formData.examination,
-                      diplopia: Number(value),
-                    },
-                  });
-                }}
+            <div className="inquiry-table-Visit-content-row-right">
+              <label htmlFor="breathing">imuran</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="imuran"
+                name="imuran"
+                min="0"
+                max="9"
+                step="1"
+                list="imuran"
               />
-            </div>
-          </div>
-          <div className="inquiry-table-Visit-row">
-            <div className="inquiry-table-Visit-left-row">
-              <h3>吞嚥困難</h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.examination.dysphagia}
-                max={1}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to5}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    examination: {
-                      ...formData.examination,
-                      dysphagia: Number(value),
-                    },
-                  });
-                }}
-              />
-            </div>
-            <div className="inquiry-table-Visit-right-row">
-              <div className="inquiry-table-Visit-row-"></div>
-              <h3>講話不清</h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.examination.dysarthria}
-                max={1}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to5}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    examination: {
-                      ...formData.examination,
-                      dysarthria: Number(value),
-                    },
-                  });
-                }}
-              />
+
+              <datalist id="imuran">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+                <option value="4" label="4"></option>
+                <option value="5" label="5"></option>
+                <option value="6" label="6"></option>
+                <option value="7" label="7"></option>
+                <option value="8" label="8"></option>
+                <option value="9" label="9"></option>
+              </datalist>
             </div>
           </div>
-          <div className="inquiry-table-Visit-row">
-            <div className="inquiry-table-Visit-left-row">
-              <h3>呼吸困難</h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.examination.dyspnea}
-                max={1}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to5}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    examination: {
-                      ...formData.examination,
-                      dyspnea: Number(value),
-                    },
-                  });
-                }}
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-left">
+              <label htmlFor="eyeClosure">prograf</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="prograf"
+                name="prograf"
+                min="0"
+                max="9"
+                step="1"
+                list="prograf"
               />
-            </div>
-            <div className="inquiry-table-Visit-right-row">
-              <div className="inquiry-table-Visit-row-"></div>
-              <h3>手腳無力</h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.examination.limpWeakness}
-                max={1}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to5}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    examination: {
-                      ...formData.examination,
-                      limpWeakness: Number(value),
-                    },
-                  });
-                }}
-              />
+
+              <datalist id="prograf">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+                <option value="4" label="4"></option>
+                <option value="5" label="5"></option>
+                <option value="6" label="6"></option>
+                <option value="7" label="7"></option>
+                <option value="8" label="8"></option>
+                <option value="9" label="9"></option>
+              </datalist>
             </div>
           </div>
-          <div className="inquiry-table-Visit-row">
-            <div className="inquiry-table-Visit-left-row">
-              <h3>MGFA協會分類</h3>
-              <Slider
-                className="inquiry-table-Visit-left-slider"
-                value={formData.examination.MGFAclassification}
-                max={5}
-                min={0}
-                valueLabelDisplay="auto"
-                marks={marks0to5}
-                onChange={(event) => {
-                  const value = (event.target as HTMLInputElement).value;
-                  setFormData({
-                    ...formData,
-                    examination: {
-                      ...formData.examination,
-                      MGFAclassification: Number(value),
-                    },
-                  });
-                }}
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-left">
+              <label htmlFor="swallowing">ptosis</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="ptosis"
+                name="ptosis"
+                min="0"
+                max="1"
+                step="1"
+                list="ptosis"
               />
+
+              <datalist id="ptosis">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+              </datalist>
+            </div>
+            <div className="inquiry-table-Visit-content-row-right">
+              <label htmlFor="breathing">diplopia</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="diplopia"
+                name="diplopia"
+                min="0"
+                max="1"
+                step="1"
+                list="imuran"
+              />
+
+              <datalist id="diplopia">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+              </datalist>
             </div>
           </div>
-          <h4 style={{ textAlign: "center" }}>註記</h4>
-          <div className="inquiry-table-Visit-note">
-            <textarea
-              className="inquiry-table-Visit-textArea"
-              aria-label="Temperature"
-              id="Note"
-              onChange={(e) => {
-                setFormData({ ...formData, note: e.target.value });
-              }}
-            />
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-left">
+              <label htmlFor="swallowing">dysphagia</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="dysphagia"
+                name="dysphagia"
+                min="0"
+                max="1"
+                step="1"
+                list="dysphagia"
+              />
+
+              <datalist id="dysphagia">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+              </datalist>
+            </div>
+            <div className="inquiry-table-Visit-content-row-right">
+              <label htmlFor="breathing">dysarthria</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="dysarthria"
+                name="dysarthria"
+                min="0"
+                max="1"
+                step="1"
+                list="dysarthria"
+              />
+
+              <datalist id="dysarthria">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+              </datalist>
+            </div>
           </div>
-          <div className="inquiry-table-Visit-content-submit">
-            <button id="submitButton" type="submit">
-              將結果加入病歷
-            </button>
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-left">
+              <label htmlFor="swallowing">dyspnea</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="dyspnea"
+                name="dyspnea"
+                min="0"
+                max="1"
+                step="1"
+                list="dyspnea"
+              />
+
+              <datalist id="dyspnea">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+              </datalist>
+            </div>
+            <div className="inquiry-table-Visit-content-row-right">
+              <label htmlFor="breathing">limpWeakness</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="limpWeakness"
+                name="limpWeakness"
+                min="0"
+                max="1"
+                step="1"
+                list="limpWeakness"
+              />
+
+              <datalist id="limpWeakness">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+              </datalist>
+            </div>
           </div>
-        </form>
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-single">
+              <label htmlFor="swallowing">MGFAclassification</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="MGFAclassification"
+                name="MGFAclassification"
+                min="1"
+                max="5"
+                step="1"
+                list="MGFAclassification"
+              />
+
+              <datalist id="MGFAclassification">
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+                <option value="4" label="4"></option>
+                <option value="5" label="5"></option>
+              </datalist>
+            </div>
+          </div>
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-SBP">
+              <div className="inquiry-table-Visit-content-row-SBP-head">
+                <label htmlFor="TSH">note</label>
+              </div>
+              <div style={{ position: "relative" }}>
+                <input
+                  className="inquiry-table-Visit-content-row-input-note "
+                  defaultValue=""
+                  onChange={handleChange}
+                  type="text"
+                  id="note"
+                  name="note"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="inquiry-table-Visit-submit">
+          <button onClick={handleSubmit}>儲存</button>
+        </div>
       </div>
     </div>
   );
 };
-
 export default Visit;
