@@ -1,4 +1,4 @@
-import "./BloodTest.css";
+ import "./BloodTest.css";
 import { useState } from "react";
 import { BloodTest as typeBloodTest } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
