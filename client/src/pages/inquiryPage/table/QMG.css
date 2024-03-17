@@ -10,7 +10,7 @@
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 .inquiry-table-QMG {
@@ -75,39 +75,54 @@
   display: flex;
   flex-direction: row;
   overflow-y: auto;
+  font-size: 1.6rem;
+}
+
+.inquiry-table-QMG-content input:hover {
+  cursor: pointer;
 }
 
 .inquiry-table-QMG-content-block-left {
   width: 100%;
   height: 100%;
-  margin: 0 2rem 0 4rem;
+  margin: 0 0 0 4rem;
 }
 
+.inquiry-table-QMG-content-block-left :nth-child(1) {
+  margin-top: 0;
+}
 .inquiry-table-QMG-content-block-right {
   width: 100%;
   height: 100%;
-  margin: 0 4rem 0 2rem;
+  margin: 0 4rem 0;
 }
 
+.inquiry-table-QMG-content-block-right :nth-child(1) {
+  margin-top: 0;
+}
 .inquiry-table-QMG-content-sliderbox {
   margin: 2rem;
   display: flex;
   flex-direction: column;
 }
 
+input .QMQ-datalist {
+  width: 17vw;
+}
 .inquiry-table-QMG-content-block-textfield {
-  width: 100%;
-  height: 9vh;
-  border-radius: 5px;
-  background-color: rgb(240, 240, 240);
-  border: 2px solid rgb(240, 240, 240);
-  font-size: 2vh;
+  width: 16vw;
+  height: 5vh;
+  font-size: 1.3rem;
+  background-color: #eeeeee;
+  border: 0;
+  border-radius: 0.7rem;
+  padding: 0.3rem;
+  margin-top: 1.4rem;
 }
 
 .inquiry-table-QMG-content-block-textfield:focus {
-  outline-color: #26cfff;
+  outline: 0.15rem solid #7c7b7b;
 }
-
 .inquiry-table-QMG-content-block-buttom {
   width: 5rem;
   height: 3rem;

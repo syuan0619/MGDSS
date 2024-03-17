@@ -47,7 +47,7 @@ const QOL = ({
     .map((item) => (
       <>
         <div className="inquiry-table-QOL-content-sliderbox">
-          {item}
+          <p>{item}</p>
           <input
             defaultValue="0"
             onChange={scoreQolInput}
@@ -59,7 +59,7 @@ const QOL = ({
             list="tickmarks"
           />
 
-          <datalist id="tickmarks">
+          <datalist className="QOL-datalist" id="tickmarks">
             <option value="0" label="0"></option>
             <option value="1" label="1"></option>
             <option value="2" label="2"></option>
@@ -73,7 +73,7 @@ const QOL = ({
     .map((item) => (
       <>
         <div className="inquiry-table-QOL-content-sliderbox">
-          {item}
+          <p>{item}</p>
           <input
             defaultValue="0"
             onChange={scoreQolInput}
@@ -85,7 +85,7 @@ const QOL = ({
             list="tickmarks"
           />
 
-          <datalist id="tickmarks">
+          <datalist className="QOL-datalist" id="tickmarks">
             <option value="0" label="0"></option>
             <option value="1" label="1"></option>
             <option value="2" label="2"></option>
@@ -113,6 +113,7 @@ const QOL = ({
           <div className="inquiry-table-QOL-content">
             <div className="inquiry-table-QOL-content-block-left">
               <div className="inquiry-table-QOL-content-sliderbox">
+                <label htmlFor="testDate">Test Date:</label>
                 <input
                   className="inquiry-table-QOL-content-block-textfield"
                   type="date"

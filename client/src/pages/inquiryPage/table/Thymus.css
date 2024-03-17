@@ -6,7 +6,6 @@
 .inquiry-table-Thymus-bg {
   width: 100%;
   height: 95%;
-  margin-top: 1rem;
   margin-left: 1rem;
   background-color: rgb(255, 255, 255);
   border-radius: 1rem;
@@ -19,7 +18,7 @@
   background-color: white;
   font-size: 3.7rem;
   color: #c7c8cc;
-  margin-left: -17rem;
+  margin-left: -20rem;
 }
 .Thymus-backToRight:hover {
   cursor: pointer;
@@ -34,95 +33,51 @@
 }
 
 .inquiry-table-Thymus-head p {
-  margin-left: 12rem;
+  margin-left: 15rem;
 }
 .inquiry-table-Thymus-content {
-  height: 65vh;
+  height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  margin-left: 4rem;
 }
+
 .inquiry-table-Thymus-content-row {
-  width: 58vw;
-  height: 20vh;
+  width: 60vw;
+  height: 22vh;
   font-size: 1.6rem;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  margin-bottom: 3rem;
-}
-
-.inquiry-table-Thymus-content-row-Note {
-  display: flex;
-  flex-direction: column;
-  width: 20vw;
-  height: 16vh;
-}
-.inquiry-table-Thymus-content-row-Note-head {
-  display: flex;
-  align-items: center;
-}
-.inquiry-table-Thymus-content-row-input-Note {
-  width: 20rem !important;
-  height: 10rem !important;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 16px;
-  resize: vertical;
-  box-sizing: border-box;
-  flex-direction: column;
-}
-
-
-
-.Thymus-alert-input {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  color: red;
-  font-size: 1.3rem;
-
-}
-
-.Thymus-placeholder {
-  position: absolute;
-  top: 1.2rem;
-  right: 5rem;
-  color: rgb(81, 80, 80);
-  font-size: 1.2rem;
-}
-
-.MuiAlert-message {
-  font-size: 0.98rem;
-}
-.MuiAlert-root {
-  margin-top: 0.5rem;
-}
-
-.inquiry-table-Thymus-content-row {
-  width: 58vw;
-  height: 20vh;
-  font-size: 1.6rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-bottom: 3rem;
 }
 
 .inquiry-table-Thymus-content-row-head {
   display: flex;
   align-items: center;
 }
+.inquiry-table-Thymus-content-row-testdate,
+.inquiry-table-Thymus-content-row-thymusStatus,
+.inquiry-table-Thymus-content-row-thymusDescription {
+  display: flex;
+  flex-direction: column;
+}
+
+.inquiry-table-Thymus-content-row-thymusDescription {
+  margin-right: 22rem;
+}
 .inquiry-table-Thymus-content-row input[type="date"] {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+.inquiry-table-Thymus-content-row input[type="date"]:hover {
   font-size: 1.2rem;
 }
 .inquiry-table-Thymus-content-row input[type="text"] {
   font-size: 1.7rem;
-  align-items: center ;
-
+  align-items: center;
+}
+.inquiry-table-Thymus-content-row input[type="text"]:focus {
+  cursor: text;
 }
 
 .inquiry-table-Thymus-content-row input {
@@ -130,19 +85,35 @@
   border: 0;
   border-radius: 0.7rem;
   padding: 0.3rem;
-  width: 14vw;
+  width: 16vw;
   height: 5vh;
   margin-top: 0.2rem;
-  align-items: center ;
-
+  align-items: center;
+}
+.inquiry-table-Thymus-content-row input[type="range"] {
+  padding: 0;
 }
 
 .inquiry-table-Thymus-content-row input:hover {
   cursor: pointer;
 }
 
-.inquiry-table-Thymus-content-row input:focus {
+.inquiry-table-Thymus-content-row input[type="date"]:focus,
+[type="text"]:focus {
   outline: 0.15rem solid #7c7b7b;
+}
+
+.Thymus-datalist {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  width: 16.5vw;
+  font-size: 1.3rem;
+}
+option {
+  padding: 0;
 }
 
 .inquiry-table-Thymus-submit {
