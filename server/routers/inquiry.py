@@ -1,10 +1,11 @@
 import json
 import models
 from fastapi import APIRouter, UploadFile, File
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response, StreamingResponse
 from pydantic import ValidationError
 from mongoDB.connectDB import updatePatient, updateEntirePatient, getPatientById
 from OCR.ImgToWord import recognize, getWhite
+import io
 
 router = APIRouter(prefix="/inquiry", tags=["inquiry"])
 
@@ -132,10 +133,12 @@ async def recognize_text(file: UploadFile=File(...)):
     for result in output:
         response.append({
             "musclePart": result["target_words"],
-            "preActivation": json.loads(result['result_data']),
+            "preActivation": result['result_data'],
             # "preActivation": [ json.loads(activation) for activation in result['result_data']]
             # "postActivation":
         })
-    croped_image = getWhite(file.file)
-    print("bytes: ",croped_image.tobytes())
-    return response
+    buffer = io.BytesIO()
+    getWhite(file.file).save(buffer, format="PNG")
+    buffer.seek(0)
+    print(response)
+    return StreamingResponse(content=buffer, media_type="image/png", headers={"results":json.dumps(response)})
