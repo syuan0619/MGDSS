@@ -67,19 +67,6 @@ def perform_ocr(resized_image):
                 result_image_gray = cv2.cvtColor(result_image_cropped, cv2.COLOR_BGR2GRAY)
 
                 extracted_text = pytesseract.image_to_string(result_image_gray)
-<<<<<<< Updated upstream
-                extracted_text = extracted_text.strip()
-                split_text = re.split('[\n:]+', extracted_text)
-                json_string = json.dumps(split_text, ensure_ascii=False)
-
-                # print(json_string)
-                results.append({
-                    "target_words": target_words,
-                    "result_data": json_string
-                })
-                # cv2.imshow("result_image", result_image_cropped)
-                # cv2.waitKey(0)
-=======
                 extracted_text = extracted_text.strip().encode('ascii', 'ignore').decode('ascii')
                 split_text = re.split('[\n:]+', extracted_text)
 
@@ -92,7 +79,6 @@ def perform_ocr(resized_image):
                         "target_words": target_word,
                         "result_data": split_text
                     })
->>>>>>> Stashed changes
         
     return results
 
