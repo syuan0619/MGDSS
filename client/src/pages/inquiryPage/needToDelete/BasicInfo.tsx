@@ -15,7 +15,7 @@ function BasicInfo() {
     symptom: "",
   });
 
-  const changeInput = (event: { target: { name: any; value: any } }) => {
+  const changeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setChange({ ...change, [name]: value });
   };

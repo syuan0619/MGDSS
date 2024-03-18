@@ -2,6 +2,7 @@ import "./Thymus.css";
 import { useState } from "react";
 import { Thymus as typeThymus } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import api from "../../../api";
 
 const Thymus = ({
   setReplaceComponent,
@@ -29,8 +30,14 @@ const Thymus = ({
 
   const handleSubmit = async () => {
     const confirmResult = confirm("確定送出結果嗎?");
+
     if (confirmResult) {
       console.log(Thymusscore);
+      await api
+        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/thymus`, Thymusscore)
+        .then((res) => {
+          console.log(res.data);
+        });
     }
   };
 

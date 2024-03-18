@@ -9,7 +9,7 @@ const ADL = ({
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
-  const [ADLscore, setADLScore] = useState<typeADL>({
+  const [ADLscore, setADLscore] = useState<typeADL>({
     testDate: "",
     talking: 0,
     chewing: 0,
@@ -28,11 +28,11 @@ const ADL = ({
     const { name, value } = e.target;
 
     if (name === "testDate") {
-      setADLScore({ ...ADLscore, testDate: value });
+      setADLscore({ ...ADLscore, testDate: value });
     } else {
       const numericValue = parseInt(value, 10);
 
-      setADLScore({
+      setADLscore({
         ...ADLscore,
         [name]: numericValue,
         sum: ADLscore.sum + numericValue - beforeChangedParam,
