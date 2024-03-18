@@ -98,7 +98,7 @@ const MG = ({
                 list="tickmarks"
               />
 
-              <datalist id="tickmarks">
+              <datalist className="MG-datalist" id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -121,7 +121,7 @@ const MG = ({
                 list="tickmarks"
               />
 
-              <datalist id="tickmarks">
+              <datalist className="MG-datalist" id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -142,7 +142,7 @@ const MG = ({
                 list="tickmarks"
               />
 
-              <datalist id="tickmarks">
+              <datalist className="MG-datalist" id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -165,7 +165,7 @@ const MG = ({
                 list="tickmarks"
               />
 
-              <datalist id="tickmarks">
+              <datalist className="MG-datalist" id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -186,7 +186,7 @@ const MG = ({
                 list="tickmarks"
               />
 
-              <datalist id="tickmarks">
+              <datalist className="MG-datalist" id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -209,7 +209,7 @@ const MG = ({
                 list="tickmarks"
               />
 
-              <datalist id="tickmarks">
+              <datalist className="MG-datalist" id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -230,7 +230,7 @@ const MG = ({
                 list="tickmarks"
               />
 
-              <datalist id="tickmarks">
+              <datalist className="MG-datalist" id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -253,7 +253,7 @@ const MG = ({
                 list="tickmarks"
               />
 
-              <datalist id="tickmarks">
+              <datalist className="MG-datalist" id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -274,7 +274,7 @@ const MG = ({
                 list="tickmarks"
               />
 
-              <datalist id="tickmarks">
+              <datalist className="MG-datalist" id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -297,7 +297,7 @@ const MG = ({
                 list="tickmarks"
               />
 
-              <datalist id="tickmarks">
+              <datalist className="MG-datalist" id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>

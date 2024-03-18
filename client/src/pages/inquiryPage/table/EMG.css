@@ -1,14 +1,12 @@
 .inquiry-table-EMG-all {
-  width: 70vw;
+  width: 68vw;
   height: 85vh;
-  float: right;
   display: flex;
 }
 
 .inquiry-table-EMG-head-content {
   width: 100%;
   height: 95%;
-  margin-top: 1rem;
   margin-left: 1rem;
   background-color: rgb(255, 255, 255);
   border-radius: 1rem;
@@ -24,6 +22,20 @@
   font-size: 1.6rem;
 }
 
+.inquiry-table-EMG-head p {
+  margin-left: 18rem;
+}
+.EMG-backToRight {
+  border: 0;
+  background-color: white;
+  font-size: 3.2rem;
+  color: #c7c8cc;
+  margin-left: -20rem;
+}
+.EMG-backToRight:hover {
+  cursor: pointer;
+  color: #b4b4b8;
+}
 .inquiry-table-EMG-content {
   display: flex;
   flex-direction: row;
@@ -62,11 +74,17 @@
   align-items: center;
 }
 
+.inquiry-table-EMG-content textarea:hover {
+  cursor: pointer;
+}
+
+.inquiry-table-EMG-content textarea:focus {
+  cursor: text;
+}
 #result {
   width: 25vw;
   height: 20vh;
   font-size: 1.3rem;
-
   background-color: #eeeeee;
   border: 0;
   border-radius: 0.9rem;

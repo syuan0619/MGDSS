@@ -2,6 +2,7 @@ import api from "../../../api";
 import FileInputWithPreview from "../components/OCRPreview";
 import { useEffect, useRef, useState } from "react";
 import "./EMG.css";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
 
 const EMG = ({
   setReplaceComponent,
@@ -43,6 +44,12 @@ const EMG = ({
     <div className="inquiry-table-EMG-all">
       <div className="inquiry-table-EMG-head-content">
         <div className="inquiry-table-EMG-head">
+          <button
+            className="EMG-backToRight"
+            onClick={() => setReplaceComponent("right")}
+          >
+            <IoIosArrowDropleftCircle />
+          </button>
           <p>電生理訊號</p>
         </div>
 

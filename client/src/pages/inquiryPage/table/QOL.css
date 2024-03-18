@@ -10,7 +10,7 @@
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
@@ -76,37 +76,53 @@
   display: flex;
   flex-direction: row;
   overflow-y: auto;
+  font-size: 1.6rem;
+}
+.inquiry-table-QOL-content input:hover {
+  cursor: pointer;
 }
 
 .inquiry-table-QOL-content-block-left {
   width: 100%;
   height: 100%;
-  margin: 0 2rem 0 4rem;
+  margin: 0 0 0 4rem;
 }
 
+.inquiry-table-QOL-content-sliderbox :nth-child(1) {
+  margin-top: 0;
+}
 .inquiry-table-QOL-content-block-right {
   width: 100%;
   height: 100%;
-  margin: 0 4rem 0 2rem;
+  margin: 0 4rem 0 0;
 }
 
+.inquiry-table-QOL-content-sliderbox:nth-child(1) {
+  margin-top: 0;
+}
 .inquiry-table-QOL-content-sliderbox {
   margin: 2rem;
   display: flex;
   flex-direction: column;
 }
 
+.QOL-datalist {
+  width: 20vw;
+}
+
 .inquiry-table-QOL-content-block-textfield {
-  width: 100%;
-  height: 9vh;
-  border-radius: 5px;
-  background-color: rgb(240, 240, 240);
-  border: 2px solid rgb(240, 240, 240);
-  font-size: 2vh;
+  width: 16vw;
+  height: 5vh;
+  font-size: 1.3rem;
+  background-color: #eeeeee;
+  border: 0;
+  border-radius: 0.7rem;
+  padding: 0.3rem;
+  margin-top: 1.4rem;
 }
 
 .inquiry-table-QOL-content-block-textfield:focus {
-  outline-color: #26cfff;
+  outline: 0.15rem solid #7c7b7b;
 }
 
 .inquiry-table-QOL-content-block-buttom {
