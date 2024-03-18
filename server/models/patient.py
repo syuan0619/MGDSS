@@ -1,4 +1,6 @@
 from pydantic import BaseModel, Field
+from typing import Optional
+from pydantic import BaseModel
 
 class OtherHospitalRecord(BaseModel):
 	recentlyDate: str
@@ -135,8 +137,8 @@ class RNS(BaseModel):
 # 電生理訊號
 class EMG(BaseModel):
 	testDate: str
-	imgPath: str
-	RNS: list[RNS]
+	image: Optional[bytes]
+	RNS: list[RNS]  
 
 # 病患資料
 class Patient(BaseModel):

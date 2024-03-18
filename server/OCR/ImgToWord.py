@@ -18,7 +18,6 @@ def recognize(uploadImage):
 def getWhite(uploadImage):
     origin_image = Image.open(uploadImage)
     croped_image = crop(origin_image)
-    print("croped_image type: ", type(croped_image))
     return Image.fromarray(croped_image)
 
 def crop(image):
@@ -67,14 +66,14 @@ def perform_ocr(resized_image):
                 result_image_gray = cv2.cvtColor(result_image_cropped, cv2.COLOR_BGR2GRAY)
 
                 extracted_text = pytesseract.image_to_string(result_image_gray)
-                extracted_text = extracted_text.strip()
+                extracted_text: str = extracted_text.strip().encode('ascii', 'ignore').decode('ascii')
                 split_text = re.split('[\n:]+', extracted_text)
-                json_string = json.dumps(split_text, ensure_ascii=False)
+                # json_string = json.dumps(split_text, ensure_ascii=False)
 
                 # print(json_string)
                 results.append({
                     "target_words": target_words,
-                    "result_data": json_string
+                    "result_data": split_text
                 })
                 # cv2.imshow("result_image", result_image_cropped)
                 # cv2.waitKey(0)
