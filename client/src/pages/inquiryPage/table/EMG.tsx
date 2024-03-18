@@ -13,9 +13,11 @@ const EMG = ({
   const [uploadedFile, setUploadedFile] = useState<File>();
   const [recognizedResult, setRecognizedResult] = useState<string>("");
   // const [modifiedResult, setModifiedResult] = useState<string>("");
+
   const getRecognized = async (formData: FormData) => {
     return await api.post("/recognize", formData);
   };
+
   useEffect(() => {
     if (uploadedFile) {
       const formData = new FormData();

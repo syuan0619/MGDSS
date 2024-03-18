@@ -24,16 +24,21 @@ const MG = ({
     sum: 0,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    beforeChangedParam: number
+  ) => {
     const { name, value } = e.target;
+
     if (name === "testDate") {
-      setMGScore({ ...MGscore, [name]: value });
+      setMGScore({ ...MGscore, testDate: value });
     } else {
       const numericValue = parseInt(value, 10);
+
       setMGScore({
         ...MGscore,
         [name]: numericValue,
-        sum: MGscore.sum + numericValue,
+        sum: MGscore.sum + numericValue - beforeChangedParam,
       });
     }
   };
@@ -81,14 +86,14 @@ const MG = ({
                 id="testDate"
                 name="testDate"
                 value={MGscore.testDate}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, 0)}
               />
             </div>
             <div className="inquiry-table-MG-content-row-ptosis">
               <label htmlFor="ptosis">ptosis</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, MGscore.ptosis)}
                 type="range"
                 id="ptosis"
                 name="ptosis"
@@ -111,7 +116,7 @@ const MG = ({
               <label htmlFor="doubleVision">doubleVision</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, MGscore.doubleVision)}
                 type="range"
                 id="doubleVision"
                 name="doubleVision"
@@ -132,7 +137,7 @@ const MG = ({
               <label htmlFor="eyeClosure">eyeClosure</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, MGscore.eyeClosure)}
                 type="range"
                 id="eyeClosure"
                 name="eyeClosure"
@@ -155,7 +160,7 @@ const MG = ({
               <label htmlFor="talking">talking</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, MGscore.talking)}
                 type="range"
                 id="talking"
                 name="talking"
@@ -176,7 +181,7 @@ const MG = ({
               <label htmlFor="chewing">chewing</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, MGscore.chewing)}
                 type="range"
                 id="chewing"
                 name="chewing"
@@ -199,7 +204,7 @@ const MG = ({
               <label htmlFor="swallowing">swallowing</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, MGscore.swallowing)}
                 type="range"
                 id="swallowing"
                 name="swallowing"
@@ -220,7 +225,7 @@ const MG = ({
               <label htmlFor="breathing">breathing</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, MGscore.breathing)}
                 type="range"
                 id="breathing"
                 name="breathing"
@@ -243,7 +248,7 @@ const MG = ({
               <label htmlFor="neckFlexion">neckFlexion</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, MGscore.neckFlexion)}
                 type="range"
                 id="neckFlexion"
                 name="neckFlexion"
@@ -264,7 +269,7 @@ const MG = ({
               <label htmlFor="shoulderAbduction">shoulderAbduction</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, MGscore.shoulderAbduction)}
                 type="range"
                 id="shoulderAbduction"
                 name="shoulderAbduction"
@@ -287,7 +292,7 @@ const MG = ({
               <label htmlFor="hipFlexion">hipFlexion</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, MGscore.hipFlexion)}
                 type="range"
                 id="hipFlexion"
                 name="hipFlexion"

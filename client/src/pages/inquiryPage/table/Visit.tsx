@@ -3,16 +3,13 @@ import { useState } from "react";
 import { Visit as typeVisit } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { Alert, Stack } from "@mui/material";
+import api from "../../../api";
 
 const Visit = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
-  const getCurrentDate = () => {
-    const currentDate = new Date();
-    return currentDate.toISOString().slice(0, 10);
-  };
   const [VisitScore, setVisitscore] = useState<typeVisit>({
     date: "",
     treat: 0,
@@ -91,11 +88,17 @@ const Visit = ({
       setWarnings({ ...warnings, [name]: "" });
     }
   };
+
   const handleSubmit = async () => {
     const confirmResult = confirm("確定送出結果嗎?");
+
     if (confirmResult) {
       console.log(VisitScore);
-      console.log("Date", getCurrentDate());
+      await api
+        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/visit`, VisitScore)
+        .then((res) => {
+          console.log(res.data);
+        });
     }
   };
 
