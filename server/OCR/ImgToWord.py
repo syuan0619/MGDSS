@@ -53,13 +53,13 @@ def perform_ocr(resized_image):
     data = pytesseract.image_to_data(resized_image, output_type=pytesseract.Output.DICT)
     target_words = ["Right Nasalis", "Left Nasalis", "Right Trapezius", "Left Trapezius", "Right Adb", "Left Adb"]
 
-    for target_words_idx, target_words in enumerate(target_words):
-        match = re.search(r'\b' + re.escape(target_words) + r'\b', code, re.IGNORECASE)
+    for target_word in target_words:
+        match = re.search(r'\b' + re.escape(target_word) + r'\b', code, re.IGNORECASE)
         if match:
             start_idx = match.start()
             end_idx = match.end()
             x, y = data['left'][start_idx], data['top'][start_idx]
-            crop_dimensions = crop_dimensions_data_1 if target_words_idx == 0 else crop_dimensions_data_2
+            crop_dimensions = crop_dimensions_data_1 if target_word == "Right Nasalis" or target_word == "Left Nasalis" else crop_dimensions_data_2
 
             for i, (w, h, x, y) in enumerate(crop_dimensions, start=1):
                 result_image = resized_image[y:y + h, x:x + w]
@@ -67,6 +67,7 @@ def perform_ocr(resized_image):
                 result_image_gray = cv2.cvtColor(result_image_cropped, cv2.COLOR_BGR2GRAY)
 
                 extracted_text = pytesseract.image_to_string(result_image_gray)
+<<<<<<< Updated upstream
                 extracted_text = extracted_text.strip()
                 split_text = re.split('[\n:]+', extracted_text)
                 json_string = json.dumps(split_text, ensure_ascii=False)
@@ -78,6 +79,20 @@ def perform_ocr(resized_image):
                 })
                 # cv2.imshow("result_image", result_image_cropped)
                 # cv2.waitKey(0)
+=======
+                extracted_text = extracted_text.strip().encode('ascii', 'ignore').decode('ascii')
+                split_text = re.split('[\n:]+', extracted_text)
+
+                for result in results:
+                    if result["target_words"] == target_word:
+                        result["result_data"].extend(split_text)
+                        break
+                else:
+                    results.append({
+                        "target_words": target_word,
+                        "result_data": split_text
+                    })
+>>>>>>> Stashed changes
         
     return results
 
@@ -89,5 +104,5 @@ def perform_ocr(resized_image):
 # # Print the OCR results
 # for result in results:
 #     print(result)
-# # cv2.imshow("Cropped result_image", crop_image)
-# # cv2.waitKey(0)
+# cv2.imshow("Cropped result_image", crop_image)
+# cv2.waitKey(0)
