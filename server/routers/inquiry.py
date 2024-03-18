@@ -117,8 +117,10 @@ async def inquiry_ADL(patientId: str, table: models.ADL):
         return JSONResponse(status_code=500, content={"message": "Internal server error"})
 
 @router.post("/{patientId}/EMG")
-async def inquiry_EMG(patientId: str, table: models.EMG):
+async def inquiry_EMG(patientId: str, file: UploadFile=File(...), table: str = Header(None)):
     try:
+        table = json.loads(table)
+        
         updatedPatient = updatePatient(patientId, "EMG", table.model_dump(by_alias=True))
         return {"message": "Success add new EMG table!", "updatedPatient": updatedPatient}
     except ValidationError as e:
@@ -135,18 +137,11 @@ async def recognize_text(file: UploadFile=File(...)):
     for result in output:
         response.append({
             "musclePart": result["target_words"],
-            "preActivation": result['result_data'],
-            # "preActivation": [ json.loads(activation) for activation in result['result_data']]
-            # "postActivation":
+            "preActivation": result['result_data'][0:3],
+            "postActivation": result['result_data'][3:]
         })
     buffer = io.BytesIO()
     getWhite(file.file).save(buffer, format="PNG")
     buffer.seek(0)
     print(response)
     return StreamingResponse(content=buffer, media_type="image/png", headers={"results":json.dumps(response)})
-
-@router.post("/{patientId}/uploadEMG")
-async def inquiry_upload_EMG(patientId: str, file: UploadFile=File(...), table: str= Header(None)):
-    temp = json.loads(table)
-    print(temp["name"])
-    print(file.filename)
