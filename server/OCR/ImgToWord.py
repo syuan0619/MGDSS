@@ -19,7 +19,6 @@ def recognize(uploadImage):
 def getWhite(uploadImage):
     origin_image = Image.open(uploadImage)
     croped_image = crop(origin_image)
-    print("croped_image type: ", type(croped_image))
     return Image.fromarray(croped_image)
 
 
