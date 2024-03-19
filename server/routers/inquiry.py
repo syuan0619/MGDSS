@@ -1,11 +1,14 @@
 import json
 import models
-from fastapi import APIRouter, UploadFile, File
-from fastapi.responses import JSONResponse, Response, StreamingResponse
-from pydantic import ValidationError
-from mongoDB.connectDB import updatePatient, updateEntirePatient, getPatientById
-from OCR.ImgToWord import recognize, getWhite
 import io
+from PIL import Image
+from bson.binary import Binary
+from fastapi import APIRouter, UploadFile, File, Header
+from fastapi.responses import JSONResponse, StreamingResponse
+from pydantic import ValidationError
+from mongoDB.connectDB import updatePatient, updateEntirePatient, getPatientById, uploadImage
+from OCR.ImgToWord import recognize, getWhite
+
 
 router = APIRouter(prefix="/inquiry", tags=["inquiry"])
 
@@ -115,10 +118,11 @@ async def inquiry_ADL(patientId: str, table: models.ADL):
         return JSONResponse(status_code=500, content={"message": "Internal server error"})
 
 @router.post("/{patientId}/EMG")
-async def inquiry_EMG(patientId: str, table: models.EMG):
+async def inquiry_EMG(patientId: str, file: UploadFile=File(...), table: str = Header(None)):
     try:
-        updatedPatient = updatePatient(patientId, "EMG", table.model_dump(by_alias=True))
-        return {"message": "Success add new EMG table!", "updatedPatient": updatedPatient}
+        table = json.loads(table)
+        updatePatient(patientId, "EMG", {**table, "image": file.file.read()})
+        return {"message": "Success add new EMG table!", "updatedPatient": table}
     except ValidationError as e:
         print("error: ", str(e))
         return JSONResponse(status_code=400, content={"message": "Invalid EMG table"})
@@ -133,12 +137,11 @@ async def recognize_text(file: UploadFile=File(...)):
     for result in output:
         response.append({
             "musclePart": result["target_words"],
-            "preActivation": result['result_data'],
-            # "preActivation": [ json.loads(activation) for activation in result['result_data']]
-            # "postActivation":
+            "preActivation": result['result_data'][0:3],
+            "postActivation": result['result_data'][3:]
         })
     buffer = io.BytesIO()
     getWhite(file.file).save(buffer, format="PNG")
     buffer.seek(0)
     print(response)
-    return StreamingResponse(content=buffer, media_type="image/png", headers={"results":json.dumps(response)})
+    return StreamingResponse(content=buffer, media_type="image/png", headers={"results":json.dumps(response), "Access-Control-Expose-Headers": "results"})
