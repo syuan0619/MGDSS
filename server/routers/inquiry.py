@@ -1,11 +1,12 @@
 import json
 import models
 import io
-from typing import Annotated
+from PIL import Image
+from bson.binary import Binary
 from fastapi import APIRouter, UploadFile, File, Header
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import ValidationError
-from mongoDB.connectDB import updatePatient, updateEntirePatient, getPatientById
+from mongoDB.connectDB import updatePatient, updateEntirePatient, getPatientById, uploadImage
 from OCR.ImgToWord import recognize, getWhite
 
 
@@ -120,9 +121,8 @@ async def inquiry_ADL(patientId: str, table: models.ADL):
 async def inquiry_EMG(patientId: str, file: UploadFile=File(...), table: str = Header(None)):
     try:
         table = json.loads(table)
-        
-        updatedPatient = updatePatient(patientId, "EMG", table.model_dump(by_alias=True))
-        return {"message": "Success add new EMG table!", "updatedPatient": updatedPatient}
+        updatePatient(patientId, "EMG", {**table, "image": file.file.read()})
+        return {"message": "Success add new EMG table!", "updatedPatient": table}
     except ValidationError as e:
         print("error: ", str(e))
         return JSONResponse(status_code=400, content={"message": "Invalid EMG table"})
@@ -144,4 +144,4 @@ async def recognize_text(file: UploadFile=File(...)):
     getWhite(file.file).save(buffer, format="PNG")
     buffer.seek(0)
     print(response)
-    return StreamingResponse(content=buffer, media_type="image/png", headers={"results":json.dumps(response)})
+    return StreamingResponse(content=buffer, media_type="image/png", headers={"results":json.dumps(response), "Access-Control-Expose-Headers": "results"})
