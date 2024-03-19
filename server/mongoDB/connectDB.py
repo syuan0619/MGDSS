@@ -7,6 +7,9 @@ client = pymongo.MongoClient(
 "mongodb+srv://testMember:1234@schoolproject.tsw5n6e.mongodb.net/?retryWrites=true&w=majority")
 db = client["SchoolProject"]
 patientCollection = db["Patient"]
+accountCollection = db["Account"]
+
+### Patient
 
 def getAllPatients():
     patients = patientCollection.find()
@@ -32,12 +35,27 @@ def updatePatient(patientId: str, tableName: str, table: dict):
     updatedPatient['_id'] = str(updatedPatient['_id'])
     return updatedPatient
 
-def uploadImage(patientId: str, image: Binary):
-    pateient = getPatientById(patientId)
-    return "Success upload image!"
-
 def updateEntirePatient(patientId: str, updatedPatient: dict):
     patientCollection.find_one_and_update({"_id": ObjectId(patientId)}, {"$set": updatedPatient})
     updatedPatient['_id'] = str(updatedPatient['_id'])
     return updatedPatient
 
+
+
+### Account
+
+def createAccount(newAccount: dict):
+    if accountCollection.find_one({"email": newAccount['email']}):
+        raise Exception("Email already exists")
+        
+    accountId = accountCollection.insert_one(newAccount).inserted_id()
+    accountId = str(accountId)
+    return accountId
+
+def loginWithEmailandPassword(email: str, password: str):
+    account = accountCollection.find_one({"email": email, "password": password})
+    if account:
+        account['_id'] = str(account['_id'])
+        return account
+    else:
+        return None
