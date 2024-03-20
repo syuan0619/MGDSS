@@ -59,8 +59,7 @@ def perform_ocr(resized_image):
             start_idx = match.start()
             end_idx = match.end()
             x, y = data['left'][start_idx], data['top'][start_idx]
-            crop_dimensions = crop_dimensions_data_1 if target_word == "Right Nasalis" or target_word == "Left Nasalis" else crop_dimensions_data_2
-
+            crop_dimensions = crop_dimensions_data_1 if target_words_idx == 0 else crop_dimensions_data_2    
             for i, (w, h, x, y) in enumerate(crop_dimensions, start=1):
                 result_image = resized_image[y:y + h, x:x + w]
                 result_image_cropped = cv2.resize(result_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
