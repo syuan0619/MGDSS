@@ -1,4 +1,4 @@
- import "./BloodTest.css";
+import "./BloodTest.css";
 import { useState } from "react";
 import { BloodTest as typeBloodTest } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
@@ -56,21 +56,16 @@ const BloodTest = ({
     const numericValue = value.trim() !== "" ? parseFloat(value) : 0;
     if (!isNaN(numericValue) || value === "") {
       if (numericValue > maxValues[name]) {
-        // 设置超过最大值的警告提示
         setWarnings({
           ...warnings,
           [name]: `正常範圍到 ${maxValues[name]},請確認！`,
         });
       } else {
-        // 清除对应输入框的错误消息和警告提示
         setErrors({ ...errors, [name]: "" });
-        // 清除警告提示
         setWarnings({ ...warnings, [name]: "" });
       }
-      // 无论是否超过范围，都设置血液检测分数
       setBloodTestScore({ ...BloodTestScore, [name]: numericValue });
     } else {
-      // 设置对应输入框的错误消息
       setErrors({ ...errors, [name]: "請輸入有效的數字！" });
     }
   };

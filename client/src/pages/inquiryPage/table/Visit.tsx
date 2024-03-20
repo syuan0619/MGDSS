@@ -3,20 +3,16 @@ import { useState } from "react";
 import { Visit as typeVisit } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { Alert, Stack } from "@mui/material";
+import api from "../../../api";
 
 const Visit = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
-  const getCurrentDate = () => {
-    const currentDate = new Date();
-    return currentDate.toISOString().slice(0, 10);
-  };
-  const [Visit, setVisit] = useState<typeVisit>({
-    treat: 0,
+  const [VisitScore, setVisitscore] = useState<typeVisit>({
     date: "",
-
+    treat: 0,
     selfAssessment: 0,
     note: "",
     SBP: 0,
@@ -38,7 +34,7 @@ const Visit = ({
       MGFAclassification: 0,
     },
   });
-  
+
   const maxValues: { [key: string]: number } = {
     SBP: 120,
     DBP: 80,
@@ -71,32 +67,38 @@ const Visit = ({
       }
 
       if (name === "date" || name === "note") {
-        setVisit({ ...Visit, [name]: value });
-      } else if (name in Visit.prescription) {
+        setVisitscore({ ...VisitScore, [name]: value });
+      } else if (name in VisitScore.prescription) {
         const updatedPrescription = {
-          ...Visit.prescription,
+          ...VisitScore.prescription,
           [name]: numericValue,
         };
-        setVisit({ ...Visit, prescription: updatedPrescription });
-      } else if (name in Visit.examination) {
+        setVisitscore({ ...VisitScore, prescription: updatedPrescription });
+      } else if (name in VisitScore.examination) {
         const updatedExamination = {
-          ...Visit.examination,
+          ...VisitScore.examination,
           [name]: numericValue,
         };
-        setVisit({ ...Visit, examination: updatedExamination });
+        setVisitscore({ ...VisitScore, examination: updatedExamination });
       } else {
-        setVisit({ ...Visit, [name]: numericValue });
+        setVisitscore({ ...VisitScore, [name]: numericValue });
       }
     } else {
       setErrors({ ...errors, [name]: "請輸入有效的數字！" });
       setWarnings({ ...warnings, [name]: "" });
     }
   };
+
   const handleSubmit = async () => {
     const confirmResult = confirm("確定送出結果嗎?");
+
     if (confirmResult) {
-      console.log(Visit);
-      console.log("Date", getCurrentDate());
+      console.log(VisitScore);
+      await api
+        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/visit`, VisitScore)
+        .then((res) => {
+          console.log(res.data);
+        });
     }
   };
 
@@ -110,12 +112,80 @@ const Visit = ({
           >
             <IoIosArrowDropleftCircle />
           </button>
-          <p>看診紀錄</p>
-          <div className="inquiry-table-Visit-content-row-sum">
-            <label></label>
-          </div>
+          <p>Visit</p>
+          <div className="inquiry-table-Visit-content-row-sum"></div>
         </div>
         <div className="inquiry-table-Visit-content">
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-testdate">
+              <label htmlFor="testDate">Test Date:</label>
+              <input
+                type="date"
+                id="testDate"
+                name="testDate"
+                value={VisitScore.date}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="inquiry-table-Visit-content-row-note">
+              <label htmlFor="note">note</label>
+              <input
+                defaultValue=""
+                onChange={handleChange}
+                type="text"
+                id="note"
+                name="note"
+              />
+            </div>
+          </div>
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-SBP">
+              <label htmlFor="SBP">SBP</label>
+              <div style={{ position: "relative" }}>
+                <input
+                  defaultValue="0"
+                  onChange={handleChange}
+                  type="text"
+                  id="SBP"
+                  name="SBP"
+                />
+                {errors.SBP && (
+                  <div className="Visit-alert-input">{errors.SBP}</div>
+                )}
+                <Stack>
+                  {warnings.SBP && (
+                    <Alert severity="info">{warnings.SBP}</Alert>
+                  )}
+                </Stack>
+                {!VisitScore.SBP && (
+                  <div className="Visit-placeholder"> (mm/Hg)</div>
+                )}
+              </div>
+            </div>
+            <div className="inquiry-table-Visit-content-row-DBP">
+              <label htmlFor="DBP">DBP</label>
+              <div style={{ position: "relative" }}>
+                <input
+                  defaultValue="0"
+                  onChange={handleChange}
+                  type="text"
+                  id="DBP"
+                  name="DBP"
+                />
+                {errors.DBP && (
+                  <div className="Visit-alert-input">{errors.DBP}</div>
+                )}
+                <Stack>
+                  {warnings.DBP && (
+                    <Alert severity="info">{warnings.DBP}</Alert>
+                  )}
+                </Stack>
+                {!VisitScore.DBP && (
+                  <div className="Visit-placeholder"> (mm/Hg)</div>
+                )}
+              </div>
+            </div>
+          </div>
           <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-left">
               <label htmlFor="doubleVision">treat</label>
@@ -128,10 +198,10 @@ const Visit = ({
                 min="0"
                 max="4"
                 step="1"
-                list="treat"
+                list="tickmarks"
               />
 
-              <datalist id="tickmarks">
+              <datalist className="Visit-datalist" id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -150,69 +220,21 @@ const Visit = ({
                 min="0"
                 max="2"
                 step="1"
-                list="selfAssessment"
+                list="tickmarks"
               />
 
-              <datalist id="selfAssessment">
+              <datalist id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
               </datalist>
             </div>
           </div>
-          <div className="inquiry-table-Visit-content-row">
-          <div className="inquiry-table-Visit-content-row-SBP">
-              <div className="inquiry-table-Visit-content-row-SBP-head">
-                <label htmlFor="SBP">SBP</label>
-              </div>
-              <div style={{ position: "relative" }}>
-                <input
-                  defaultValue="0"
-                  onChange={handleChange}
-                  type="text"
-                  id="SBP"
-                  name="SBP"
-                />
-                {errors.SBP && (
-                  <div className="Visit-alert-input">{errors.DBP}</div>
-                )}
-                <Stack>
-                  {warnings.SBP && (
-                    <Alert severity="info">{warnings.DBP}</Alert>
-                  )}
-                </Stack>
-                {!Visit.SBP && <div className="Visit-placeholder"> (mmHg)</div>}
-              </div>
-            </div>
-            <div className="inquiry-table-Visit-content-row-DBP">
-              <div className="inquiry-table-Visit-content-row-DBP-head">
-                <label htmlFor="freeThyroxine">DBP</label>
-              </div>
-              <div style={{ position: "relative" }}>
-                <input
-                  defaultValue="0"
-                  onChange={handleChange}
-                  type="text"
-                  id="freeThyroxine"
-                  name="freeThyroxine"
-                />
-                {errors.DBP && (
-                  <div className="Visit-alert-input">{errors.DBP}</div>
-                )}
-                <Stack>
-                  {warnings.DBP && (
-                    <Alert severity="info">{warnings.DBP}</Alert>
-                  )}
-                </Stack>
-                {!Visit.DBP && <div className="Visit-placeholder"> (mmHg)</div>}
-              </div>
-            </div>
+          <div className="subTitle">
+            <p>prescription</p>
           </div>
-          <h3 style={{ textAlign: "center", color: "#0c537b" }}>
-            prescription
-          </h3>
           <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-left">
+            <div className="inquiry-table-Visit-content-row-pyridostigmine">
               <label htmlFor="pyridostigmine">pyridostigmine</label>
               <input
                 defaultValue="0"
@@ -223,10 +245,9 @@ const Visit = ({
                 min="0"
                 max="9"
                 step="1"
-                list="pyridostigmine"
+                list="tickmarks-to9"
               />
-
-              <datalist id="pyridostigmine">
+              <datalist className="prescription-datalist" id="tickmarks-to9">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -239,7 +260,9 @@ const Visit = ({
                 <option value="9" label="9"></option>
               </datalist>
             </div>
-            <div className="inquiry-table-Visit-content-row-left">
+          </div>
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-compesolone">
               <label htmlFor="compesolone">compesolone</label>
               <input
                 defaultValue="0"
@@ -250,10 +273,10 @@ const Visit = ({
                 min="0"
                 max="9"
                 step="1"
-                list="compesolone"
+                list="tickmarks-to9"
               />
 
-              <datalist id="compesolone">
+              <datalist className="prescription-datalist" id="tickmarks-to9">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -268,7 +291,7 @@ const Visit = ({
             </div>
           </div>
           <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-left">
+            <div className="inquiry-table-Visit-content-row-cellcept">
               <label htmlFor="cellcept">cellcept</label>
               <input
                 defaultValue="0"
@@ -279,37 +302,10 @@ const Visit = ({
                 min="0"
                 max="9"
                 step="1"
-                list="cellcept"
+                list="tickmarks-to9"
               />
 
-              <datalist id="cellcept">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-                <option value="2" label="2"></option>
-                <option value="3" label="3"></option>
-                <option value="4" label="4"></option>
-                <option value="5" label="5"></option>
-                <option value="6" label="6"></option>
-                <option value="7" label="7"></option>
-                <option value="8" label="8"></option>
-                <option value="9" label="9"></option>
-              </datalist>
-            </div>
-            <div className="inquiry-table-Visit-content-row-right">
-              <label htmlFor="imuran">imuran</label>
-              <input
-                defaultValue="0"
-                onChange={handleChange}
-                type="range"
-                id="imuran"
-                name="imuran"
-                min="0"
-                max="9"
-                step="1"
-                list="imuran"
-              />
-
-              <datalist id="imuran">
+              <datalist className="prescription-datalist" id="tickmarks-to9">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -324,21 +320,20 @@ const Visit = ({
             </div>
           </div>
           <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-left">
-              <label htmlFor="prograf">prograf</label>
+            <div className="inquiry-table-Visit-content-row-imuran">
+              <label htmlFor="imuran">imuran</label>
               <input
                 defaultValue="0"
                 onChange={handleChange}
                 type="range"
-                id="prograf"
-                name="prograf"
+                id="imuran"
+                name="imuran"
                 min="0"
                 max="9"
                 step="1"
-                list="prograf"
+                list="tickmarks-to9"
               />
-
-              <datalist id="prograf">
+              <datalist className="prescription-datalist" id="tickmarks-to9">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
@@ -352,8 +347,37 @@ const Visit = ({
               </datalist>
             </div>
           </div>
-          <h3 style={{ textAlign: "center", color: "#0c537b" }}>examination</h3>
-
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-prograf">
+              <label htmlFor="prograf">prograf</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="prograf"
+                name="prograf"
+                min="0"
+                max="9"
+                step="1"
+                list="tickmarks-to9"
+              />
+              <datalist className="prescription-datalist" id="tickmarks-to9">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+                <option value="4" label="4"></option>
+                <option value="5" label="5"></option>
+                <option value="6" label="6"></option>
+                <option value="7" label="7"></option>
+                <option value="8" label="8"></option>
+                <option value="9" label="9"></option>
+              </datalist>
+            </div>
+          </div>
+          <div className="subTitle">
+            <p>examination</p>
+          </div>
           <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-left">
               <label htmlFor="ptosis">ptosis</label>
@@ -366,10 +390,9 @@ const Visit = ({
                 min="0"
                 max="1"
                 step="1"
-                list="ptosis"
+                list="tickmarks"
               />
-
-              <datalist id="ptosis">
+              <datalist id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
               </datalist>
@@ -385,10 +408,10 @@ const Visit = ({
                 min="0"
                 max="1"
                 step="1"
-                list="imuran"
+                list="tickmarks"
               />
 
-              <datalist id="diplopia">
+              <datalist id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
               </datalist>
@@ -406,10 +429,10 @@ const Visit = ({
                 min="0"
                 max="1"
                 step="1"
-                list="dysphagia"
+                list="tickmarks"
               />
 
-              <datalist id="dysphagia">
+              <datalist id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
               </datalist>
@@ -425,10 +448,10 @@ const Visit = ({
                 min="0"
                 max="1"
                 step="1"
-                list="dysarthria"
+                list="tickmarks"
               />
 
-              <datalist id="dysarthria">
+              <datalist id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
               </datalist>
@@ -446,10 +469,10 @@ const Visit = ({
                 min="0"
                 max="1"
                 step="1"
-                list="dyspnea"
+                list="tickmarks"
               />
 
-              <datalist id="dyspnea">
+              <datalist id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
               </datalist>
@@ -465,17 +488,16 @@ const Visit = ({
                 min="0"
                 max="1"
                 step="1"
-                list="limpWeakness"
+                list="tickmarks"
               />
-
-              <datalist id="limpWeakness">
+              <datalist id="tickmarks">
                 <option value="0" label="0"></option>
                 <option value="1" label="1"></option>
               </datalist>
             </div>
           </div>
           <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-left">
+            <div className="inquiry-table-Visit-content-row-MGFAclassification">
               <label htmlFor="MGFAclassification">MGFAclassification</label>
               <input
                 defaultValue="0"
@@ -486,33 +508,15 @@ const Visit = ({
                 min="1"
                 max="5"
                 step="1"
-                list="MGFAclassification"
+                list="tickmarks-to5"
               />
-
-              <datalist id="MGFAclassification">
+              <datalist id="tickmarks-to5">
                 <option value="1" label="1"></option>
                 <option value="2" label="2"></option>
                 <option value="3" label="3"></option>
                 <option value="4" label="4"></option>
                 <option value="5" label="5"></option>
               </datalist>
-            </div>
-          </div>
-          <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-SBP">
-              <div className="inquiry-table-Visit-content-row-SBP-head">
-                <label htmlFor="note">note</label>
-              </div>
-              <div style={{ position: "relative" }}>
-                <input
-                  className="inquiry-table-Visit-content-row-input-note "
-                  defaultValue=""
-                  onChange={handleChange}
-                  type="text"
-                  id="note"
-                  name="note"
-                />
-              </div>
             </div>
           </div>
         </div>

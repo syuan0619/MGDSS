@@ -1,30 +1,16 @@
-import { Button, Slider } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 import "./QOL.css";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-
-const marks = [
-  {
-    value: 0,
-    label: "0",
-  },
-  {
-    value: 1,
-    label: "1",
-  },
-  {
-    value: 2,
-    label: "2",
-  },
-];
+import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { QOL as typeQOL } from "../../../types/Patient.ts";
+import api from "../../../api.tsx";
 
 const QOL = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
-  const [qolScore, setQolScore] = useState({
+  const [QOLscore, setQOLscore] = useState<typeQOL>({
     frustration: 0,
     eyeUsing: 0,
     eating: 0,
@@ -41,117 +27,141 @@ const QOL = ({
     overwhelm: 0,
     freshenUp: 0,
     sum: 0,
+    testDate: "",
   });
 
-  const scoreQolInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQolScore({ ...qolScore, [e.target.name]: e.target.value });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    beforeChangedParam: number
+  ) => {
+    const { name, value } = e.target;
+
+    if (name === "testDate") {
+      setQOLscore({ ...QOLscore, testDate: value });
+    } else {
+      const numericValue = parseInt(value, 10);
+
+      setQOLscore({
+        ...QOLscore,
+        [name]: numericValue,
+        sum: QOLscore.sum + numericValue - beforeChangedParam,
+      });
+    }
   };
 
-  let qolSum = 0;
-  Object.values(qolScore)
-    .slice(0, -1)
-    .map((item) => (qolSum += item));
-  qolScore["sum"] = qolSum;
+  const handleSubmit = async () => {
+    const confirmResult = confirm("確定送出結果嗎?");
 
-  const onSubmitQolScore = () => {
-    console.log(qolScore);
+    if (confirmResult) {
+      console.log(QOLscore);
+      await api
+        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/QOL`, QOLscore)
+        .then((res) => {
+          console.log(res.data);
+        });
+    }
   };
 
-  const blockLeft = Object.keys(qolScore)
-    .slice(0, 5)
-    .map((item) => (
+  const blockLeft = Object.entries(QOLscore)
+    .slice(0, 7)
+    .map(([key, value]) => (
       <>
         <div className="inquiry-table-QOL-content-sliderbox">
-          {item}
-          <Slider
-            valueLabelDisplay="auto"
-            defaultValue={0}
-            max={2}
-            marks={marks}
-            onChange={scoreQolInput}
-            name={item}
+          <p>{key}</p>
+          <input
+            defaultValue="0"
+            onChange={(e) => {
+              if (typeof value === "number") handleChange(e, value);
+            }}
+            type="range"
+            name={key}
+            min="0"
+            max="2"
+            step="1"
+            list="tickmarks"
           />
+
+          <datalist className="QOL-datalist" id="tickmarks">
+            <option value="0" label="0"></option>
+            <option value="1" label="1"></option>
+            <option value="2" label="2"></option>
+          </datalist>
         </div>
       </>
     ));
 
-  const blockMid = Object.keys(qolScore)
-    .slice(5, 10)
-    .map((item) => (
+  const blockRight = Object.entries(QOLscore)
+    .slice(7, -2)
+    .map(([key, value]) => (
       <>
         <div className="inquiry-table-QOL-content-sliderbox">
-          {item}
-          <Slider
-            valueLabelDisplay="auto"
-            defaultValue={0}
-            max={2}
-            marks={marks}
-            onChange={scoreQolInput}
-            name={item}
+          <p>{key}</p>
+          <input
+            defaultValue="0"
+            onChange={(e) => {
+              if (typeof value === "number") handleChange(e, value);
+            }}
+            type="range"
+            name={key}
+            min="0"
+            max="2"
+            step="1"
+            list="tickmarks"
           />
-        </div>
-      </>
-    ));
 
-  const blockRight = Object.keys(qolScore)
-    .slice(10, -1)
-    .map((item) => (
-      <>
-        <div className="inquiry-table-QOL-content-sliderbox">
-          {item}
-          <Slider
-            valueLabelDisplay="auto"
-            defaultValue={0}
-            max={2}
-            marks={marks}
-            onChange={scoreQolInput}
-            name={item}
-          />
+          <datalist className="QOL-datalist" id="tickmarks">
+            <option value="0" label="0"></option>
+            <option value="1" label="1"></option>
+            <option value="2" label="2"></option>
+          </datalist>
         </div>
       </>
     ));
   return (
     <>
-      <div className="inquiry-table-QOL">
-        <div className="inquiry-table-QOL-closebutton">
-          <button
-            onClick={() => setReplaceComponent("right")}
-            className="inquiry-table-QOL-closebutton-item"
-          >
-            <CloseRoundedIcon />
-          </button>
-        </div>
-        <div className="inquiry-table-QOL-header">QOL</div>
-        <div className="inquiry-table-QOL-content">
-          <div className="inquiry-table-QOL-content-block">
-            <div className="inquiry-table-QOL-content-sliderbox">
+      <div className="inquiry-table-QOL-bg">
+        <div className="inquiry-table-QOL">
+          <div className="inquiry-table-QOL-head">
+            <button
+              className="QOL-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+            <p>QOL</p>
+            <div className="inquiry-table-QOL-content-row-sum">
+              <label htmlFor="sum">總分 : </label>
               <input
-                className="inquiry-table-QOL-content-block-textfield"
-                type="date"
-              />
-            </div>
-            {blockLeft}
-          </div>
-          <div className="inquiry-table-QOL-content-block">
-            {blockMid}
-            <div className="inquiry-table-QOL-content-sliderbox">
-              <input
-                className="inquiry-table-QOL-content-block-textfield"
-                disabled
-                value={qolScore["sum"]}
+                type="text"
+                id="sum"
+                value={QOLscore.sum}
+                name="sum"
+                readOnly
               />
             </div>
           </div>
-          <div className="inquiry-table-QOL-content-block">
-            {blockRight}
-            <div className="inquiry-table-QOL-content-sliderbox">
-              <button
-                className="inquiry-table-QOL-content-block-buttom"
-                onClick={onSubmitQolScore}
-              >
-                確定
-              </button>
+          <div className="inquiry-table-QOL-content">
+            <div className="inquiry-table-QOL-content-block-left">
+              <div className="inquiry-table-QOL-content-sliderbox">
+                <label htmlFor="testDate">Test Date:</label>
+                <input
+                  className="inquiry-table-QOL-content-block-textfield"
+                  type="date"
+                  value={QOLscore.testDate}
+                  onChange={(e) => {
+                    handleChange(e, 0);
+                  }}
+                  name="testDate"
+                />
+              </div>
+              {blockLeft}
             </div>
+            <div className="inquiry-table-QOL-content-block-right">
+              {blockRight}
+            </div>
+          </div>
+          <div className="inquiry-table-QOL-submit">
+            <button onClick={handleSubmit}>儲存</button>
           </div>
         </div>
       </div>

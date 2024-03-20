@@ -8,6 +8,7 @@ import QOL from "../chart/QOL";
 import Thymus from "../chart/Thymus";
 import Visit from "../chart/Visit";
 import { GiChart } from "react-icons/gi";
+import { FaPencil } from "react-icons/fa6";
 
 const Right = ({
   setReplaceComponent,
@@ -27,11 +28,12 @@ const Right = ({
       <div className="inquiry-right-set">
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">
+            <p>ADL</p>
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("ADL")}
             >
-              toADLtable
+              <FaPencil className="tableIcon" />
             </button>
             <button
               className="inquiry-right-to-chart-button"
@@ -43,12 +45,13 @@ const Right = ({
           <ADL />
         </div>
         <div className="inquiry-right-each">
-          <div className="inquiry-right-table-chart-container">
+          <div className="inquiry-right-table-chart-container-BloodTest">
+            <p>BloodTest</p>
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("BloodTest")}
             >
-              toBloodTesttable
+              <FaPencil className="tableIcon" />
             </button>
             <button
               className="inquiry-right-to-chart-button"
@@ -63,11 +66,12 @@ const Right = ({
       <div className="inquiry-right-set">
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">
+            <p>EMG</p>
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("EMG")}
             >
-              toEMGtable
+              <FaPencil className="tableIcon" />
             </button>
             <button
               className="inquiry-right-to-chart-button"
@@ -80,11 +84,12 @@ const Right = ({
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">
+            <p>MG</p>
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("MG")}
             >
-              toMGtable
+              <FaPencil className="tableIcon" />
             </button>
             <button
               className="inquiry-right-to-chart-button"
@@ -99,11 +104,12 @@ const Right = ({
       <div className="inquiry-right-set">
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">
+            <p>QMG</p>
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("QMG")}
             >
-              toQMGtable
+              <FaPencil className="tableIcon" />
             </button>
             <button
               className="inquiry-right-to-chart-button"
@@ -116,11 +122,12 @@ const Right = ({
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">
+            <p>QOL</p>
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("QOL")}
             >
-              toQOLtable
+              <FaPencil className="tableIcon" />
             </button>
             <button
               className="inquiry-right-to-chart-button"
@@ -134,12 +141,13 @@ const Right = ({
       </div>
       <div className="inquiry-right-set">
         <div className="inquiry-right-each">
-          <div className="inquiry-right-table-chart-container">
+          <div className="inquiry-right-table-chart-container-Thymus">
+            <p>Thymus</p>
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("Thymus")}
             >
-              toThymustable
+              <FaPencil className="tableIcon" />
             </button>
             <button
               className="inquiry-right-to-chart-button"
@@ -152,11 +160,12 @@ const Right = ({
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">
+            <p>Visit</p>
             <button
               className="inquiry-right-to-table-button"
               onClick={() => buttonToTable("Visit")}
             >
-              toVisittable
+              <FaPencil className="tableIcon" />
             </button>
             <button
               className="inquiry-right-to-chart-button"

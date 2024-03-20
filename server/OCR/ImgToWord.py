@@ -15,11 +15,12 @@ def recognize(uploadImage):
         
     return  results_data
 
+
 def getWhite(uploadImage):
     origin_image = Image.open(uploadImage)
     croped_image = crop(origin_image)
-    print("croped_image type: ", type(croped_image))
     return Image.fromarray(croped_image)
+
 
 def crop(image):
     image_array = np.array(image)
@@ -53,18 +54,17 @@ def perform_ocr(resized_image):
     data = pytesseract.image_to_data(resized_image, output_type=pytesseract.Output.DICT)
     target_words = ["Right Nasalis", "Left Nasalis", "Right Trapezius", "Left Trapezius", "Right Adb", "Left Adb"]
 
-    for target_word in target_words:
+    for target_words_idx, target_word in enumerate(target_words):
         match = re.search(r'\b' + re.escape(target_word) + r'\b', code, re.IGNORECASE)
         if match:
             start_idx = match.start()
             end_idx = match.end()
             x, y = data['left'][start_idx], data['top'][start_idx]
-            crop_dimensions = crop_dimensions_data_1 if target_words_idx == 0 else crop_dimensions_data_2    
+            crop_dimensions = crop_dimensions_data_1 if target_words_idx == 0 else crop_dimensions_data_2
             for i, (w, h, x, y) in enumerate(crop_dimensions, start=1):
                 result_image = resized_image[y:y + h, x:x + w]
                 result_image_cropped = cv2.resize(result_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
                 result_image_gray = cv2.cvtColor(result_image_cropped, cv2.COLOR_BGR2GRAY)
-
                 extracted_text = pytesseract.image_to_string(result_image_gray)
                 extracted_text = extracted_text.strip().encode('ascii', 'ignore').decode('ascii')
                 split_text = re.split('[\n:]+', extracted_text)

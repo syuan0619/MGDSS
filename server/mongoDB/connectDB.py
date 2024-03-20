@@ -1,6 +1,7 @@
 import pymongo
 import models
 from bson.objectid import ObjectId
+from bson.binary import Binary
 
 client = pymongo.MongoClient(
 "mongodb+srv://testMember:1234@schoolproject.tsw5n6e.mongodb.net/?retryWrites=true&w=majority")
@@ -31,7 +32,12 @@ def updatePatient(patientId: str, tableName: str, table: dict):
     updatedPatient['_id'] = str(updatedPatient['_id'])
     return updatedPatient
 
+def uploadImage(patientId: str, image: Binary):
+    pateient = getPatientById(patientId)
+    return "Success upload image!"
+
 def updateEntirePatient(patientId: str, updatedPatient: dict):
     patientCollection.find_one_and_update({"_id": ObjectId(patientId)}, {"$set": updatedPatient})
     updatedPatient['_id'] = str(updatedPatient['_id'])
     return updatedPatient
+

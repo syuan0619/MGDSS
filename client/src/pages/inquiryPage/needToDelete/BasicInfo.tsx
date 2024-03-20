@@ -1,20 +1,27 @@
 import { useState } from "react";
-import { Info } from "../../../types/Patient.ts";
 import "./Left.css";
-
-const Left = ({ info }: { info: Info }) => {
-  const [change, setChange] = useState<Info>(info);
+//basic data component
+function BasicInfo() {
+  const [change, setChange] = useState({
+    patientName: "",
+    birth: "",
+    sex: "",
+    age: "",
+    height: "",
+    weight: "",
+    state: "",
+    other: "",
+    onset: "",
+    symptom: "",
+  });
 
   const changeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setChange({ ...change, [name]: value });
   };
 
-  const currentDate = new Date();
-  const currentAge = currentDate.getFullYear() - parseInt(info.DOB.slice(0, 4));
-
   function onSubmitChange() {
-    console.log(change);
+    console.log([change, setChange]);
   }
 
   //switch readonly
@@ -37,7 +44,6 @@ const Left = ({ info }: { info: Info }) => {
                 name="patientName"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.name}
               ></input>
             </div>
             <div>
@@ -48,7 +54,6 @@ const Left = ({ info }: { info: Info }) => {
                 name="birth"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.DOB}
               ></input>
             </div>
             <div>
@@ -59,7 +64,6 @@ const Left = ({ info }: { info: Info }) => {
                 name="sex"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.sex}
               ></input>
             </div>
             <div>
@@ -70,7 +74,6 @@ const Left = ({ info }: { info: Info }) => {
                 name="age"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={currentAge}
               ></input>
             </div>
             <div>
@@ -81,7 +84,6 @@ const Left = ({ info }: { info: Info }) => {
                 name="height"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.height}
               ></input>
             </div>
             <div>
@@ -92,7 +94,6 @@ const Left = ({ info }: { info: Info }) => {
                 name="weight"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.weight}
               ></input>
             </div>
             <div>
@@ -103,7 +104,6 @@ const Left = ({ info }: { info: Info }) => {
                 name="state"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.status}
               ></input>
             </div>
             <div>
@@ -114,7 +114,6 @@ const Left = ({ info }: { info: Info }) => {
                 name="other"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.other}
               ></input>
             </div>
             <div>
@@ -125,7 +124,6 @@ const Left = ({ info }: { info: Info }) => {
                 name="onset"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.attackDate}
               ></input>
             </div>
             <div>
@@ -136,7 +134,6 @@ const Left = ({ info }: { info: Info }) => {
                 name="symptom"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.beginSymptom}
               ></input>
             </div>
           </div>
@@ -155,5 +152,6 @@ const Left = ({ info }: { info: Info }) => {
       </div>
     </div>
   );
-};
-export default Left;
+}
+
+export default BasicInfo;

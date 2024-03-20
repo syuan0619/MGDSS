@@ -11,12 +11,12 @@ app = FastAPI()
 app.include_router(inquiry.router)
 
 # GET /patients/ -> return all patients
-@app.get("/patinets/", tags=["patients"])
+@app.get("/patients", tags=["patients"])
 async def get_all_patients():
     return getAllPatients()
 
 # POST /patients/ -> add new patient
-@app.post("/patients/", tags=["patients"])
+@app.post("/patients", tags=["patients"])
 async def add_new_patient(newPatientInfo: models.Info):
     try:
         newPatient = addNewPatient(newPatientInfo.model_dump(by_alias=True))
