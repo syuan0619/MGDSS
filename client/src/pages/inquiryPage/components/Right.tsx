@@ -9,6 +9,7 @@ import Thymus from "../chart/Thymus";
 import Visit from "../chart/Visit";
 import { GiChart } from "react-icons/gi";
 import TuneIcon from "@mui/icons-material/Tune";
+import QMGChart from "../chart/QMG";
 
 const Right = ({
   setReplaceComponent,
