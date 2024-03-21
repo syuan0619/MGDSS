@@ -2,12 +2,15 @@ import * as React from "react";
 import { useState } from "react";
 import "./QMG.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import api from "../../../api";
+import { QMG as typeQMG } from "../../../types/Patient.ts";
+
 const QMG = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
-  const [qmgScore, setQMGScore] = useState({
+  const [QMGscore, setQMGscore] = useState<typeQMG>({
     doubleVision: 0,
     ptosis: 0,
     facialMuscle: 0,
@@ -25,41 +28,58 @@ const QMG = ({
     testDate: "",
   });
 
-  const scoreQMGInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQMGScore({
-      ...qmgScore,
-      [e.target.name]: parseFloat(e.target.value),
-    });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    beforeChangedParam: number
+  ) => {
+    const { name, value } = e.target;
+
+    if (name === "testDate") {
+      setQMGscore({ ...QMGscore, testDate: value });
+    } else {
+      const numericValue = parseInt(value, 10);
+
+      setQMGscore({
+        ...QMGscore,
+        [name]: numericValue,
+        sum: QMGscore.sum + numericValue - beforeChangedParam,
+      });
+    }
   };
 
-  const dateQMGInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQMGScore({ ...qmgScore, [e.target.name]: e.target.value });
+  const handleSubmit = async () => {
+    const confirmResult = confirm("確定送出結果嗎?");
+
+    if (confirmResult) {
+      console.log(QMGscore);
+      await api
+        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/QMG`, QMGscore)
+        .then((res) => {
+          console.log(res.data);
+        });
+    }
   };
 
-  let qmgSum = 0;
-  Object.values(qmgScore)
-    .slice(0, -2)
-    .map((item) => (qmgSum += item as number));
-  qmgScore["sum"] = qmgSum;
-
-  const blockLeft = Object.keys(qmgScore)
+  const blockLeft = Object.entries(QMGscore)
     .slice(0, 6)
-    .map((item) => (
+    .map(([key, value]) => (
       <>
         <div className="inquiry-table-QMG-content-sliderbox">
-          {item}
+          <p>{key}</p>
           <input
             defaultValue="0"
-            onChange={scoreQMGInput}
+            onChange={(e) => {
+              if (typeof value === "number") handleChange(e, value);
+            }}
             type="range"
-            name={item}
+            name={key}
             min="0"
             max="3"
             step="1"
             list="tickmarks"
           />
 
-          <datalist id="tickmarks">
+          <datalist className="QMG-datalist" id="tickmarks">
             <option value="0" label="0"></option>
             <option value="1" label="1"></option>
             <option value="2" label="2"></option>
@@ -69,24 +89,26 @@ const QMG = ({
       </>
     ));
 
-  const blockRight = Object.keys(qmgScore)
+  const blockRight = Object.entries(QMGscore)
     .slice(6, -2)
-    .map((item) => (
+    .map(([key, value]) => (
       <>
         <div className="inquiry-table-QMG-content-sliderbox">
-          {item}
+          <p>{key}</p>
           <input
             defaultValue="0"
-            onChange={scoreQMGInput}
+            onChange={(e) => {
+              if (typeof value === "number") handleChange(e, value);
+            }}
             type="range"
-            name={item}
+            name={key}
             min="0"
             max="3"
             step="1"
             list="tickmarks"
           />
 
-          <datalist id="tickmarks">
+          <datalist className="QMG-datalist" id="tickmarks">
             <option value="0" label="0"></option>
             <option value="1" label="1"></option>
             <option value="2" label="2"></option>
@@ -110,18 +132,25 @@ const QMG = ({
             <p>QMG</p>
             <div className="inquiry-table-QMG-content-row-sum">
               <label htmlFor="sum">總分 : </label>
-              <input type="text" id="sum" value={qmgSum} name="sum" readOnly />
+              <input
+                type="text"
+                id="sum"
+                value={QMGscore.sum}
+                name="sum"
+                readOnly
+              />
             </div>
           </div>
           <div className="inquiry-table-QMG-content">
             <div className="inquiry-table-QMG-content-block-left">
               <div className="inquiry-table-QMG-content-sliderbox">
+                <label htmlFor="testDate">Test Date:</label>
                 <input
                   className="inquiry-table-QMG-content-block-textfield"
                   type="date"
-                  id="qmgDate"
-                  value={qmgScore.testDate}
-                  onChange={dateQMGInput}
+                  id="testDate"
+                  value={QMGscore.testDate}
+                  onChange={(e) => handleChange(e, 0)}
                   name="testDate"
                 />
               </div>
@@ -132,16 +161,7 @@ const QMG = ({
             </div>
           </div>
           <div className="inquiry-table-QMG-submit">
-            <button
-              onClick={() => {
-                if (confirm("確定送出結果嗎?")) {
-                  console.log("送出結果：", qmgScore);
-                }
-                setReplaceComponent("right");
-              }}
-            >
-              儲存
-            </button>
+            <button onClick={handleSubmit}>儲存</button>
           </div>
         </div>
       </div>

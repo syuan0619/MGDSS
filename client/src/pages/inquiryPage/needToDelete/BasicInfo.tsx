@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./Left.css";
-
 //basic data component
 function BasicInfo() {
   const [change, setChange] = useState({
@@ -16,7 +15,7 @@ function BasicInfo() {
     symptom: "",
   });
 
-  const changeInput = (event: { target: { name: any; value: any } }) => {
+  const changeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setChange({ ...change, [name]: value });
   };
@@ -138,15 +137,17 @@ function BasicInfo() {
               ></input>
             </div>
           </div>
-          <button
-            className="inquiry-components-left-buttom"
-            onClick={() => {
-              switchReadOnly();
-              onSubmitChange();
-            }}
-          >
-            {readOnly ? "編輯" : "完成"}
-          </button>
+          <div className="inquiry-inquiry-components-left-submit">
+            <button
+              className="inquiry-components-left-buttom"
+              onClick={() => {
+                switchReadOnly();
+                onSubmitChange();
+              }}
+            >
+              {readOnly ? "編輯" : "完成"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

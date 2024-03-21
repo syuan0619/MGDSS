@@ -1,72 +1,111 @@
 import "./Thymus.css";
 import { useState } from "react";
-import { Slider } from "@mui/material";
+import { Thymus as typeThymus } from "../../../types/Patient";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
+import api from "../../../api";
 
 const Thymus = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
-  const [ThymusDescription, setThymusDescription] = useState<string>("");
-  const [sliderValue, setSliderValue] = useState<number>(0);
+  const [Thymusscore, setThymusScore] = useState<typeThymus>({
+    testDate: "",
+    thymusStatus: 0,
+    thymusDescription: "",
+  });
 
-  const getCurrentDate = () => {
-    const currentDate = new Date();
-    return currentDate.toISOString().slice(0, 10);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === "testDate" || name === "thymusDescription") {
+      setThymusScore({ ...Thymusscore, [name]: value });
+    } else {
+      const numericValue = parseInt(value, 10);
+      setThymusScore({
+        ...Thymusscore,
+        [name]: isNaN(numericValue) ? value : numericValue,
+      });
+    }
+  };
+
+  const handleSubmit = async () => {
+    const confirmResult = confirm("確定送出結果嗎?");
+
+    if (confirmResult) {
+      console.log(Thymusscore);
+      await api
+        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/thymus`, Thymusscore)
+        .then((res) => {
+          console.log(res.data);
+        });
+    }
   };
 
   return (
     <div className="inquiry-table-Thymus-all">
-      <div className="inquiry-table-Thymus-head-content ">
+      <div className="inquiry-table-Thymus-bg">
         <div className="inquiry-table-Thymus-head">
-          <h3>胸腺掃描</h3>
+          <button
+            className="Thymus-backToRight"
+            onClick={() => setReplaceComponent("right")}
+          >
+            <IoIosArrowDropleftCircle />
+          </button>
+          <p>Thymus</p>
         </div>
-        <div className="inquiry-table-Thymus-content-text">
-          <h3>掃描結果 </h3>
-          <Slider
-            className="inquiry-table-Thymus-content-slider"
-            value={sliderValue}
-            max={3}
-            min={0}
-            aria-label="Default"
-            valueLabelDisplay="auto"
-            onChange={(e, newValue) => {
-              if (typeof newValue === "number") {
-                setSliderValue(newValue);
-              }
-            }}
-          />
-          <h3>掃描結果敘述 </h3>
-          <div className="inquiry-table-Thymus-content-description">
-            <textarea
-              className="inquiry-table-Thymus-textArea"
-              aria-label="Temperature"
-              id="description"
-              onChange={(e) => {
-                setThymusDescription(e.target.value);
-              }}
-            />
+        <div className="inquiry-table-Thymus-content">
+          <div className="inquiry-table-Thymus-content-row">
+            <div className="inquiry-table-Thymus-content-row-testdate">
+              <label htmlFor="testDate">Test Date:</label>
+              <input
+                type="date"
+                id="testDate"
+                name="testDate"
+                value={Thymusscore.testDate}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="inquiry-table-Thymus-content-row-thymusStatus">
+              <label htmlFor="thymusStatus">thymusStatus</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="thymusStatus"
+                name="thymusStatus"
+                min="0"
+                max="3"
+                step="1"
+                list="tickmarks"
+              />
+
+              <datalist className="Thymus-datalist" id="tickmarks">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+              </datalist>
+            </div>
+          </div>
+          <div className="inquiry-table-Thymus-content-row">
+            <div className="inquiry-table-Thymus-content-row-thymusDescription">
+              <label htmlFor="thymusDescription">thymusDescription</label>
+              <input
+                defaultValue=""
+                onChange={handleChange}
+                type="text"
+                id="thymusDescription"
+                name="thymusDescription"
+              />
+            </div>
           </div>
         </div>
 
-        <div className="inquiry-table-Thymus-content-submit">
-          <button
-            id="submitButton"
-            onClick={() => {
-              if (confirm("確定送出結果嗎?")) {
-                console.log("thymusDescription", ThymusDescription);
-                console.log("sliderValue", sliderValue);
-                console.log("Date", getCurrentDate());
-              }
-              setReplaceComponent("right");
-            }}
-          >
-            將結果加入病歷
-          </button>
+        <div className="inquiry-table-Thymus-submit">
+          <button onClick={handleSubmit}>儲存</button>
         </div>
       </div>
     </div>
   );
 };
-
 export default Thymus;

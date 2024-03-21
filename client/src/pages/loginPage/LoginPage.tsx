@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   TextField,
@@ -7,7 +7,6 @@ import {
   InputAdornment,
   InputLabel,
   FormControl,
-  Grid,
   OutlinedInput,
   styled,
   createTheme,
@@ -108,13 +107,15 @@ const LoginPage = () => {
     password: "",
   });
 
-  const loginInput = (event: { target: { name: any; value: any } }) => {
+  const loginInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setForm({ ...form, [name]: value });
   };
 
+  const navigate = useNavigate();
   function onSubmit() {
     console.log([form, setForm]);
+    navigate("/patient");
   }
 
   return (

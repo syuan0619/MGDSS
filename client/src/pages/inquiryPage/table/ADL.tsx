@@ -2,13 +2,14 @@ import "./ADL.css";
 import { useState } from "react";
 import { ADL as typeADL } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import api from "../../../api";
 
 const ADL = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
-  const [ADLscore, setADLScore] = useState<typeADL>({
+  const [ADLscore, setADLscore] = useState<typeADL>({
     testDate: "",
     talking: 0,
     chewing: 0,
@@ -19,28 +20,38 @@ const ADL = ({
     eyelid: 0,
     sum: 0,
   });
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    beforeChangedParam: number
+  ) => {
     const { name, value } = e.target;
+
     if (name === "testDate") {
-      setADLScore({ ...ADLscore, testDate: value });
+      setADLscore({ ...ADLscore, testDate: value });
     } else {
       const numericValue = parseInt(value, 10);
 
-      setADLScore({
+      setADLscore({
         ...ADLscore,
         [name]: numericValue,
-        sum: ADLscore.sum + numericValue,
+        sum: ADLscore.sum + numericValue - beforeChangedParam,
       });
     }
   };
 
-  let sum = 0;
-  for (const key in ADLscore) {
-    if (typeof ADLscore[key] === "number") {
-      sum += ADLscore[key] as number;
+  const handleSubmit = async () => {
+    const confirmResult = confirm("確定送出結果嗎?");
+
+    if (confirmResult) {
+      console.log(ADLscore);
+      await api
+        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/ADL`, ADLscore)
+        .then((res) => {
+          console.log(res.data);
+        });
     }
-  }
-  const adlTotal = sum;
+  };
 
   return (
     <div className="inquiry-table-ADL-all">
@@ -55,7 +66,13 @@ const ADL = ({
           <p>ADL</p>
           <div className="inquiry-table-ADL-content-row-sum">
             <label htmlFor="sum">總分 : </label>
-            <input type="text" id="sum" value={adlTotal} name="sum" readOnly />
+            <input
+              type="text"
+              id="sum"
+              value={ADLscore.sum}
+              name="sum"
+              readOnly
+            />
           </div>
         </div>
         <div className="inquiry-table-ADL-content">
@@ -67,14 +84,14 @@ const ADL = ({
                 id="testDate"
                 name="testDate"
                 value={ADLscore.testDate}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, 0)}
               />
             </div>
             <div className="inquiry-table-ADL-content-row-talking">
               <label htmlFor="talking">talking</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.talking)}
                 type="range"
                 id="talking"
                 name="talking"
@@ -97,7 +114,7 @@ const ADL = ({
               <label htmlFor="chewing">chewing</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.chewing)}
                 type="range"
                 id="chewing"
                 name="chewing"
@@ -118,7 +135,7 @@ const ADL = ({
               <label htmlFor="swallowing">swallowing</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.swallowing)}
                 type="range"
                 id="swallowing"
                 name="swallowing"
@@ -141,7 +158,7 @@ const ADL = ({
               <label htmlFor="breathing">breathing</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.breathing)}
                 type="range"
                 id="breathing"
                 name="breathing"
@@ -162,7 +179,7 @@ const ADL = ({
               <label htmlFor="brushTeethOrCombHair">brushTeethOrCombHair</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.brushTeethOrCombHair)}
                 type="range"
                 id="brushTeethOrCombHair"
                 name="brushTeethOrCombHair"
@@ -185,7 +202,7 @@ const ADL = ({
               <label htmlFor="ariseFromChair">ariseFromChair</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.ariseFromChair)}
                 type="range"
                 id="ariseFromChair"
                 name="ariseFromChair"
@@ -206,7 +223,7 @@ const ADL = ({
               <label htmlFor="eyelid">eyelid</label>
               <input
                 defaultValue="0"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, ADLscore.eyelid)}
                 type="range"
                 id="eyelid"
                 name="eyelid"
@@ -226,16 +243,7 @@ const ADL = ({
           </div>
         </div>
         <div className="inquiry-table-ADL-submit">
-          <button
-            onClick={() => {
-              if (confirm("確定送出結果嗎?")) {
-                console.log("送出結果：", ADLscore);
-              }
-              setReplaceComponent("right");
-            }}
-          >
-            儲存
-          </button>
+          <button onClick={handleSubmit}>儲存</button>
         </div>
       </div>
     </div>
