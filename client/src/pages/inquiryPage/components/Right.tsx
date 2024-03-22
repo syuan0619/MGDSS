@@ -1,8 +1,8 @@
 import "./right.css";
-import ADL from "../chart/ADL";
+import { ADLSmallChart } from "../chart/ADL";
 import BloodTest from "../chart/BloodTest";
 import EMG from "../chart/EMG";
-import MG from "../chart/MG";
+import { MGSmallChart } from "../chart/MG";
 import { QMGSmallChart } from "../chart/QMG";
 import QOL from "../chart/QOL";
 import Thymus from "../chart/Thymus";
@@ -42,7 +42,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <ADL />
+          <ADLSmallChart />
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container-BloodTest">
@@ -98,7 +98,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <MG />
+          <MGSmallChart />
         </div>
       </div>
       <div className="inquiry-right-set">

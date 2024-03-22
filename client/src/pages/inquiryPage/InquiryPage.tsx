@@ -11,7 +11,9 @@ import QMG from "./table/QMG";
 import QOL from "./table/QOL";
 import Thymus from "./table/Thymus";
 import Visit from "./table/Visit";
-import { QMGChart, QMGSmallChart } from "./chart/QMG";
+import { QMGChart } from "./chart/QMG";
+import { MGChart } from "./chart/MG";
+import { ADLChart } from "./chart/ADL";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api.tsx";
@@ -99,6 +101,22 @@ const InquiryPage = () => {
                   {
                     return (
                       <QMGChart setReplaceComponent={setReplaceComponent} />
+                    );
+                  }
+                  break;
+
+                case "ADLchart":
+                  {
+                    return (
+                      <ADLChart setReplaceComponent={setReplaceComponent} />
+                    );
+                  }
+                  break;
+
+                case "MGchart":
+                  {
+                    return (
+                      <MGChart setReplaceComponent={setReplaceComponent} />
                     );
                   }
                   break;

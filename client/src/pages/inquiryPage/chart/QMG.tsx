@@ -57,16 +57,16 @@ const patientQMG = [
     doubleVision: 1,
     ptosis: 3,
     facialMuscle: 1,
-    swallowing: 1,
-    speakFluency: 1,
-    rightArmHeight: 1,
+    swallowing: 2,
+    speakFluency: 3,
+    rightArmHeight: 0,
     leftArmHeight: 1,
     vitalCapacity: 1,
-    rightHandGrid: 1,
+    rightHandGrid: 2,
     leftHandGrid: 1,
-    headLift: 1,
+    headLift: 3,
     rightLegHeight: 1,
-    leftLegHeight: 1,
+    leftLegHeight: 3,
     sum: 13,
     testDate: "2024-03-25",
   },
@@ -74,16 +74,16 @@ const patientQMG = [
     doubleVision: 3,
     ptosis: 0,
     facialMuscle: 3,
-    swallowing: 3,
-    speakFluency: 3,
-    rightArmHeight: 3,
-    leftArmHeight: 3,
-    vitalCapacity: 3,
-    rightHandGrid: 3,
+    swallowing: 2,
+    speakFluency: 1,
+    rightArmHeight: 0,
+    leftArmHeight: 0,
+    vitalCapacity: 2,
+    rightHandGrid: 1,
     leftHandGrid: 3,
     headLift: 3,
     rightLegHeight: 3,
-    leftLegHeight: 3,
+    leftLegHeight: 1,
     sum: 39,
     testDate: "2024-03-29",
   },
@@ -93,7 +93,17 @@ const QMGData = patientQMG.map((item) => item.sum);
 const QMGxLabels = patientQMG.map((item) => item.testDate);
 const doubleVisionData = patientQMG.map((item) => item.doubleVision);
 const ptosisData = patientQMG.map((item) => item.ptosis);
-
+const facialMuscleData = patientQMG.map((item) => item.facialMuscle);
+const swallowingData = patientQMG.map((item) => item.swallowing);
+const speakFluencyData = patientQMG.map((item) => item.speakFluency);
+const rightArmHeightData = patientQMG.map((item) => item.rightArmHeight);
+const leftArmHeightData = patientQMG.map((item) => item.leftArmHeight);
+const vitalCapacityData = patientQMG.map((item) => item.vitalCapacity);
+const rightHandGridData = patientQMG.map((item) => item.rightHandGrid);
+const leftHandGridData = patientQMG.map((item) => item.leftHandGrid);
+const headLiftData = patientQMG.map((item) => item.headLift);
+const rightLegHeightData = patientQMG.map((item) => item.rightLegHeight);
+const leftLegHeightData = patientQMG.map((item) => item.leftLegHeight);
 const QMGChart = ({
   setReplaceComponent,
 }: {
@@ -131,6 +141,61 @@ const QMGChart = ({
                 curve: "linear",
                 data: ptosisData,
                 label: "ptosis",
+              },
+              {
+                curve: "linear",
+                data: facialMuscleData,
+                label: "facialMuscle",
+              },
+              {
+                curve: "linear",
+                data: swallowingData,
+                label: "swallowing",
+              },
+              {
+                curve: "linear",
+                data: speakFluencyData,
+                label: "speakFluency",
+              },
+              {
+                curve: "linear",
+                data: rightArmHeightData,
+                label: "rightArmHeight",
+              },
+              {
+                curve: "linear",
+                data: leftArmHeightData,
+                label: "leftArmHeight",
+              },
+              {
+                curve: "linear",
+                data: vitalCapacityData,
+                label: "vitalCapacity",
+              },
+              {
+                curve: "linear",
+                data: rightHandGridData,
+                label: "rightHandGrid",
+              },
+              {
+                curve: "linear",
+                data: leftHandGridData,
+                label: "leftHandGrid",
+              },
+              {
+                curve: "linear",
+                data: headLiftData,
+                label: "headLift",
+              },
+              {
+                curve: "linear",
+                data: rightLegHeightData,
+                label: "rightLegHeight",
+              },
+              {
+                curve: "linear",
+                data: leftLegHeightData,
+                label: "leftLegHeight",
               },
             ]}
             xAxis={[{ scaleType: "point", data: QMGxLabels }]}
