@@ -1,0 +1,14 @@
+.readLable {
+  .MuiSvgIcon-root {
+    fill: rgb(102, 105, 105);
+  }
+
+  .MuiOutlinedInput-input:hover {
+    background-color: #e0f4ff;
+    border: 0;
+  }
+}
+.MuiMenu-list {
+  height: 19vh;
+  overflow: auto;
+}
