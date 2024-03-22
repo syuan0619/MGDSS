@@ -1,0 +1,49 @@
+.chart-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.chart {
+  width: 95%;
+  height: 95%;
+  background-color: white;
+  border-radius: 20px;
+}
+.chart-header {
+  width: 100%;
+  height: 15%;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: auto 1fr;
+  justify-items: start;
+}
+
+.chart-header p {
+  font-size: 2rem;
+  justify-self: center;
+  margin-right: 10%;
+  /* position: relative;
+  right: 5%; */
+}
+.chart-footer {
+  width: 100%;
+  height: 85%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-backToRight {
+  border: 0;
+  background-color: white;
+  font-size: 3.7rem;
+  color: #c7c8cc;
+  justify-self: start;
+  margin-left: 1rem;
+  /* position: relative;
+  top: 5%;
+  right: 40%; */
+}

@@ -1,10 +1,10 @@
-import * as React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
-
+import { IoIosArrowDropleftCircle } from "react-icons/io";
+import "./Chart.css";
 const patientQMG = [
   {
     doubleVision: 2,
-    ptosis: 2,
+    ptosis: 3,
     facialMuscle: 2,
     swallowing: 2,
     speakFluency: 2,
@@ -21,7 +21,7 @@ const patientQMG = [
   },
   {
     doubleVision: 1,
-    ptosis: 1,
+    ptosis: 2,
     facialMuscle: 1,
     swallowing: 1,
     speakFluency: 1,
@@ -55,7 +55,7 @@ const patientQMG = [
   },
   {
     doubleVision: 1,
-    ptosis: 1,
+    ptosis: 3,
     facialMuscle: 1,
     swallowing: 1,
     speakFluency: 1,
@@ -72,7 +72,7 @@ const patientQMG = [
   },
   {
     doubleVision: 3,
-    ptosis: 3,
+    ptosis: 0,
     facialMuscle: 3,
     swallowing: 3,
     speakFluency: 3,
@@ -91,8 +91,57 @@ const patientQMG = [
 
 const QMGData = patientQMG.map((item) => item.sum);
 const QMGxLabels = patientQMG.map((item) => item.testDate);
+const doubleVisionData = patientQMG.map((item) => item.doubleVision);
+const ptosisData = patientQMG.map((item) => item.ptosis);
 
-const QMG = () => {
+const QMGChart = ({
+  setReplaceComponent,
+}: {
+  setReplaceComponent: (table: string) => void;
+}) => {
+  return (
+    <div className="chart-bg">
+      <div className="chart">
+        <div className="chart-header">
+          <button
+            className="chart-backToRight"
+            onClick={() => setReplaceComponent("right")}
+          >
+            <IoIosArrowDropleftCircle />
+          </button>
+          <p>QMG</p>
+        </div>
+        <div className="chart-footer">
+          <LineChart
+            width={700}
+            height={500}
+            series={[
+              {
+                curve: "linear",
+                data: QMGData,
+                label: "sum score",
+                color: "#008dda",
+              },
+              {
+                curve: "linear",
+                data: doubleVisionData,
+                label: "doubleVision",
+              },
+              {
+                curve: "linear",
+                data: ptosisData,
+                label: "ptosis",
+              },
+            ]}
+            xAxis={[{ scaleType: "point", data: QMGxLabels }]}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const QMGSmallChart = () => {
   return (
     <div>
       <LineChart
@@ -111,4 +160,4 @@ const QMG = () => {
     </div>
   );
 };
-export default QMG;
+export { QMGChart, QMGSmallChart };

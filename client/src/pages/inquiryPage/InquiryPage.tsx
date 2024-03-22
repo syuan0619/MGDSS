@@ -11,6 +11,7 @@ import QMG from "./table/QMG";
 import QOL from "./table/QOL";
 import Thymus from "./table/Thymus";
 import Visit from "./table/Visit";
+import { QMGChart, QMGSmallChart } from "./chart/QMG";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api.tsx";
@@ -91,6 +92,14 @@ const InquiryPage = () => {
                 case "Visittable":
                   {
                     return <Visit setReplaceComponent={setReplaceComponent} />;
+                  }
+                  break;
+
+                case "QMGchart":
+                  {
+                    return (
+                      <QMGChart setReplaceComponent={setReplaceComponent} />
+                    );
                   }
                   break;
 

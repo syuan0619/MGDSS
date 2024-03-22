@@ -3,7 +3,7 @@ import ADL from "../chart/ADL";
 import BloodTest from "../chart/BloodTest";
 import EMG from "../chart/EMG";
 import MG from "../chart/MG";
-import QMG from "../chart/QMG";
+import { QMGSmallChart } from "../chart/QMG";
 import QOL from "../chart/QOL";
 import Thymus from "../chart/Thymus";
 import Visit from "../chart/Visit";
@@ -118,7 +118,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <QMG />
+          <QMGSmallChart />
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">
