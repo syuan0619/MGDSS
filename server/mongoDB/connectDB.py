@@ -44,6 +44,14 @@ def updateEntirePatient(patientId: str, updatedPatient: dict):
 
 ### Account
 
+def getAllAccounts():
+    accounts = accountCollection.find()
+    response = []
+    for account in accounts:
+        account['_id'] = str(account['_id'])
+        response.append(account)
+    return response
+
 def createAccount(newAccount: dict):
     if accountCollection.find_one({"email": newAccount['email']}):
         raise Exception("Email already exists")
@@ -59,3 +67,8 @@ def loginWithEmailandPassword(email: str, password: str):
         return account
     else:
         return None
+    
+    
+def deleteAccount(accountId: str):
+    return accountCollection.delete_one({"_id": ObjectId(accountId)})
+    
