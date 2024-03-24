@@ -4,9 +4,9 @@ import BloodTest from "../chart/BloodTest";
 import EMG from "../chart/EMG";
 import { MGSmallChart } from "../chart/MG";
 import { QMGSmallChart } from "../chart/QMG";
-import QOL from "../chart/QOL";
+import { QOLSmallChart } from "../chart/QOL";
 import Thymus from "../chart/Thymus";
-import Visit from "../chart/Visit";
+import { VisitSmallChart } from "../chart/Visit";
 import { GiChart } from "react-icons/gi";
 import { FaPencil } from "react-icons/fa6";
 
@@ -136,7 +136,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <QOL />
+          <QOLSmallChart />
         </div>
       </div>
       <div className="inquiry-right-set">
@@ -174,7 +174,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <Visit />
+          <VisitSmallChart />
         </div>
       </div>
     </div>

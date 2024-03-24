@@ -1,4 +1,6 @@
 import { LineChart } from "@mui/x-charts";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
+import "./Chart.css";
 
 const patientVisit = [
   {
@@ -16,9 +18,9 @@ const patientVisit = [
       prograf: 3,
     },
     examination: {
-      ptosis: 0,
-      diplopia: 0,
-      dysphagia: 0,
+      ptosis: 1,
+      diplopia: 2,
+      dysphagia: 3,
       dysarthria: 0,
       dyspnea: 0,
       limpWeakness: 0,
@@ -37,7 +39,7 @@ const patientVisit = [
       compesolone: 9,
       cellcept: 1,
       imuran: 7,
-      prograf: 3,
+      prograf: 0,
     },
     examination: {
       ptosis: 0,
@@ -81,16 +83,82 @@ const pyridostigmineData = patientVisit.map(
 const compesoloneData = patientVisit.map(
   (item) => item.prescription.compesolone
 );
-
 const cellceptData = patientVisit.map((item) => item.prescription.cellcept);
-
 const imuranData = patientVisit.map((item) => item.prescription.imuran);
-
 const prografData = patientVisit.map((item) => item.prescription.prograf);
-
+const selfAssessmentDaya = patientVisit.map((item) => item.selfAssessment);
 const VisitxLabels = patientVisit.map((item) => item.date);
 
-const Visit = () => {
+const VisitChart = ({
+  setReplaceComponent,
+}: {
+  setReplaceComponent: (table: string) => void;
+}) => {
+  return (
+    <div className="chart-bg">
+      <div className="chart">
+        <div className="chart-header">
+          <button
+            className="chart-backToRight"
+            onClick={() => setReplaceComponent("right")}
+          >
+            <IoIosArrowDropleftCircle />
+          </button>
+          <p>Visit</p>
+        </div>
+        <div className="chart-footer">
+          <LineChart
+            margin={{ top: 100 }}
+            slotProps={{
+              legend: {
+                itemGap: 20,
+                padding: -5,
+                itemMarkHeight: 5,
+              },
+            }}
+            width={700}
+            height={500}
+            series={[
+              {
+                curve: "linear",
+                data: pyridostigmineData,
+                label: "pyridostigmine",
+              },
+              {
+                curve: "linear",
+                data: compesoloneData,
+                label: "compesolone",
+              },
+              {
+                curve: "linear",
+                data: cellceptData,
+                label: "cellcept",
+              },
+              {
+                curve: "linear",
+                data: imuranData,
+                label: "imuran",
+              },
+              {
+                curve: "linear",
+                data: prografData,
+                label: "prograf",
+              },
+              {
+                curve: "linear",
+                data: selfAssessmentDaya,
+                label: "selfAssessment",
+              },
+            ]}
+            xAxis={[{ scaleType: "point", data: VisitxLabels }]}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const VisitSmallChart = () => {
   return (
     <div>
       <LineChart
@@ -99,28 +167,9 @@ const Visit = () => {
         series={[
           {
             curve: "linear",
-            data: pyridostigmineData,
-            label: "pyridostigmine",
-          },
-          {
-            curve: "linear",
-            data: compesoloneData,
-            label: "compesolone",
-          },
-          {
-            curve: "linear",
-            data: cellceptData,
-            label: "cellcept",
-          },
-          {
-            curve: "linear",
-            data: imuranData,
-            label: "imuran",
-          },
-          {
-            curve: "linear",
             data: prografData,
             label: "prograf",
+            color: "#008dda",
           },
         ]}
         xAxis={[{ scaleType: "point", data: VisitxLabels }]}
@@ -128,4 +177,4 @@ const Visit = () => {
     </div>
   );
 };
-export default Visit;
+export { VisitSmallChart, VisitChart };

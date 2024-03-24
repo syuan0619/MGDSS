@@ -123,6 +123,14 @@ const QMGChart = ({
         </div>
         <div className="chart-footer">
           <LineChart
+            margin={{ top: 150 }}
+            slotProps={{
+              legend: {
+                itemGap: 20,
+                padding: -5,
+                itemMarkHeight: 5,
+              },
+            }}
             width={700}
             height={500}
             series={[

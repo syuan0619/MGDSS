@@ -11,12 +11,14 @@ import QMG from "./table/QMG";
 import QOL from "./table/QOL";
 import Thymus from "./table/Thymus";
 import Visit from "./table/Visit";
+import { QOLChart } from "./chart/QOL";
 import { QMGChart } from "./chart/QMG";
 import { MGChart } from "./chart/MG";
 import { ADLChart } from "./chart/ADL";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api.tsx";
+import { VisitChart } from "./chart/Visit";
 
 const InquiryPage = () => {
   const [replaceComponent, setReplaceComponent] = useState("");
@@ -117,6 +119,22 @@ const InquiryPage = () => {
                   {
                     return (
                       <MGChart setReplaceComponent={setReplaceComponent} />
+                    );
+                  }
+                  break;
+
+                case "QOLchart":
+                  {
+                    return (
+                      <QOLChart setReplaceComponent={setReplaceComponent} />
+                    );
+                  }
+                  break;
+
+                case "Visitchart":
+                  {
+                    return (
+                      <VisitChart setReplaceComponent={setReplaceComponent} />
                     );
                   }
                   break;

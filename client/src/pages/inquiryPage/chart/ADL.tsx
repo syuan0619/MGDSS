@@ -69,6 +69,14 @@ const ADLChart = ({
         </div>
         <div className="chart-footer">
           <LineChart
+            margin={{ top: 100 }}
+            slotProps={{
+              legend: {
+                itemGap: 20,
+                padding: -5,
+                itemMarkHeight: 5,
+              },
+            }}
             width={700}
             height={500}
             series={[

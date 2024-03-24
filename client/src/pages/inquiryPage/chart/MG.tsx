@@ -1,5 +1,6 @@
 import { LineChart } from "@mui/x-charts";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import "./Chart.css";
 
 const patientMG = [
   {
@@ -63,6 +64,14 @@ const MGChart = ({
         </div>
         <div className="chart-footer">
           <LineChart
+            margin={{ top: 100 }}
+            slotProps={{
+              legend: {
+                itemGap: 20,
+                padding: -5,
+                itemMarkHeight: 5,
+              },
+            }}
             width={700}
             height={500}
             series={[
