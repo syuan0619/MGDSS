@@ -82,44 +82,45 @@ const ADLChart = ({
             series={[
               {
                 curve: "linear",
-                data: ADLData,
-                label: "sum score",
-                color: "#008dda",
-              },
-              {
-                curve: "linear",
                 data: talkingData,
                 label: "talking",
+                color: "#5356FF",
               },
               {
                 curve: "linear",
                 data: chewingData,
                 label: "chewing",
+                color: "#2D46B9",
               },
               {
                 curve: "linear",
                 data: swallowingData,
                 label: "swallowing",
+                color: "#7C93C3",
               },
               {
                 curve: "linear",
                 data: breathingData,
                 label: "breathing",
+                color: "#836FFF",
               },
               {
                 curve: "linear",
                 data: brushTeethOrCombHairData,
                 label: "brushTeethOrCombHair",
+                color: "#BC7AF9",
               },
               {
                 curve: "linear",
                 data: ariseFromChairData,
                 label: "ariseFromChair",
+                color: "#86A7FC",
               },
               {
                 curve: "linear",
                 data: eyelidData,
                 label: "eyelid",
+                color: "#40679E",
               },
             ]}
             xAxis={[{ scaleType: "point", data: ADLxLabels }]}

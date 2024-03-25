@@ -31,6 +31,34 @@ const patientMG = [
     hipFlexion: 2,
     sum: 18,
   },
+  {
+    testDate: "2024-04-13",
+    ptosis: 1,
+    doubleVision: 2,
+    eyeClosure: 1,
+    talking: 2,
+    chewing: 2,
+    swallowing: 1,
+    breathing: 2,
+    neckFlexion: 0,
+    shoulderAbduction: 0,
+    hipFlexion: 3,
+    sum: 11,
+  },
+  {
+    testDate: "2024-05-23",
+    ptosis: 2,
+    doubleVision: 1,
+    eyeClosure: 3,
+    talking: 1,
+    chewing: 2,
+    swallowing: 3,
+    breathing: 0,
+    neckFlexion: 2,
+    shoulderAbduction: 3,
+    hipFlexion: 1,
+    sum: 18,
+  },
 ];
 
 const MGData = patientMG.map((item) => item.sum);
@@ -77,59 +105,63 @@ const MGChart = ({
             series={[
               {
                 curve: "linear",
-                data: MGData,
-                label: "sum score",
-                color: "#008dda",
-              },
-              {
-                curve: "linear",
                 data: ptosisData,
                 label: "ptosis",
+                color: "#5356FF",
               },
               {
                 curve: "linear",
                 data: doubleVisionData,
                 label: "doubleVision",
+                color: "#7C93C3",
               },
               {
                 curve: "linear",
                 data: eyeClosureData,
                 label: "eyeClosure",
+                color: "#2D46B9",
               },
               {
                 curve: "linear",
                 data: talkingData,
                 label: "talking",
+                color: "#0096FF",
               },
               {
                 curve: "linear",
                 data: chewingData,
                 label: "chewing",
+                color: "#7469B6",
               },
               {
                 curve: "linear",
                 data: swallowingData,
                 label: "swallowing",
+                color: "#836FFF",
               },
               {
                 curve: "linear",
                 data: breathingData,
                 label: "breathing",
+                color: "#81689D",
               },
               {
                 curve: "linear",
                 data: neckFlexionData,
                 label: "neckFlexion",
+                color: "#BC7AF9",
               },
               {
                 curve: "linear",
                 data: shoulderAbductionData,
                 label: "shoulderAbduction",
+                color: "#86A7FC",
               },
               {
                 curve: "linear",
                 data: hipFlexionData,
                 label: "hipFlexion",
+                color: "#40679E",
               },
             ]}
             xAxis={[{ scaleType: "point", data: MGxLabels }]}

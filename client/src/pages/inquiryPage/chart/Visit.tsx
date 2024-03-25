@@ -123,31 +123,37 @@ const VisitChart = ({
                 curve: "linear",
                 data: pyridostigmineData,
                 label: "pyridostigmine",
+                color: "#5356FF",
               },
               {
                 curve: "linear",
                 data: compesoloneData,
                 label: "compesolone",
+                color: "#BC7AF9",
               },
               {
                 curve: "linear",
                 data: cellceptData,
                 label: "cellcept",
+                color: "#2D46B9",
               },
               {
                 curve: "linear",
                 data: imuranData,
                 label: "imuran",
+                color: "#0096FF",
               },
               {
                 curve: "linear",
                 data: prografData,
                 label: "prograf",
+                color: "#7469B6",
               },
               {
                 curve: "linear",
                 data: selfAssessmentDaya,
                 label: "selfAssessment",
+                color: "#836FFF",
               },
             ]}
             xAxis={[{ scaleType: "point", data: VisitxLabels }]}

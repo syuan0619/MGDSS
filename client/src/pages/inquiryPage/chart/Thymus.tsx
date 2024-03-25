@@ -33,7 +33,7 @@ const ThymusChart = ({
           >
             <IoIosArrowDropleftCircle />
           </button>
-          <p>ADL</p>
+          <p>Thymus</p>
         </div>
         <div className="chart-footer">
           <LineChart
