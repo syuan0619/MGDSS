@@ -130,7 +130,7 @@ def recognize_result(recognized_muscle, crop_dimensions_data, white_part, weight
         for crop_dimensions_data in crop_dimensions_data:
             width, height, x, y = crop_dimensions_data
             resize_image = white_part[
-                y: y + int(height * weight), x: x + int(width * weight)
+                y : y + int(height * weight), x : x + int(width * weight)
             ]
             enlarge_resize_image = cv2.resize(
                 resize_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC
