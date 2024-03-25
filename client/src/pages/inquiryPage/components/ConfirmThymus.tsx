@@ -1,12 +1,9 @@
-import * as React from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { Thymus } from "../../../types/Patient";
-import { Thymus as typeThymus } from "../../../types/Patient";
 import { useState } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import { Thymus as typeThymus } from "../../../types/Patient";
 import "./Confirm.css";
 
 const ConfirmThymus = () => {
@@ -15,35 +12,36 @@ const ConfirmThymus = () => {
     thymusStatus: 0,
     thymusDescription: "",
   });
-  const [tableName] = React.useState<string[]>([]);
-  const getThymusNames = (Thymus: Thymus) => {
-    const ThymusNames: string[] = [];
-    for (const [key, value] of Object.entries(Thymus)) {
-      ThymusNames.push(`${key}: ${value}`);
-    }
-    return ThymusNames;
-  };
+  const ThymusEntries: [string, number | string][] =
+    Object.entries(Thymusscore);
+  const [expanded, setExpanded] = useState<boolean>(false);
 
-  const ThymusNames = getThymusNames(Thymusscore);
-  const handleChange = () => {};
+  const handleChange = (isExpanded: boolean) => {
+    setExpanded(isExpanded);
+  };
 
   return (
     <div className="readLable">
-      <FormControl sx={{ m: 1, width: "18vw" }}>
-        <InputLabel>Thymus</InputLabel>
-        <Select
-          multiple
-          value={tableName}
-          onChange={handleChange}
-          input={<OutlinedInput label="Thymus" />}
-        >
-          {ThymusNames.map((name) => (
-            <MenuItem className="predictMenu" key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Accordion
+        expanded={expanded}
+        onChange={(e, isExpanded) => handleChange(isExpanded)}
+        sx={{ width: "10vw" }}
+      >
+        <AccordionSummary>
+          <Typography>Thymus</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div>
+            {ThymusEntries.map(([name, value], index) => (
+              <div key={index} style={{ marginBottom: "0.6rem" }}>
+                <Typography>
+                  {name}: {value}
+                </Typography>
+              </div>
+            ))}
+          </div>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };

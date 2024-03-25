@@ -1,12 +1,9 @@
-import * as React from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { QMG } from "../../../types/Patient";
-import { QMG as typeQMG } from "../../../types/Patient";
 import { useState } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import { QMG as typeQMG } from "../../../types/Patient";
 import "./Confirm.css";
 
 const ConfirmQMG = () => {
@@ -27,35 +24,35 @@ const ConfirmQMG = () => {
     leftLegHeight: 0,
     sum: 0,
   });
-  const [tableName] = React.useState<string[]>([]);
-  const getQMGNames = (QMG: QMG) => {
-    const QMGNames: string[] = [];
-    for (const [key, value] of Object.entries(QMG)) {
-      QMGNames.push(`${key}: ${value}`);
-    }
-    return QMGNames;
-  };
+  const QMGEntries: [string, number | string][] = Object.entries(QMGscore);
+  const [expanded, setExpanded] = useState<boolean>(false);
 
-  const QMGNames = getQMGNames(QMGscore);
-  const handleChange = () => {};
+  const handleChange = (isExpanded: boolean) => {
+    setExpanded(isExpanded);
+  };
 
   return (
     <div className="readLable">
-      <FormControl sx={{ m: 1, width: "18vw" }}>
-        <InputLabel>QMG</InputLabel>
-        <Select
-          multiple
-          value={tableName}
-          onChange={handleChange}
-          input={<OutlinedInput label="QMG" />}
-        >
-          {QMGNames.map((name) => (
-            <MenuItem className="predictMenu" key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Accordion
+        expanded={expanded}
+        onChange={(e, isExpanded) => handleChange(isExpanded)}
+        sx={{ width: "10vw" }}
+      >
+        <AccordionSummary>
+          <Typography>QMG</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div>
+            {QMGEntries.map(([name, value], index) => (
+              <div key={index} style={{ marginBottom: "0.6rem" }}>
+                <Typography>
+                  {name}: {value}
+                </Typography>
+              </div>
+            ))}
+          </div>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };

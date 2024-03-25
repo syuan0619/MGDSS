@@ -1,12 +1,9 @@
-import * as React from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { ADL } from "../../../types/Patient";
-import { ADL as typeADL } from "../../../types/Patient";
 import { useState } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import { ADL as typeADL } from "../../../types/Patient";
 import "./Confirm.css";
 
 const ConfirmADL = () => {
@@ -21,37 +18,35 @@ const ConfirmADL = () => {
     eyelid: 0,
     sum: 0,
   });
-  const [tableName] = React.useState<string[]>([]);
-  // 將 ADLscore 轉換格式
-  const getADLNames = (adl: ADL) => {
-    const adlNames: string[] = [];
-    for (const [key, value] of Object.entries(adl)) {
-      adlNames.push(`${key}: ${value}`);
-    }
-    return adlNames;
-  };
+  const ADLEntries: [string, number | string][] = Object.entries(ADLscore);
+  const [expanded, setExpanded] = useState<boolean>(false);
 
-  // 在渲染時獲取 ADLscore 的名稱和值
-  const adlNames = getADLNames(ADLscore);
-  const handleChange = () => {};
+  const handleChange = (isExpanded: boolean) => {
+    setExpanded(isExpanded);
+  };
 
   return (
     <div className="readLable">
-      <FormControl sx={{ m: 1, width: "18vw" }}>
-        <InputLabel>ADL</InputLabel>
-        <Select
-          multiple
-          value={tableName}
-          onChange={handleChange}
-          input={<OutlinedInput label="ADL" />}
-        >
-          {adlNames.map((name) => (
-            <MenuItem className="predictMenu" key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Accordion
+        expanded={expanded}
+        onChange={(e, isExpanded) => handleChange(isExpanded)}
+        sx={{ width: "10vw" }}
+      >
+        <AccordionSummary>
+          <Typography>ADL</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div>
+            {ADLEntries.map(([name, value], index) => (
+              <div key={index} style={{ marginBottom: "0.6rem" }}>
+                <Typography>
+                  {name}: {value}
+                </Typography>
+              </div>
+            ))}
+          </div>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };

@@ -1,14 +1,33 @@
 .readLable {
+  width: 20vw;
+  height: 18vh;
+  margin-right: 1vw;
+
   .MuiSvgIcon-root {
     fill: rgb(102, 105, 105);
   }
 
-  .MuiOutlinedInput-input:hover {
-    background-color: #e0f4ff;
-    border: 0;
+  .MuiPaper-root {
+    width: 14vw;
+    height: fit-content;
+    margin-top: 0;
+    padding-left: 4vh;
+    padding-right: 4vh;
+    padding-top: 1vh;
   }
-}
-.MuiMenu-list {
-  height: 19vh;
-  overflow: auto;
+
+  .MuiCollapse-root {
+    width: 15vw;
+  }
+  .MuiCollapse-wrapperInner {
+    width: 14vw;
+    overflow: auto;
+    height: 20vh;
+  }
+  .MuiTypography-root {
+    font-size: 1.1rem;
+  }
+  .MuiAccordionSummary-root.Mui-expanded:focus {
+    border-bottom: 0.15rem solid #eeeeee;
+  }
 }

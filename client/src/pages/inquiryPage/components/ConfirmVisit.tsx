@@ -1,12 +1,9 @@
-import * as React from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { Visit } from "../../../types/Patient";
-import { Visit as typeVisit } from "../../../types/Patient";
 import { useState } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import { Visit as typeVisit } from "../../../types/Patient";
 import "./Confirm.css";
 
 const ConfirmVisit = () => {
@@ -34,35 +31,55 @@ const ConfirmVisit = () => {
       MGFAclassification: 0,
     },
   });
-  const [tableName] = React.useState<string[]>([]);
-  const getVisitNames = (Visit: Visit) => {
-    const VisitNames: string[] = [];
-    for (const [key, value] of Object.entries(Visit)) {
-      VisitNames.push(`${key}: ${value}`);
-    }
-    return VisitNames;
-  };
 
-  const VisitNames = getVisitNames(Visitscore);
-  const handleChange = () => {};
+  const VisitEntries: [string, number | string][] = [
+    ["date", Visitscore.date],
+    ["treat", Visitscore.treat],
+    ["selfAssessment", Visitscore.selfAssessment],
+    ["note", Visitscore.note],
+    ["SBP", Visitscore.SBP],
+    ["DBP", Visitscore.DBP],
+    ["pyridostigmine", Visitscore.prescription.pyridostigmine],
+    ["compesolone", Visitscore.prescription.compesolone],
+    ["cellcept", Visitscore.prescription.cellcept],
+    ["imuran", Visitscore.prescription.imuran],
+    ["prograf", Visitscore.prescription.prograf],
+    ["ptosis", Visitscore.examination.ptosis],
+    ["diplopia", Visitscore.examination.diplopia],
+    ["dysphagia", Visitscore.examination.dysphagia],
+    ["dysarthria", Visitscore.examination.dysarthria],
+    ["dyspnea", Visitscore.examination.dyspnea],
+    ["limpWeakness", Visitscore.examination.limpWeakness],
+    ["MGFAclassification", Visitscore.examination.MGFAclassification],
+  ];
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  const handleChange = (isExpanded: boolean) => {
+    setExpanded(isExpanded);
+  };
 
   return (
     <div className="readLable">
-      <FormControl sx={{ m: 1, width: "18vw" }}>
-        <InputLabel>Visit</InputLabel>
-        <Select
-          multiple
-          value={tableName}
-          onChange={handleChange}
-          input={<OutlinedInput label="Visit" />}
-        >
-          {VisitNames.map((name) => (
-            <MenuItem className="predictMenu" key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Accordion
+        expanded={expanded}
+        onChange={(e, isExpanded) => handleChange(isExpanded)}
+        sx={{ width: "10vw" }}
+      >
+        <AccordionSummary>
+          <Typography>Visit</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div>
+            {VisitEntries.map(([name, value], index) => (
+              <div key={index} style={{ marginBottom: "0.6rem" }}>
+                <Typography>
+                  {name}: {value}
+                </Typography>
+              </div>
+            ))}
+          </div>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };

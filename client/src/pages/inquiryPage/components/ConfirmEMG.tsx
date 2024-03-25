@@ -1,12 +1,9 @@
-import * as React from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { EMG } from "../../../types/Patient";
-import { EMG as typeEMG } from "../../../types/Patient";
 import { useState } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import { EMG as typeEMG } from "../../../types/Patient";
 import "./Confirm.css";
 
 const ConfirmEMG = () => {
@@ -21,35 +18,39 @@ const ConfirmEMG = () => {
       },
     ],
   });
-  const [tableName] = React.useState<string[]>([]);
-  const getEMGNames = (EMG: EMG) => {
-    const EMGNames: string[] = [];
-    for (const [key, value] of Object.entries(EMG)) {
-      EMGNames.push(`${key}: ${value}`);
-    }
-    return EMGNames;
-  };
+  const EMGEntries: [
+    string,
+    string | { musclePart: string; preActivation: []; postActivation: [] }[]
+  ][] = Object.entries(EMGscore);
+  const [expanded, setExpanded] = useState<boolean>(false);
 
-  const EMGNames = getEMGNames(EMGscore);
-  const handleChange = () => {};
+  const handleChange = (isExpanded: boolean) => {
+    setExpanded(isExpanded);
+  };
 
   return (
     <div className="readLable">
-      <FormControl sx={{ m: 1, width: "18vw" }}>
-        <InputLabel>EMG</InputLabel>
-        <Select
-          multiple
-          value={tableName}
-          onChange={handleChange}
-          input={<OutlinedInput label="EMG" />}
-        >
-          {EMGNames.map((name) => (
-            <MenuItem className="predictMenu" key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Accordion
+        expanded={expanded}
+        onChange={(e, isExpanded) => handleChange(isExpanded)}
+        sx={{ width: "10vw" }}
+      >
+        <AccordionSummary>
+          <Typography>EMG</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div>
+            {EMGEntries.map(([name, value], index) => (
+              <div key={index} style={{ marginBottom: "0.6rem" }}>
+                <Typography>
+                  {name}:
+                  {typeof value === "object" ? JSON.stringify(value) : value}{" "}
+                </Typography>
+              </div>
+            ))}
+          </div>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };

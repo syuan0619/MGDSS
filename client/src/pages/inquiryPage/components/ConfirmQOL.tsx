@@ -1,12 +1,9 @@
-import * as React from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { QOL } from "../../../types/Patient";
-import { QOL as typeQOL } from "../../../types/Patient";
 import { useState } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import { QOL as typeQOL } from "../../../types/Patient";
 import "./Confirm.css";
 
 const ConfirmQOL = () => {
@@ -29,35 +26,35 @@ const ConfirmQOL = () => {
     freshenUp: 0,
     sum: 0,
   });
-  const [tableName] = React.useState<string[]>([]);
-  const getQOLNames = (QOL: QOL) => {
-    const QOLNames: string[] = [];
-    for (const [key, value] of Object.entries(QOL)) {
-      QOLNames.push(`${key}: ${value}`);
-    }
-    return QOLNames;
-  };
+  const QOLEntries: [string, number | string][] = Object.entries(QOLscore);
+  const [expanded, setExpanded] = useState<boolean>(false);
 
-  const QOLNames = getQOLNames(QOLscore);
-  const handleChange = () => {};
+  const handleChange = (isExpanded: boolean) => {
+    setExpanded(isExpanded);
+  };
 
   return (
     <div className="readLable">
-      <FormControl sx={{ m: 1, width: "18vw" }}>
-        <InputLabel>QOL</InputLabel>
-        <Select
-          multiple
-          value={tableName}
-          onChange={handleChange}
-          input={<OutlinedInput label="QOL" />}
-        >
-          {QOLNames.map((name) => (
-            <MenuItem className="predictMenu" key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Accordion
+        expanded={expanded}
+        onChange={(e, isExpanded) => handleChange(isExpanded)}
+        sx={{ width: "10vw" }}
+      >
+        <AccordionSummary>
+          <Typography>QOL</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div>
+            {QOLEntries.map(([name, value], index) => (
+              <div key={index} style={{ marginBottom: "0.6rem" }}>
+                <Typography>
+                  {name}: {value}
+                </Typography>
+              </div>
+            ))}
+          </div>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };

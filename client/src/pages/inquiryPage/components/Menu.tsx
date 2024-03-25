@@ -58,7 +58,7 @@ const Menu = () => {
           open={predictStatus}
           onClose={predictDialogHide}
         >
-          <DialogTitle sx={{ fontSize: "1.6rem" }}>確認病患資訊</DialogTitle>
+          <DialogTitle sx={{ fontSize: "1.5rem" }}>確認病患資訊</DialogTitle>
           <DialogContent className="predictDialog-content">
             <div className="row-for-confirm">
               <ConfirmADL />

@@ -1,12 +1,9 @@
-import * as React from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { BloodTest } from "../../../types/Patient";
-import { BloodTest as typeBloodTest } from "../../../types/Patient";
 import { useState } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import { BloodTest as typeBloodTest } from "../../../types/Patient";
 import "./Confirm.css";
 
 const ConfirmBloodTest = () => {
@@ -18,36 +15,38 @@ const ConfirmBloodTest = () => {
     ANA: 0,
     uricAcid: 0,
   });
-  const [tableName] = React.useState<string[]>([]);
-  const getBloodTestNames = (BloodTest: BloodTest) => {
-    const BloodTestNames: string[] = [];
-    for (const [key, value] of Object.entries(BloodTest)) {
-      BloodTestNames.push(`${key}: ${value}`);
-    }
-    return BloodTestNames;
-  };
+  const BloodTestEntries: [string, number | string][] =
+    Object.entries(BloodTestscore);
+  const [expanded, setExpanded] = useState<boolean>(false);
 
-  const BloodTestNames = getBloodTestNames(BloodTestscore);
-  const handleChange = () => {};
+  const handleChange = (isExpanded: boolean) => {
+    setExpanded(isExpanded);
+  };
 
   return (
     <div className="readLable">
-      <FormControl sx={{ m: 1, width: "18vw" }}>
-        <InputLabel>BloodTest</InputLabel>
-        <Select
-          multiple
-          value={tableName}
-          onChange={handleChange}
-          input={<OutlinedInput label="BloodTest" />}
-        >
-          {BloodTestNames.map((name) => (
-            <MenuItem className="predictMenu" key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Accordion
+        expanded={expanded}
+        onChange={(e, isExpanded) => handleChange(isExpanded)}
+        sx={{ width: "10vw" }}
+      >
+        <AccordionSummary>
+          <Typography>BloodTest</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div>
+            {BloodTestEntries.map(([name, value], index) => (
+              <div key={index} style={{ marginBottom: "0.6rem" }}>
+                <Typography>
+                  {name}: {value}
+                </Typography>
+              </div>
+            ))}
+          </div>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };
+
 export default ConfirmBloodTest;
