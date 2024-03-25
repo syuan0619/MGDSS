@@ -8,10 +8,10 @@ import cv2
 kernel_one = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
 kernel_two = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
 crop_dimensions_data_one_row = [
-    [(125, 55, 364, 78)],
+    [(125, 65, 355, 75)],
     [
-        (125, 55, 364, 504),
-        (125, 55, 140, 876),
+        (125, 65, 355, 500),
+        (125, 65, 135, 875),
     ],
 ]
 crop_dimensions_data_two_row = [
@@ -34,51 +34,35 @@ target_words_muscle_name = ["Nasalis", "Trapezius", "Abd"]
 
 
 def functionalRecognize(uploadImage):
-    white_part = full_image_to_white_part(uploadImage)
+    white_part, weight = full_image_to_white_part(uploadImage)
     recognized_muscle_index = get_tested_muscle_index(image_processing(white_part))
     if len(recognized_muscle_index[0]) < 2:
-        print("只有一個受測肌肉")
+        print("只有一個受測肌肉或根本辨識不出來")
         return "error"
     recognized_muscle, recognized_index = (
         recognized_muscle_index[0],
         recognized_muscle_index[1],
     )
-    crop_dimensions_data = determine_recognize_area(recognized_index)
+    crop_dimensions_data = determine_recognize_area(recognized_index, weight)
     result_of_recognizition = recognize_result(
-        recognized_muscle, crop_dimensions_data, white_part
+        recognized_muscle, crop_dimensions_data, white_part, weight
     )
-    print(result_of_recognizition)
-    return "兩個辨識完的物件跟一張白色範圍的照片"
+    print("\n", result_of_recognizition)
+    return (
+        result_of_recognizition,
+        Image.fromarray(white_part),
+    )  # 老吳如果要白色部分把white_part放進return裡就好
 
 
 # 規定的標準尺寸下 720p/1080p/2k 都是 1.77777778 的比例因此可以將絕對座標加權
 # 讓辨識成果可以適應三種常見尺寸（或符合這個螢幕比例的尺寸），但暫時不支援 4k（比例不同）
-def standard_image_size(uploadImage):
-    image_array = np.array(uploadImage)
-    # 這裡需要一個funcion去判斷螢幕比例
-    screen_size_weight = 1
-    cropped_image = cv.resize(
-        image_array[
-            400 * screen_size_weight : 1020 * screen_size_weight,
-            750 * screen_size_weight : 1350 * screen_size_weight,
-        ],
-        None,
-        None,
-        fx=2,
-        fy=2,
-        interpolation=cv.INTER_NEAREST,
-    )
-    return "標準尺寸"
-
-
-# 規定的標準尺寸下 720p/1080p/2k 都是 1.77777778 的比例因此可以將絕對座標加權
-# 讓辨識成果可以適應三種常見尺寸（或符合這個螢幕比例的尺寸），但暫時不支援 4k（比例不同）
-# 之後要改成可以適用更多尺寸就調整權重
+# 之後要改成可以適用更多尺寸就調整權重，現在只有 1920*1080
 def full_image_to_white_part(uploadImage):
     origin_image = Image.open(uploadImage)
     image_array = np.array(origin_image)
     screen_size_height, screen_size_width, screen_size_color = image_array.shape
-    weight = round(screen_size_width / 1920, 3)
+    weight = round(screen_size_width / 1920, 4)
+    print(weight)
     cropped_image = cv2.resize(
         image_array[
             int(400 * weight) : int(1020 * weight),
@@ -90,7 +74,7 @@ def full_image_to_white_part(uploadImage):
         fy=2,
         interpolation=cv2.INTER_NEAREST,
     )
-    return cropped_image
+    return cropped_image, weight
 
 
 # 先影像處理完，辨識一次，得到兩個受測肌肉座標
@@ -98,7 +82,7 @@ def get_tested_muscle_index(white_part):
     recognized_muscle = []
     recognized_muscle_index = []
     data = pytesseract.image_to_data(white_part, output_type=pytesseract.Output.DICT)
-    # print(data)
+    print("\n", data)
     for idx, (left, top, width, height, text, conf) in enumerate(
         zip(
             data["left"],
@@ -110,40 +94,58 @@ def get_tested_muscle_index(white_part):
         )
     ):
         if int(data["conf"][idx]) > 70 and text in target_words_muscle_name:
-            (x, y, w, h) = (left, top, width, height)
             recognized_muscle.append(data["text"][idx - 1] + " " + text)
             recognized_muscle_index.append(top)
-    if len(recognized_muscle_index) == 0:
-        print("沒辨識成功1")
-        return recognized_muscle_index
+            ######################## 快速找座標 #########################
+            if text == "":
+                print(
+                    "left: ",
+                    left,
+                    ",top: ",
+                    top,
+                    ",width:  ",
+                    width,
+                    ",height: ",
+                    height,
+                    ",text: ",
+                    text,
+                    ",,,conf: ",
+                    conf,
+                )
     return recognized_muscle, recognized_muscle_index
 
 
 # 藉由兩個受測肌肉座標判斷第一個受測肌肉分別有幾個橫排，來決定要辨識的重點範圍
-def determine_recognize_area(recognized_index):
-    if int(recognized_index[1]) - int(recognized_index[0]) > 600:
+def determine_recognize_area(recognized_index, weight):
+    if int(recognized_index[1]) - int(recognized_index[0]) > int(600 * weight):
         return crop_dimensions_data_two_row
     return crop_dimensions_data_one_row
 
 
 # 辨識圖片並輸出
-def recognize_result(recognized_muscle, crop_dimensions_data, white_part):
+def recognize_result(recognized_muscle, crop_dimensions_data, white_part, weight):
     results = []
     recognized_string_splited_by_line = []
     for muscle, crop_dimensions_data in zip(recognized_muscle, crop_dimensions_data):
         for crop_dimensions_data in crop_dimensions_data:
             width, height, x, y = crop_dimensions_data
-            resize_image = white_part[y : y + height, x : x + width]
+            resize_image = white_part[
+                y : y + int(height * weight), x : x + int(width * weight)
+            ]
             enlarge_resize_image = cv2.resize(
                 resize_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC
             )
+            ########### 可以打開這個看每一張小圖經過圖像處理後的差別 ###########
             # cv2.imshow("img", enlarge_resize_image)
             # cv2.waitKey(0)
             # cv2.imshow("img", image_processing(enlarge_resize_image))
             # cv2.waitKey(0)
-            recognized_string = pytesseract.image_to_string(
-                enlarge_resize_image
-            ).splitlines()
+            recognized_string = (
+                pytesseract.image_to_string(enlarge_resize_image)
+                .encode("ascii", "ignore")
+                .decode("ascii")
+                .splitlines()
+            )
             recognized_string_splited_by_line.extend(recognized_string)
         results.append(
             {
@@ -164,25 +166,8 @@ def image_processing(image):
 
 
 # Update with the path to your test image
-image_path = r"/Users/kevinlakao/Desktop/MDGSS/server/images/10.png"
+image_path = r"/Users/kevinlakao/Desktop/MDGSS/server/images/1.png"
 functionalRecognize(image_path)
-
-# 快速座標
-# if text == "-8.5":
-#     print(
-#         "left: ",
-#         left,
-#         ",top: ",
-#         top,
-#         ",width:  ",
-#         width,
-#         ",height: ",
-#         height,
-#         ",text: ",
-#         text,
-#         ",,,conf: ",
-#         conf,
-#     )
 
 # 單純列出所有字
 # word = pytesseract.image_to_string(white_part)
@@ -205,7 +190,7 @@ functionalRecognize(image_path)
 # cv2.imshow("img", img)
 # cv2.waitKey(0)
 
-# 只用字串查詢，無法得知真實index
+# 用字串查詢，無法得知真實index
 # for target_word in target_words:
 #     match = re.search(r'\b' + re.escape(target_word) + r'\b', word, re.IGNORECASE)
 #     if match:
