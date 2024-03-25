@@ -5,7 +5,7 @@ import EMG from "../chart/EMG";
 import { MGSmallChart } from "../chart/MG";
 import { QMGSmallChart } from "../chart/QMG";
 import { QOLSmallChart } from "../chart/QOL";
-import Thymus from "../chart/Thymus";
+import { ThymusSmallChart } from "../chart/Thymus";
 import { VisitSmallChart } from "../chart/Visit";
 import { GiChart } from "react-icons/gi";
 import { FaPencil } from "react-icons/fa6";
@@ -156,7 +156,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <Thymus />
+          <ThymusSmallChart />
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">

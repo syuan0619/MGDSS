@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api.tsx";
 import { VisitChart } from "./chart/Visit";
+import { ThymusChart } from "./chart/Thymus";
 
 const InquiryPage = () => {
   const [replaceComponent, setReplaceComponent] = useState("");
@@ -139,6 +140,13 @@ const InquiryPage = () => {
                   }
                   break;
 
+                case "Thymuschart":
+                  {
+                    return (
+                      <ThymusChart setReplaceComponent={setReplaceComponent} />
+                    );
+                  }
+                  break;
                 default:
                   {
                     return <Right setReplaceComponent={setReplaceComponent} />;
