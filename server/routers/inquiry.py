@@ -1,12 +1,10 @@
 import json
 import models
 import io
-from PIL import Image
-from bson.binary import Binary
 from fastapi import APIRouter, UploadFile, File, Header
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import ValidationError
-from mongoDB.connectDB import updatePatient, updateEntirePatient, getPatientById, uploadImage
+from mongoDB.connectDB import updatePatient, updateEntirePatient, getPatientById
 from OCR.ImgToWord import recognize, getWhite
 
 
@@ -117,7 +115,7 @@ async def inquiry_ADL(patientId: str, table: models.ADL):
         print("error: ", str(e))
         return JSONResponse(status_code=500, content={"message": "Internal server error"})
 
-@router.post("/{patientId}/EMG")
+@router.post("/{patientId}/EMG", summary="Add new EMG table", description="request body: croped image, request header: EMG table without 'image' key")
 async def inquiry_EMG(patientId: str, file: UploadFile=File(...), table: str = Header(None)):
     try:
         table = json.loads(table)
