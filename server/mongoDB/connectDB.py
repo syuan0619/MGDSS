@@ -35,6 +35,10 @@ def updatePatient(patientId: str, tableName: str, table: dict):
     updatedPatient['_id'] = str(updatedPatient['_id'])
     return updatedPatient
 
+def uploadImage(patientId: str, image: Binary):
+    pateient = getPatientById(patientId)
+    return "Success upload image!"
+
 def updateEntirePatient(patientId: str, updatedPatient: dict):
     patientCollection.find_one_and_update({"_id": ObjectId(patientId)}, {"$set": updatedPatient})
     updatedPatient['_id'] = str(updatedPatient['_id'])

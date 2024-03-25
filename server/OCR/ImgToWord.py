@@ -24,17 +24,9 @@ def getWhite(uploadImage):
 
 def crop(image):
     image_array = np.array(image)
-
     # Resize the image
     resized_image = cv2.resize(image_array, (1920, 1080))
-
-    # crop_dimensions_main = [(600, 620, 750, 400)]
-    # for i, (w, h, x, y) in enumerate(crop_dimensions_main, start=1):
-        # Crop the image
-        # crop_image = resized_image[y:y + h, x:x + w]
-        
     crop_image = resized_image[400:1020, 750:1350]
-
     resized_image = cv2.resize(
         crop_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
 
@@ -49,10 +41,12 @@ crop_dimensions_data_2 = [(125, 55, 350, 503),
 
 def perform_ocr(resized_image):
     results = []
-
+    dif = 0
     code = pytesseract.image_to_string(resized_image)
     data = pytesseract.image_to_data(resized_image, output_type=pytesseract.Output.DICT)
-    target_words = ["Right Nasalis", "Left Nasalis", "Right Trapezius", "Left Trapezius", "Right Adb", "Left Adb"]
+    target_words = ["Right Nasalis", "Left Nasalis", "Right Trapezius", "Left Trapezius", "Right Abd", "Left Abd"]
+
+    target_y_coords = []
 
     for target_words_idx, target_word in enumerate(target_words):
         match = re.search(r'\b' + re.escape(target_word) + r'\b', code, re.IGNORECASE)
@@ -60,7 +54,16 @@ def perform_ocr(resized_image):
             start_idx = match.start()
             end_idx = match.end()
             x, y = data['left'][start_idx], data['top'][start_idx]
-            crop_dimensions = crop_dimensions_data_1 if target_words_idx == 0 else crop_dimensions_data_2
+            print(x, y)
+            target_y_coords.append(y)
+            # cv2.rectangle(resized_image, (x, y), (x + 10, y + 10), (0, 255, 0), 2)
+            # cv2.imshow("Cropped result_image", resized_image)
+            # cv2.waitKey(0)
+
+            if len(target_y_coords) >= 2:
+                dif = (target_y_coords[1] - target_y_coords[0])
+
+            crop_dimensions = crop_dimensions_data_2 if dif > 50 else crop_dimensions_data_1
             for i, (w, h, x, y) in enumerate(crop_dimensions, start=1):
                 result_image = resized_image[y:y + h, x:x + w]
                 result_image_cropped = cv2.resize(result_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
@@ -78,9 +81,8 @@ def perform_ocr(resized_image):
                         "target_words": target_word,
                         "result_data": split_text
                     })
-        
+                    
     return results
-
 
 # # Update with the path to your test image
 # image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'  # Update with the path to your test image
