@@ -1,12 +1,12 @@
 import "./right.css";
-import ADL from "../chart/ADL";
+import { ADLSmallChart } from "../chart/ADL";
 import BloodTest from "../chart/BloodTest";
 import EMG from "../chart/EMG";
-import MG from "../chart/MG";
-import QMG from "../chart/QMG";
-import QOL from "../chart/QOL";
-import Thymus from "../chart/Thymus";
-import Visit from "../chart/Visit";
+import { MGSmallChart } from "../chart/MG";
+import { QMGSmallChart } from "../chart/QMG";
+import { QOLSmallChart } from "../chart/QOL";
+import { ThymusSmallChart } from "../chart/Thymus";
+import { VisitSmallChart } from "../chart/Visit";
 import { GiChart } from "react-icons/gi";
 import { FaPencil } from "react-icons/fa6";
 
@@ -42,7 +42,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <ADL />
+          <ADLSmallChart />
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container-BloodTest">
@@ -98,7 +98,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <MG />
+          <MGSmallChart />
         </div>
       </div>
       <div className="inquiry-right-set">
@@ -118,7 +118,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <QMG />
+          <QMGSmallChart />
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">
@@ -136,7 +136,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <QOL />
+          <QOLSmallChart />
         </div>
       </div>
       <div className="inquiry-right-set">
@@ -156,7 +156,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <Thymus />
+          <ThymusSmallChart />
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">
@@ -174,7 +174,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <Visit />
+          <VisitSmallChart />
         </div>
       </div>
     </div>
