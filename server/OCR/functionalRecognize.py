@@ -8,23 +8,23 @@ kernel_two = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
 crop_dimensions_data_one_row = [
     [(123, 65, 350, 75)],
     [
-    (125, 65, 350, 502),
-    (125, 65, 990, 502),
-    (125, 65, 135, 872),
-    (125, 65, 348, 872),
-    (125, 65, 563, 872),
+        (125, 65, 350, 502),
+        (125, 65, 990, 502),
+        (125, 65, 135, 872),
+        (125, 65, 348, 872),
+        (125, 65, 563, 872),
     ],
 ]
 crop_dimensions_data_two_row = [
     [
-    (125, 65, 355, 75),
-    (125, 65, 990, 75),
-    (125, 65, 135, 445),
-    (125, 65, 355, 445),
-    (122, 65, 563, 445),
-],
+        (125, 65, 355, 75),
+        (125, 65, 990, 75),
+        (125, 65, 135, 445),
+        (125, 65, 355, 445),
+        (122, 65, 563, 445),
+    ],
     [
-    (125, 65, 350, 875),
+        (125, 65, 350, 875),
     ],
 ]
 target_words_left_right_muscle = [
@@ -40,7 +40,8 @@ target_words_muscle_name = ["Nasalis", "Trapezius", "Abd"]
 
 def functionalRecognize(uploadImage):
     white_part, weight = full_image_to_white_part(uploadImage)
-    recognized_muscle_index = get_tested_muscle_index(image_processing(white_part))
+    recognized_muscle_index = get_tested_muscle_index(
+        image_processing(white_part))
     if len(recognized_muscle_index[0]) < 2:
         print("只有一個受測肌肉或根本辨識不出來")
         return "error"
@@ -89,7 +90,8 @@ def full_image_to_white_part(uploadImage):
 def get_tested_muscle_index(white_part):
     recognized_muscle = []
     recognized_muscle_index = []
-    data = pytesseract.image_to_data(white_part, output_type=pytesseract.Output.DICT)
+    data = pytesseract.image_to_data(
+        white_part, output_type=pytesseract.Output.DICT)
     # print("\n", data)
     for idx, (left, top, width, height, text, conf) in enumerate(
         zip(
@@ -174,8 +176,8 @@ def image_processing(image):
 
 
 # Update with the path to your test image
-image_path = r"C:\Users\User\Desktop\MDDGSS\server\images\1.png"
-functionalRecognize(image_path)
+# image_path = r"C:\Users\User\Desktop\MDDGSS\server\images\1.png"
+# functionalRecognize(image_path)
 
 # 單純列出所有字
 # word = pytesseract.image_to_string(white_part)
