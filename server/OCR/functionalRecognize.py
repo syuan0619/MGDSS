@@ -1,5 +1,3 @@
-import json
-import re
 import numpy as np
 from PIL import Image
 import pytesseract
@@ -10,17 +8,24 @@ kernel_two = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
 crop_dimensions_data_one_row = [
     [(125, 65, 355, 75)],
     [
-        (125, 65, 355, 500),
-        (125, 65, 135, 875),
+    (125, 65, 350, 505),
+    (125, 65, 990, 505),
+    (125, 65, 135, 875),
+    (125, 65, 350, 875),
+    (122, 65, 563, 875),
     ],
 ]
 crop_dimensions_data_two_row = [
-    (125, 55, 364, 78),
-    (125, 55, 350, 503),
-    (125, 55, 990, 503),
-    (125, 55, 135, 875),
-    (125, 55, 350, 875),
-    (122, 55, 563, 875),
+    [
+    (125, 65, 355, 75),
+    (125, 65, 990, 75),
+    (125, 65, 135, 445),
+    (125, 65, 355, 445),
+    (122, 65, 563, 445),
+],
+    [
+    (125, 65, 350, 875),
+    ],
 ]
 target_words_left_right_muscle = [
     "Right Nasalis",
@@ -74,6 +79,9 @@ def full_image_to_white_part(uploadImage):
         fy=2,
         interpolation=cv2.INTER_NEAREST,
     )
+    # cv2.imshow("img", cropped_image)
+    # cv2.waitKey(0)
+
     return cropped_image, weight
 
 
@@ -97,21 +105,21 @@ def get_tested_muscle_index(white_part):
             recognized_muscle.append(data["text"][idx - 1] + " " + text)
             recognized_muscle_index.append(top)
             ######################## 快速找座標 #########################
-            if text == "":
-                print(
-                    "left: ",
-                    left,
-                    ",top: ",
-                    top,
-                    ",width:  ",
-                    width,
-                    ",height: ",
-                    height,
-                    ",text: ",
-                    text,
-                    ",,,conf: ",
-                    conf,
-                )
+        if text == "3.2%":
+            print("text=" + text,
+                "left: ",
+                left,
+                ",top: ",
+                top,
+                ",width:  ",
+                width,
+                ",height: ",
+                height,
+                ",text: ",
+                text,
+                ",,,conf: ",
+                conf,
+            )
     return recognized_muscle, recognized_muscle_index
 
 
@@ -130,14 +138,14 @@ def recognize_result(recognized_muscle, crop_dimensions_data, white_part, weight
         for crop_dimensions_data in crop_dimensions_data:
             width, height, x, y = crop_dimensions_data
             resize_image = white_part[
-                y : y + int(height * weight), x : x + int(width * weight)
+                y: y + int(height * weight), x: x + int(width * weight)
             ]
             enlarge_resize_image = cv2.resize(
                 resize_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC
             )
             ########### 可以打開這個看每一張小圖經過圖像處理後的差別 ###########
-            # cv2.imshow("img", enlarge_resize_image)
-            # cv2.waitKey(0)
+            cv2.imshow("img", enlarge_resize_image)
+            cv2.waitKey(0)
             # cv2.imshow("img", image_processing(enlarge_resize_image))
             # cv2.waitKey(0)
             recognized_string = (
@@ -166,7 +174,7 @@ def image_processing(image):
 
 
 # Update with the path to your test image
-image_path = r"/Users/kevinlakao/Desktop/MDGSS/server/images/1.png"
+image_path = r"C:\Users\User\Desktop\MDDGSS\server\images\1.png"
 functionalRecognize(image_path)
 
 # 單純列出所有字

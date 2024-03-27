@@ -102,11 +102,11 @@ def perform_ocr(resized_image):
     return results
 
 # # Update with the path to your test image
-# image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\9.png'  # Update with the path to your test image
-# results = recognize(image_path)
+image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'  # Update with the path to your test image
+results = recognize(image_path)
 
 # Print the OCR results
-# for result in results:
-#     print(result)
+for result in results:
+    print(result)
 # cv2.imshow("Cropped result_image", crop_image)
 # cv2.waitKey(0)
