@@ -293,8 +293,9 @@ function PatientList() {
           "& .MuiSvgIcon-root": {
             fill: "white",
           },
-          "&:hover .MuiSvgIcon-root": {
+          " .MuiSvgIcon-root:hover": {
             backgroundColor: "transparent",
+            fill: " rgba(41, 71, 118, 0.976)",
           },
           "& .MuiButtonBase-root": {
             borderRadius: "0.7rem",
