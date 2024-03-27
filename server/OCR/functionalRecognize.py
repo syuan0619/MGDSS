@@ -6,13 +6,13 @@ import cv2
 kernel_one = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
 kernel_two = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
 crop_dimensions_data_one_row = [
-    [(125, 65, 355, 75)],
+    [(123, 65, 350, 75)],
     [
-    (125, 65, 350, 505),
-    (125, 65, 990, 505),
-    (125, 65, 135, 875),
-    (125, 65, 350, 875),
-    (122, 65, 563, 875),
+    (125, 65, 350, 502),
+    (125, 65, 990, 502),
+    (125, 65, 135, 872),
+    (125, 65, 348, 872),
+    (125, 65, 563, 872),
     ],
 ]
 crop_dimensions_data_two_row = [
@@ -90,7 +90,7 @@ def get_tested_muscle_index(white_part):
     recognized_muscle = []
     recognized_muscle_index = []
     data = pytesseract.image_to_data(white_part, output_type=pytesseract.Output.DICT)
-    print("\n", data)
+    # print("\n", data)
     for idx, (left, top, width, height, text, conf) in enumerate(
         zip(
             data["left"],
@@ -105,21 +105,21 @@ def get_tested_muscle_index(white_part):
             recognized_muscle.append(data["text"][idx - 1] + " " + text)
             recognized_muscle_index.append(top)
             ######################## 快速找座標 #########################
-        if text == "3.2%":
-            print("text=" + text,
-                "left: ",
-                left,
-                ",top: ",
-                top,
-                ",width:  ",
-                width,
-                ",height: ",
-                height,
-                ",text: ",
-                text,
-                ",,,conf: ",
-                conf,
-            )
+        # if text == "3.2%":
+        #     print("text=" + text,
+        #         "left: ",
+        #         left,
+        #         ",top: ",
+        #         top,
+        #         ",width:  ",
+        #         width,
+        #         ",height: ",
+        #         height,
+        #         ",text: ",
+        #         text,
+        #         ",,,conf: ",
+        #         conf,
+        #     )
     return recognized_muscle, recognized_muscle_index
 
 
