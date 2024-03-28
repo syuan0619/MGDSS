@@ -11,14 +11,7 @@ import { Link } from "react-router-dom";
 import "./menu.css";
 import { Dialog } from "@mui/material";
 import { useState } from "react";
-import ConfirmADL from "./ConfirmADL";
-import ConfirmBloodTest from "./ConfirmBloodTest";
-import ConfirmEMG from "./ConfirmEMG";
-import ConfirmMG from "./ConfirmMG";
-import ConfirmQMG from "./ConfirmQMG";
-import ConfirmQOL from "./ConfirmQOL";
-import ConfirmThymus from "./ConfirmThymus";
-import ConfirmVisit from "./ConfirmVisit";
+import ConfirmPanel from "./ConfirmPanel";
 
 const Menu = () => {
   //病情預測dialog
@@ -60,18 +53,7 @@ const Menu = () => {
         >
           <DialogTitle sx={{ fontSize: "1.5rem" }}>確認病患資訊</DialogTitle>
           <DialogContent className="predictDialog-content">
-            <div className="row-for-confirm">
-              <ConfirmADL />
-              <ConfirmBloodTest />
-              <ConfirmEMG />
-              <ConfirmMG />
-            </div>
-            <div className="row-for-confirm">
-              <ConfirmQMG />
-              <ConfirmQOL />
-              <ConfirmThymus />
-              <ConfirmVisit />
-            </div>
+            <ConfirmPanel />
           </DialogContent>
           <DialogActions>
             <IconButton
