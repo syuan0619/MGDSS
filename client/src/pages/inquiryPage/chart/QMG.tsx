@@ -1,6 +1,8 @@
 import { LineChart } from "@mui/x-charts/LineChart";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { QMG } from "../../../types/Patient";
 import "./Chart.css";
+
 const patientQMG = [
   {
     doubleVision: 2,
@@ -104,11 +106,15 @@ const leftHandGridData = patientQMG.map((item) => item.leftHandGrid);
 const headLiftData = patientQMG.map((item) => item.headLift);
 const rightLegHeightData = patientQMG.map((item) => item.rightLegHeight);
 const leftLegHeightData = patientQMG.map((item) => item.leftLegHeight);
+
 const QMGChart = ({
   setReplaceComponent,
+  historyData,
 }: {
   setReplaceComponent: (table: string) => void;
+  historyData: QMG[];
 }) => {
+  console.log(historyData);
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -221,7 +227,8 @@ const QMGChart = ({
   );
 };
 
-const QMGSmallChart = () => {
+const QMGSmallChart = ({ historyData }: { historyData: QMG[] }) => {
+  console.log(historyData);
   return (
     <div>
       <LineChart

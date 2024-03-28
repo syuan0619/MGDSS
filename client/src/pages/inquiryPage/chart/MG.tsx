@@ -1,5 +1,6 @@
 import { LineChart } from "@mui/x-charts";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { MG } from "../../../types/Patient";
 import "./Chart.css";
 
 const patientMG = [
@@ -73,11 +74,15 @@ const breathingData = patientMG.map((item) => item.breathing);
 const neckFlexionData = patientMG.map((item) => item.neckFlexion);
 const shoulderAbductionData = patientMG.map((item) => item.shoulderAbduction);
 const hipFlexionData = patientMG.map((item) => item.hipFlexion);
+
 const MGChart = ({
   setReplaceComponent,
+  historyData,
 }: {
   setReplaceComponent: (table: string) => void;
+  historyData: MG[];
 }) => {
+  console.log(historyData);
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -172,7 +177,8 @@ const MGChart = ({
   );
 };
 
-const MGSmallChart = () => {
+const MGSmallChart = ({ historyData }: { historyData: MG[] }) => {
+  console.log(historyData);
   return (
     <div>
       <LineChart

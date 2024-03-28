@@ -1,5 +1,6 @@
 import { LineChart } from "@mui/x-charts/LineChart";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { ADL } from "../../../types/Patient";
 import "./Chart.css";
 
 const patientADL = [
@@ -52,9 +53,12 @@ const eyelidData = patientADL.map((item) => item.eyelid);
 
 const ADLChart = ({
   setReplaceComponent,
+  historyData,
 }: {
   setReplaceComponent: (table: string) => void;
+  historyData: ADL[];
 }) => {
+  console.log(historyData);
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -131,7 +135,8 @@ const ADLChart = ({
   );
 };
 
-const ADLSmallChart = () => {
+const ADLSmallChart = ({ historyData }: { historyData: ADL[] }) => {
+  console.log("smallchart: ", historyData);
   return (
     <div>
       <LineChart
