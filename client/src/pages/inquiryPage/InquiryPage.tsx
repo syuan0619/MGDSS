@@ -103,7 +103,10 @@ const InquiryPage = () => {
                 case "QMGchart":
                   {
                     return (
-                      <QMGChart setReplaceComponent={setReplaceComponent} />
+                      <QMGChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.QMG}
+                      />
                     );
                   }
                   break;
@@ -111,7 +114,10 @@ const InquiryPage = () => {
                 case "ADLchart":
                   {
                     return (
-                      <ADLChart setReplaceComponent={setReplaceComponent} />
+                      <ADLChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.ADL}
+                      />
                     );
                   }
                   break;
@@ -119,7 +125,10 @@ const InquiryPage = () => {
                 case "MGchart":
                   {
                     return (
-                      <MGChart setReplaceComponent={setReplaceComponent} />
+                      <MGChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.MG}
+                      />
                     );
                   }
                   break;
@@ -127,7 +136,10 @@ const InquiryPage = () => {
                 case "QOLchart":
                   {
                     return (
-                      <QOLChart setReplaceComponent={setReplaceComponent} />
+                      <QOLChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.QOL}
+                      />
                     );
                   }
                   break;
@@ -135,7 +147,10 @@ const InquiryPage = () => {
                 case "Visitchart":
                   {
                     return (
-                      <VisitChart setReplaceComponent={setReplaceComponent} />
+                      <VisitChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.visit}
+                      />
                     );
                   }
                   break;
@@ -143,13 +158,21 @@ const InquiryPage = () => {
                 case "Thymuschart":
                   {
                     return (
-                      <ThymusChart setReplaceComponent={setReplaceComponent} />
+                      <ThymusChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.thymus}
+                      />
                     );
                   }
                   break;
                 default:
                   {
-                    return <Right setReplaceComponent={setReplaceComponent} />;
+                    return (
+                      <Right
+                        setReplaceComponent={setReplaceComponent}
+                        patient={patients}
+                      />
+                    );
                   }
                   break;
               }

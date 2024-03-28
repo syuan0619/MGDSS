@@ -1,6 +1,7 @@
 import { LineChart } from "@mui/x-charts";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import "./Chart.css";
+import { Visit } from "../../../types/Patient";
 
 const patientVisit = [
   {
@@ -91,9 +92,12 @@ const VisitxLabels = patientVisit.map((item) => item.date);
 
 const VisitChart = ({
   setReplaceComponent,
+  historyData,
 }: {
   setReplaceComponent: (table: string) => void;
+  historyData: Visit[];
 }) => {
+  console.log(historyData);
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -164,7 +168,8 @@ const VisitChart = ({
   );
 };
 
-const VisitSmallChart = () => {
+const VisitSmallChart = ({ historyData }: { historyData: ADL[] }) => {
+  console.log(historyData);
   return (
     <div>
       <LineChart

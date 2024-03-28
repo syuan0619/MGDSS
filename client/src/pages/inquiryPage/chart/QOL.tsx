@@ -1,5 +1,6 @@
 import { LineChart } from "@mui/x-charts/LineChart";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { QOL } from "../../../types/Patient";
 import "./Chart.css";
 
 const patientQOL = [
@@ -89,9 +90,12 @@ const freshenUpData = patientQOL.map((item) => item.freshenUp);
 
 const QOLChart = ({
   setReplaceComponent,
+  historyData,
 }: {
   setReplaceComponent: (table: string) => void;
+  historyData: QOL[];
 }) => {
+  console.log(historyData);
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -216,7 +220,8 @@ const QOLChart = ({
   );
 };
 
-const QOLSmallChart = () => {
+const QOLSmallChart = ({ historyData }: { historyData: QOL[] }) => {
+  console.log(historyData);
   return (
     <div>
       <LineChart
