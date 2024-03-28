@@ -52,7 +52,7 @@ def functionalRecognize(uploadImage):
     result_of_recognizition = recognize_result(
         recognized_muscle, crop_dimensions_data, white_part, weight
     )
-    print("\n", result_of_recognizition)
+    # print("\n", result_of_recognizition)
     return (
         result_of_recognizition,
         Image.fromarray(white_part),
@@ -144,8 +144,8 @@ def recognize_result(recognized_muscle, crop_dimensions_data, white_part, weight
                 resize_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC
             )
             ########### 可以打開這個看每一張小圖經過圖像處理後的差別 ###########
-            cv2.imshow("img", enlarge_resize_image)
-            cv2.waitKey(0)
+            # cv2.imshow("img", enlarge_resize_image)
+            # cv2.waitKey(0)
             # cv2.imshow("img", image_processing(enlarge_resize_image))
             # cv2.waitKey(0)
             recognized_string = (
