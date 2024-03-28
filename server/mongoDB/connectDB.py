@@ -44,8 +44,6 @@ def updateEntirePatient(patientId: str, updatedPatient: dict):
     updatedPatient['_id'] = str(updatedPatient['_id'])
     return updatedPatient
 
-
-
 ### Account
 
 def getAllAccounts():
@@ -76,3 +74,4 @@ def loginWithEmailandPassword(email: str, password: str):
 def deleteAccount(accountId: str):
     return accountCollection.delete_one({"_id": ObjectId(accountId)})
     
+### Prediction
