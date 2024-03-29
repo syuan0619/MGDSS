@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-
+import api from "../../api"; 
 import {
   TextField,
   Button,
@@ -113,12 +113,27 @@ const LoginPage = () => {
   };
 
   const navigate = useNavigate();
-  function onSubmit() {
-    console.log([form, setForm]);
-    navigate("/patient");
-  }
 
-  return (
+  const onSubmit = async () => {
+    try {
+      const response = await api.post("/account/login", null, {
+        params: {
+          email: form.account,
+          password: form.password
+        }
+      });
+      if (response.data) {
+        alert("登入成功!");
+        navigate("/patient");
+      } else {
+        console.log(response.data)
+        alert("帳號或密碼錯誤!");
+      }
+    } catch (error) {
+      alert("帳號或密碼錯誤!");
+    }
+  };
+      return (
     <>
       <div className="background">
         <div className="spinnerwapper">

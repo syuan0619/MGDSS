@@ -174,8 +174,8 @@ def image_processing(image):
 
 
 # Update with the path to your test image
-image_path = r"C:\Users\User\Desktop\MDDGSS\server\images\1.png"
-functionalRecognize(image_path)
+# image_path = r"C:\Users\User\Desktop\MDDGSS\server\images\1.png"
+# functionalRecognize(image_path)
 
 # 單純列出所有字
 # word = pytesseract.image_to_string(white_part)
