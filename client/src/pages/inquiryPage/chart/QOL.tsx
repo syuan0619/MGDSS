@@ -125,67 +125,67 @@ const QOLChart = ({
                 curve: "linear",
                 data: frustrationData,
                 label: "frustration",
-                color: "#5356FF",
+                color: "#FF204E",
               },
               {
                 curve: "linear",
                 data: eyeUsingData,
                 label: "eyeUsing",
-                color: "#7C93C3",
+                color: "#F7418F",
               },
               {
                 curve: "linear",
                 data: eatingData,
                 label: "eating",
-                color: "#2D46B9",
+                color: "#E36414",
               },
               {
                 curve: "linear",
                 data: socialData,
                 label: "social",
-                color: "#0096FF",
+                color: "#FFBB64",
               },
               {
                 curve: "linear",
                 data: entertainmentData,
                 label: "entertainment",
-                color: "#7469B6",
+                color: "#FAEF5D",
               },
               {
                 curve: "linear",
                 data: fullfillFamilyNeedsData,
                 label: "fullfillFamilyNeeds",
-                color: "#836FFF",
+                color: "#00DFA2",
               },
               {
                 curve: "linear",
                 data: plansNecessityData,
                 label: "plansNecessity",
-                color: "#81689D",
+                color: "#0B666A",
               },
               {
                 curve: "linear",
                 data: jobStateData,
                 label: "jobState",
-                color: "#BC7AF9",
+                color: "#2F58CD",
               },
               {
                 curve: "linear",
                 data: speakingData,
                 label: "speaking",
-                color: "#86A7FC",
+                color: "#80B3FF",
               },
               {
                 curve: "linear",
                 data: drivingData,
                 label: "driving",
-                color: "#40679E",
+                color: "#9400FF",
               },
               {
                 curve: "linear",
                 data: depressionData,
                 label: "depression",
-                color: "#427D9D",
+                color: "#E26EE5",
               },
               {
                 curve: "linear",
@@ -197,19 +197,19 @@ const QOLChart = ({
                 curve: "linear",
                 data: beingInPublicPlacesData,
                 label: "beingInPublicPlaces",
-                color: "#839AA8",
+                color: "#706233",
               },
               {
                 curve: "linear",
                 data: overwhelmData,
                 label: "overwhelm",
-                color: "#97D2EC",
+                color: "#EAD7BB",
               },
               {
                 curve: "linear",
                 data: freshenUpData,
                 label: "freshenUp",
-                color: "#9C9EFE",
+                color: "#F4EAE0",
               },
             ]}
             xAxis={[{ scaleType: "point", data: QOLxLabels }]}
@@ -225,6 +225,11 @@ const QOLSmallChart = ({ historyData }: { historyData: QOL[] }) => {
   return (
     <div>
       <LineChart
+        slotProps={{
+          legend: {
+            itemMarkHeight: 5,
+          },
+        }}
         width={400}
         height={300}
         series={[

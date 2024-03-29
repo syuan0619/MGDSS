@@ -144,67 +144,67 @@ const QMGChart = ({
                 curve: "linear",
                 data: doubleVisionData,
                 label: "doubleVision",
-                color: "#5356FF",
+                color: "#FF204E",
               },
               {
                 curve: "linear",
                 data: ptosisData,
                 label: "ptosis",
-                color: "#7C93C3",
+                color: "#F7418F",
               },
               {
                 curve: "linear",
                 data: facialMuscleData,
                 label: "facialMuscle",
-                color: "#2D46B9",
+                color: "#E36414",
               },
               {
                 curve: "linear",
                 data: swallowingData,
                 label: "swallowing",
-                color: "#0096FF",
+                color: "#FFBB64",
               },
               {
                 curve: "linear",
                 data: speakFluencyData,
                 label: "speakFluency",
-                color: "#7469B6",
+                color: "#FAEF5D",
               },
               {
                 curve: "linear",
                 data: rightArmHeightData,
                 label: "rightArmHeight",
-                color: "#836FFF",
+                color: "#00DFA2",
               },
               {
                 curve: "linear",
                 data: leftArmHeightData,
                 label: "leftArmHeight",
-                color: "#81689D",
+                color: "#0B666A",
               },
               {
                 curve: "linear",
                 data: vitalCapacityData,
                 label: "vitalCapacity",
-                color: "#BC7AF9",
+                color: "#2F58CD",
               },
               {
                 curve: "linear",
                 data: rightHandGridData,
                 label: "rightHandGrid",
-                color: "#86A7FC",
+                color: "#80B3FF",
               },
               {
                 curve: "linear",
                 data: leftHandGridData,
                 label: "leftHandGrid",
-                color: "#40679E",
+                color: "#9400FF",
               },
               {
                 curve: "linear",
                 data: headLiftData,
                 label: "headLift",
-                color: "#427D9D",
+                color: "#E26EE5",
               },
               {
                 curve: "linear",
@@ -216,7 +216,7 @@ const QMGChart = ({
                 curve: "linear",
                 data: leftLegHeightData,
                 label: "leftLegHeight",
-                color: "#839AA8",
+                color: "#706233",
               },
             ]}
             xAxis={[{ scaleType: "point", data: QMGxLabels }]}
@@ -232,6 +232,11 @@ const QMGSmallChart = ({ historyData }: { historyData: QMG[] }) => {
   return (
     <div>
       <LineChart
+        slotProps={{
+          legend: {
+            itemMarkHeight: 5,
+          },
+        }}
         width={400}
         height={300}
         series={[

@@ -112,61 +112,61 @@ const MGChart = ({
                 curve: "linear",
                 data: ptosisData,
                 label: "ptosis",
-                color: "#5356FF",
+                color: "#FF204E",
               },
               {
                 curve: "linear",
                 data: doubleVisionData,
                 label: "doubleVision",
-                color: "#7C93C3",
+                color: "#FF7ED4",
               },
               {
                 curve: "linear",
                 data: eyeClosureData,
                 label: "eyeClosure",
-                color: "#2D46B9",
+                color: "#E36414",
               },
               {
                 curve: "linear",
                 data: talkingData,
                 label: "talking",
-                color: "#0096FF",
+                color: "#FFBB64",
               },
               {
                 curve: "linear",
                 data: chewingData,
                 label: "chewing",
-                color: "#7469B6",
+                color: "#FAEF5D",
               },
               {
                 curve: "linear",
                 data: swallowingData,
                 label: "swallowing",
-                color: "#836FFF",
+                color: "#00DFA2",
               },
               {
                 curve: "linear",
                 data: breathingData,
                 label: "breathing",
-                color: "#81689D",
+                color: "#0B666A",
               },
               {
                 curve: "linear",
                 data: neckFlexionData,
                 label: "neckFlexion",
-                color: "#BC7AF9",
+                color: "#2F58CD",
               },
               {
                 curve: "linear",
                 data: shoulderAbductionData,
                 label: "shoulderAbduction",
-                color: "#86A7FC",
+                color: "#80B3FF",
               },
               {
                 curve: "linear",
                 data: hipFlexionData,
                 label: "hipFlexion",
-                color: "#40679E",
+                color: "#9400FF",
               },
             ]}
             xAxis={[{ scaleType: "point", data: MGxLabels }]}
@@ -182,6 +182,11 @@ const MGSmallChart = ({ historyData }: { historyData: MG[] }) => {
   return (
     <div>
       <LineChart
+        slotProps={{
+          legend: {
+            itemMarkHeight: 5,
+          },
+        }}
         width={400}
         height={300}
         series={[

@@ -1,6 +1,6 @@
 import "./right.css";
-import BloodTest from "../chart/BloodTest";
-import EMG from "../chart/EMG";
+import { BloodTestSmallChart } from "../chart/BloodTest";
+import { EMGSmallChart } from "../chart/EMG";
 import { ADLSmallChart } from "../chart/ADL";
 import { MGSmallChart } from "../chart/MG";
 import { QMGSmallChart } from "../chart/QMG";
@@ -63,7 +63,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <BloodTest />
+          <BloodTestSmallChart />
         </div>
       </div>
       <div className="inquiry-right-set">
@@ -83,7 +83,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <EMG />
+          <EMGSmallChart />
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">

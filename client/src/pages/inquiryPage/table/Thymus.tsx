@@ -64,32 +64,9 @@ const Thymus = ({
                 value={Thymusscore.testDate}
                 onChange={handleChange}
               />
-            </div>
-            <div className="inquiry-table-Thymus-content-row-thymusStatus">
-              <label htmlFor="thymusStatus">thymusStatus</label>
-              <input
-                defaultValue="0"
-                onChange={handleChange}
-                type="range"
-                id="thymusStatus"
-                name="thymusStatus"
-                min="0"
-                max="3"
-                step="1"
-                list="tickmarks"
-              />
-
-              <datalist className="Thymus-datalist" id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-                <option value="2" label="2"></option>
-                <option value="3" label="3"></option>
-              </datalist>
-            </div>
-          </div>
-          <div className="inquiry-table-Thymus-content-row">
+            </div>{" "}
             <div className="inquiry-table-Thymus-content-row-thymusDescription">
-              <label htmlFor="thymusDescription">thymusDescription</label>
+              <label htmlFor="thymusDescription">Description:</label>
               <input
                 defaultValue=""
                 onChange={handleChange}
@@ -97,6 +74,51 @@ const Thymus = ({
                 id="thymusDescription"
                 name="thymusDescription"
               />
+            </div>
+          </div>{" "}
+          <div className="inquiry-table-Thymus-content-row-thymusStatus">
+            <label htmlFor="thymusStatus">Thymus Status</label>
+            <div>
+              <div>
+                <input
+                  onChange={handleChange}
+                  type="radio"
+                  id="thymusStatus"
+                  name="thymusStatus"
+                  value="0"
+                />
+                <label>胸腺正常</label>
+              </div>
+              <div>
+                <input
+                  onChange={handleChange}
+                  type="radio"
+                  id="thymusStatus"
+                  name="thymusStatus"
+                  value="1"
+                />
+                <label>胸腺委縮</label>
+              </div>
+              <div>
+                <input
+                  onChange={handleChange}
+                  type="radio"
+                  id="thymusStatus"
+                  name="thymusStatus"
+                  value="2"
+                />
+                <label>胸腺增生</label>
+              </div>
+              <div>
+                <input
+                  onChange={handleChange}
+                  type="radio"
+                  id="thymusStatus"
+                  name="thymusStatus"
+                  value="3"
+                />
+                <label>胸腺瘤</label>
+              </div>
             </div>
           </div>
         </div>

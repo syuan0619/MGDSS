@@ -127,37 +127,37 @@ const VisitChart = ({
                 curve: "linear",
                 data: pyridostigmineData,
                 label: "pyridostigmine",
-                color: "#5356FF",
+                color: "#FF204E",
               },
               {
                 curve: "linear",
                 data: compesoloneData,
                 label: "compesolone",
-                color: "#BC7AF9",
+                color: "#E36414",
               },
               {
                 curve: "linear",
                 data: cellceptData,
                 label: "cellcept",
-                color: "#2D46B9",
+                color: "#0B666A",
               },
               {
                 curve: "linear",
                 data: imuranData,
                 label: "imuran",
-                color: "#0096FF",
+                color: "#2F58CD",
               },
               {
                 curve: "linear",
                 data: prografData,
                 label: "prograf",
-                color: "#7469B6",
+                color: "#9400FF",
               },
               {
                 curve: "linear",
                 data: selfAssessmentDaya,
                 label: "selfAssessment",
-                color: "#836FFF",
+                color: "#7C81AD",
               },
             ]}
             xAxis={[{ scaleType: "point", data: VisitxLabels }]}
@@ -168,19 +168,37 @@ const VisitChart = ({
   );
 };
 
-const VisitSmallChart = ({ historyData }: { historyData: ADL[] }) => {
+const VisitSmallChart = ({ historyData }: { historyData: Visit[] }) => {
   console.log(historyData);
   return (
     <div>
       <LineChart
+        slotProps={{
+          legend: {
+            itemGap: 20,
+            itemMarkHeight: 5,
+          },
+        }}
         width={400}
         height={300}
         series={[
           {
             curve: "linear",
-            data: prografData,
-            label: "prograf",
-            color: "#008dda",
+            data: pyridostigmineData,
+            label: "pyridostigmine",
+            color: "#FF204E",
+          },
+          {
+            curve: "linear",
+            data: compesoloneData,
+            label: "compesolone",
+            color: "#0B666A",
+          },
+          {
+            curve: "linear",
+            data: imuranData,
+            label: "imuran",
+            color: "#9400FF",
           },
         ]}
         xAxis={[{ scaleType: "point", data: VisitxLabels }]}

@@ -88,43 +88,43 @@ const ADLChart = ({
                 curve: "linear",
                 data: talkingData,
                 label: "talking",
-                color: "#5356FF",
+                color: "#FF204E",
               },
               {
                 curve: "linear",
                 data: chewingData,
                 label: "chewing",
-                color: "#2D46B9",
+                color: "#FF7ED4",
               },
               {
                 curve: "linear",
                 data: swallowingData,
                 label: "swallowing",
-                color: "#7C93C3",
+                color: "#E36414",
               },
               {
                 curve: "linear",
                 data: breathingData,
                 label: "breathing",
-                color: "#836FFF",
+                color: "#FFBB64",
               },
               {
                 curve: "linear",
                 data: brushTeethOrCombHairData,
                 label: "brushTeethOrCombHair",
-                color: "#BC7AF9",
+                color: "#FAEF5D",
               },
               {
                 curve: "linear",
                 data: ariseFromChairData,
                 label: "ariseFromChair",
-                color: "#86A7FC",
+                color: "#00DFA2",
               },
               {
                 curve: "linear",
                 data: eyelidData,
                 label: "eyelid",
-                color: "#40679E",
+                color: "#0B666A",
               },
             ]}
             xAxis={[{ scaleType: "point", data: ADLxLabels }]}
@@ -140,6 +140,11 @@ const ADLSmallChart = ({ historyData }: { historyData: ADL[] }) => {
   return (
     <div>
       <LineChart
+        slotProps={{
+          legend: {
+            itemMarkHeight: 5,
+          },
+        }}
         width={400}
         height={300}
         series={[
