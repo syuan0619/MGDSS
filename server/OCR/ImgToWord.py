@@ -48,7 +48,8 @@ def perform_ocr(resized_image):
     results = []
     dif = 0
     code = pytesseract.image_to_string(resized_image)
-    data = pytesseract.image_to_data(resized_image, output_type=pytesseract.Output.DICT)
+    data = pytesseract.image_to_data(
+        resized_image, output_type=pytesseract.Output.DICT)
     target_words = [
         "Right Nasalis",
         "Left Nasalis",
@@ -59,7 +60,8 @@ def perform_ocr(resized_image):
     ]
 
     for target_words_idx, target_word in enumerate(target_words):
-        match = re.search(r"\b" + re.escape(target_word) + r"\b", code, re.IGNORECASE)
+        match = re.search(r"\b" + re.escape(target_word) +
+                          r"\b", code, re.IGNORECASE)
         if match:
             start_idx = match.start()
             end_idx = match.end()
@@ -77,7 +79,7 @@ def perform_ocr(resized_image):
                 crop_dimensions_data_2 if dif > 50 else crop_dimensions_data_1
             )
             for i, (w, h, x, y) in enumerate(crop_dimensions, start=1):
-                result_image = resized_image[y : y + h, x : x + w]
+                result_image = resized_image[y: y + h, x: x + w]
                 result_image_cropped = cv2.resize(
                     result_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC
                 )
@@ -101,9 +103,8 @@ def perform_ocr(resized_image):
 
     return results
 
-
 # # Update with the path to your test image
-# image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\9.png'  # Update with the path to your test image
+# image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'  # Update with the path to your test image
 # results = recognize(image_path)
 
 # Print the OCR results

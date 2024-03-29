@@ -38,7 +38,7 @@ const EMG = ({
                         recognizedString += `\nPreActivation:\n`;
                         result.preActivation.forEach((preAct, idx) => {
                             if (idx % 3 === 0) {
-                                recognizedString += `1~5: ${preAct}\n`;
+                                recognizedString += `1-5: ${preAct}\n`;
                             } else if (idx % 3 === 1) {
                                 recognizedString += `#1: ${preAct}\n`;
                             } else if (idx % 3 === 2) {
@@ -49,7 +49,7 @@ const EMG = ({
                             recognizedString += `\nPostActivation:\n`;
                             result.postActivation.forEach((postAct, idx) => {
                                 if (idx % 3 === 0) {
-                                    recognizedString += `1~5: ${postAct}\n`;
+                                    recognizedString += `1-5: ${postAct}\n`;
                                 } else if (idx % 3 === 1) {
                                     recognizedString += `#1: ${postAct}\n`;
                                 } else if (idx % 3 === 2) {

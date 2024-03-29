@@ -1,5 +1,6 @@
 import { LineChart } from "@mui/x-charts";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { Thymus } from "../../../types/Patient";
 import "./Chart.css";
 
 const patientThymus = [
@@ -20,9 +21,12 @@ const ThymusxLabels = patientThymus.map((item) => item.testDate);
 
 const ThymusChart = ({
   setReplaceComponent,
+  historyData,
 }: {
   setReplaceComponent: (table: string) => void;
+  historyData: Thymus[];
 }) => {
+  console.log(historyData);
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -63,7 +67,8 @@ const ThymusChart = ({
   );
 };
 
-const ThymusSmallChart = () => {
+const ThymusSmallChart = ({ historyData }: { historyData: Thymus[] }) => {
+  console.log(historyData);
   return (
     <div>
       <LineChart
