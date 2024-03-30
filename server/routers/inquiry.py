@@ -20,11 +20,11 @@ async def get_patient_by_id(patientId: str):
         print("error: ", str(e))
         return JSONResponse(status_code=500, content={"message": "Internal server error"})
 
-@router.get("/{patientId}/date")
+@router.get("/{patientId}/{date}", description="path parameter: patientId(病患的_id), date(日期'yyyy-mm-dd')", summary="回傳病患在特定日期有填的表格")
 async def get_patient_date(patientId: str, date: datetime.date):
     try:
         tables = getPatientByDate(patientId, str(date))
-        return {"message": "Success get patient date", "tables": tables}
+        return {"message": f"Success get tables in {date}", "tables": tables}
     except Exception as e:
         print("error: ", str(e))
         return JSONResponse(status_code=500, content={"message": str(e)})
