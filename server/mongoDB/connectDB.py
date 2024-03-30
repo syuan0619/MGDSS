@@ -2,6 +2,7 @@ import pymongo
 import models
 from bson.objectid import ObjectId
 from bson.binary import Binary
+from datetime import date
 
 client = pymongo.MongoClient(
 "mongodb+srv://testMember:1234@schoolproject.tsw5n6e.mongodb.net/?retryWrites=true&w=majority")
@@ -9,7 +10,7 @@ db = client["SchoolProject"]
 patientCollection = db["Patient"]
 accountCollection = db["Account"]
 
-### Patient
+### Patient ###
 
 def getAllPatients():
     patients = patientCollection.find()
@@ -22,6 +23,17 @@ def getPatientById(patientId):
     patient = patientCollection.find_one({"_id": ObjectId(patientId)})
     patient['_id'] = str(patient['_id'])
     return patient
+
+def getPatientByDate(patientId: str, date: str):
+    patient = getPatientById(patientId)
+    tablesAtDate = {}
+    for key in patient:
+        if key != '_id' and key != 'info' and key != 'visit':
+            for table in patient[key]:
+                if table['testDate'] == date:
+                    tablesAtDate[key] = table
+    return tablesAtDate
+
 
 # return dict with _id
 def addNewPatient(newPatientInfo: dict):
@@ -44,9 +56,7 @@ def updateEntirePatient(patientId: str, updatedPatient: dict):
     updatedPatient['_id'] = str(updatedPatient['_id'])
     return updatedPatient
 
-
-
-### Account
+### Account ###
 
 def getAllAccounts():
     accounts = accountCollection.find()
@@ -76,3 +86,4 @@ def loginWithEmailandPassword(email: str, password: str):
 def deleteAccount(accountId: str):
     return accountCollection.delete_one({"_id": ObjectId(accountId)})
     
+### Prediction ###
