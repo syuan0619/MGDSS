@@ -30,8 +30,8 @@ def create_account(newAccount: models.Account):
 		return {"message": "Success create account!", "accountId": accountId}
 	except Exception as e:
 		return JSONResponse(status_code=400, content={"message": str(e)})
-	
-@router.post("/login")
+
+@router.post("/login", description="用email和password在資料庫中查詢，如果有對應的帳號回傳該帳號資料，否則回傳None，回傳內容可以改，在error code 400那行")
 def login(email: str, password: str):
 	try:
 		account = loginWithEmailandPassword(email, password)
