@@ -6,18 +6,44 @@ const patientEMG = [
   {
     testDate: "2024-04-13",
     imgPath: "string",
-    RNS: 2.5,
+    RNS: {
+      musclePart: "string",
+      preActivation: [2, 5, 7],
+      postActivation: [3, 4, 8],
+    },
   },
   {
     testDate: "2024-04-23",
     imgPath: "string",
-    RNS: 1.5,
+    RNS: {
+      musclePart: "string",
+      preActivation: [3, 4, 5],
+      postActivation: [2, 6, 5],
+    },
+  },
+  {
+    testDate: "2024-05-21",
+    imgPath: "string",
+    RNS: {
+      musclePart: "string",
+      preActivation: [3, 2, 5],
+      postActivation: [2, 5, 5],
+    },
   },
 ];
 
 const EMGxLabels = patientEMG.map((item) => item.testDate);
-const EMGData = patientEMG.map((item) => item.RNS);
+const preData = patientEMG
+  .map((item) => ({
+    preActivation: item.RNS.preActivation,
+  }))
+  .map((x) => x.preActivation[1]);
 
+const postData = patientEMG
+  .map((item) => ({
+    postActivation: item.RNS.postActivation,
+  }))
+  .map((x) => x.postActivation[1]);
 const EMGChart = ({
   setReplaceComponent,
   historyData,
@@ -53,9 +79,13 @@ const EMGChart = ({
             series={[
               {
                 curve: "linear",
-                data: EMGData,
-                label: "talking",
-                color: "#5356FF",
+                data: preData,
+                label: "preActivation",
+              },
+              {
+                curve: "linear",
+                data: postData,
+                label: "postActivation",
               },
             ]}
             xAxis={[{ scaleType: "point", data: EMGxLabels }]}
@@ -80,7 +110,7 @@ const EMGSmallChart = () => {
         series={[
           {
             curve: "linear",
-            data: EMGData,
+            data: preData,
             label: "amp",
             color: "#008dda",
           },
