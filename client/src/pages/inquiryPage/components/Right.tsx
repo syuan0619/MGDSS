@@ -1,19 +1,22 @@
 import "./right.css";
-import ADL from "../chart/ADL";
 import BloodTest from "../chart/BloodTest";
 import EMG from "../chart/EMG";
-import MG from "../chart/MG";
-import QMG from "../chart/QMG";
-import QOL from "../chart/QOL";
-import Thymus from "../chart/Thymus";
-import Visit from "../chart/Visit";
+import { ADLSmallChart } from "../chart/ADL";
+import { MGSmallChart } from "../chart/MG";
+import { QMGSmallChart } from "../chart/QMG";
+import { QOLSmallChart } from "../chart/QOL";
+import { ThymusSmallChart } from "../chart/Thymus";
+import { VisitSmallChart } from "../chart/Visit";
 import { GiChart } from "react-icons/gi";
 import { FaPencil } from "react-icons/fa6";
+import { Patient } from "../../../types/Patient";
 
 const Right = ({
   setReplaceComponent,
+  patient,
 }: {
   setReplaceComponent: (table: string) => void;
+  patient: Patient;
 }) => {
   const buttonToTable = (whichTable: string) => {
     setReplaceComponent(whichTable + "table");
@@ -42,7 +45,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <ADL />
+          <ADLSmallChart historyData={patient.ADL} />
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container-BloodTest">
@@ -98,7 +101,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <MG />
+          <MGSmallChart historyData={patient.MG} />
         </div>
       </div>
       <div className="inquiry-right-set">
@@ -118,7 +121,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <QMG />
+          <QMGSmallChart historyData={patient.QMG} />
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">
@@ -136,7 +139,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <QOL />
+          <QOLSmallChart historyData={patient.QOL} />
         </div>
       </div>
       <div className="inquiry-right-set">
@@ -156,7 +159,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <Thymus />
+          <ThymusSmallChart historyData={patient.thymus} />
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">
@@ -174,7 +177,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <Visit />
+          <VisitSmallChart historyData={patient.visit} />
         </div>
       </div>
     </div>
