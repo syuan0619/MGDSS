@@ -63,7 +63,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <BloodTestSmallChart />
+          <BloodTestSmallChart historyData={patient.bloodTest} />
         </div>
       </div>
       <div className="inquiry-right-set">
@@ -83,7 +83,7 @@ const Right = ({
               <GiChart className="chartIcon" />
             </button>
           </div>
-          <EMGSmallChart />
+          <EMGSmallChart historyData={patient.EMG} />
         </div>
         <div className="inquiry-right-each">
           <div className="inquiry-right-table-chart-container">

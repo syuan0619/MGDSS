@@ -96,7 +96,8 @@ const EMGChart = ({
   );
 };
 
-const EMGSmallChart = () => {
+const EMGSmallChart = ({ historyData }: { historyData: EMG[] }) => {
+  console.log(historyData);
   return (
     <div>
       <LineChart

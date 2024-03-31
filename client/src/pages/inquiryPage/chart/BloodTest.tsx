@@ -3,35 +3,6 @@ import { IoIosArrowDropleftCircle } from "react-icons/io";
 import "./Chart.css";
 import { BloodTest } from "../../../types/Patient";
 
-const patientBlood = [
-  {
-    testDate: "2024-04-02",
-    ACHR: 150,
-    TSH: 130,
-    freeThyroxine: 120,
-    ANA: 121,
-    uricAcid: 129,
-  },
-  {
-    testDate: "2024-04-21",
-    ACHR: 132,
-    TSH: 124,
-    freeThyroxine: 112,
-    ANA: 147,
-    uricAcid: 137,
-  },
-];
-const ACHRData = patientBlood.map((item) => item.ACHR);
-const TSHData = patientBlood.map((item) => item.TSH);
-
-const freeThyroxineData = patientBlood.map((item) => item.freeThyroxine);
-
-const ANAData = patientBlood.map((item) => item.ANA);
-
-const uricAcidData = patientBlood.map((item) => item.uricAcid);
-
-const BloodTestxLabels = patientBlood.map((item) => item.testDate);
-
 const BloodTestChart = ({
   setReplaceComponent,
   historyData,
@@ -39,7 +10,15 @@ const BloodTestChart = ({
   setReplaceComponent: (table: string) => void;
   historyData: BloodTest[];
 }) => {
-  console.log(historyData);
+  const BloodTestChart_ACHRData = historyData.map((item) => item.ACHR);
+  const BloodTestChart_TSHData = historyData.map((item) => item.TSH);
+  const BloodTestChart_freeThyroxineData = historyData.map(
+    (item) => item.freeThyroxine
+  );
+  const BloodTestChart_ANAData = historyData.map((item) => item.ANA);
+  const BloodTestChart_uricAcidData = historyData.map((item) => item.uricAcid);
+  const BloodTestChart_xLabels = historyData.map((item) => item.testDate);
+
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -67,36 +46,36 @@ const BloodTestChart = ({
             series={[
               {
                 curve: "linear",
-                data: ACHRData,
+                data: BloodTestChart_ACHRData,
                 label: "ACHR",
                 color: "#FF204E",
               },
               {
                 curve: "linear",
-                data: TSHData,
+                data: BloodTestChart_TSHData,
                 label: "TSH",
                 color: "#E36414",
               },
               {
                 curve: "linear",
-                data: freeThyroxineData,
+                data: BloodTestChart_freeThyroxineData,
                 label: "freeThyroxine",
                 color: "#FFBB64",
               },
               {
                 curve: "linear",
-                data: ANAData,
+                data: BloodTestChart_ANAData,
                 label: "ANA",
                 color: "#00DFA2",
               },
               {
                 curve: "linear",
-                data: uricAcidData,
+                data: BloodTestChart_uricAcidData,
                 label: "uricAcid",
                 color: "#687EFF",
               },
             ]}
-            xAxis={[{ scaleType: "point", data: BloodTestxLabels }]}
+            xAxis={[{ scaleType: "point", data: BloodTestChart_xLabels }]}
           />
         </div>
       </div>
@@ -104,7 +83,10 @@ const BloodTestChart = ({
   );
 };
 
-const BloodTestSmallChart = () => {
+const BloodTestSmallChart = ({ historyData }: { historyData: BloodTest[] }) => {
+  const BloodTestSmallChart_xLabels = historyData.map((item) => item.testDate);
+  const BloodTestSmallChart_ACHRData = historyData.map((item) => item.ACHR);
+
   return (
     <div>
       <LineChart
@@ -118,14 +100,43 @@ const BloodTestSmallChart = () => {
         series={[
           {
             curve: "linear",
-            data: ACHRData,
+            data: BloodTestSmallChart_ACHRData,
             label: "ACHR",
             color: "#008dda",
           },
         ]}
-        xAxis={[{ scaleType: "point", data: BloodTestxLabels }]}
+        xAxis={[{ scaleType: "point", data: BloodTestSmallChart_xLabels }]}
       />
     </div>
   );
 };
 export { BloodTestChart, BloodTestSmallChart };
+
+// const patientBlood = [
+//   {
+//     testDate: "2024-04-02",
+//     ACHR: 150,
+//     TSH: 130,
+//     freeThyroxine: 120,
+//     ANA: 121,
+//     uricAcid: 129,
+//   },
+//   {
+//     testDate: "2024-04-21",
+//     ACHR: 132,
+//     TSH: 124,
+//     freeThyroxine: 112,
+//     ANA: 147,
+//     uricAcid: 137,
+//   },
+// ];
+// const ACHRData = patientBlood.map((item) => item.ACHR);
+// const TSHData = patientBlood.map((item) => item.TSH);
+
+// const freeThyroxineData = patientBlood.map((item) => item.freeThyroxine);
+
+// const ANAData = patientBlood.map((item) => item.ANA);
+
+// const uricAcidData = patientBlood.map((item) => item.uricAcid);
+
+// const BloodTestxLabels = patientBlood.map((item) => item.testDate);
