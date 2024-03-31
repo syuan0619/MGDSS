@@ -20,6 +20,8 @@ import { useParams } from "react-router-dom";
 import api from "../../api.tsx";
 import { VisitChart } from "./chart/Visit";
 import { ThymusChart } from "./chart/Thymus";
+import { BloodTestChart } from "./chart/BloodTest";
+import { EMGChart } from "./chart/EMG";
 
 const InquiryPage = () => {
   const [replaceComponent, setReplaceComponent] = useState("");
@@ -165,6 +167,29 @@ const InquiryPage = () => {
                     );
                   }
                   break;
+
+                case "BloodTestchart":
+                  {
+                    return (
+                      <BloodTestChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.BloodTest}
+                      />
+                    );
+                  }
+                  break;
+
+                case "EMGchart":
+                  {
+                    return (
+                      <EMGChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.EMG}
+                      />
+                    );
+                  }
+                  break;
+
                 default:
                   {
                     return (
