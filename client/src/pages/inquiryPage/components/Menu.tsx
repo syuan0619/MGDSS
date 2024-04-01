@@ -1,30 +1,20 @@
 import { ArrowBackRounded } from "@mui/icons-material";
-import {
-  Button,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./menu.css";
-import { Dialog } from "@mui/material";
+import PredictDialog from "./PredictDialog";
 import { useState } from "react";
-import ConfirmPanel from "./ConfirmPanel";
 
 const Menu = ({ patient_id }: { patient_id: string | undefined }) => {
   //病情預測dialog
   const [predictStatus, setPredictStatus] = useState(false);
+
   const predictDialogOpen = () => {
     setPredictStatus(true);
   };
   const predictDialogHide = () => {
     setPredictStatus(false);
   };
-  // const changePredict = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setPredict({ ...predict!, [e.target.name]: e.target.value });
-  // };
   return (
     <div className="inquiry-menu-all">
       <div className="inquiry-menu-left">
@@ -46,35 +36,11 @@ const Menu = ({ patient_id }: { patient_id: string | undefined }) => {
         <button className="inquiry-menu-button" onClick={predictDialogOpen}>
           病情預測
         </button>
-        <Dialog
-          className="predictDialog"
+        <PredictDialog
           open={predictStatus}
-          onClose={predictDialogHide}
-        >
-          <DialogTitle sx={{ fontSize: "1.5rem" }}>確認病患資訊</DialogTitle>
-          <DialogContent className="predictDialog-content">
-            <ConfirmPanel patient_id={patient_id} />
-          </DialogContent>
-          <DialogActions>
-            <IconButton
-              className="deleteIcon-predict"
-              aria-label="close"
-              onClick={predictDialogHide}
-              sx={{
-                position: "absolute",
-                right: "1.3rem",
-                top: "1.3rem",
-                width: "3.5rem",
-                height: "3.5rem",
-              }}
-            >
-              <CloseIcon sx={{ fontSize: "1.4rem" }} />
-            </IconButton>
-            <Button variant="contained" color="primary">
-              進入AI病情預測
-            </Button>
-          </DialogActions>
-        </Dialog>
+          handleClose={predictDialogHide}
+          patient_id={patient_id}
+        />
         <button className="inquiry-menu-button">結束看診</button>
       </div>
     </div>
