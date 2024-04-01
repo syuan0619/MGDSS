@@ -11,12 +11,15 @@ import ConfirmPanel from "./ConfirmPanel";
 import { useState } from "react";
 import AIDialog from "./AIDialog";
 
-interface PredictDialogProps {
+const PredictDialog = ({
+  open,
+  handleClose,
+  patient_id,
+}: {
   open: boolean;
   handleClose: () => void;
-}
-
-const PredictDialog: React.FC<PredictDialogProps> = ({ open, handleClose }) => {
+  patient_id: string | undefined;
+}) => {
   const [AIStatus, setAIStatus] = useState(false);
   const AIDialogOpen = () => {
     setAIStatus(true);
@@ -32,7 +35,7 @@ const PredictDialog: React.FC<PredictDialogProps> = ({ open, handleClose }) => {
     <Dialog className="predictDialog" open={open} onClose={handleClose}>
       <DialogTitle sx={{ fontSize: "1.5rem" }}>確認病患資訊</DialogTitle>
       <DialogContent className="predictDialog-content">
-        <ConfirmPanel />
+        <ConfirmPanel patient_id={patient_id} />
       </DialogContent>
       <DialogActions>
         <IconButton
