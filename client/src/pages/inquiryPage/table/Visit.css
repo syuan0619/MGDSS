@@ -80,7 +80,7 @@ input[type="range"]::-webkit-slider-thumb {
   width: 14vw;
   height: 5vh;
 }
-.inquiry-table-Visit-content-row-testdate,
+.inquiry-table-Visit-content-row-testDate,
 .inquiry-table-Visit-content-row-note,
 .inquiry-table-Visit-content-row-left,
 .inquiry-table-Visit-content-row-right,
@@ -148,7 +148,7 @@ input[type="range"]::-webkit-slider-thumb {
   outline: 0;
 }
 
-.inquiry-table-Visit-content-row-testdate input {
+.inquiry-table-Visit-content-row-testDate input {
   background-color: #eeeeee;
   border: 0;
   border-radius: 0.7rem;
@@ -157,7 +157,7 @@ input[type="range"]::-webkit-slider-thumb {
   height: 4vh;
   margin-top: 0.2rem;
 }
-.inquiry-table-Visit-content-row-testdate input:focus {
+.inquiry-table-Visit-content-row-testDate input:focus {
   outline: 0.15rem solid #7c7b7b;
 }
 

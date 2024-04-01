@@ -11,7 +11,7 @@ const Visit = ({
   setReplaceComponent: (table: string) => void;
 }) => {
   const [VisitScore, setVisitscore] = useState<typeVisit>({
-    date: "",
+    testDate: "",
     treat: 0,
     selfAssessment: 0,
     note: "",
@@ -66,7 +66,8 @@ const Visit = ({
         setWarnings({ ...warnings, [name]: "" });
       }
 
-      if (name === "date" || name === "note") {
+      if (name === "testDate" || name === "note") {
+        console.log(value);
         setVisitscore({ ...VisitScore, [name]: value });
       } else if (name in VisitScore.prescription) {
         const updatedPrescription = {
@@ -117,13 +118,13 @@ const Visit = ({
         </div>
         <div className="inquiry-table-Visit-content">
           <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-testdate">
+            <div className="inquiry-table-Visit-content-row-testDate">
               <label htmlFor="testDate">Test Date:</label>
               <input
                 type="date"
                 id="testDate"
                 name="testDate"
-                value={VisitScore.date}
+                value={VisitScore.testDate}
                 onChange={handleChange}
               />
             </div>

@@ -13,7 +13,7 @@ import { Dialog } from "@mui/material";
 import { useState } from "react";
 import ConfirmPanel from "./ConfirmPanel";
 
-const Menu = () => {
+const Menu = ({ patient_id }: { patient_id: string | undefined }) => {
   //病情預測dialog
   const [predictStatus, setPredictStatus] = useState(false);
   const predictDialogOpen = () => {
@@ -53,7 +53,7 @@ const Menu = () => {
         >
           <DialogTitle sx={{ fontSize: "1.5rem" }}>確認病患資訊</DialogTitle>
           <DialogContent className="predictDialog-content">
-            <ConfirmPanel />
+            <ConfirmPanel patient_id={patient_id} />
           </DialogContent>
           <DialogActions>
             <IconButton

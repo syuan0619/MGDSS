@@ -5,16 +5,15 @@ import {
   AccordionDetails,
   Typography,
 } from "@mui/material";
+import { Thymus, BloodTest, QOL, QMG, MG, ADL } from "../../../types/Patient";
 
-type ConfirmProps<T> = {
-  title: string;
-  initialData: T;
-};
-
-const Confirm = <T extends Record<string, string | number>>({
+const Confirm = ({
   title,
   initialData,
-}: ConfirmProps<T>) => {
+}: {
+  title: string;
+  initialData: Thymus[] | BloodTest[] | QOL[] | QMG[] | MG[] | ADL[];
+}) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const handleChange = () => {
     setExpanded(!expanded);

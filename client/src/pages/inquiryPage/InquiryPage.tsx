@@ -42,7 +42,7 @@ const InquiryPage = () => {
   return (
     <div className="inquiry-all">
       <div className="inquiry-menu">
-        <Menu />
+        <Menu patient_id={routeParams.id} />
       </div>
       <div className="inquiry-left-right-flex">
         <div className="inquiry-left">
@@ -173,7 +173,7 @@ const InquiryPage = () => {
                     return (
                       <BloodTestChart
                         setReplaceComponent={setReplaceComponent}
-                        historyData={patients.BloodTest}
+                        historyData={patients.bloodTest}
                       />
                     );
                   }
