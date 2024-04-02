@@ -32,7 +32,7 @@ type Info = {
 
 // 看診紀錄
 type Visit = {
-  date: string;
+  testDate: string;
   treat: number; // 0 ~ 4
   SBP: number;
   DBP: number;

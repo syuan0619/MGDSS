@@ -48,7 +48,8 @@ def perform_ocr(resized_image):
     results = []
     dif = 0
     code = pytesseract.image_to_string(resized_image)
-    data = pytesseract.image_to_data(resized_image, output_type=pytesseract.Output.DICT)
+    data = pytesseract.image_to_data(
+        resized_image, output_type=pytesseract.Output.DICT)
     target_words = [
         "Right Nasalis",
         "Left Nasalis",
@@ -59,7 +60,8 @@ def perform_ocr(resized_image):
     ]
 
     for target_words_idx, target_word in enumerate(target_words):
-        match = re.search(r"\b" + re.escape(target_word) + r"\b", code, re.IGNORECASE)
+        match = re.search(r"\b" + re.escape(target_word) +
+                          r"\b", code, re.IGNORECASE)
         if match:
             start_idx = match.start()
             end_idx = match.end()
@@ -102,11 +104,11 @@ def perform_ocr(resized_image):
     return results
 
 # # Update with the path to your test image
-image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'  # Update with the path to your test image
-results = recognize(image_path)
+# image_path = r'C:\Users\User\Desktop\MDDGSS\server\images\1.png'  # Update with the path to your test image
+# results = recognize(image_path)
 
 # Print the OCR results
-for result in results:
-    print(result)
+# for result in results:
+#     print(result)
 # cv2.imshow("Cropped result_image", crop_image)
 # cv2.waitKey(0)

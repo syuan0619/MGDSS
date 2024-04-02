@@ -1,60 +1,28 @@
 import { LineChart } from "@mui/x-charts/LineChart";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { ADL } from "../../../types/Patient";
 import "./Chart.css";
-
-const patientADL = [
-  {
-    testDate: "2024-03-21",
-    talking: 1,
-    chewing: 2,
-    swallowing: 1,
-    breathing: 3,
-    brushTeethOrCombHair: 1,
-    ariseFromChair: 1,
-    eyelid: 0,
-    sum: 7,
-  },
-  {
-    testDate: "2024-03-22",
-    talking: 3,
-    chewing: 2,
-    swallowing: 1,
-    breathing: 0,
-    brushTeethOrCombHair: 3,
-    ariseFromChair: 3,
-    eyelid: 1,
-    sum: 21,
-  },
-  {
-    testDate: "2024-03-30",
-    talking: 2,
-    chewing: 3,
-    swallowing: 3,
-    breathing: 3,
-    brushTeethOrCombHair: 2,
-    ariseFromChair: 0,
-    eyelid: 0,
-    sum: 14,
-  },
-];
-
-const ADLData = patientADL.map((item) => item.sum);
-const ADLxLabels = patientADL.map((item) => item.testDate);
-const talkingData = patientADL.map((item) => item.talking);
-const chewingData = patientADL.map((item) => item.chewing);
-const swallowingData = patientADL.map((item) => item.swallowing);
-const breathingData = patientADL.map((item) => item.breathing);
-const brushTeethOrCombHairData = patientADL.map(
-  (item) => item.brushTeethOrCombHair
-);
-const ariseFromChairData = patientADL.map((item) => item.ariseFromChair);
-const eyelidData = patientADL.map((item) => item.eyelid);
 
 const ADLChart = ({
   setReplaceComponent,
+  historyData,
 }: {
   setReplaceComponent: (table: string) => void;
+  historyData: ADL[];
 }) => {
+  const ADLChart_xLabels = historyData.map((item) => item.testDate);
+  const ADLChart_talkingData = historyData.map((item) => item.talking);
+  const ADLChart_chewingData = historyData.map((item) => item.chewing);
+  const ADLChart_swallowingData = historyData.map((item) => item.swallowing);
+  const ADLChart_breathingData = historyData.map((item) => item.breathing);
+  const ADLChart_brushTeethOrCombHairData = historyData.map(
+    (item) => item.brushTeethOrCombHair
+  );
+  const ADLChart_ariseFromChairData = historyData.map(
+    (item) => item.ariseFromChair
+  );
+  const ADLChart_eyelidData = historyData.map((item) => item.eyelid);
+
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -82,48 +50,48 @@ const ADLChart = ({
             series={[
               {
                 curve: "linear",
-                data: talkingData,
+                data: ADLChart_talkingData,
                 label: "talking",
-                color: "#5356FF",
+                color: "#FF204E",
               },
               {
                 curve: "linear",
-                data: chewingData,
+                data: ADLChart_chewingData,
                 label: "chewing",
-                color: "#2D46B9",
+                color: "#FF7ED4",
               },
               {
                 curve: "linear",
-                data: swallowingData,
+                data: ADLChart_swallowingData,
                 label: "swallowing",
-                color: "#7C93C3",
+                color: "#E36414",
               },
               {
                 curve: "linear",
-                data: breathingData,
+                data: ADLChart_breathingData,
                 label: "breathing",
-                color: "#836FFF",
+                color: "#FFBB64",
               },
               {
                 curve: "linear",
-                data: brushTeethOrCombHairData,
+                data: ADLChart_brushTeethOrCombHairData,
                 label: "brushTeethOrCombHair",
-                color: "#BC7AF9",
+                color: "#FAEF5D",
               },
               {
                 curve: "linear",
-                data: ariseFromChairData,
+                data: ADLChart_ariseFromChairData,
                 label: "ariseFromChair",
-                color: "#86A7FC",
+                color: "#00DFA2",
               },
               {
                 curve: "linear",
-                data: eyelidData,
+                data: ADLChart_eyelidData,
                 label: "eyelid",
-                color: "#40679E",
+                color: "#0B666A",
               },
             ]}
-            xAxis={[{ scaleType: "point", data: ADLxLabels }]}
+            xAxis={[{ scaleType: "point", data: ADLChart_xLabels }]}
           />
         </div>
       </div>
@@ -131,23 +99,79 @@ const ADLChart = ({
   );
 };
 
-const ADLSmallChart = () => {
+const ADLSmallChart = ({ historyData }: { historyData: ADL[] }) => {
+  const ADLSmallChart_Data = historyData.map((item) => item.sum);
+  const ADLSmallChart_xLabels = historyData.map((item) => item.testDate);
+
   return (
     <div>
       <LineChart
+        slotProps={{
+          legend: {
+            itemMarkHeight: 5,
+          },
+        }}
         width={400}
         height={300}
         series={[
           {
             curve: "linear",
-            data: ADLData,
+            data: ADLSmallChart_Data,
             label: "sum score",
             color: "#008dda",
           },
         ]}
-        xAxis={[{ scaleType: "point", data: ADLxLabels }]}
+        xAxis={[{ scaleType: "point", data: ADLSmallChart_xLabels }]}
       />
     </div>
   );
 };
 export { ADLSmallChart, ADLChart };
+
+// const patientADL = [
+//   {
+//     testDate: "2024-03-21",
+//     talking: 1,
+//     chewing: 2,
+//     swallowing: 1,
+//     breathing: 3,
+//     brushTeethOrCombHair: 1,
+//     ariseFromChair: 1,
+//     eyelid: 0,
+//     sum: 7,
+//   },
+//   {
+//     testDate: "2024-03-22",
+//     talking: 3,
+//     chewing: 2,
+//     swallowing: 1,
+//     breathing: 0,
+//     brushTeethOrCombHair: 3,
+//     ariseFromChair: 3,
+//     eyelid: 1,
+//     sum: 21,
+//   },
+//   {
+//     testDate: "2024-03-30",
+//     talking: 2,
+//     chewing: 3,
+//     swallowing: 3,
+//     breathing: 3,
+//     brushTeethOrCombHair: 2,
+//     ariseFromChair: 0,
+//     eyelid: 0,
+//     sum: 14,
+//   },
+// ];
+
+// const ADLData = patientADL.map((item) => item.sum);
+// const ADLxLabels = patientADL.map((item) => item.testDate);
+// const talkingData = patientADL.map((item) => item.talking);
+// const chewingData = patientADL.map((item) => item.chewing);
+// const swallowingData = patientADL.map((item) => item.swallowing);
+// const breathingData = patientADL.map((item) => item.breathing);
+// const brushTeethOrCombHairData = patientADL.map(
+//   (item) => item.brushTeethOrCombHair
+// );
+// const ariseFromChairData = patientADL.map((item) => item.ariseFromChair);
+// const eyelidData = patientADL.map((item) => item.eyelid);

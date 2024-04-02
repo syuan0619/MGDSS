@@ -1,99 +1,35 @@
 import { LineChart } from "@mui/x-charts";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import "./Chart.css";
-
-const patientVisit = [
-  {
-    date: "2024-03-21",
-    treat: 0,
-    selfAssessment: 0,
-    note: "",
-    SBP: 0,
-    DBP: 0,
-    prescription: {
-      pyridostigmine: 2,
-      compesolone: 7,
-      cellcept: 5,
-      imuran: 5,
-      prograf: 3,
-    },
-    examination: {
-      ptosis: 1,
-      diplopia: 2,
-      dysphagia: 3,
-      dysarthria: 0,
-      dyspnea: 0,
-      limpWeakness: 0,
-      MGFAclassification: 0,
-    },
-  },
-  {
-    date: "2024-03-22",
-    treat: 0,
-    selfAssessment: 0,
-    note: "",
-    SBP: 0,
-    DBP: 0,
-    prescription: {
-      pyridostigmine: 1,
-      compesolone: 9,
-      cellcept: 1,
-      imuran: 7,
-      prograf: 0,
-    },
-    examination: {
-      ptosis: 0,
-      diplopia: 0,
-      dysphagia: 0,
-      dysarthria: 0,
-      dyspnea: 0,
-      limpWeakness: 0,
-      MGFAclassification: 0,
-    },
-  },
-  {
-    date: "2024-03-31",
-    treat: 0,
-    selfAssessment: 0,
-    note: "",
-    SBP: 0,
-    DBP: 0,
-    prescription: {
-      pyridostigmine: 9,
-      compesolone: 8,
-      cellcept: 3,
-      imuran: 7,
-      prograf: 2,
-    },
-    examination: {
-      ptosis: 0,
-      diplopia: 0,
-      dysphagia: 0,
-      dysarthria: 0,
-      dyspnea: 0,
-      limpWeakness: 0,
-      MGFAclassification: 0,
-    },
-  },
-];
-
-const pyridostigmineData = patientVisit.map(
-  (item) => item.prescription.pyridostigmine
-);
-const compesoloneData = patientVisit.map(
-  (item) => item.prescription.compesolone
-);
-const cellceptData = patientVisit.map((item) => item.prescription.cellcept);
-const imuranData = patientVisit.map((item) => item.prescription.imuran);
-const prografData = patientVisit.map((item) => item.prescription.prograf);
-const selfAssessmentDaya = patientVisit.map((item) => item.selfAssessment);
-const VisitxLabels = patientVisit.map((item) => item.date);
+import { Visit } from "../../../types/Patient";
 
 const VisitChart = ({
   setReplaceComponent,
+  historyData,
 }: {
   setReplaceComponent: (table: string) => void;
+  historyData: Visit[];
 }) => {
+  const VisitChart_pyridostigmineData = historyData.map(
+    (item) => item.prescription.pyridostigmine
+  );
+  const VisitChart_compesoloneData = historyData.map(
+    (item) => item.prescription.compesolone
+  );
+  const VisitChart_cellceptData = historyData.map(
+    (item) => item.prescription.cellcept
+  );
+  const VisitChart_imuranData = historyData.map(
+    (item) => item.prescription.imuran
+  );
+  const VisitChart_prografData = historyData.map(
+    (item) => item.prescription.prograf
+  );
+  const VisitChart_selfAssessmentDaya = historyData.map(
+    (item) => item.selfAssessment
+  );
+  const VisitChart_xLabels = historyData.map((item) => item.date);
+
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -121,42 +57,42 @@ const VisitChart = ({
             series={[
               {
                 curve: "linear",
-                data: pyridostigmineData,
+                data: VisitChart_pyridostigmineData,
                 label: "pyridostigmine",
-                color: "#5356FF",
+                color: "#FF204E",
               },
               {
                 curve: "linear",
-                data: compesoloneData,
+                data: VisitChart_compesoloneData,
                 label: "compesolone",
-                color: "#BC7AF9",
+                color: "#E36414",
               },
               {
                 curve: "linear",
-                data: cellceptData,
+                data: VisitChart_cellceptData,
                 label: "cellcept",
-                color: "#2D46B9",
+                color: "#0B666A",
               },
               {
                 curve: "linear",
-                data: imuranData,
+                data: VisitChart_imuranData,
                 label: "imuran",
-                color: "#0096FF",
+                color: "#2F58CD",
               },
               {
                 curve: "linear",
-                data: prografData,
+                data: VisitChart_prografData,
                 label: "prograf",
-                color: "#7469B6",
+                color: "#9400FF",
               },
               {
                 curve: "linear",
-                data: selfAssessmentDaya,
+                data: VisitChart_selfAssessmentDaya,
                 label: "selfAssessment",
-                color: "#836FFF",
+                color: "#7C81AD",
               },
             ]}
-            xAxis={[{ scaleType: "point", data: VisitxLabels }]}
+            xAxis={[{ scaleType: "point", data: VisitChart_xLabels }]}
           />
         </div>
       </div>
@@ -164,23 +100,138 @@ const VisitChart = ({
   );
 };
 
-const VisitSmallChart = () => {
+const VisitSmallChart = ({ historyData }: { historyData: Visit[] }) => {
+  const VisitSmallChart_xLabels = historyData.map((item) => item.date);
+  const VisitSmallChart_imuranData = historyData.map(
+    (item) => item.prescription.imuran
+  );
+  const VisitSmallChart_compesoloneData = historyData.map(
+    (item) => item.prescription.compesolone
+  );
+  const VisitSmallChart_pyridostigmineData = historyData.map(
+    (item) => item.prescription.pyridostigmine
+  );
   return (
     <div>
       <LineChart
+        slotProps={{
+          legend: {
+            itemGap: 20,
+            itemMarkHeight: 5,
+          },
+        }}
         width={400}
         height={300}
         series={[
           {
             curve: "linear",
-            data: prografData,
-            label: "prograf",
-            color: "#008dda",
+            data: VisitSmallChart_pyridostigmineData,
+            label: "pyridostigmine",
+            color: "#FF204E",
+          },
+          {
+            curve: "linear",
+            data: VisitSmallChart_compesoloneData,
+            label: "compesolone",
+            color: "#0B666A",
+          },
+          {
+            curve: "linear",
+            data: VisitSmallChart_imuranData,
+            label: "imuran",
+            color: "#9400FF",
           },
         ]}
-        xAxis={[{ scaleType: "point", data: VisitxLabels }]}
+        xAxis={[{ scaleType: "point", data: VisitSmallChart_xLabels }]}
       />
     </div>
   );
 };
 export { VisitSmallChart, VisitChart };
+
+// const patientVisit = [
+//   {
+//     date: "2024-03-21",
+//     treat: 0,
+//     selfAssessment: 0,
+//     note: "",
+//     SBP: 0,
+//     DBP: 0,
+//     prescription: {
+//       pyridostigmine: 2,
+//       compesolone: 7,
+//       cellcept: 5,
+//       imuran: 5,
+//       prograf: 3,
+//     },
+//     examination: {
+//       ptosis: 1,
+//       diplopia: 2,
+//       dysphagia: 3,
+//       dysarthria: 0,
+//       dyspnea: 0,
+//       limpWeakness: 0,
+//       MGFAclassification: 0,
+//     },
+//   },
+//   {
+//     date: "2024-03-22",
+//     treat: 0,
+//     selfAssessment: 0,
+//     note: "",
+//     SBP: 0,
+//     DBP: 0,
+//     prescription: {
+//       pyridostigmine: 1,
+//       compesolone: 9,
+//       cellcept: 1,
+//       imuran: 7,
+//       prograf: 0,
+//     },
+//     examination: {
+//       ptosis: 0,
+//       diplopia: 0,
+//       dysphagia: 0,
+//       dysarthria: 0,
+//       dyspnea: 0,
+//       limpWeakness: 0,
+//       MGFAclassification: 0,
+//     },
+//   },
+//   {
+//     date: "2024-03-31",
+//     treat: 0,
+//     selfAssessment: 0,
+//     note: "",
+//     SBP: 0,
+//     DBP: 0,
+//     prescription: {
+//       pyridostigmine: 9,
+//       compesolone: 8,
+//       cellcept: 3,
+//       imuran: 7,
+//       prograf: 2,
+//     },
+//     examination: {
+//       ptosis: 0,
+//       diplopia: 0,
+//       dysphagia: 0,
+//       dysarthria: 0,
+//       dyspnea: 0,
+//       limpWeakness: 0,
+//       MGFAclassification: 0,
+//     },
+//   },
+// ];
+
+// const pyridostigmineData = patientVisit.map(
+//   (item) => item.prescription.pyridostigmine
+// );
+// const compesoloneData = patientVisit.map(
+//   (item) => item.prescription.compesolone
+// );
+// const cellceptData = patientVisit.map((item) => item.prescription.cellcept);
+// const imuranData = patientVisit.map((item) => item.prescription.imuran);
+// const prografData = patientVisit.map((item) => item.prescription.prograf);
+// const selfAssessmentDaya = patientVisit.map((item) => item.selfAssessment);
+// const VisitxLabels = patientVisit.map((item) => item.date);

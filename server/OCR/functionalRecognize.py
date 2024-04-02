@@ -8,23 +8,23 @@ kernel_two = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
 crop_dimensions_data_one_row = [
     [(123, 65, 350, 75)],
     [
-    (125, 65, 350, 502),
-    (125, 65, 990, 502),
-    (125, 65, 135, 872),
-    (125, 65, 348, 872),
-    (125, 65, 563, 872),
+        (125, 65, 350, 502),
+        (125, 65, 990, 502),
+        (125, 65, 135, 872),
+        (125, 65, 348, 872),
+        (125, 65, 563, 872),
     ],
 ]
 crop_dimensions_data_two_row = [
     [
-    (125, 65, 355, 75),
-    (125, 65, 990, 75),
-    (125, 65, 135, 445),
-    (125, 65, 355, 445),
-    (122, 65, 563, 445),
-],
+        (125, 65, 355, 75),
+        (125, 65, 990, 75),
+        (125, 65, 135, 445),
+        (125, 65, 355, 445),
+        (122, 65, 563, 445),
+    ],
     [
-    (125, 65, 350, 875),
+        (125, 65, 350, 875),
     ],
 ]
 target_words_left_right_muscle = [
@@ -52,7 +52,6 @@ def functionalRecognize(uploadImage):
     result_of_recognizition = recognize_result(
         recognized_muscle, crop_dimensions_data, white_part, weight
     )
-    # print("\n", result_of_recognizition)
     return (
         result_of_recognizition,
         Image.fromarray(white_part),
@@ -67,11 +66,10 @@ def full_image_to_white_part(uploadImage):
     image_array = np.array(origin_image)
     screen_size_height, screen_size_width, screen_size_color = image_array.shape
     weight = round(screen_size_width / 1920, 4)
-    print(weight)
     cropped_image = cv2.resize(
         image_array[
-            int(400 * weight): int(1020 * weight),
-            int(750 * weight): int(1350 * weight),
+            int(400 * weight) : int(1020 * weight),
+            int(750 * weight) : int(1350 * weight),
         ],
         None,
         None,
@@ -138,7 +136,7 @@ def recognize_result(recognized_muscle, crop_dimensions_data, white_part, weight
         for crop_dimensions_data in crop_dimensions_data:
             width, height, x, y = crop_dimensions_data
             resize_image = white_part[
-                y: y + int(height * weight), x: x + int(width * weight)
+                y : y + int(height * weight), x : x + int(width * weight)
             ]
             enlarge_resize_image = cv2.resize(
                 resize_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC

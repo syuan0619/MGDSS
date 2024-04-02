@@ -4,12 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 from mongoDB.connectDB import getAllPatients, addNewPatient
-from routers import inquiry, account
+from routers import inquiry, account, prediction
 
 app = FastAPI()
 # routers/inquiry.py
 app.include_router(inquiry.router)
 app.include_router(account.router)
+app.include_router(prediction.router)
 
 # GET /patients/ -> return all patients
 @app.get("/patients", tags=["patients"])
