@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
-from mongoDB.connectDB import getAllPatients, addNewPatient
+from mongoDB.connectDB import getAllPatients, addNewPatient, update_patient_info
 from routers import inquiry, account, prediction
 
 app = FastAPI()
@@ -26,6 +26,26 @@ async def add_new_patient(newPatientInfo: models.Info):
     except ValidationError as e:
         print("error: ", str(e))
         return JSONResponse(status_code=400, content={"message": "Invalid patient info"})
+    
+@app.post("/updateinfo/{patientId}", tags=["patients"], description="request body: 更新後的info, return: {_id: _id, info:執行後的info}")
+async def update_info(patientId: str, updatedPatientInfo: models.Info):
+    try:
+        updatedPatient = update_patient_info(patientId, updatedPatientInfo.model_dump(by_alias=True))
+        return {
+            "message": "Success update patient info!",
+            "updatedPatient": updatedPatient,
+        }
+    except ValidationError as e:
+        print("error: ", str(e))
+        return JSONResponse(
+            status_code=400, content={"message": "Invalid patient info"}
+        )
+    except Exception as e:
+        print("error: ", str(e))
+        return JSONResponse(
+            status_code=500, content={"message": "Internal server error"}
+        )
+
 
 @app.get("/")
 async def root():

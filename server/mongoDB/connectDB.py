@@ -34,6 +34,10 @@ def getPatientByDate(patientId: str, date: str):
                     tablesAtDate[key] = table
     return tablesAtDate
 
+def update_patient_info(patientId: str, updatedInfo: dict):
+    updatedPatient = patientCollection.find_one_and_update({"_id": ObjectId(patientId)}, {"$set": {"info": updatedInfo}}, return_document=pymongo.ReturnDocument.AFTER)
+    updatedPatient['_id'] = str(updatedPatient['_id'])
+    return {'_id': updatedPatient['_id'], 'info': updatedPatient['info']}
 
 # return dict with _id
 def addNewPatient(newPatientInfo: dict):
