@@ -517,7 +517,7 @@ function PatientList() {
       >
         <DialogTitle>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            修改病患
+            修改基本資料
             <IconButton onClick={updatePatientDialogHide}>
               <CloseIcon />
             </IconButton>

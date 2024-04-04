@@ -130,7 +130,7 @@ const LoginPage = () => {
         navigate(`/patient`, { state: { data: response.data } });
       } else if (response.data.account.role === "role") {
         alert("登入成功!");
-        navigate(`/admin`, { state: { data: response.data } });
+        navigate(`../backstage`, { state: { data: response.data } });
       } else {
         alert("帳號或密碼錯誤!");
       }
