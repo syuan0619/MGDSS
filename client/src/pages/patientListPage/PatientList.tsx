@@ -294,7 +294,7 @@ function PatientList() {
                         >
                           <EditIcon />
                         </IconButton>
-                      </Box>{" "}
+                      </Box>
                     </TableCell>
                   </TableRow>
                 ))}
