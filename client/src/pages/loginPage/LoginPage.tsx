@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-
+import api from "../../api";
 import {
   TextField,
   Button,
@@ -113,11 +113,38 @@ const LoginPage = () => {
   };
 
   const navigate = useNavigate();
-  function onSubmit() {
-    console.log([form, setForm]);
-    navigate("/patient");
-  }
 
+  const onSubmit = async () => {
+    try {
+      const response = await api.post("/account/login", null, {
+        params: {
+          email: form.account,
+          password: form.password,
+        },
+      });
+      // if (response.data.account.status === "uncheck") {
+      //   alert("帳號未驗證，請與管理者聯絡!");
+      // }
+      // else
+      if (
+        response.data.account.role === "doctor" ||
+        response.data.account.role === "nurse"
+      ) {
+        alert("登入成功!");
+        sessionStorage.setItem("userData", JSON.stringify(response.data));
+        navigate(`/patient`, { state: { data: response.data } });
+        console.log(sessionStorage.getItem("userData"));
+      } else if (response.data.account.role === "role") {
+        alert("登入成功!");
+        sessionStorage.setItem("userData", JSON.stringify(response.data));
+        navigate(`../backstage`, { state: { data: response.data } });
+      } else {
+        alert("帳號或密碼錯誤!");
+      }
+    } catch (error) {
+      alert("帳號或密碼錯誤!");
+    }
+  };
   return (
     <>
       <div className="background">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -23,8 +23,20 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
+import { Account } from "../../types/Account";
+import api from "../../api";
 
 const AccountsPage = () => {
+  const [account, setAccount] = useState<Account[]>();
+  const data = async () => {
+    const response = await api.get("/account");
+    setAccount(response.data);
+  };
+
+  useEffect(() => {
+    data();
+  }, []);
+
   //搜尋病患
   const [search, setSearch] = useState("");
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -212,40 +224,43 @@ const AccountsPage = () => {
               </TableRow>
             </TableHead>
             <TableBody sx={{ cursor: "pointer" }}>
-              <TableRow hover={true}>
-                <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                  account-name
-                </TableCell>
-                <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                  account-email
-                </TableCell>
-                <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                  account-auth
-                </TableCell>
-                <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                  account-status
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton onClick={() => handleCheck("account-id")}>
-                    <DoneIcon fontSize="large" />
-                  </IconButton>
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton onClick={emailDialogOpen}>
-                    <EmailIcon fontSize="large" />
-                  </IconButton>
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton onClick={reviseDialogOpen}>
-                    <EditIcon fontSize="large" />
-                  </IconButton>
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton onClick={() => handleDelete("account-id")}>
-                    <DeleteIcon fontSize="large" />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
+              {account &&
+                account.map((item, index) => (
+                  <TableRow key={index} hover={true}>
+                    <TableCell align="center" sx={{ fontSize: "2vh" }}>
+                      {item.name}
+                    </TableCell>
+                    <TableCell align="center" sx={{ fontSize: "2vh" }}>
+                      {item.email}
+                    </TableCell>
+                    <TableCell align="center" sx={{ fontSize: "2vh" }}>
+                      {item.role}
+                    </TableCell>
+                    <TableCell align="center" sx={{ fontSize: "2vh" }}>
+                      {!item.isVerified ? "未驗證" : ""}
+                    </TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={() => handleCheck("account-id")}>
+                        <DoneIcon fontSize="large" />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={emailDialogOpen}>
+                        <EmailIcon fontSize="large" />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={reviseDialogOpen}>
+                        <EditIcon fontSize="large" />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={() => handleDelete("account-id")}>
+                        <DeleteIcon fontSize="large" />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </Box>

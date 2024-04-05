@@ -20,6 +20,8 @@ import { useParams } from "react-router-dom";
 import api from "../../api.tsx";
 import { VisitChart } from "./chart/Visit";
 import { ThymusChart } from "./chart/Thymus";
+import { BloodTestChart } from "./chart/BloodTest";
+import { EMGChart } from "./chart/EMG";
 
 const InquiryPage = () => {
   const [replaceComponent, setReplaceComponent] = useState("");
@@ -40,7 +42,7 @@ const InquiryPage = () => {
   return (
     <div className="inquiry-all">
       <div className="inquiry-menu">
-        <Menu />
+        <Menu patient_id={routeParams.id} />
       </div>
       <div className="inquiry-left-right-flex">
         <div className="inquiry-left">
@@ -165,6 +167,29 @@ const InquiryPage = () => {
                     );
                   }
                   break;
+
+                case "BloodTestchart":
+                  {
+                    return (
+                      <BloodTestChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.bloodTest}
+                      />
+                    );
+                  }
+                  break;
+
+                case "EMGchart":
+                  {
+                    return (
+                      <EMGChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.EMG}
+                      />
+                    );
+                  }
+                  break;
+
                 default:
                   {
                     return (
