@@ -1,7 +1,7 @@
 import models
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from mongoDB.connectDB import getAllAccounts, createAccount, deleteAccount, loginWithEmailandPassword
+from mongoDB.connectDB import getAllAccounts, createAccount, deleteAccount, loginWithEmailandPassword, update_account
 
 router = APIRouter(prefix="/account", tags=["account"])
 
@@ -14,6 +14,14 @@ def get_all_accounts():
 		return {"accounts": accounts}
 	except Exception as e:
 		return JSONResponse(status_code=500, content={"message": str(e)})
+
+@router.put("/{accountId}",description="用accountId找到對應的帳號，將帳號資料覆蓋為updatedAccount，回傳更新後的帳號資料")
+def update_account_by_id(accountId: str, updatedAccount: models.Account):
+	try:
+		updatedAccount = update_account(accountId, updatedAccount.model_dump(by_alias=True))
+		return {"message": "Success update account!", "updatedAccount": updatedAccount}
+	except Exception as e:
+		return JSONResponse(status_code=500, content={"message": str(e)})	
 	
 @router.delete("/{accountId}")
 def delete_account(accountId: str):

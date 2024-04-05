@@ -66,8 +66,9 @@ def getAllAccounts():
     accounts = accountCollection.find()
     response = []
     for account in accounts:
-        account['_id'] = str(account['_id'])
-        response.append(account)
+        if account['role'] != 'admin':
+            account['_id'] = str(account['_id'])
+            response.append(account)
     return response
 
 def createAccount(newAccount: dict):
@@ -77,6 +78,11 @@ def createAccount(newAccount: dict):
     accountId = accountCollection.insert_one(newAccount).inserted_id()
     accountId = str(accountId)
     return accountId
+
+def update_account(accountId: str, updatedAccount: dict):
+    updatedAccount = accountCollection.find_one_and_update({"_id": ObjectId(accountId)}, {"$set": updatedAccount}, return_document=pymongo.ReturnDocument.AFTER)
+    updatedAccount['_id'] = str(updatedAccount['_id'])
+    return updatedAccount
 
 def loginWithEmailandPassword(email: str, password: str):
     account = accountCollection.find_one({"email": email, "password": password})
