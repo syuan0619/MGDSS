@@ -22,20 +22,17 @@ const patientEMG = [
     ],
   },
 ];
-
+const postXLabel = [1, 2, 3, 4].map((x) => x);
 const EMGxLabels = patientEMG.map((item) => item.testDate);
 const firstPreData = patientEMG.map((item) => item.RNS[0][1] as number);
-const firstPostData = patientEMG
-  .map((item) => item.RNS[0].slice(2) as unknown as number)
-  .map((x) => x);
+const firstPostData = patientEMG[0]["RNS"][0]
+  .slice(2)
+  .map((item) => item as unknown as number);
 const firstName = patientEMG.map((item) => item.RNS[0][0]);
 
 const secPreData = patientEMG.map((item) => item.RNS[1][1] as number);
-const secPostData = patientEMG.map(
-  (item) => item.RNS[1].slice(2) as unknown as number
-);
+const secPostData1 = patientEMG.map((item) => item.RNS[1][2] as number);
 const secName = patientEMG.map((item) => item.RNS[1][0]);
-console.log(firstPostData);
 
 const EMGChart = ({
   setReplaceComponent,
@@ -45,6 +42,12 @@ const EMGChart = ({
   historyData: EMG[];
 }) => {
   console.log(historyData);
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
 
   return (
     <div className="chart-bg">
@@ -74,15 +77,10 @@ const EMGChart = ({
               {
                 curve: "linear",
                 data: firstPostData,
-                label: "firstMuscle",
-              },
-              {
-                curve: "linear",
-                data: secPostData,
-                label: "secondMuscle",
+                label: "post Activation",
               },
             ]}
-            xAxis={[{ scaleType: "point", data: EMGxLabels }]}
+            xAxis={[{ scaleType: "point", data: postXLabel }]}
           />
         </div>
       </div>
