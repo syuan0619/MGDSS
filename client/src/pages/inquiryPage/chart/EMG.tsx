@@ -2,48 +2,41 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import "./Chart.css";
 import { EMG } from "../../../types/Patient";
+import * as React from "react";
 const patientEMG = [
   {
     testDate: "2024-04-13",
     imgPath: "string",
-    RNS: {
-      musclePart: "string",
-      preActivation: [2, 5, 7],
-      postActivation: [3, 4, 8],
-    },
+    RNS: [
+      ["Right Abd dig min(man)", -2.6, -1.03, -5.4, -5.1, -5.0],
+      ["Right Trapezius", -12.1, -10.9],
+    ],
   },
+
   {
-    testDate: "2024-04-23",
+    testDate: "2024-05-02",
     imgPath: "string",
-    RNS: {
-      musclePart: "string",
-      preActivation: [3, 4, 5],
-      postActivation: [2, 6, 5],
-    },
-  },
-  {
-    testDate: "2024-05-21",
-    imgPath: "string",
-    RNS: {
-      musclePart: "string",
-      preActivation: [3, 2, 5],
-      postActivation: [2, 5, 5],
-    },
+    RNS: [
+      ["Right Abd dig min(man)", 3.2, 2.3, 2.1, 1.95, 2.0],
+      ["Right Trapezius", -14.1, -12.6],
+    ],
   },
 ];
 
 const EMGxLabels = patientEMG.map((item) => item.testDate);
-const preData = patientEMG
-  .map((item) => ({
-    preActivation: item.RNS.preActivation,
-  }))
-  .map((x) => x.preActivation[1]);
+const firstPreData = patientEMG.map((item) => item.RNS[0][1] as number);
+const firstPostData = patientEMG
+  .map((item) => item.RNS[0].slice(2) as unknown as number)
+  .map((x) => x);
+const firstName = patientEMG.map((item) => item.RNS[0][0]);
 
-const postData = patientEMG
-  .map((item) => ({
-    postActivation: item.RNS.postActivation,
-  }))
-  .map((x) => x.postActivation[1]);
+const secPreData = patientEMG.map((item) => item.RNS[1][1] as number);
+const secPostData = patientEMG.map(
+  (item) => item.RNS[1].slice(2) as unknown as number
+);
+const secName = patientEMG.map((item) => item.RNS[1][0]);
+console.log(firstPostData);
+
 const EMGChart = ({
   setReplaceComponent,
   historyData,
@@ -52,6 +45,7 @@ const EMGChart = ({
   historyData: EMG[];
 }) => {
   console.log(historyData);
+
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -79,13 +73,13 @@ const EMGChart = ({
             series={[
               {
                 curve: "linear",
-                data: preData,
-                label: "preActivation",
+                data: firstPostData,
+                label: "firstMuscle",
               },
               {
                 curve: "linear",
-                data: postData,
-                label: "postActivation",
+                data: secPostData,
+                label: "secondMuscle",
               },
             ]}
             xAxis={[{ scaleType: "point", data: EMGxLabels }]}
@@ -111,8 +105,8 @@ const EMGSmallChart = ({ historyData }: { historyData: EMG[] }) => {
         series={[
           {
             curve: "linear",
-            data: preData,
-            label: "amp",
+            data: firstPreData,
+            label: "firstName",
             color: "#008dda",
           },
         ]}

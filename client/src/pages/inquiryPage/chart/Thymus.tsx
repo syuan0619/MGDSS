@@ -6,7 +6,7 @@ const patientThymus = [
   {
     testDate: "2023-11-30",
     thymusStatus: 0,
-    thymusDescription: "thymusDescription",
+    thymusDescription: "nmsl",
   },
 ];
 
