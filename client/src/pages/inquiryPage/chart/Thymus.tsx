@@ -5,7 +5,7 @@ import "./Thymus.css";
 const patientThymus = [
   {
     testDate: "2023-11-30",
-    thymusStatus: 0,
+    thymusStatus: 2,
     thymusDescription: "nmsl",
   },
 ];
@@ -14,6 +14,17 @@ const ThymusData = patientThymus.map((item) => item.thymusStatus);
 const ThymusDate = patientThymus[0]["testDate"];
 const ThymusDes = patientThymus[0]["thymusDescription"];
 const ThymusStatus = patientThymus[0]["thymusStatus"];
+let thymusResult = "";
+
+if (ThymusStatus === 0) {
+  thymusResult = "正常";
+} else if (ThymusStatus === 1) {
+  thymusResult = "胸腺萎縮";
+} else if (ThymusStatus === 2) {
+  thymusResult = "胸腺增生";
+} else if (ThymusStatus === 3) {
+  thymusResult = "胸腺瘤";
+}
 
 const ThymusChart = ({
   setReplaceComponent,
@@ -65,7 +76,7 @@ const ThymusChart = ({
           </div>
           <div className="thymus-chart-footer-right">
             <div>Thymus Status : </div>
-            <div>{ThymusStatus}</div>
+            <div>{thymusResult}</div>
           </div>
         </div>
       </div>
