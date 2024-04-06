@@ -28,10 +28,9 @@ const patientEMG = [
 const postXLabel = [1, 2, 3, 4].map((x) => x);
 const EMGxLabels = patientEMG.map((item) => item.testDate);
 const firstPreData = patientEMG.map((item) => item.RNS[0][1] as number);
-const firstName = patientEMG.map((item) => item.RNS[0][0] as string);
+const firstName = patientEMG.map((item) => item.RNS[0][0] as string)[0];
 const secPreData = patientEMG.map((item) => item.RNS[1][1] as number);
-const secPostData = patientEMG.map((item) => item.RNS[1][2] as number);
-const secName = patientEMG.map((item) => item.RNS[1][0]);
+const secName = patientEMG.map((item) => item.RNS[1][0] as string)[0];
 
 function a11yProps(index: number) {
   return {
@@ -89,6 +88,11 @@ const EMGChart = ({
       ?.slice(2)
       ?.map((item) => item as unknown as number) ?? [];
 
+  const secPostData =
+    tarData[0]?.["RNS"]?.[1]
+      ?.slice(2)
+      ?.map((item) => item as unknown as number) ?? [];
+
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -133,12 +137,12 @@ const EMGChart = ({
                 {
                   curve: "linear",
                   data: firstPreData,
-                  label: "post Activation",
+                  label: firstName,
                 },
                 {
                   curve: "linear",
                   data: secPreData,
-                  label: "post Activation",
+                  label: secName,
                 },
               ]}
               xAxis={[{ scaleType: "point", data: EMGxLabels }]}
@@ -178,7 +182,13 @@ const EMGChart = ({
                 {
                   curve: "linear",
                   data: firstPostData,
-                  label: "post Activation",
+                  label: firstName,
+                  color: "#008dda",
+                },
+                {
+                  curve: "linear",
+                  data: secPostData,
+                  label: secName,
                   color: "#008dda",
                 },
               ]}
@@ -207,7 +217,7 @@ const EMGSmallChart = ({ historyData }: { historyData: EMG[] }) => {
           {
             curve: "linear",
             data: firstPreData,
-            label: "firstName",
+            label: firstName,
             color: "#008dda",
           },
         ]}
