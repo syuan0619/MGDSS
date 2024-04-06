@@ -89,12 +89,11 @@ function PatientList() {
   const changeUpdatePatient = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUpdatePatient({ ...updatePatient!, [e.target.name]: e.target.value });
   };
-  
+
   //登出
   const onclickLogout = () => {
     const confirmLogout = window.confirm("確定要登出嗎?");
     if (confirmLogout) {
-        alert("登出成功!");
         sessionStorage.removeItem("userData");
         console.log("userData", userData);
         navigate(`/`);

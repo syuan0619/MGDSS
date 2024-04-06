@@ -25,8 +25,8 @@ import { EMGChart } from "./chart/EMG";
 
 const InquiryPage = () => {
   const navigate = useNavigate();
+  const userData = sessionStorage.getItem("userData");
   useEffect(() => {
-    const userData = sessionStorage.getItem("userData");
     if (!userData) {
       alert("請先登入!");
       navigate("/");

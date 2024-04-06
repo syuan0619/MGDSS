@@ -44,7 +44,6 @@ const AccountsPage = () => {
 const onclickLogout = () => {
     const confirmLogout = window.confirm("確定要登出嗎?");
     if (confirmLogout) {
-        alert("登出成功!");
         sessionStorage.removeItem("userData");
         console.log("userData", userData);
         navigate(`/`);
