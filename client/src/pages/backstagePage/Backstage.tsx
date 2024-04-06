@@ -23,11 +23,11 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { Account } from "../../types/Account";
+import { Account, returnAccount } from "../../types/Account";
 import api from "../../api";
 
 const AccountsPage = () => {
-  const [account, setAccount] = useState<Account[]>();
+  const [account, setAccount] = useState<returnAccount[]>();
   const data = async () => {
     const response = await api.get("/account");
     setAccount(response.data);
@@ -36,6 +36,8 @@ const AccountsPage = () => {
   useEffect(() => {
     data();
   }, []);
+
+  console.log(account);
 
   //搜尋病患
   const [search, setSearch] = useState("");
@@ -48,10 +50,21 @@ const AccountsPage = () => {
   };
 
   //check
-  const handleCheck = async (id: string) => {
+  const handleCheck = async (item: returnAccount) => {
+    const checkAccount: Account = {
+      name: item.name,
+      email: item.email,
+      password: item.password,
+      role: item.role,
+      authCode: item.authCode,
+      isVerified: !item.isVerified,
+    };
     const confirm = window.confirm("確定要審核通過嗎?");
     if (confirm) {
-      console.log("check id : " + id);
+      await api.put(`/account/${item._id}`, checkAccount).then((res) => {
+        console.log(res.data);
+        data();
+      });
     }
   };
 
@@ -59,7 +72,75 @@ const AccountsPage = () => {
   const handleDelete = async (id: string) => {
     const confirm = window.confirm("確定要刪除嗎?");
     if (confirm) {
-      console.log("delete id : " + id);
+      await api.delete(`/account/${id}`).then((res) => {
+        console.log(res.data);
+        data();
+      });
+    }
+  };
+
+  //revise
+  const [reviseStatus, setReviseStatus] = useState<boolean>(false);
+  const [revise, setRevise] = useState<{
+    id: string;
+    account: Account;
+  }>({
+    id: "",
+    account: {
+      name: "",
+      email: "",
+      password: "",
+      role: "doctor",
+      authCode: "",
+      isVerified: false,
+    },
+  });
+  const reviseDialogOpen = (item: returnAccount) => {
+    setReviseStatus(true);
+    setRevise({
+      id: item._id,
+      account: {
+        name: item.name,
+        email: item.email,
+        password: item.password,
+        role: item.role,
+        authCode: item.authCode,
+        isVerified: item.isVerified,
+      },
+    });
+  };
+  const reviseDialogHide = () => {
+    setReviseStatus(false);
+    setRevise({
+      id: "",
+      account: {
+        name: "",
+        email: "",
+        password: "",
+        role: "doctor",
+        authCode: "",
+        isVerified: false,
+      },
+    });
+  };
+  const changeRevise = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRevise({
+      ...revise,
+      account: { ...revise.account, [e.target.name]: e.target.value },
+    });
+  };
+  const sendRevise = async () => {
+    if (revise.account.role != "doctor" && revise.account.role != "nurse") {
+      console.log("revise.account.role != ");
+    } else {
+      const confirm = window.confirm("確定要修改嗎?");
+      if (confirm) {
+        await api.put(`/account/${revise.id}`, revise.account).then((res) => {
+          console.log(res.data);
+          data();
+          reviseDialogHide();
+        });
+      }
     }
   };
 
@@ -97,42 +178,6 @@ const AccountsPage = () => {
         text: "",
       });
       setEmailStatus(false);
-    }
-  };
-
-  //revise
-  const [reviseStatus, setReviseStatus] = useState<boolean>(false);
-  const [revise, setRevise] = useState<{
-    id: string;
-    data: {
-      name: string;
-      role: string;
-      auth: string;
-    };
-  }>({
-    id: "",
-    data: {
-      name: "",
-      role: "",
-      auth: "",
-    },
-  });
-  const reviseDialogOpen = () => {
-    setReviseStatus(true);
-  };
-  const reviseDialogHide = () => {
-    setReviseStatus(false);
-  };
-  const changeRevise = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRevise({
-      ...revise,
-      data: { ...revise.data, [e.target.name]: e.target.value },
-    });
-  };
-  const sendRevise = async () => {
-    const confirm = window.confirm("確定要修改嗎?");
-    if (confirm) {
-      console.log(revise);
     }
   };
 
@@ -237,12 +282,16 @@ const AccountsPage = () => {
                       {item.role}
                     </TableCell>
                     <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                      {!item.isVerified ? "未驗證" : ""}
+                      {!item.isVerified ? "等待審核" : "審核通過"}
                     </TableCell>
                     <TableCell align="center">
-                      <IconButton onClick={() => handleCheck("account-id")}>
-                        <DoneIcon fontSize="large" />
-                      </IconButton>
+                      {!item.isVerified ? (
+                        <IconButton onClick={() => handleCheck(item)}>
+                          <DoneIcon fontSize="large" />
+                        </IconButton>
+                      ) : (
+                        ""
+                      )}
                     </TableCell>
                     <TableCell align="center">
                       <IconButton onClick={emailDialogOpen}>
@@ -250,12 +299,12 @@ const AccountsPage = () => {
                       </IconButton>
                     </TableCell>
                     <TableCell align="center">
-                      <IconButton onClick={reviseDialogOpen}>
+                      <IconButton onClick={() => reviseDialogOpen(item)}>
                         <EditIcon fontSize="large" />
                       </IconButton>
                     </TableCell>
                     <TableCell align="center">
-                      <IconButton onClick={() => handleDelete("account-id")}>
+                      <IconButton onClick={() => handleDelete(item._id)}>
                         <DeleteIcon fontSize="large" />
                       </IconButton>
                     </TableCell>
@@ -326,10 +375,26 @@ const AccountsPage = () => {
         <DialogTitle>修改帳號內容</DialogTitle>
         <DialogContent sx={{ margingTop: "5vh" }}>
           <TextField
+            label="電子郵件"
+            variant="outlined"
+            name="email"
+            value={revise.account.email}
+            onChange={changeRevise}
+          />
+          <p />
+          <TextField
             label="姓名"
             variant="outlined"
             name="name"
-            value={revise.data.name}
+            value={revise.account.name}
+            onChange={changeRevise}
+          />
+          <p />
+          <TextField
+            label="密碼"
+            variant="outlined"
+            name="password"
+            value={revise.account.password}
             onChange={changeRevise}
           />
           <p />
@@ -337,7 +402,7 @@ const AccountsPage = () => {
             label="身份"
             variant="outlined"
             name="role"
-            value={revise.data.role}
+            value={revise.account.role}
             onChange={changeRevise}
           />
           <p />
@@ -345,7 +410,7 @@ const AccountsPage = () => {
             label="身份驗證碼"
             variant="outlined"
             name="auth"
-            value={revise.data.auth}
+            value={revise.account.authCode}
             onChange={changeRevise}
           />
           <p />
