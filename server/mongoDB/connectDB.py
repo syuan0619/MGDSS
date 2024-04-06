@@ -32,11 +32,21 @@ def getPatientByDate(patientId: str, date: str):
     patient = getPatientById(patientId)
     tablesAtDate = {}
     for key in patient:
-        if key != "_id" and key != "info":
+        if key != "_id" and key != "info" and key != "visit":
             for table in patient[key]:
                 if table["testDate"] == date:
                     tablesAtDate[key] = table
     return tablesAtDate
+
+
+def update_patient_info(patientId: str, updatedInfo: dict):
+    updatedPatient = patientCollection.find_one_and_update(
+        {"_id": ObjectId(patientId)},
+        {"$set": {"info": updatedInfo}},
+        return_document=pymongo.ReturnDocument.AFTER,
+    )
+    updatedPatient["_id"] = str(updatedPatient["_id"])
+    return {"_id": updatedPatient["_id"], "info": updatedPatient["info"]}
 
 
 # return dict with _id
@@ -77,8 +87,9 @@ def getAllAccounts():
     accounts = accountCollection.find()
     response = []
     for account in accounts:
-        account["_id"] = str(account["_id"])
-        response.append(account)
+        if account["role"] != "admin":
+            account["_id"] = str(account["_id"])
+            response.append(account)
     return response
 
 
@@ -89,6 +100,16 @@ def createAccount(newAccount: dict):
     accountId = accountCollection.insert_one(newAccount).inserted_id()
     accountId = str(accountId)
     return accountId
+
+
+def update_account(accountId: str, updatedAccount: dict):
+    updatedAccount = accountCollection.find_one_and_update(
+        {"_id": ObjectId(accountId)},
+        {"$set": updatedAccount},
+        return_document=pymongo.ReturnDocument.AFTER,
+    )
+    updatedAccount["_id"] = str(updatedAccount["_id"])
+    return updatedAccount
 
 
 def loginWithEmailandPassword(email: str, password: str):

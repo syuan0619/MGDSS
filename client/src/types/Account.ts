@@ -7,4 +7,14 @@ type Account = {
   isVerified: boolean;
 };
 
-export type { Account };
+type returnAccount = {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  role: "doctor" | "nurse" | "admin";
+  authCode: string;
+  isVerified: boolean;
+};
+
+export type { Account, returnAccount };
