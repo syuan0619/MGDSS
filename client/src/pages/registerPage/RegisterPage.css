@@ -1,9 +1,3 @@
-@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
-* {
-  font-family: "Noto Sans TC";
-  font-weight: 400;
-}
-
 .background {
   background-image: url("../../assets/Loginnew2.png");
   display: flex;

@@ -2,10 +2,15 @@ import json
 import models
 import io
 import datetime
-from fastapi import APIRouter, UploadFile, File, Header
+from fastapi import APIRouter, Response, UploadFile, File, Header
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import ValidationError
-from mongoDB.connectDB import updatePatient, updateEntirePatient, getPatientById, getPatientByDate
+from mongoDB.connectDB import (
+    updatePatient,
+    updateEntirePatient,
+    getPatientById,
+    getPatientByDate,
+)
 from OCR.functionalRecognize import functionalRecognize
 
 
@@ -19,9 +24,16 @@ async def get_patient_by_id(patientId: str):
         return patient
     except Exception as e:
         print("error: ", str(e))
-        return JSONResponse(status_code=500, content={"message": "Internal server error"})
+        return JSONResponse(
+            status_code=500, content={"message": "Internal server error"}
+        )
 
-@router.get("/{patientId}/{date}", description="path parameter: patientId(病患的_id), date(日期'yyyy-mm-dd')", summary="回傳病患在特定日期有填的表格")
+
+@router.get(
+    "/{patientId}/{date}",
+    description="path parameter: patientId(病患的_id), date(日期'yyyy-mm-dd')",
+    summary="回傳病患在特定日期有填的表格",
+)
 async def get_patient_date(patientId: str, date: datetime.date):
     try:
         tables = getPatientByDate(patientId, str(date))
@@ -29,9 +41,13 @@ async def get_patient_date(patientId: str, date: datetime.date):
     except Exception as e:
         print("error: ", str(e))
         return JSONResponse(status_code=500, content={"message": str(e)})
-    
 
-@router.post("/{patientId}/patient", summary="Update entire patient info", description="request body: patient")
+
+@router.post(
+    "/{patientId}/patient",
+    summary="Update entire patient info",
+    description="request body: patient",
+)
 async def inquiry_update_entire_patient(patientId: str, table: models.Patient):
     try:
         updatedPatient = updateEntirePatient(patientId, table.model_dump(by_alias=True))
@@ -234,12 +250,11 @@ async def recognize_text(file: UploadFile = File(...)):
     buffer = io.BytesIO()
     white_part.save(buffer, format="PNG")
     buffer.seek(0)
-    print(response)
-    return StreamingResponse(
-        content=buffer,
-        media_type="image/png",
+    return Response(
+        content=buffer.getvalue(),
         headers={
             "results": json.dumps(response),
             "Access-Control-Expose-Headers": "results",
         },
+        media_type="image/*",
     )
