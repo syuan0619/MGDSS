@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,7 +10,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
-
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Button, IconButton } from "@mui/material";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import { Info } from "../../types/Patient";
@@ -32,11 +31,20 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 
 function PatientList() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const userData = sessionStorage.getItem("userData");
+    console.log(userData);
+    if (!userData) {
+      alert("請先登入!");
+      navigate("/");
+    }
+  });
+  const userDataString = sessionStorage.getItem("userData");
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const Name = userData ? userData.name : null;
+  const role = userData ? userData.role : null;
   const [patients, setPatients] = useState<{ _id: string; info: Info }[]>();
-  const location = useLocation();
-  const doctorName = location.state.data.account.userName;
-  const role = location.state.data.account.role;
-
   const data = async () => {
     const response = await api.get("/patients");
     setPatients(response.data);
@@ -81,7 +89,17 @@ function PatientList() {
   const changeUpdatePatient = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUpdatePatient({ ...updatePatient!, [e.target.name]: e.target.value });
   };
-
+  
+  //登出
+  const onclickLogout = () => {
+    const confirmLogout = window.confirm("確定要登出嗎?");
+    if (confirmLogout) {
+        alert("登出成功!");
+        sessionStorage.removeItem("userData");
+        console.log("userData", userData);
+        navigate(`/`);
+    }
+};
   //nav to patient's inquiry page.
   const nav = useNavigate();
   const navToInquiryPage = (id: string) => {
@@ -148,7 +166,7 @@ function PatientList() {
                       fontSize: "0.95rem",
                     }}
                   >
-                    <p>{doctorName}</p>
+                    <p>{Name}</p>
                   </Box>
                 </Box>
                 <Box
@@ -197,6 +215,18 @@ function PatientList() {
                   }}
                 >
                   <SearchName />
+                </Box>
+                <Box>
+                  <ExitToAppIcon
+                  fontSize="large"
+                    aria-label="close"
+                    onClick={onclickLogout}
+                    sx={{
+                      position: "absolute",
+                      right: 8,
+                      top: 8,
+                    }}
+                  ></ExitToAppIcon>
                 </Box>
               </Box>
             </Box>
@@ -259,11 +289,11 @@ function PatientList() {
                     </TableCell>
                     <TableCell
                       align="center"
-                      onClick={() => navToInquiryPage(patient._id)}
+                      // onClick={() => navToInquiryPage(patient._id)}
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "space-between",
+                        justifyContent: "center",
                         height: "3rem",
                       }}
                     >
@@ -288,7 +318,8 @@ function PatientList() {
                           {patient.info.other}
                         </Typography>
                       </ButtonBase>
-                      <Box>
+                      <Box
+                      >
                         <IconButton
                           onClick={() => updatePatientDialogOpen(patient.info)}
                         >
