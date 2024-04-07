@@ -37,13 +37,15 @@
   flex-direction: row;
 }
 .chart-footer-chart {
-  width: 90%;
+  width: 80%;
 }
 .chart-footer-checkbox {
-  width: 10%;
+  width: 20%;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  font-size: 2vh;
+  gap: 2vh;
 }
 
 .chart-backToRight {

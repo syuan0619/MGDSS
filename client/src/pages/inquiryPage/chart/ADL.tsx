@@ -1,4 +1,6 @@
+import { Remove } from "@mui/icons-material";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { ADL } from "../../../types/Patient";
 import "./Chart.css";
@@ -32,18 +34,81 @@ const ADLChart = ({
     "eyelid",
   ];
 
-  const ADLCheckbox = ADLCheckbocLabel.map((item) => (
-    <label>
-      <input
-        type="checkbox"
-        name={item}
-        onChange={() =>
-          (document.getElementById(item)!.style!.visibility = "hidden")
-        }
-      />
+  const data = [
+    {
+      curve: "linear",
+      data: ADLChart_talkingData,
+      label: "talking",
+      color: "#FF204E",
+    },
+    {
+      curve: "linear",
+      data: ADLChart_chewingData,
+      label: "chewing",
+      color: "#FF7ED4",
+    },
+    {
+      curve: "linear",
+      data: ADLChart_swallowingData,
+      label: "swallowing",
+      color: "#E36414",
+    },
+    {
+      curve: "linear",
+      data: ADLChart_breathingData,
+      label: "breathing",
+      color: "#FFBB64",
+    },
+    {
+      curve: "linear",
+      data: ADLChart_brushTeethOrCombHairData,
+      label: "brushTeethOrCombHair",
+      color: "#FAEF5D",
+    },
+    {
+      curve: "linear",
+      data: ADLChart_ariseFromChairData,
+      label: "ariseFromChair",
+      color: "#00DFA2",
+    },
+    {
+      curve: "linear",
+      data: ADLChart_eyelidData,
+      label: "eyelid",
+      color: "#0B666A",
+    },
+  ];
+  const [a, setA] = useState<
+    { curve: string; data: number[]; label: string; color: string }[]
+  >([]);
+  const addToSelected = (item: {
+    curve: string;
+    data: number[];
+    label: string;
+    color: string;
+  }) => {
+    const exist = a.some((tarData) => tarData.label === item.label);
+    const deleteExist = a.filter((x) => x.label !== item.label);
+    if (!exist) {
+      setA([...a, item]);
+    } else if (exist == true) {
+      setA(deleteExist);
+    }
+  };
+
+  const selectData = (label: string) => {
+    const tarData = data.find((item) => item.label === label);
+    if (tarData) {
+      addToSelected(tarData);
+    }
+  };
+  const ADLCheckbox = ADLCheckbocLabel.map((item, index) => (
+    <label key={index}>
+      <input type="checkbox" name={item} onChange={() => selectData(item)} />
       {item}
     </label>
   ));
+
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -67,54 +132,9 @@ const ADLChart = ({
                   itemMarkHeight: 5,
                 },
               }}
-              width={700}
+              width={600}
               height={500}
-              series={[
-                {
-                  curve: "linear",
-                  data: ADLChart_talkingData,
-                  label: "talking",
-                  color: "#FF204E",
-                  id: "talking",
-                },
-                {
-                  curve: "linear",
-                  data: ADLChart_chewingData,
-                  label: "chewing",
-                  color: "#FF7ED4",
-                  id: "chewing",
-                },
-                {
-                  curve: "linear",
-                  data: ADLChart_swallowingData,
-                  label: "swallowing",
-                  color: "#E36414",
-                },
-                {
-                  curve: "linear",
-                  data: ADLChart_breathingData,
-                  label: "breathing",
-                  color: "#FFBB64",
-                },
-                {
-                  curve: "linear",
-                  data: ADLChart_brushTeethOrCombHairData,
-                  label: "brushTeethOrCombHair",
-                  color: "#FAEF5D",
-                },
-                {
-                  curve: "linear",
-                  data: ADLChart_ariseFromChairData,
-                  label: "ariseFromChair",
-                  color: "#00DFA2",
-                },
-                {
-                  curve: "linear",
-                  data: ADLChart_eyelidData,
-                  label: "eyelid",
-                  color: "#0B666A",
-                },
-              ]}
+              series={a}
               xAxis={[{ scaleType: "point", data: ADLChart_xLabels }]}
             />
           </div>
