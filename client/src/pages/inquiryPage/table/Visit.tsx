@@ -31,7 +31,7 @@ const Visit = ({
       dysarthria: 0,
       dyspnea: 0,
       limpWeakness: 0,
-      MGFAclassification: 0,
+      MGFAclassification: "",
     },
   });
 

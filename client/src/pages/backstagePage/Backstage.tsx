@@ -41,16 +41,16 @@ const AccountsPage = () => {
   });
 
   //登出
-const onclickLogout = () => {
+  const onclickLogout = () => {
     const confirmLogout = window.confirm("確定要登出嗎?");
     if (confirmLogout) {
-        sessionStorage.removeItem("userData");
-        console.log("userData", userData);
-        navigate(`/`);
+      sessionStorage.removeItem("userData");
+      console.log("userData", userData);
+      navigate(`/`);
     }
-};
+  };
 
-  const [account, setAccount] = useState<Account[]>();
+  const [account, setAccount] = useState<returnAccount[]>();
   const data = async () => {
     const response = await api.get("/account");
     setAccount(response.data);
