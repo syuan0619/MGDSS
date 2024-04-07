@@ -5,12 +5,15 @@ import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import api from "../../../api";
+import { useParams } from "react-router-dom";
 
 const BloodTest = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
+  const routeParams = useParams();
+
   const [BloodTestScore, setBloodTestScore] = useState<typeBloodTest>({
     testDate: "",
     ACHR: 0,
@@ -75,10 +78,7 @@ const BloodTest = ({
     if (confirmResult) {
       console.log(BloodTestScore);
       await api
-        .post(
-          `/inquiry/${"6567477ac1d120c47468dcdf"}/bloodTest`,
-          BloodTestScore
-        )
+        .post(`/inquiry/${routeParams.id}/bloodTest`, BloodTestScore)
         .then((res) => {
           console.log(res.data);
         });

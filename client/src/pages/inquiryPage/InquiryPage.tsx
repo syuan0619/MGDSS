@@ -1,5 +1,5 @@
 import "./inquiryPage.css";
-import { Patient } from "../../types/Patient.ts";
+import { Patient } from "../../types/Patient";
 import Menu from "./components/Menu";
 import Left from "./components/Left";
 import Right from "./components/Right";
@@ -17,7 +17,7 @@ import { MGChart } from "./chart/MG";
 import { ADLChart } from "./chart/ADL";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../../api.tsx";
+import api from "../../api";
 import { VisitChart } from "./chart/Visit";
 import { ThymusChart } from "./chart/Thymus";
 import { BloodTestChart } from "./chart/BloodTest";

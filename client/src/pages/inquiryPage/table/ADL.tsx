@@ -3,12 +3,15 @@ import { useState } from "react";
 import { ADL as typeADL } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import api from "../../../api";
+import { useParams } from "react-router-dom";
 
 const ADL = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
+  const routeParams = useParams();
+
   const [ADLscore, setADLscore] = useState<typeADL>({
     testDate: "",
     talking: 0,
@@ -45,11 +48,9 @@ const ADL = ({
 
     if (confirmResult) {
       console.log(ADLscore);
-      await api
-        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/ADL`, ADLscore)
-        .then((res) => {
-          console.log(res.data);
-        });
+      await api.post(`/inquiry/${routeParams.id}/ADL`, ADLscore).then((res) => {
+        console.log(res.data);
+      });
     }
   };
 

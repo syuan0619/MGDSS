@@ -3,12 +3,15 @@ import { useState } from "react";
 import { Thymus as typeThymus } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import api from "../../../api";
+import { useParams } from "react-router-dom";
 
 const Thymus = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
+  const routeParams = useParams();
+
   const [Thymusscore, setThymusScore] = useState<typeThymus>({
     testDate: "",
     thymusStatus: 0,
@@ -34,7 +37,7 @@ const Thymus = ({
     if (confirmResult) {
       console.log(Thymusscore);
       await api
-        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/thymus`, Thymusscore)
+        .post(`/inquiry/${routeParams.id}/thymus`, Thymusscore)
         .then((res) => {
           console.log(res.data);
         });

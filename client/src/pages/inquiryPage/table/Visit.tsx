@@ -4,12 +4,15 @@ import { Visit as typeVisit } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { Alert, Stack } from "@mui/material";
 import api from "../../../api";
+import { useParams } from "react-router-dom";
 
 const Visit = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
+  const routeParams = useParams();
+
   const [VisitScore, setVisitscore] = useState<typeVisit>({
     testDate: "",
     treat: 0,
@@ -96,7 +99,7 @@ const Visit = ({
     if (confirmResult) {
       console.log(VisitScore);
       await api
-        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/visit`, VisitScore)
+        .post(`/inquiry/${routeParams.id}/visit`, VisitScore)
         .then((res) => {
           console.log(res.data);
         });

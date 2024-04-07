@@ -3,13 +3,16 @@ import { useState } from "react";
 import "./QMG.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import api from "../../../api";
-import { QMG as typeQMG } from "../../../types/Patient.ts";
+import { QMG as typeQMG } from "../../../types/Patient";
+import { useParams } from "react-router-dom";
 
 const QMG = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
+  const routeParams = useParams();
+
   const [QMGscore, setQMGscore] = useState<typeQMG>({
     doubleVision: 0,
     ptosis: 0,
@@ -52,11 +55,9 @@ const QMG = ({
 
     if (confirmResult) {
       console.log(QMGscore);
-      await api
-        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/QMG`, QMGscore)
-        .then((res) => {
-          console.log(res.data);
-        });
+      await api.post(`/inquiry/${routeParams.id}/QMG`, QMGscore).then((res) => {
+        console.log(res.data);
+      });
     }
   };
 
