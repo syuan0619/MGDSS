@@ -2,7 +2,7 @@ import json
 import models
 import io
 import datetime
-from fastapi import APIRouter, UploadFile, File, Header
+from fastapi import APIRouter, Response, UploadFile, File, Header
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import ValidationError
 from mongoDB.connectDB import (
@@ -250,12 +250,11 @@ async def recognize_text(file: UploadFile = File(...)):
     buffer = io.BytesIO()
     white_part.save(buffer, format="PNG")
     buffer.seek(0)
-    print(buffer)
-    return StreamingResponse(
-        content=buffer,
-        media_type="image/png",
+    return Response(
+        content=buffer.getvalue(),
         headers={
             "results": json.dumps(response),
             "Access-Control-Expose-Headers": "results",
         },
+        media_type="image/*",
     )

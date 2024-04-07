@@ -2,7 +2,7 @@ import { Button, Grid, TextField } from "@mui/material";
 import { ArrowBackRounded } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import "./UploadOCR.css";
-import FileInputWithPreview from "../components/OCRPreview";
+import FileInputWithPreview from "./OCRPreview";
 import { useEffect, useState, useRef } from "react";
 import api from "../../../api";
 

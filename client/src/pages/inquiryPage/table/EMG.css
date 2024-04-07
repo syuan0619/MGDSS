@@ -22,9 +22,6 @@
   font-size: 1.6rem;
 }
 
-.inquiry-table-EMG-head p {
-  margin-left: 18rem;
-}
 .EMG-backToRight {
   border: 0;
   background-color: white;
@@ -48,7 +45,10 @@
   height: 65vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 2rem;
+  padding-left: 3rem;
+  overflow: auto;
 }
 .inquiry-table-EMG-content-right {
   height: 68vh;
@@ -118,4 +118,29 @@
   background-color: white;
   color: #89b9ad;
   border: 0.15rem solid #89b9ad;
+}
+
+/* from OCRPreview.css */
+.fileInput > input {
+  margin-left: 5rem;
+  display: none;
+}
+
+.fileInput > button {
+  border: none;
+  border-radius: 2rem;
+  width: 30vw;
+  height: 65vh;
+  background-color: #eeeeee;
+  transition: 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.fileInput > button:hover {
+  background-color: #dfdfdf;
+}
+
+.fileInput > img {
+  width: 40vw;
+  height: auto;
 }

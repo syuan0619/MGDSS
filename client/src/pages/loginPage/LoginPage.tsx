@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import api from "../../api"; 
+import api from "../../api";
 import {
   TextField,
   Button,
@@ -119,21 +119,33 @@ const LoginPage = () => {
       const response = await api.post("/account/login", null, {
         params: {
           email: form.account,
-          password: form.password
-        }
+          password: form.password,
+        },
       });
-      if (response.data) {
-        alert("登入成功!");
-        navigate("/patient");
+      sessionStorage.setItem("userData", JSON.stringify(response.data.account));
+      const userDataString = sessionStorage.getItem("userData");
+      const userData = userDataString ? JSON.parse(userDataString) : null;
+      const isVerified = userData ? userData.isVerified : null;
+
+      if (isVerified == false) {
+        alert("帳號未驗證，請與管理者聯絡!");
       } else {
-        console.log(response.data)
-        alert("帳號或密碼錯誤!");
+        if (
+          response.data.account.role === "doctor" ||
+          response.data.account.role === "nurse"
+        ) {
+          navigate(`/patient`, { state: { data: response.data } });
+        } else if (response.data.account.role === "admin") {
+          navigate(`../backstage`, { state: { data: response.data } });
+        } else {
+          alert("帳號或密碼錯誤!");
+        }
       }
     } catch (error) {
       alert("帳號或密碼錯誤!");
     }
   };
-      return (
+  return (
     <>
       <div className="background">
         <div className="spinnerwapper">

@@ -1,5 +1,4 @@
 import api from "../../../api";
-import FileInputWithPreview from "../components/OCRPreview";
 import { useEffect, useRef, useState } from "react";
 import "./EMG.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
@@ -13,11 +12,24 @@ const EMG = ({
   const [previewUrl, setPreviewUrl] = useState<string>();
   const [uploadedFile, setUploadedFile] = useState<File>();
   const [recognizedResult, setRecognizedResult] = useState<string>("");
-  // const [isUploaded, setIsUploaded] = useState<boolean>(false);
-  // const [modifiedResult, setModifiedResult] = useState<string>("");
+  const [modifiedResult, setModifiedResult] = useState<string>("");
+  console.log(modifiedResult);
+
+  const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setUploadedFile(file);
+    }
+  };
+
+  const buttonHandler = () => {
+    inputRef.current?.click();
+  };
 
   const getRecognized = async (formData: FormData) => {
-    return await api.post("/inquiry/recognize", formData);
+    return await api.post("/inquiry/recognize", formData, {
+      responseType: "blob",
+    });
   };
 
   useEffect(() => {
@@ -26,6 +38,9 @@ const EMG = ({
       const image = uploadedFile;
       formData.append("file", image);
       getRecognized(formData).then((res) => {
+        const imageBlob = URL.createObjectURL(res.data);
+        setPreviewUrl(imageBlob);
+
         const results = JSON.parse(res.headers.results) as [];
         let recognizedString = "";
         results.forEach(
@@ -35,14 +50,14 @@ const EMG = ({
             postActivation: string[];
           }) => {
             recognizedString += `測試部位: ${result.musclePart}\n`;
-            recognizedString += `\nPreActivation:\n\n          Amp\n1-5:   ${
+            recognizedString += `\nPreActivation:\n\n       Amp\n1-5:  ${
               result.preActivation[0].split(" ")[0]
             }\n`;
             if (result.postActivation.length > 0) {
-              recognizedString += `\nPostActivation:\n\n          Amp\n`;
+              recognizedString += `\nPostActivation:\n\n       Amp\n`;
               result.postActivation.forEach((postAct, idx) => {
                 if (idx % 3 === 0) {
-                  recognizedString += `1-5:   ${postAct.split(" ")[0]}\n`;
+                  recognizedString += `1-5:  ${postAct.split(" ")[0]}\n`;
                 }
               });
             } else {
@@ -51,6 +66,7 @@ const EMG = ({
           }
         );
         setRecognizedResult(recognizedString);
+        setModifiedResult(recognizedString);
       });
     }
   }, [uploadedFile]);
@@ -59,23 +75,35 @@ const EMG = ({
     <div className="inquiry-table-EMG-all">
       <div className="inquiry-table-EMG-head-content">
         <div className="inquiry-table-EMG-head">
-          <button
-            className="EMG-backToRight"
-            onClick={() => setReplaceComponent("right")}
-          >
-            <IoIosArrowDropleftCircle />
-          </button>
-          <p>電生理訊號</p>
+          <div>
+            <button
+              className="EMG-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+          </div>
+          <div>
+            <p>電生理訊號</p>
+          </div>
+          <div></div>
         </div>
 
         <div className="inquiry-table-EMG-content">
           <div className="inquiry-table-EMG-content-left">
-            <FileInputWithPreview
-              setUploadedFile={setUploadedFile}
-              setPreviewUrl={setPreviewUrl}
-              previewUrl={previewUrl}
-              inputRef={inputRef}
-            />
+            <div className="fileInput">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={fileSelectedHandler}
+                ref={inputRef}
+              />
+              {previewUrl ? (
+                <img src={previewUrl} alt="Preview" />
+              ) : (
+                <button onClick={buttonHandler}>檔案上傳/預覽</button>
+              )}
+            </div>
           </div>
           <div className="inquiry-table-EMG-content-right">
             <div className="inquiry-table-EMG-content-right-recognized-result">
@@ -90,9 +118,9 @@ const EMG = ({
               <h3 className="h3">手動修正 :</h3>
               <textarea
                 id="modifyCon"
-                defaultValue={recognizedResult ? recognizedResult : ""}
+                defaultValue={modifiedResult ? modifiedResult : ""}
                 onChange={(e) => {
-                  setRecognizedResult(e.target.value);
+                  setModifiedResult(e.target.value);
                 }}
               />
             </div>
@@ -118,7 +146,17 @@ const EMG = ({
 
 export default EMG;
 
-// 圖片回傳
+// 圖片上傳後預覽
+// const reader = new FileReader();
+// reader.readAsDataURL(file);
+// reader.onloadend = () => {
+//   if (typeof reader.result === "string") {
+//     setPreviewUrl(reader.result);
+//     setUploadedFile(file);
+//   }
+// };
+
+// 圖片回傳1
 // console.log(res.data);
 // const binaryDataBuffer = res.data;
 // const bufferArray = new Uint8Array(binaryDataBuffer).buffer;
@@ -133,6 +171,15 @@ export default EMG;
 // reader.onerror = () => {
 //   console.log(reader.error);
 // };
+
+// 圖片回傳2
+// console.log(typeof res.data);
+// const textEncoder = new TextEncoder();
+// const uint8Array = textEncoder.encode(res.data);
+// console.log(typeof uint8Array);
+// const blob = new Blob([uint8Array]);
+// console.log(blob);
+// const imageBlob = URL.createObjectURL(blob);
 
 // 舊版輸出
 // recognizedString += `測試部位: ${result.musclePart}\n`;

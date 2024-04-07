@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import EmailIcon from "@mui/icons-material/Email";
@@ -15,6 +16,8 @@ import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
+
 import {
   Button,
   Dialog,
@@ -23,8 +26,42 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
+import { Account, returnAccount } from "../../types/Account";
+import api from "../../api";
 
 const AccountsPage = () => {
+  const navigate = useNavigate();
+  const userData = sessionStorage.getItem("userData");
+
+  useEffect(() => {
+    if (!userData) {
+      alert("請先登入!");
+      navigate("/");
+    }
+  });
+
+  //登出
+  const onclickLogout = () => {
+    const confirmLogout = window.confirm("確定要登出嗎?");
+    if (confirmLogout) {
+      sessionStorage.removeItem("userData");
+      console.log("userData", userData);
+      navigate(`/`);
+    }
+  };
+
+  const [account, setAccount] = useState<returnAccount[]>();
+  const data = async () => {
+    const response = await api.get("/account");
+    setAccount(response.data);
+  };
+
+  useEffect(() => {
+    data();
+  }, []);
+
+  console.log(account);
+
   //搜尋病患
   const [search, setSearch] = useState("");
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,10 +73,21 @@ const AccountsPage = () => {
   };
 
   //check
-  const handleCheck = async (id: string) => {
+  const handleCheck = async (item: returnAccount) => {
+    const checkAccount: Account = {
+      name: item.name,
+      email: item.email,
+      password: item.password,
+      role: item.role,
+      authCode: item.authCode,
+      isVerified: !item.isVerified,
+    };
     const confirm = window.confirm("確定要審核通過嗎?");
     if (confirm) {
-      console.log("check id : " + id);
+      await api.put(`/account/${item._id}`, checkAccount).then((res) => {
+        console.log(res.data);
+        data();
+      });
     }
   };
 
@@ -47,7 +95,75 @@ const AccountsPage = () => {
   const handleDelete = async (id: string) => {
     const confirm = window.confirm("確定要刪除嗎?");
     if (confirm) {
-      console.log("delete id : " + id);
+      await api.delete(`/account/${id}`).then((res) => {
+        console.log(res.data);
+        data();
+      });
+    }
+  };
+
+  //revise
+  const [reviseStatus, setReviseStatus] = useState<boolean>(false);
+  const [revise, setRevise] = useState<{
+    id: string;
+    account: Account;
+  }>({
+    id: "",
+    account: {
+      name: "",
+      email: "",
+      password: "",
+      role: "doctor",
+      authCode: "",
+      isVerified: false,
+    },
+  });
+  const reviseDialogOpen = (item: returnAccount) => {
+    setReviseStatus(true);
+    setRevise({
+      id: item._id,
+      account: {
+        name: item.name,
+        email: item.email,
+        password: item.password,
+        role: item.role,
+        authCode: item.authCode,
+        isVerified: item.isVerified,
+      },
+    });
+  };
+  const reviseDialogHide = () => {
+    setReviseStatus(false);
+    setRevise({
+      id: "",
+      account: {
+        name: "",
+        email: "",
+        password: "",
+        role: "doctor",
+        authCode: "",
+        isVerified: false,
+      },
+    });
+  };
+  const changeRevise = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRevise({
+      ...revise,
+      account: { ...revise.account, [e.target.name]: e.target.value },
+    });
+  };
+  const sendRevise = async () => {
+    if (revise.account.role != "doctor" && revise.account.role != "nurse") {
+      console.log("revise.account.role != ");
+    } else {
+      const confirm = window.confirm("確定要修改嗎?");
+      if (confirm) {
+        await api.put(`/account/${revise.id}`, revise.account).then((res) => {
+          console.log(res.data);
+          data();
+          reviseDialogHide();
+        });
+      }
     }
   };
 
@@ -85,42 +201,6 @@ const AccountsPage = () => {
         text: "",
       });
       setEmailStatus(false);
-    }
-  };
-
-  //revise
-  const [reviseStatus, setReviseStatus] = useState<boolean>(false);
-  const [revise, setRevise] = useState<{
-    id: string;
-    data: {
-      name: string;
-      role: string;
-      auth: string;
-    };
-  }>({
-    id: "",
-    data: {
-      name: "",
-      role: "",
-      auth: "",
-    },
-  });
-  const reviseDialogOpen = () => {
-    setReviseStatus(true);
-  };
-  const reviseDialogHide = () => {
-    setReviseStatus(false);
-  };
-  const changeRevise = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRevise({
-      ...revise,
-      data: { ...revise.data, [e.target.name]: e.target.value },
-    });
-  };
-  const sendRevise = async () => {
-    const confirm = window.confirm("確定要修改嗎?");
-    if (confirm) {
-      console.log(revise);
     }
   };
 
@@ -179,6 +259,18 @@ const AccountsPage = () => {
               >
                 <SearchIcon />
               </IconButton>
+              <Box>
+                <ExitToAppIcon
+                  fontSize="large"
+                  aria-label="close"
+                  onClick={onclickLogout}
+                  sx={{
+                    position: "absolute",
+                    right: 8,
+                    top: 8,
+                  }}
+                ></ExitToAppIcon>
+              </Box>
             </Paper>
           </Box>
 
@@ -212,40 +304,47 @@ const AccountsPage = () => {
               </TableRow>
             </TableHead>
             <TableBody sx={{ cursor: "pointer" }}>
-              <TableRow hover={true}>
-                <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                  account-name
-                </TableCell>
-                <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                  account-email
-                </TableCell>
-                <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                  account-auth
-                </TableCell>
-                <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                  account-status
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton onClick={() => handleCheck("account-id")}>
-                    <DoneIcon fontSize="large" />
-                  </IconButton>
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton onClick={emailDialogOpen}>
-                    <EmailIcon fontSize="large" />
-                  </IconButton>
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton onClick={reviseDialogOpen}>
-                    <EditIcon fontSize="large" />
-                  </IconButton>
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton onClick={() => handleDelete("account-id")}>
-                    <DeleteIcon fontSize="large" />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
+              {account &&
+                account.map((item, index) => (
+                  <TableRow key={index} hover={true}>
+                    <TableCell align="center" sx={{ fontSize: "2vh" }}>
+                      {item.name}
+                    </TableCell>
+                    <TableCell align="center" sx={{ fontSize: "2vh" }}>
+                      {item.email}
+                    </TableCell>
+                    <TableCell align="center" sx={{ fontSize: "2vh" }}>
+                      {item.role}
+                    </TableCell>
+                    <TableCell align="center" sx={{ fontSize: "2vh" }}>
+                      {!item.isVerified ? "等待審核" : "審核通過"}
+                    </TableCell>
+                    <TableCell align="center">
+                      {!item.isVerified ? (
+                        <IconButton onClick={() => handleCheck(item)}>
+                          <DoneIcon fontSize="large" />
+                        </IconButton>
+                      ) : (
+                        ""
+                      )}
+                    </TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={emailDialogOpen}>
+                        <EmailIcon fontSize="large" />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={() => reviseDialogOpen(item)}>
+                        <EditIcon fontSize="large" />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={() => handleDelete(item._id)}>
+                        <DeleteIcon fontSize="large" />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </Box>
@@ -311,10 +410,26 @@ const AccountsPage = () => {
         <DialogTitle>修改帳號內容</DialogTitle>
         <DialogContent sx={{ margingTop: "5vh" }}>
           <TextField
+            label="電子郵件"
+            variant="outlined"
+            name="email"
+            value={revise.account.email}
+            onChange={changeRevise}
+          />
+          <p />
+          <TextField
             label="姓名"
             variant="outlined"
             name="name"
-            value={revise.data.name}
+            value={revise.account.name}
+            onChange={changeRevise}
+          />
+          <p />
+          <TextField
+            label="密碼"
+            variant="outlined"
+            name="password"
+            value={revise.account.password}
             onChange={changeRevise}
           />
           <p />
@@ -322,7 +437,7 @@ const AccountsPage = () => {
             label="身份"
             variant="outlined"
             name="role"
-            value={revise.data.role}
+            value={revise.account.role}
             onChange={changeRevise}
           />
           <p />
@@ -330,7 +445,7 @@ const AccountsPage = () => {
             label="身份驗證碼"
             variant="outlined"
             name="auth"
-            value={revise.data.auth}
+            value={revise.account.authCode}
             onChange={changeRevise}
           />
           <p />

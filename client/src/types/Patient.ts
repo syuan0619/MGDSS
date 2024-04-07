@@ -54,7 +54,7 @@ type Visit = {
     dysarthria: number;
     dyspnea: number;
     limpWeakness: number;
-    MGFAclassification: number; // 0 ~5 classes
+    MGFAclassification: string;
   };
 };
 

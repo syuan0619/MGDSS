@@ -16,7 +16,7 @@ import { QMGChart } from "./chart/QMG";
 import { MGChart } from "./chart/MG";
 import { ADLChart } from "./chart/ADL";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api.tsx";
 import { VisitChart } from "./chart/Visit";
 import { ThymusChart } from "./chart/Thymus";
@@ -24,6 +24,14 @@ import { BloodTestChart } from "./chart/BloodTest";
 import { EMGChart } from "./chart/EMG";
 
 const InquiryPage = () => {
+  const navigate = useNavigate();
+  const userData = sessionStorage.getItem("userData");
+  useEffect(() => {
+    if (!userData) {
+      alert("請先登入!");
+      navigate("/");
+    }
+  });
   const [replaceComponent, setReplaceComponent] = useState("");
   const routeParams = useParams();
 
