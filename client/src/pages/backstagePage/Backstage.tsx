@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import EmailIcon from "@mui/icons-material/Email";
@@ -15,6 +16,8 @@ import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
+
 import {
   Button,
   Dialog,
@@ -27,7 +30,27 @@ import { Account, returnAccount } from "../../types/Account";
 import api from "../../api";
 
 const AccountsPage = () => {
-  const [account, setAccount] = useState<returnAccount[]>();
+  const navigate = useNavigate();
+  const userData = sessionStorage.getItem("userData");
+
+  useEffect(() => {
+    if (!userData) {
+      alert("請先登入!");
+      navigate("/");
+    }
+  });
+
+  //登出
+const onclickLogout = () => {
+    const confirmLogout = window.confirm("確定要登出嗎?");
+    if (confirmLogout) {
+        sessionStorage.removeItem("userData");
+        console.log("userData", userData);
+        navigate(`/`);
+    }
+};
+
+  const [account, setAccount] = useState<Account[]>();
   const data = async () => {
     const response = await api.get("/account");
     setAccount(response.data);
@@ -236,6 +259,18 @@ const AccountsPage = () => {
               >
                 <SearchIcon />
               </IconButton>
+              <Box>
+                <ExitToAppIcon
+                  fontSize="large"
+                  aria-label="close"
+                  onClick={onclickLogout}
+                  sx={{
+                    position: "absolute",
+                    right: 8,
+                    top: 8,
+                  }}
+                ></ExitToAppIcon>
+              </Box>
             </Paper>
           </Box>
 
