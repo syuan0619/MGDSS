@@ -40,7 +40,7 @@ class Examination(BaseModel):
     dysarthria: int
     dyspnea: int
     limpWeakness: int
-    MGFAclassification: int
+    MGFAclassification: str
 
 
 # 看診紀錄
@@ -141,17 +141,26 @@ class ADL(BaseModel):
     sum: int
 
 
-class RNS(BaseModel):
-    musclePart: str
-    preActivation: list[str]
-    postActivation: list[str]
+class Nasalis(BaseModel):
+    preactivation: float
+    postactivation: list[float]
+
+class Abd(BaseModel):
+    preactivation: float
+    postactivation: list[float]
+
+class Trapezius(BaseModel):
+    preactivation: float
+    postactivation: list[float]
 
 
 # 電生理訊號
 class EMG(BaseModel):
     testDate: str
     image: Optional[bytes]
-    RNS: list[RNS]
+    nasalis: Nasalis
+    abd: Abd
+    trapezius: Trapezius
 
 
 # 病患資料

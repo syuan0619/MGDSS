@@ -28,7 +28,7 @@ const VisitChart = ({
   const VisitChart_selfAssessmentDaya = historyData.map(
     (item) => item.selfAssessment
   );
-  const VisitChart_xLabels = historyData.map((item) => item.date);
+  const VisitChart_xLabels = historyData.map((item) => item.testDate);
 
   return (
     <div className="chart-bg">
@@ -101,7 +101,7 @@ const VisitChart = ({
 };
 
 const VisitSmallChart = ({ historyData }: { historyData: Visit[] }) => {
-  const VisitSmallChart_xLabels = historyData.map((item) => item.date);
+  const VisitSmallChart_xLabels = historyData.map((item) => item.testDate);
   const VisitSmallChart_imuranData = historyData.map(
     (item) => item.prescription.imuran
   );

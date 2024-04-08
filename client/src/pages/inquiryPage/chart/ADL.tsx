@@ -22,7 +22,28 @@ const ADLChart = ({
     (item) => item.ariseFromChair
   );
   const ADLChart_eyelidData = historyData.map((item) => item.eyelid);
+  const ADLCheckbocLabel = [
+    "talking",
+    "chewing",
+    "swallowing",
+    "breathing",
+    "brushTeethOrCombHair",
+    "ariseFromChair",
+    "eyelid",
+  ];
 
+  const ADLCheckbox = ADLCheckbocLabel.map((item) => (
+    <label>
+      <input
+        type="checkbox"
+        name={item}
+        onChange={() =>
+          (document.getElementById(item)!.style!.visibility = "hidden")
+        }
+      />
+      {item}
+    </label>
+  ));
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -36,63 +57,68 @@ const ADLChart = ({
           <p>ADL</p>
         </div>
         <div className="chart-footer">
-          <LineChart
-            margin={{ top: 100 }}
-            slotProps={{
-              legend: {
-                itemGap: 20,
-                padding: -5,
-                itemMarkHeight: 5,
-              },
-            }}
-            width={700}
-            height={500}
-            series={[
-              {
-                curve: "linear",
-                data: ADLChart_talkingData,
-                label: "talking",
-                color: "#FF204E",
-              },
-              {
-                curve: "linear",
-                data: ADLChart_chewingData,
-                label: "chewing",
-                color: "#FF7ED4",
-              },
-              {
-                curve: "linear",
-                data: ADLChart_swallowingData,
-                label: "swallowing",
-                color: "#E36414",
-              },
-              {
-                curve: "linear",
-                data: ADLChart_breathingData,
-                label: "breathing",
-                color: "#FFBB64",
-              },
-              {
-                curve: "linear",
-                data: ADLChart_brushTeethOrCombHairData,
-                label: "brushTeethOrCombHair",
-                color: "#FAEF5D",
-              },
-              {
-                curve: "linear",
-                data: ADLChart_ariseFromChairData,
-                label: "ariseFromChair",
-                color: "#00DFA2",
-              },
-              {
-                curve: "linear",
-                data: ADLChart_eyelidData,
-                label: "eyelid",
-                color: "#0B666A",
-              },
-            ]}
-            xAxis={[{ scaleType: "point", data: ADLChart_xLabels }]}
-          />
+          <div className="chart-footer-chart">
+            <LineChart
+              margin={{ top: 100 }}
+              slotProps={{
+                legend: {
+                  itemGap: 20,
+                  padding: -5,
+                  itemMarkHeight: 5,
+                },
+              }}
+              width={700}
+              height={500}
+              series={[
+                {
+                  curve: "linear",
+                  data: ADLChart_talkingData,
+                  label: "talking",
+                  color: "#FF204E",
+                  id: "talking",
+                },
+                {
+                  curve: "linear",
+                  data: ADLChart_chewingData,
+                  label: "chewing",
+                  color: "#FF7ED4",
+                  id: "chewing",
+                },
+                {
+                  curve: "linear",
+                  data: ADLChart_swallowingData,
+                  label: "swallowing",
+                  color: "#E36414",
+                },
+                {
+                  curve: "linear",
+                  data: ADLChart_breathingData,
+                  label: "breathing",
+                  color: "#FFBB64",
+                },
+                {
+                  curve: "linear",
+                  data: ADLChart_brushTeethOrCombHairData,
+                  label: "brushTeethOrCombHair",
+                  color: "#FAEF5D",
+                },
+                {
+                  curve: "linear",
+                  data: ADLChart_ariseFromChairData,
+                  label: "ariseFromChair",
+                  color: "#00DFA2",
+                },
+                {
+                  curve: "linear",
+                  data: ADLChart_eyelidData,
+                  label: "eyelid",
+                  color: "#0B666A",
+                },
+              ]}
+              xAxis={[{ scaleType: "point", data: ADLChart_xLabels }]}
+            />
+          </div>
+          <div className="chart-footer-checkbox">{ADLCheckbox}</div>
         </div>
       </div>
     </div>
