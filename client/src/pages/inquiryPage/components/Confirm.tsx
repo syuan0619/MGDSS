@@ -20,28 +20,30 @@ const Confirm = ({
   };
 
   return (
-    <div className="readLable">
-      <Accordion
-        expanded={expanded}
-        onChange={handleChange}
-        sx={{ width: "10vw" }}
-      >
-        <AccordionSummary>
-          <Typography>{title}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <div>
-            {Object.entries(initialData).map(([name, value], index) => (
-              <div key={index} style={{ marginBottom: "0.6rem" }}>
-                <Typography>
-                  {name}: {value}
-                </Typography>
-              </div>
-            ))}
-          </div>
-        </AccordionDetails>
-      </Accordion>
-    </div>
+    initialData && (
+      <div className="readLable">
+        <Accordion
+          expanded={expanded}
+          onChange={handleChange}
+          sx={{ width: "10vw" }}
+        >
+          <AccordionSummary>
+            <Typography>{title}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <div>
+              {Object.entries(initialData).map(([name, value], index) => (
+                <div key={index} style={{ marginBottom: "0.6rem" }}>
+                  <Typography>
+                    {name}: {value}
+                  </Typography>
+                </div>
+              ))}
+            </div>
+          </AccordionDetails>
+        </Accordion>
+      </div>
+    )
   );
 };
 
