@@ -16,12 +16,22 @@ import { QMGChart } from "./chart/QMG";
 import { MGChart } from "./chart/MG";
 import { ADLChart } from "./chart/ADL";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api.tsx";
 import { VisitChart } from "./chart/Visit";
 import { ThymusChart } from "./chart/Thymus";
+import { BloodTestChart } from "./chart/BloodTest";
+import { EMGChart } from "./chart/EMG";
 
 const InquiryPage = () => {
+  const navigate = useNavigate();
+  const userData = sessionStorage.getItem("userData");
+  useEffect(() => {
+    if (!userData) {
+      alert("請先登入!");
+      navigate("/");
+    }
+  });
   const [replaceComponent, setReplaceComponent] = useState("");
   const routeParams = useParams();
 
@@ -40,7 +50,7 @@ const InquiryPage = () => {
   return (
     <div className="inquiry-all">
       <div className="inquiry-menu">
-        <Menu />
+        <Menu patient_id={routeParams.id} />
       </div>
       <div className="inquiry-left-right-flex">
         <div className="inquiry-left">
@@ -103,7 +113,10 @@ const InquiryPage = () => {
                 case "QMGchart":
                   {
                     return (
-                      <QMGChart setReplaceComponent={setReplaceComponent} />
+                      <QMGChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.QMG}
+                      />
                     );
                   }
                   break;
@@ -111,7 +124,10 @@ const InquiryPage = () => {
                 case "ADLchart":
                   {
                     return (
-                      <ADLChart setReplaceComponent={setReplaceComponent} />
+                      <ADLChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.ADL}
+                      />
                     );
                   }
                   break;
@@ -119,7 +135,10 @@ const InquiryPage = () => {
                 case "MGchart":
                   {
                     return (
-                      <MGChart setReplaceComponent={setReplaceComponent} />
+                      <MGChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.MG}
+                      />
                     );
                   }
                   break;
@@ -127,7 +146,10 @@ const InquiryPage = () => {
                 case "QOLchart":
                   {
                     return (
-                      <QOLChart setReplaceComponent={setReplaceComponent} />
+                      <QOLChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.QOL}
+                      />
                     );
                   }
                   break;
@@ -135,7 +157,10 @@ const InquiryPage = () => {
                 case "Visitchart":
                   {
                     return (
-                      <VisitChart setReplaceComponent={setReplaceComponent} />
+                      <VisitChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.visit}
+                      />
                     );
                   }
                   break;
@@ -143,13 +168,44 @@ const InquiryPage = () => {
                 case "Thymuschart":
                   {
                     return (
-                      <ThymusChart setReplaceComponent={setReplaceComponent} />
+                      <ThymusChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.thymus}
+                      />
                     );
                   }
                   break;
+
+                case "BloodTestchart":
+                  {
+                    return (
+                      <BloodTestChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.bloodTest}
+                      />
+                    );
+                  }
+                  break;
+
+                case "EMGchart":
+                  {
+                    return (
+                      <EMGChart
+                        setReplaceComponent={setReplaceComponent}
+                        historyData={patients.EMG}
+                      />
+                    );
+                  }
+                  break;
+
                 default:
                   {
-                    return <Right setReplaceComponent={setReplaceComponent} />;
+                    return (
+                      <Right
+                        setReplaceComponent={setReplaceComponent}
+                        patient={patients}
+                      />
+                    );
                   }
                   break;
               }

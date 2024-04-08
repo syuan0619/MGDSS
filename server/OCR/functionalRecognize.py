@@ -40,8 +40,7 @@ target_words_muscle_name = ["Nasalis", "Trapezius", "Abd"]
 
 def functionalRecognize(uploadImage):
     white_part, weight = full_image_to_white_part(uploadImage)
-    recognized_muscle_index = get_tested_muscle_index(
-        image_processing(white_part))
+    recognized_muscle_index = get_tested_muscle_index(image_processing(white_part))
     if len(recognized_muscle_index[0]) < 2:
         print("只有一個受測肌肉或根本辨識不出來")
         return "error"
@@ -53,7 +52,6 @@ def functionalRecognize(uploadImage):
     result_of_recognizition = recognize_result(
         recognized_muscle, crop_dimensions_data, white_part, weight
     )
-    # print("\n", result_of_recognizition)
     return (
         result_of_recognizition,
         Image.fromarray(white_part),
@@ -68,11 +66,10 @@ def full_image_to_white_part(uploadImage):
     image_array = np.array(origin_image)
     screen_size_height, screen_size_width, screen_size_color = image_array.shape
     weight = round(screen_size_width / 1920, 4)
-    print(weight)
     cropped_image = cv2.resize(
         image_array[
-            int(400 * weight): int(1020 * weight),
-            int(750 * weight): int(1350 * weight),
+            int(400 * weight) : int(1020 * weight),
+            int(750 * weight) : int(1350 * weight),
         ],
         None,
         None,
@@ -90,8 +87,7 @@ def full_image_to_white_part(uploadImage):
 def get_tested_muscle_index(white_part):
     recognized_muscle = []
     recognized_muscle_index = []
-    data = pytesseract.image_to_data(
-        white_part, output_type=pytesseract.Output.DICT)
+    data = pytesseract.image_to_data(white_part, output_type=pytesseract.Output.DICT)
     # print("\n", data)
     for idx, (left, top, width, height, text, conf) in enumerate(
         zip(
@@ -140,7 +136,7 @@ def recognize_result(recognized_muscle, crop_dimensions_data, white_part, weight
         for crop_dimensions_data in crop_dimensions_data:
             width, height, x, y = crop_dimensions_data
             resize_image = white_part[
-                y: y + int(height * weight), x: x + int(width * weight)
+                y : y + int(height * weight), x : x + int(width * weight)
             ]
             enlarge_resize_image = cv2.resize(
                 resize_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC
