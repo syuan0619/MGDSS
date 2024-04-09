@@ -2,14 +2,17 @@ import * as React from "react";
 import { useState } from "react";
 import "./QOL.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
-import { QOL as typeQOL } from "../../../types/Patient.ts";
-import api from "../../../api.tsx";
+import { QOL as typeQOL } from "../../../types/Patient";
+import api from "../../../api";
+import { useParams } from "react-router-dom";
 
 const QOL = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
+  const routeParams = useParams();
+
   const [QOLscore, setQOLscore] = useState<typeQOL>({
     frustration: 0,
     eyeUsing: 0,
@@ -54,11 +57,9 @@ const QOL = ({
 
     if (confirmResult) {
       console.log(QOLscore);
-      await api
-        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/QOL`, QOLscore)
-        .then((res) => {
-          console.log(res.data);
-        });
+      await api.post(`/inquiry/${routeParams.id}/QOL`, QOLscore).then((res) => {
+        console.log(res.data);
+      });
     }
   };
 

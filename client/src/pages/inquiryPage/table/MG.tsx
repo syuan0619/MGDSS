@@ -3,12 +3,14 @@ import { useState } from "react";
 import { MG as typeMG } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import api from "../../../api";
+import { useParams } from "react-router-dom";
 
 const MG = ({
   setReplaceComponent,
 }: {
   setReplaceComponent: (table: string) => void;
 }) => {
+  const routeParams = useParams();
   const [MGscore, setMGScore] = useState<typeMG>({
     testDate: "",
     ptosis: 0,
@@ -47,11 +49,9 @@ const MG = ({
     const confirmResult = confirm("確定送出結果嗎?");
     if (confirmResult) {
       console.log(MGscore);
-      await api
-        .post(`/inquiry/${"6567477ac1d120c47468dcdf"}/MG`, MGscore)
-        .then((res) => {
-          console.log(res.data);
-        });
+      await api.post(`/inquiry/${routeParams.id}/MG`, MGscore).then((res) => {
+        console.log(res.data);
+      });
     }
   };
 
