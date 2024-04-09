@@ -38,6 +38,7 @@ const ConfirmVisit = ({
   const handleChange = () => {
     setExpanded(!expanded);
   };
+  console.log(initialData);
 
   const flattenObject: flatVisit = {
     testDate: "",
@@ -59,42 +60,47 @@ const ConfirmVisit = ({
     limpWeakness: 0,
     MGFAclassification: 0,
   };
-  for (const [key, value] of Object.entries(initialData)) {
-    if (typeof value === "object") {
-      for (const [k, v] of Object.entries(value)) {
-        console.log(`${k}: ${v}`);
-        flattenObject[k] = v;
+
+  if (initialData) {
+    for (const [key, value] of Object.entries(initialData)) {
+      if (typeof value === "object") {
+        for (const [k, v] of Object.entries(value)) {
+          console.log(`${k}: ${v}`);
+          flattenObject[k] = v;
+        }
+      } else {
+        console.log(`${key}: ${value}`);
+        flattenObject[key] = value;
       }
-    } else {
-      console.log(`${key}: ${value}`);
-      flattenObject[key] = value;
     }
   }
   console.log(flattenObject);
 
   return (
-    <div className="readLable">
-      <Accordion
-        expanded={expanded}
-        onChange={handleChange}
-        sx={{ width: "10vw" }}
-      >
-        <AccordionSummary>
-          <Typography>{title}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <div>
-            {Object.entries(flattenObject).map(([name, value], index) => (
-              <div key={index} style={{ marginBottom: "0.6rem" }}>
-                <Typography>
-                  {name}: {value}
-                </Typography>
-              </div>
-            ))}
-          </div>
-        </AccordionDetails>
-      </Accordion>
-    </div>
+    initialData && (
+      <div className="readLable">
+        <Accordion
+          expanded={expanded}
+          onChange={handleChange}
+          sx={{ width: "10vw" }}
+        >
+          <AccordionSummary>
+            <Typography>{title}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <div>
+              {Object.entries(flattenObject).map(([name, value], index) => (
+                <div key={index} style={{ marginBottom: "0.6rem" }}>
+                  <Typography>
+                    {name}: {value}
+                  </Typography>
+                </div>
+              ))}
+            </div>
+          </AccordionDetails>
+        </Accordion>
+      </div>
+    )
   );
 };
 export default ConfirmVisit;

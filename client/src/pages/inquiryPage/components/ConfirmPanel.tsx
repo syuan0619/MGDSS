@@ -89,19 +89,21 @@ const ConfirmPanel = ({ patient_id }: { patient_id: string | undefined }) => {
   // });
 
   // Timer
-  // const [time, setTime] = useState(new Date().toISOString());
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setTime(new Date().toISOString());
-  //   }, 60000);
-  //   return () => clearInterval(timer);
-  // }, []);
+  const [time, setTime] = useState(new Date().toISOString());
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date().toISOString());
+    }, 60000);
+    return () => clearInterval(timer);
+  }, []);
 
   //get patient data by date
   const [patients, setPatients] = useState<Patient>();
+  console.log(patients);
+  console.log(time.slice(0, 10));
 
   const data = async () => {
-    const response = await api.get(`/inquiry/${patient_id}/2023-11-29`);
+    const response = await api.get(`/inquiry/${patient_id}/2024-04-05`);
     setPatients(response.data.tables);
   };
 
