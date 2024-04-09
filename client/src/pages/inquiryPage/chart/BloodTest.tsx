@@ -2,6 +2,7 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import "./Chart.css";
 import { BloodTest } from "../../../types/Patient";
+import { useState } from "react";
 
 const BloodTestChart = ({
   setReplaceComponent,
@@ -18,6 +19,74 @@ const BloodTestChart = ({
   const BloodTestChart_ANAData = historyData.map((item) => item.ANA);
   const BloodTestChart_uricAcidData = historyData.map((item) => item.uricAcid);
   const BloodTestChart_xLabels = historyData.map((item) => item.testDate);
+  const BloodData = [
+    {
+      curve: "linear",
+      data: BloodTestChart_ACHRData,
+      label: "ACHR",
+      color: "#FF204E",
+    },
+    {
+      curve: "linear",
+      data: BloodTestChart_TSHData,
+      label: "TSH",
+      color: "#E36414",
+    },
+    {
+      curve: "linear",
+      data: BloodTestChart_freeThyroxineData,
+      label: "freeThyroxine",
+      color: "#FFBB64",
+    },
+    {
+      curve: "linear",
+      data: BloodTestChart_ANAData,
+      label: "ANA",
+      color: "#00DFA2",
+    },
+    {
+      curve: "linear",
+      data: BloodTestChart_uricAcidData,
+      label: "uricAcid",
+      color: "#687EFF",
+    },
+  ];
+
+  const [a, setA] =
+    useState<{ curve: string; data: number[]; label: string; color: string }[]>(
+      BloodData
+    );
+  const addToSelected = (item: {
+    curve: string;
+    data: number[];
+    label: string;
+    color: string;
+  }) => {
+    const exist = a.some((tarData) => tarData.label === item.label);
+    const deleteExist = a.filter((x) => x.label !== item.label);
+    if (!exist) {
+      setA([...a, item]);
+    } else if (exist == true) {
+      setA(deleteExist);
+    }
+  };
+  const selectData = (label: string) => {
+    const tarData = BloodData.find((item) => item.label === label);
+    if (tarData) {
+      addToSelected(tarData);
+    }
+  };
+  const BloodCheckbox = BloodData.map((item, index) => (
+    <label key={index}>
+      <input
+        type="checkbox"
+        name={item.label}
+        defaultChecked={true}
+        onChange={() => selectData(item.label)}
+      />
+      {item.label}
+    </label>
+  ));
 
   return (
     <div className="chart-bg">
@@ -32,51 +101,27 @@ const BloodTestChart = ({
           <p>BloodTest</p>
         </div>
         <div className="chart-footer">
-          <LineChart
-            margin={{ top: 100 }}
-            slotProps={{
-              legend: {
-                itemGap: 20,
-                padding: -5,
-                itemMarkHeight: 5,
-              },
-            }}
-            width={700}
-            height={500}
-            series={[
-              {
-                curve: "linear",
-                data: BloodTestChart_ACHRData,
-                label: "ACHR",
-                color: "#FF204E",
-              },
-              {
-                curve: "linear",
-                data: BloodTestChart_TSHData,
-                label: "TSH",
-                color: "#E36414",
-              },
-              {
-                curve: "linear",
-                data: BloodTestChart_freeThyroxineData,
-                label: "freeThyroxine",
-                color: "#FFBB64",
-              },
-              {
-                curve: "linear",
-                data: BloodTestChart_ANAData,
-                label: "ANA",
-                color: "#00DFA2",
-              },
-              {
-                curve: "linear",
-                data: BloodTestChart_uricAcidData,
-                label: "uricAcid",
-                color: "#687EFF",
-              },
-            ]}
-            xAxis={[{ scaleType: "point", data: BloodTestChart_xLabels }]}
-          />
+          <div className="chart-footer-chart">
+            <LineChart
+              margin={{ top: 100 }}
+              slotProps={{
+                legend: {
+                  itemGap: 12,
+                  padding: -5,
+                  itemMarkHeight: 5,
+                },
+              }}
+              width={600}
+              height={500}
+              series={a}
+              xAxis={[{ scaleType: "point", data: BloodTestChart_xLabels }]}
+            />
+          </div>
+          <div className="chart-footer-checkbox">
+            <div className="chart-footer-checkbox-inner">
+              目前顯示:{BloodCheckbox}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -25,8 +25,6 @@
   font-size: 2rem;
   justify-self: center;
   margin-right: 10%;
-  /* position: relative;
-    right: 5%; */
 }
 .thymus-chart-footer {
   width: 100%;
@@ -44,9 +42,6 @@
   color: #c7c8cc;
   justify-self: start;
   margin-left: 1rem;
-  /* position: relative;
-    top: 5%;
-    right: 40%; */
 }
 
 .thymus-chart-smallchart {
@@ -55,7 +50,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 5vh;
+  font-size: 3.5vh;
   flex-direction: column;
 }
 .thymus-chart-footer-left {
