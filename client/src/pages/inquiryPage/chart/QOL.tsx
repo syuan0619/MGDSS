@@ -154,7 +154,7 @@ const QOLChart = ({
   };
   const QOLCheckbox = QOLData.map((item) => (
     <>
-      <label>
+      <label style={{ color: item.color }}>
         <input
           type="checkbox"
           name={item.label}
@@ -181,12 +181,13 @@ const QOLChart = ({
         <div className="chart-footer">
           <div className="chart-footer-chart">
             <LineChart
-              margin={{ top: 150 }}
+              margin={{ top: 30 }}
               slotProps={{
                 legend: {
                   itemGap: 12,
                   padding: -5,
                   itemMarkHeight: 5,
+                  hidden: true,
                 },
               }}
               width={600}

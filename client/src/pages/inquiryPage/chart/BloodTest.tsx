@@ -77,7 +77,7 @@ const BloodTestChart = ({
     }
   };
   const BloodCheckbox = BloodData.map((item, index) => (
-    <label key={index}>
+    <label style={{ color: item.color }}>
       <input
         type="checkbox"
         name={item.label}
@@ -103,12 +103,13 @@ const BloodTestChart = ({
         <div className="chart-footer">
           <div className="chart-footer-chart">
             <LineChart
-              margin={{ top: 100 }}
+              margin={{ top: 30 }}
               slotProps={{
                 legend: {
                   itemGap: 12,
                   padding: -5,
                   itemMarkHeight: 5,
+                  hidden: true,
                 },
               }}
               width={600}
