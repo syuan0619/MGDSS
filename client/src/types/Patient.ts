@@ -145,11 +145,18 @@ type ADL = {
 
 type EMG = {
   testDate: string;
-  imgPath: string;
-  RNS: {
-    musclePart: string;
-    preActivation: [];
+  img: Blob;
+  nasalis: {
+    preActivation: number;
     postActivation: [];
-  }[];
+  };
+  abd: {
+    preActivation: number;
+    postActivation: [];
+  };
+  trapezius: {
+    preActivation: number;
+    postActivation: [];
+  };
 };
 export type { Patient, Info, Visit, Thymus, BloodTest, QOL, QMG, MG, ADL, EMG };
