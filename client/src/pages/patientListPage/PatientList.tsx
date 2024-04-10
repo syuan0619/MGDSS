@@ -181,7 +181,7 @@ function PatientList() {
                                 >
                                     {`現在時間：${time.toLocaleDateString()} ${time.getHours()}時${time.getMinutes()}分`}
                                 </Box>
-                                <Button
+                                {/* <Button
                                     sx={{
                                         width: "6rem",
                                         marginTop: "1rem",
@@ -195,7 +195,7 @@ function PatientList() {
                                     }}
                                 >
                                     建立模型
-                                </Button>
+                                </Button> */}
                                 <Button
                                     sx={{
                                         width: "6rem",
@@ -307,7 +307,10 @@ function PatientList() {
                                             }
                                             align="center"
                                         >
-                                            {"用生日算"}
+                                            {new Date().getFullYear() -
+                                                new Date(
+                                                    patient.info.DOB
+                                                ).getFullYear()}
                                         </TableCell>
                                         <TableCell
                                             onClick={() =>
