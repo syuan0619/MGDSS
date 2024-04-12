@@ -137,6 +137,7 @@ class ADL(BaseModel):
     breathing: int
     brushTeethOrCombHair: int
     ariseFromChair: int
+    doubleVision: int
     eyelid: int
     sum: int
 
