@@ -60,20 +60,14 @@ const patientEMG = [
 const postXLabel = [1, 2, 3, 4].map((x) => x);
 const EMGxLabels = patientEMG.map((item) => item.testDate);
 const nasalisPreData = patientEMG.map(
-  (item) => item.nasalis.preActivation as unknown as number
+  (item) => item.nasalis.preActivation[0] as unknown as null
 );
-const nasalisPostData = patientEMG.map((item) => item.nasalis.postActivation);
 const abdPreData = patientEMG.map(
-  (item) => item.abd.preActivation as unknown as number
+  (item) => item.abd.preActivation[0] as unknown as null
 );
-const abdPostData = patientEMG.map((item) => item.abd.postActivation);
 const trapeziusPreData = patientEMG.map(
-  (item) => item.trapezius.preActivation as unknown as number
+  (item) => item.trapezius.preActivation[0] as unknown as null
 );
-const trapeziusPostData = patientEMG.map(
-  (item) => item.trapezius.postActivation
-);
-
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -126,13 +120,25 @@ const EMGChart = ({
   const tarData = patientEMG.filter((item) => item.testDate === selectedOption);
   const tarNasalisData =
     tarData[0]?.nasalis?.postActivation?.map(
-      (item) => item as unknown as number
+      (item) => item as unknown as null
     ) ?? [];
   const tarAbdData =
-    tarData[0]?.abd?.postActivation?.map((item) => item as number) ?? [];
+    tarData[0]?.abd?.postActivation?.map((item) => item as unknown as null) ??
+    [];
   const tarTrapeziusData =
-    tarData[0]?.nasalis?.postActivation?.map((item) => item as number) ?? [];
+    tarData[0]?.trapezius?.postActivation?.map(
+      (item) => item as unknown as null
+    ) ?? [];
 
+  console.log(
+    "nasalis:",
+    nasalisPreData,
+    "abd",
+    abdPreData,
+    "trapezius",
+    trapeziusPreData,
+    tarNasalisData
+  );
   return (
     <div className="chart-bg">
       <div className="chart">
