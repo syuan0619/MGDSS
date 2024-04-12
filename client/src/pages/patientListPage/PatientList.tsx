@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,6 +11,8 @@ import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import WaterDropIcon from "@mui/icons-material/WaterDrop";
+import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import { Button, IconButton } from "@mui/material";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import { Info } from "../../types/Patient";
@@ -87,24 +89,36 @@ function PatientList() {
     setUpdatePatientStatus(false);
   };
   const changeUpdatePatient = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdatePatient({ ...updatePatient!, [e.target.name]: e.target.value });
+    setUpdatePatient({
+      ...updatePatient!,
+      [e.target.name]: e.target.value,
+    });
   };
 
   //登出
   const onclickLogout = () => {
     const confirmLogout = window.confirm("確定要登出嗎?");
     if (confirmLogout) {
-        sessionStorage.removeItem("userData");
-        console.log("userData", userData);
-        navigate(`/`);
+      sessionStorage.removeItem("userData");
+      console.log("userData", userData);
+      navigate(`/`);
     }
-};
+  };
   //nav to patient's inquiry page.
   const nav = useNavigate();
   const navToInquiryPage = (id: string) => {
     if (role == "doctor") {
       nav(`/inquiry/${id}`);
     }
+    //EMG
+    const onclickEMG = () => {
+      const inputRef = useRef<HTMLInputElement>(null);
+      const [previewUrl, setPreviewUrl] = useState<string>();
+      const [uploadedFile, setUploadedFile] = useState<File>();
+      const [recognizedResult, setRecognizedResult] = useState<string>("");
+      const [modifiedResult, setModifiedResult] = useState<string>("");
+      console.log(modifiedResult);
+    };
   };
   return (
     <>
@@ -176,21 +190,21 @@ function PatientList() {
                 >
                   {`現在時間：${time.toLocaleDateString()} ${time.getHours()}時${time.getMinutes()}分`}
                 </Box>
-                <Button
-                  sx={{
-                    width: "6rem",
-                    marginTop: "1rem",
-                    marginRight: "1.5rem",
-                    backgroundColor: "#4E3636",
-                    color: "white",
-                    borderRadius: "0.7rem",
-                    "&:hover": {
-                      color: "#4E3636",
-                    },
-                  }}
-                >
-                  建立模型
-                </Button>
+                {/* <Button
+                                    sx={{
+                                        width: "6rem",
+                                        marginTop: "1rem",
+                                        marginRight: "1.5rem",
+                                        backgroundColor: "#4E3636",
+                                        color: "white",
+                                        borderRadius: "0.7rem",
+                                        "&:hover": {
+                                            color: "#4E3636",
+                                        },
+                                    }}
+                                >
+                                    建立模型
+                                </Button> */}
                 <Button
                   sx={{
                     width: "6rem",
@@ -217,7 +231,7 @@ function PatientList() {
                 </Box>
                 <Box>
                   <ExitToAppIcon
-                  fontSize="large"
+                    fontSize="large"
                     aria-label="close"
                     onClick={onclickLogout}
                     sx={{
@@ -253,6 +267,15 @@ function PatientList() {
                 <TableCell align="center" sx={{ color: "#9E9FA5" }}>
                   其他註記
                 </TableCell>
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  修改基本資料
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  新增電生理訊號量表
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  新增抽血結果
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody sx={{ cursor: "pointer" }}>
@@ -278,7 +301,8 @@ function PatientList() {
                       onClick={() => navToInquiryPage(patient._id)}
                       align="center"
                     >
-                      {"用生日算"}
+                      {new Date().getFullYear() -
+                        new Date(patient.info.DOB).getFullYear()}
                     </TableCell>
                     <TableCell
                       onClick={() => navToInquiryPage(patient._id)}
@@ -317,13 +341,28 @@ function PatientList() {
                           {patient.info.other}
                         </Typography>
                       </ButtonBase>
-                      <Box
-                      >
+                    </TableCell>
+                    <TableCell align="center">
+                      <Box>
                         <IconButton
                           onClick={() => updatePatientDialogOpen(patient.info)}
                         >
                           <EditIcon />
                         </IconButton>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Box>
+                        <ElectricBoltIcon>
+                          <EditIcon />
+                        </ElectricBoltIcon>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Box>
+                        <WaterDropIcon>
+                          <EditIcon />
+                        </WaterDropIcon>
                       </Box>
                     </TableCell>
                   </TableRow>
@@ -546,7 +585,12 @@ function PatientList() {
         }}
       >
         <DialogTitle>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
             修改基本資料
             <IconButton onClick={updatePatientDialogHide}>
               <CloseIcon />
