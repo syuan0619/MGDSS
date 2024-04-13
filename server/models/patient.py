@@ -175,3 +175,13 @@ class Patient(BaseModel):
     mg: list[MG] = Field(default=[], alias="MG")
     adl: list[ADL] = Field(default=[], alias="ADL")
     emg: list[EMG] = Field(default=[], alias="EMG")
+
+class PatientForPredict(BaseModel):
+    info: Info
+    visit: Visit
+    thymus:Thymus
+    bloodTest: BloodTest
+    qol: QOL = Field(alias="QOL")
+    qmg: QMG = Field(alias="QMG")
+    mg: MG = Field(alias="MG")
+    adl: ADL = Field(alias="ADL")

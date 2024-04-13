@@ -1,16 +1,15 @@
 import pandas as pd
+import models
 from fastapi import APIRouter
-from mongoDB import getAllPatients
+from prediction.predict import patient_to_dataframe, predict_MGCscore
 
 router = APIRouter(prefix="/prediction", tags=["prediction"])
 
-@router.get("/data")
-async def get_prediction_data():
-	try:
-		allPatients = getAllPatients()
-		for patient in allPatients:
-			del patient['_id']
-			QOL_df = pd.DataFrame(patient['qol'])
-			print(QOL_df)
-	except Exception as e:
-		return {"message": f"Error: {e}"}
+@router.post("/data")
+async def get_prediction_data(patient: models.PatientForPredict):
+	# try:
+		df = patient_to_dataframe(patient.model_dump())	
+		print(predict_MGCscore(df))
+		# return predict_MGCscore(df)
+	# except Exception as e:
+	# 	return {"message": e}
