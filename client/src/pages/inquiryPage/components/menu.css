@@ -126,3 +126,27 @@
 .inquiry-menu-button:nth-child(4):hover {
   background-color: #ce0000;
 }
+
+.inquiry-menu-right-testdate {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-size: 1.4rem;
+}
+
+.inquiry-menu-right-testdate input[type="date"] {
+  width: 10rem;
+  height: 2.6rem;
+  font-size: 1rem;
+  border-radius: 0.9rem;
+  box-sizing: border-box;
+  border: 0;
+  background-color: rgb(255, 255, 255);
+  margin: 0 0.5vw 0 0.5vw;
+}
+.inquiry-menu-right-testdate input:focus {
+  outline: 0.15rem solid #7c7b7b;
+}

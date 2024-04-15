@@ -79,39 +79,6 @@ const MG = ({
         </div>
         <div className="inquiry-table-MG-content">
           <div className="inquiry-table-MG-content-row">
-            <div className="inquiry-table-MG-content-row-testdate">
-              <label htmlFor="testDate">Test Date:</label>
-              <input
-                type="date"
-                id="testDate"
-                name="testDate"
-                value={MGscore.testDate}
-                onChange={(e) => handleChange(e, 0)}
-              />
-            </div>
-            <div className="inquiry-table-MG-content-row-ptosis">
-              <label htmlFor="ptosis">ptosis</label>
-              <input
-                defaultValue="0"
-                onChange={(e) => handleChange(e, MGscore.ptosis)}
-                type="range"
-                id="ptosis"
-                name="ptosis"
-                min="0"
-                max="3"
-                step="1"
-                list="tickmarks"
-              />
-
-              <datalist className="MG-datalist" id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-                <option value="2" label="2"></option>
-                <option value="3" label="3"></option>
-              </datalist>
-            </div>
-          </div>
-          <div className="inquiry-table-MG-content-row">
             <div className="inquiry-table-MG-content-row-doubleVision">
               <label htmlFor="doubleVision">doubleVision</label>
               <input
@@ -296,6 +263,27 @@ const MG = ({
                 type="range"
                 id="hipFlexion"
                 name="hipFlexion"
+                min="0"
+                max="3"
+                step="1"
+                list="tickmarks"
+              />
+
+              <datalist className="MG-datalist" id="tickmarks">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+              </datalist>
+            </div>
+            <div className="inquiry-table-MG-content-row-ptosis">
+              <label htmlFor="ptosis">ptosis</label>
+              <input
+                defaultValue="0"
+                onChange={(e) => handleChange(e, MGscore.ptosis)}
+                type="range"
+                id="ptosis"
+                name="ptosis"
                 min="0"
                 max="3"
                 step="1"
