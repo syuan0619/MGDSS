@@ -110,15 +110,6 @@ function PatientList() {
     if (role == "doctor") {
       nav(`/inquiry/${id}`);
     }
-    //EMG
-    const onclickEMG = () => {
-      const inputRef = useRef<HTMLInputElement>(null);
-      const [previewUrl, setPreviewUrl] = useState<string>();
-      const [uploadedFile, setUploadedFile] = useState<File>();
-      const [recognizedResult, setRecognizedResult] = useState<string>("");
-      const [modifiedResult, setModifiedResult] = useState<string>("");
-      console.log(modifiedResult);
-    };
   };
   return (
     <>
@@ -267,15 +258,6 @@ function PatientList() {
                 <TableCell align="center" sx={{ color: "#9E9FA5" }}>
                   其他註記
                 </TableCell>
-                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
-                  修改基本資料
-                </TableCell>
-                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
-                  新增電生理訊號量表
-                </TableCell>
-                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
-                  新增抽血結果
-                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody sx={{ cursor: "pointer" }}>
@@ -341,28 +323,12 @@ function PatientList() {
                           {patient.info.other}
                         </Typography>
                       </ButtonBase>
-                    </TableCell>
-                    <TableCell align="center">
                       <Box>
                         <IconButton
                           onClick={() => updatePatientDialogOpen(patient.info)}
                         >
                           <EditIcon />
                         </IconButton>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box>
-                        <ElectricBoltIcon>
-                          <EditIcon />
-                        </ElectricBoltIcon>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box>
-                        <WaterDropIcon>
-                          <EditIcon />
-                        </WaterDropIcon>
                       </Box>
                     </TableCell>
                   </TableRow>
