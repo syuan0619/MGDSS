@@ -281,7 +281,7 @@ function PatientList() {
                 <TableCell align="center" sx={{ color: "#9E9FA5" }}>
                   其他註記
                 </TableCell>
-                {role === "nurse" && (
+                {role === "nurse" ? (
                   <>
                     <TableCell align="center" sx={{ color: "#9E9FA5" }}>
                       修改病人基本資料
@@ -293,7 +293,7 @@ function PatientList() {
                       新增抽血資訊
                     </TableCell>
                   </>
-                )}{" "}
+                ) : null}
               </TableRow>
             </TableHead>
             <TableBody sx={{ cursor: "pointer" }}>
@@ -360,7 +360,7 @@ function PatientList() {
                         </Typography>
                       </ButtonBase>
                     </TableCell>
-                    {role === "nurse" && (
+                    {role === "nurse" ? (
                       <>
                         <TableCell align="center">
                           <Box>
@@ -389,7 +389,7 @@ function PatientList() {
                           </Box>
                         </TableCell>
                       </>
-                    )}{" "}
+                    ) : null}
                   </TableRow>
                 ))}
             </TableBody>
