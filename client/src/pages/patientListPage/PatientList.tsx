@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,13 +13,16 @@ import Typography from "@mui/material/Typography";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
-import { Button, IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import { Info } from "../../types/Patient";
 import api from "../../api";
 import * as React from "react";
 import SearchName from "./components/SearchName";
 import PatientStatus from "./components/PatientStatus";
+import EMG from "../../pages/inquiryPage/table/EMG";
+import BloodTest from "../../pages/inquiryPage/table/BloodTest";
+import IconButton from "@mui/material/IconButton";
 import {
   Dialog,
   DialogActions,
@@ -68,6 +71,9 @@ function PatientList() {
   //新增病患dialog
   const [addPatient, setAddPatient] = useState<Info>({} as Info);
   const [addPatientStatus, setAddPatientStatus] = useState(false);
+  const [emgDialogOpen, setEMGDialogOpen] = useState(false);
+  const [BloodTestDialogOpen, setBloodTestDialogOpen] = useState(false);
+
   const addPatientDialogOpen = () => {
     setAddPatientStatus(true);
   };
@@ -111,6 +117,24 @@ function PatientList() {
       nav(`/inquiry/${id}`);
     }
   };
+  //EMG
+  const handleEMGDialogOpen = () => {
+    setEMGDialogOpen(true);
+  };
+
+  const handleEMGDialogClose = () => {
+    setEMGDialogOpen(false);
+  };
+
+  //BloodTest
+  const handleBloodTestDialogOpen = () => {
+    setBloodTestDialogOpen(true);
+  };
+
+  const handleBloodTestDialogClose = () => {
+    setBloodTestDialogOpen(false);
+  };
+
   return (
     <>
       <TableContainer
@@ -254,10 +278,22 @@ function PatientList() {
                 <TableCell align="center" sx={{ color: "#9E9FA5" }}>
                   病歷號
                 </TableCell>
-
                 <TableCell align="center" sx={{ color: "#9E9FA5" }}>
                   其他註記
                 </TableCell>
+                {role === "nurse" && (
+                  <>
+                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                      修改病人基本資料
+                    </TableCell>
+                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                      新增電生理訊號量表
+                    </TableCell>
+                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                      新增抽血資訊
+                    </TableCell>
+                  </>
+                )}{" "}
               </TableRow>
             </TableHead>
             <TableBody sx={{ cursor: "pointer" }}>
@@ -294,7 +330,7 @@ function PatientList() {
                     </TableCell>
                     <TableCell
                       align="center"
-                      // onClick={() => navToInquiryPage(patient._id)}
+                      onClick={() => navToInquiryPage(patient._id)}
                       sx={{
                         display: "flex",
                         alignItems: "center",
@@ -323,14 +359,37 @@ function PatientList() {
                           {patient.info.other}
                         </Typography>
                       </ButtonBase>
-                      <Box>
-                        <IconButton
-                          onClick={() => updatePatientDialogOpen(patient.info)}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                      </Box>
                     </TableCell>
+                    {role === "nurse" && (
+                      <>
+                        <TableCell align="center">
+                          <Box>
+                            <IconButton
+                              onClick={() =>
+                                updatePatientDialogOpen(patient.info)
+                              }
+                            >
+                              <EditIcon />
+                            </IconButton>
+                          </Box>
+                        </TableCell>
+
+                        <TableCell align="center">
+                          <Box>
+                            <ElectricBoltIcon onClick={handleEMGDialogOpen}>
+                              <EditIcon />
+                            </ElectricBoltIcon>
+                          </Box>
+                        </TableCell>
+                        <TableCell align="center">
+                          <Box>
+                            <WaterDropIcon onClick={handleBloodTestDialogOpen}>
+                              <EditIcon />
+                            </WaterDropIcon>
+                          </Box>
+                        </TableCell>
+                      </>
+                    )}{" "}
                   </TableRow>
                 ))}
             </TableBody>
@@ -699,6 +758,57 @@ function PatientList() {
           >
             確認
           </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        className="predictDialog"
+        open={emgDialogOpen}
+        onClose={handleEMGDialogClose}
+      >
+        {" "}
+        <EMG setReplaceComponent={() => {}} />
+        <DialogActions>
+          <IconButton
+            className="deleteIcon-predict"
+            aria-label="close"
+            onClick={handleEMGDialogClose}
+            sx={{
+              position: "absolute",
+              right: "1.3rem",
+              top: "1.3rem",
+              width: "3rem",
+              height: "3.5rem",
+            }}
+          >
+            <CloseIcon sx={{ fontSize: "1.4rem" }} />
+          </IconButton>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        className="predictDialog"
+        open={BloodTestDialogOpen}
+        onClose={handleBloodTestDialogClose}
+        aria-labelledby="新增病患抽血資訊"
+      >
+        <DialogContent>
+          <BloodTest setReplaceComponent={() => {}} />
+        </DialogContent>
+        <DialogActions>
+          <IconButton
+            className="deleteIcon-predict"
+            aria-label="close"
+            onClick={handleBloodTestDialogClose}
+            sx={{
+              position: "absolute",
+              right: "1.3rem",
+              top: "1.3rem",
+              width: "3rem",
+              height: "3.5rem",
+            }}
+          >
+            <CloseIcon sx={{ fontSize: "1.4rem" }} />
+          </IconButton>
         </DialogActions>
       </Dialog>
     </>
