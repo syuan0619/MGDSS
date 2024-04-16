@@ -34,6 +34,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
+import "./PatientList.css";
 
 function PatientList() {
   const navigate = useNavigate();
@@ -299,7 +300,11 @@ function PatientList() {
             <TableBody sx={{ cursor: "pointer" }}>
               {patients &&
                 patients.map((patient, index) => (
-                  <TableRow key={index} hover={true}>
+                  <TableRow
+                    className="patient-table-row"
+                    key={index}
+                    hover={true}
+                  >
                     <TableCell align="center">
                       <PatientStatus />
                     </TableCell>
@@ -329,13 +334,13 @@ function PatientList() {
                       {patient.info["ID#"]}
                     </TableCell>
                     <TableCell
+                      className="table-cell-other"
                       align="center"
                       onClick={() => navToInquiryPage(patient._id)}
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        height: "3rem",
                       }}
                     >
                       <ButtonBase
@@ -343,8 +348,7 @@ function PatientList() {
                         style={{
                           width: "auto",
                           minWidth: "5rem",
-                          paddingInline: "1em",
-                          height: "6vh",
+                          height: "5vh",
                           backgroundColor: "#FFE2E2",
                           textAlign: "center",
                           borderRadius: "0.6rem",
@@ -765,7 +769,6 @@ function PatientList() {
         open={emgDialogOpen}
         onClose={handleEMGDialogClose}
       >
-        {" "}
         <EMG setReplaceComponent={() => {}} />
         <DialogActions>
           <IconButton

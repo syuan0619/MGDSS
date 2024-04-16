@@ -6,6 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Thymus, BloodTest, QOL, QMG, MG, ADL } from "../../../types/Patient";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const Confirm = ({
   title,
@@ -27,7 +28,7 @@ const Confirm = ({
           onChange={handleChange}
           sx={{ width: "10vw" }}
         >
-          <AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{title}</Typography>
           </AccordionSummary>
           <AccordionDetails>

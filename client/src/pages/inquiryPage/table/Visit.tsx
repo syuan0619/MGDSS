@@ -144,8 +144,6 @@ const Visit = ({
                 )}
               </div>
             </div>
-          </div>
-          <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-DBP">
               <label htmlFor="DBP">DBP</label>
               <div style={{ position: "relative" }}>
@@ -181,6 +179,7 @@ const Visit = ({
                 name="note"
               />
             </div>
+            <div className="inquiry-table-Visit-content-row-nonefornote"></div>
           </div>
 
           <div className="inquiry-table-Visit-content-row">
@@ -515,6 +514,7 @@ const Visit = ({
                 <option value="5" label="5"></option>
               </datalist>
             </div>
+            <div className="inquiry-table-Visit-content-row-MGFAclassification"></div>
           </div>
         </div>
         <div className="inquiry-table-Visit-submit">

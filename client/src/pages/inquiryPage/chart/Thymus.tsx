@@ -50,18 +50,6 @@ const ThymusChart = ({
         <div className="thymus-chart-footer">
           <div className="thymus-chart-footer-left">
             <div>
-              <div>Test Date :</div>
-              <div>
-                <input
-                  type="date"
-                  id="testDate"
-                  name="testDate"
-                  value={ThymusDate}
-                  disabled
-                />
-              </div>
-            </div>
-            <div>
               <div>Description : </div>
               <div>
                 <input
@@ -101,8 +89,7 @@ const ThymusSmallChart = ({ historyData }: { historyData: Thymus[] }) => {
 
   return (
     <div className="thymus-chart-smallchart">
-      <div>胸腺掃描結果:</div>
-      <div>{thymusResult}</div>
+      <div>胸腺掃描結果:{thymusResult}</div>
     </div>
   );
 };
