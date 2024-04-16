@@ -1,4 +1,5 @@
 import { LineChart } from "@mui/x-charts/LineChart";
+import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { QOL } from "../../../types/Patient";
 import "./Chart.css";
@@ -34,6 +35,136 @@ const QOLChart = ({
   );
   const QOLChart_overwhelmData = historyData.map((item) => item.overwhelm);
   const QOLChart_freshenUpData = historyData.map((item) => item.freshenUp);
+  const QOLData = [
+    {
+      curve: "linear",
+      data: QOLChart_frustrationData,
+      label: "frustration",
+      color: "#FF204E",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_eyeUsingData,
+      label: "eyeUsing",
+      color: "#F7418F",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_eatingData,
+      label: "eating",
+      color: "#E36414",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_socialData,
+      label: "social",
+      color: "#FFBB64",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_entertainmentData,
+      label: "entertainment",
+      color: "#FAEF5D",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_fullfillFamilyNeedsData,
+      label: "fullfillFamilyNeeds",
+      color: "#00DFA2",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_plansNecessityData,
+      label: "plansNecessity",
+      color: "#0B666A",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_jobStateData,
+      label: "jobState",
+      color: "#2F58CD",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_speakingData,
+      label: "speaking",
+      color: "#80B3FF",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_drivingData,
+      label: "driving",
+      color: "#9400FF",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_depressionData,
+      label: "depression",
+      color: "#E26EE5",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_walkingData,
+      label: "walking",
+      color: "#7C81AD",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_beingInPublicPlacesData,
+      label: "beingInPublicPlaces",
+      color: "#706233",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_overwhelmData,
+      label: "overwhelm",
+      color: "#EAD7BB",
+    },
+    {
+      curve: "linear",
+      data: QOLChart_freshenUpData,
+      label: "freshenUp",
+      color: "#F4EAE0",
+    },
+  ];
+  const [a, setA] =
+    useState<{ curve: string; data: number[]; label: string; color: string }[]>(
+      QOLData
+    );
+  const addToSelected = (item: {
+    curve: string;
+    data: number[];
+    label: string;
+    color: string;
+  }) => {
+    const exist = a.some((tarData) => tarData.label === item.label);
+    const deleteExist = a.filter((x) => x.label !== item.label);
+    if (!exist) {
+      setA([...a, item]);
+    } else if (exist == true) {
+      setA(deleteExist);
+    }
+  };
+
+  const selectData = (label: string) => {
+    const tarData = QOLData.find((item) => item.label === label);
+    if (tarData) {
+      addToSelected(tarData);
+    }
+  };
+  const QOLCheckbox = QOLData.map((item) => (
+    <>
+      <label style={{ color: item.color }}>
+        <input
+          type="checkbox"
+          name={item.label}
+          defaultChecked={true}
+          onChange={() => selectData(item.label)}
+        />
+        {item.label}
+      </label>
+    </>
+  ));
 
   return (
     <div className="chart-bg">
@@ -48,111 +179,29 @@ const QOLChart = ({
           <p>QOL</p>
         </div>
         <div className="chart-footer">
-          <LineChart
-            margin={{ top: 150 }}
-            slotProps={{
-              legend: {
-                itemGap: 20,
-                padding: -5,
-                itemMarkHeight: 5,
-              },
-            }}
-            width={700}
-            height={500}
-            series={[
-              {
-                curve: "linear",
-                data: QOLChart_frustrationData,
-                label: "frustration",
-                color: "#FF204E",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_eyeUsingData,
-                label: "eyeUsing",
-                color: "#F7418F",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_eatingData,
-                label: "eating",
-                color: "#E36414",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_socialData,
-                label: "social",
-                color: "#FFBB64",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_entertainmentData,
-                label: "entertainment",
-                color: "#FAEF5D",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_fullfillFamilyNeedsData,
-                label: "fullfillFamilyNeeds",
-                color: "#00DFA2",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_plansNecessityData,
-                label: "plansNecessity",
-                color: "#0B666A",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_jobStateData,
-                label: "jobState",
-                color: "#2F58CD",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_speakingData,
-                label: "speaking",
-                color: "#80B3FF",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_drivingData,
-                label: "driving",
-                color: "#9400FF",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_depressionData,
-                label: "depression",
-                color: "#E26EE5",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_walkingData,
-                label: "walking",
-                color: "#7C81AD",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_beingInPublicPlacesData,
-                label: "beingInPublicPlaces",
-                color: "#706233",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_overwhelmData,
-                label: "overwhelm",
-                color: "#EAD7BB",
-              },
-              {
-                curve: "linear",
-                data: QOLChart_freshenUpData,
-                label: "freshenUp",
-                color: "#F4EAE0",
-              },
-            ]}
-            xAxis={[{ scaleType: "point", data: QOLChart_xLabels }]}
-          />
+          <div className="chart-footer-chart">
+            <LineChart
+              margin={{ top: 30 }}
+              slotProps={{
+                legend: {
+                  itemGap: 12,
+                  padding: -5,
+                  itemMarkHeight: 5,
+                  hidden: true,
+                },
+              }}
+              width={600}
+              height={500}
+              series={a}
+              xAxis={[{ scaleType: "point", data: QOLChart_xLabels }]}
+            />
+          </div>
+          <div className="chart-footer-checkbox">
+            <div className="chart-footer-checkbox-inner">
+              <div>目前顯示:</div>
+              {QOLCheckbox}
+            </div>
+          </div>
         </div>
       </div>
     </div>

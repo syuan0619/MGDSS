@@ -1,4 +1,3 @@
-import { Remove } from "@mui/icons-material";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
@@ -24,16 +23,6 @@ const ADLChart = ({
     (item) => item.ariseFromChair
   );
   const ADLChart_eyelidData = historyData.map((item) => item.eyelid);
-  const ADLCheckbocLabel = [
-    "talking",
-    "chewing",
-    "swallowing",
-    "breathing",
-    "brushTeethOrCombHair",
-    "ariseFromChair",
-    "eyelid",
-  ];
-
   const data = [
     {
       curve: "linear",
@@ -78,9 +67,10 @@ const ADLChart = ({
       color: "#0B666A",
     },
   ];
-  const [a, setA] = useState<
-    { curve: string; data: number[]; label: string; color: string }[]
-  >([]);
+  const [a, setA] =
+    useState<{ curve: string; data: number[]; label: string; color: string }[]>(
+      data
+    );
   const addToSelected = (item: {
     curve: string;
     data: number[];
@@ -102,10 +92,15 @@ const ADLChart = ({
       addToSelected(tarData);
     }
   };
-  const ADLCheckbox = ADLCheckbocLabel.map((item, index) => (
-    <label key={index}>
-      <input type="checkbox" name={item} onChange={() => selectData(item)} />
-      {item}
+  const ADLCheckbox = data.map((item) => (
+    <label style={{ color: item.color }}>
+      <input
+        type="checkbox"
+        name={item.label}
+        defaultChecked={true}
+        onChange={() => selectData(item.label)}
+      />
+      {item.label}
     </label>
   ));
 
@@ -124,12 +119,13 @@ const ADLChart = ({
         <div className="chart-footer">
           <div className="chart-footer-chart">
             <LineChart
-              margin={{ top: 100 }}
+              margin={{ top: 30 }}
               slotProps={{
                 legend: {
-                  itemGap: 20,
+                  itemGap: 15,
                   padding: -5,
                   itemMarkHeight: 5,
+                  hidden: true,
                 },
               }}
               width={600}
@@ -138,7 +134,11 @@ const ADLChart = ({
               xAxis={[{ scaleType: "point", data: ADLChart_xLabels }]}
             />
           </div>
-          <div className="chart-footer-checkbox">{ADLCheckbox}</div>
+          <div className="chart-footer-checkbox">
+            <div className="chart-footer-checkbox-inner">
+              目前顯示:{ADLCheckbox}
+            </div>
+          </div>
         </div>
       </div>
     </div>

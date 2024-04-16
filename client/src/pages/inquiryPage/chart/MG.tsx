@@ -1,4 +1,5 @@
 import { LineChart } from "@mui/x-charts";
+import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { MG } from "../../../types/Patient";
 import "./Chart.css";
@@ -24,6 +25,108 @@ const MGChart = ({
   );
   const MGChart_hipFlexionData = historyData.map((item) => item.hipFlexion);
 
+  const MGData = [
+    {
+      curve: "linear",
+      data: MGChart_ptosisData,
+      label: "ptosis",
+      color: "#FF204E",
+    },
+    {
+      curve: "linear",
+      data: MGChart_doubleVisionData,
+      label: "doubleVision",
+      color: "#FF7ED4",
+    },
+    {
+      curve: "linear",
+      data: MGChart_eyeClosureData,
+      label: "eyeClosure",
+      color: "#E36414",
+    },
+    {
+      curve: "linear",
+      data: MGChart_talkingData,
+      label: "talking",
+      color: "#FFBB64",
+    },
+    {
+      curve: "linear",
+      data: MGChart_chewingData,
+      label: "chewing",
+      color: "#FAEF5D",
+    },
+    {
+      curve: "linear",
+      data: MGChart_swallowingData,
+      label: "swallowing",
+      color: "#00DFA2",
+    },
+    {
+      curve: "linear",
+      data: MGChart_breathingData,
+      label: "breathing",
+      color: "#0B666A",
+    },
+    {
+      curve: "linear",
+      data: MGChart_neckFlexionData,
+      label: "neckFlexion",
+      color: "#2F58CD",
+    },
+    {
+      curve: "linear",
+      data: MGChart_shoulderAbductionData,
+      label: "shoulderAbduction",
+      color: "#80B3FF",
+    },
+    {
+      curve: "linear",
+      data: MGChart_hipFlexionData,
+      label: "hipFlexion",
+      color: "#9400FF",
+    },
+  ];
+
+  const [a, setA] =
+    useState<{ curve: string; data: number[]; label: string; color: string }[]>(
+      MGData
+    );
+  const addToSelected = (item: {
+    curve: string;
+    data: number[];
+    label: string;
+    color: string;
+  }) => {
+    const exist = a.some((tarData) => tarData.label === item.label);
+    const deleteExist = a.filter((x) => x.label !== item.label);
+    if (!exist) {
+      setA([...a, item]);
+    } else if (exist == true) {
+      setA(deleteExist);
+    }
+  };
+
+  const selectData = (label: string) => {
+    const tarData = MGData.find((item) => item.label === label);
+    if (tarData) {
+      addToSelected(tarData);
+    }
+  };
+  const MGCheckbox = MGData.map((item) => (
+    <>
+      <label style={{ color: item.color }}>
+        <input
+          type="checkbox"
+          name={item.label}
+          defaultChecked={true}
+          onChange={() => selectData(item.label)}
+        />
+        {item.label}
+      </label>
+    </>
+  ));
+
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -37,81 +140,28 @@ const MGChart = ({
           <p>MG</p>
         </div>
         <div className="chart-footer">
-          <LineChart
-            margin={{ top: 100 }}
-            slotProps={{
-              legend: {
-                itemGap: 20,
-                padding: -5,
-                itemMarkHeight: 5,
-              },
-            }}
-            width={700}
-            height={500}
-            series={[
-              {
-                curve: "linear",
-                data: MGChart_ptosisData,
-                label: "ptosis",
-                color: "#FF204E",
-              },
-              {
-                curve: "linear",
-                data: MGChart_doubleVisionData,
-                label: "doubleVision",
-                color: "#FF7ED4",
-              },
-              {
-                curve: "linear",
-                data: MGChart_eyeClosureData,
-                label: "eyeClosure",
-                color: "#E36414",
-              },
-              {
-                curve: "linear",
-                data: MGChart_talkingData,
-                label: "talking",
-                color: "#FFBB64",
-              },
-              {
-                curve: "linear",
-                data: MGChart_chewingData,
-                label: "chewing",
-                color: "#FAEF5D",
-              },
-              {
-                curve: "linear",
-                data: MGChart_swallowingData,
-                label: "swallowing",
-                color: "#00DFA2",
-              },
-              {
-                curve: "linear",
-                data: MGChart_breathingData,
-                label: "breathing",
-                color: "#0B666A",
-              },
-              {
-                curve: "linear",
-                data: MGChart_neckFlexionData,
-                label: "neckFlexion",
-                color: "#2F58CD",
-              },
-              {
-                curve: "linear",
-                data: MGChart_shoulderAbductionData,
-                label: "shoulderAbduction",
-                color: "#80B3FF",
-              },
-              {
-                curve: "linear",
-                data: MGChart_hipFlexionData,
-                label: "hipFlexion",
-                color: "#9400FF",
-              },
-            ]}
-            xAxis={[{ scaleType: "point", data: MGChart_xLabels }]}
-          />
+          <div className="chart-footer-chart">
+            <LineChart
+              margin={{ top: 30 }}
+              slotProps={{
+                legend: {
+                  itemGap: 12,
+                  padding: -5,
+                  itemMarkHeight: 5,
+                  hidden: true,
+                },
+              }}
+              width={600}
+              height={500}
+              series={a}
+              xAxis={[{ scaleType: "point", data: MGChart_xLabels }]}
+            />
+          </div>
+          <div className="chart-footer-checkbox">
+            <div className="chart-footer-checkbox-inner">
+              目前顯示:{MGCheckbox}
+            </div>
+          </div>
         </div>
       </div>
     </div>

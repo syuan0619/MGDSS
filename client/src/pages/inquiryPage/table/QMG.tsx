@@ -62,7 +62,7 @@ const QMG = ({
   };
 
   const blockLeft = Object.entries(QMGscore)
-    .slice(0, 6)
+    .slice(0, 7)
     .map(([key, value]) => (
       <>
         <div className="inquiry-table-QMG-content-sliderbox">
@@ -91,7 +91,7 @@ const QMG = ({
     ));
 
   const blockRight = Object.entries(QMGscore)
-    .slice(6, -2)
+    .slice(7, -2)
     .map(([key, value]) => (
       <>
         <div className="inquiry-table-QMG-content-sliderbox">
@@ -144,17 +144,6 @@ const QMG = ({
           </div>
           <div className="inquiry-table-QMG-content">
             <div className="inquiry-table-QMG-content-block-left">
-              <div className="inquiry-table-QMG-content-sliderbox">
-                <label htmlFor="testDate">Test Date:</label>
-                <input
-                  className="inquiry-table-QMG-content-block-textfield"
-                  type="date"
-                  id="testDate"
-                  value={QMGscore.testDate}
-                  onChange={(e) => handleChange(e, 0)}
-                  name="testDate"
-                />
-              </div>
               {blockLeft}
             </div>
             <div className="inquiry-table-QMG-content-block-right">

@@ -8,30 +8,66 @@ import { useState } from "react";
 const patientEMG = [
   {
     testDate: "2024-04-13",
-    imgPath: "string",
-    RNS: [
-      ["Right Abd dig min(man)", -2.6, -1.03, -5.4, -5.1, -5.0],
-      ["Right Trapezius", -12.1, -10.9],
-    ],
+    image: "string",
+    nasalis: {
+      preActivation: [],
+      postActivation: [],
+    },
+    abd: {
+      preActivation: [-2.6],
+      postActivation: [-1.03, -5.4, -5.1, -5.0],
+    },
+    trapezius: {
+      preActivation: [-12.1],
+      postActivation: [-10.9, -11.01, -11.3, -10.5],
+    },
+  },
+  {
+    testDate: "2024-04-22",
+    image: "string",
+    nasalis: {
+      preActivation: [3.2],
+      postActivation: [2.3, 2.1, 1.95, 2.0],
+    },
+    abd: {
+      preActivation: [],
+      postActivation: [],
+    },
+    trapezius: {
+      preActivation: [-14.1],
+      postActivation: [-12.6, -12.3, -11.8, -13.1],
+    },
   },
 
   {
     testDate: "2024-05-02",
-    imgPath: "string",
-    RNS: [
-      ["Right Abd dig min(man)", 3.2, 2.3, 2.1, 1.95, 2.0],
-      ["Right Trapezius", -14.1, -12.6],
-    ],
+    image: "string",
+    nasalis: {
+      preActivation: [-9.4],
+      postActivation: [-5.4, -10.7, -9.5, -9.3],
+    },
+    abd: {
+      preActivation: [-4.6],
+      postActivation: [3.3, -2.4, -6.0, -11.9],
+    },
+    trapezius: {
+      preActivation: [],
+      postActivation: [],
+    },
   },
 ];
 //pre and post data
 const postXLabel = [1, 2, 3, 4].map((x) => x);
 const EMGxLabels = patientEMG.map((item) => item.testDate);
-const firstPreData = patientEMG.map((item) => item.RNS[0][1] as number);
-const firstName = patientEMG.map((item) => item.RNS[0][0] as string)[0];
-const secPreData = patientEMG.map((item) => item.RNS[1][1] as number);
-const secName = patientEMG.map((item) => item.RNS[1][0] as string)[0];
-
+const nasalisPreData = patientEMG.map(
+  (item) => item.nasalis.preActivation[0] as unknown as null
+);
+const abdPreData = patientEMG.map(
+  (item) => item.abd.preActivation[0] as unknown as null
+);
+const trapeziusPreData = patientEMG.map(
+  (item) => item.trapezius.preActivation[0] as unknown as null
+);
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -65,7 +101,7 @@ const EMGChart = ({
 
   //tab
   const [value, setValue] = React.useState(0);
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -81,18 +117,28 @@ const EMGChart = ({
   };
 
   //select date
-  const tarDate = selectedOption;
-  const tarData = patientEMG.filter((item) => item.testDate === tarDate);
-  const firstPostData =
-    tarData[0]?.["RNS"]?.[0]
-      ?.slice(2)
-      ?.map((item) => item as unknown as number) ?? [];
+  const tarData = patientEMG.filter((item) => item.testDate === selectedOption);
+  const tarNasalisData =
+    tarData[0]?.nasalis?.postActivation?.map(
+      (item) => item as unknown as null
+    ) ?? [];
+  const tarAbdData =
+    tarData[0]?.abd?.postActivation?.map((item) => item as unknown as null) ??
+    [];
+  const tarTrapeziusData =
+    tarData[0]?.trapezius?.postActivation?.map(
+      (item) => item as unknown as null
+    ) ?? [];
 
-  const secPostData =
-    tarData[0]?.["RNS"]?.[1]
-      ?.slice(2)
-      ?.map((item) => item as unknown as number) ?? [];
-
+  console.log(
+    "nasalis:",
+    nasalisPreData,
+    "abd",
+    abdPreData,
+    "trapezius",
+    trapeziusPreData,
+    tarNasalisData
+  );
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -112,11 +158,7 @@ const EMGChart = ({
               margin: "3vh",
             }}
           >
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-            >
+            <Tabs value={value} onChange={handleChange}>
               <Tab label="Pre Activation" {...a11yProps(0)} />
               <Tab label="Post Activation" {...a11yProps(1)} />
             </Tabs>
@@ -136,13 +178,21 @@ const EMGChart = ({
               series={[
                 {
                   curve: "linear",
-                  data: firstPreData,
-                  label: firstName,
+                  data: nasalisPreData,
+                  label: "Nasalis",
+                  connectNulls: true,
                 },
                 {
                   curve: "linear",
-                  data: secPreData,
-                  label: secName,
+                  data: abdPreData,
+                  label: "Abd",
+                  connectNulls: true,
+                },
+                {
+                  curve: "linear",
+                  data: trapeziusPreData,
+                  label: "Trapezius",
+                  connectNulls: true,
                 },
               ]}
               xAxis={[{ scaleType: "point", data: EMGxLabels }]}
@@ -159,7 +209,7 @@ const EMGChart = ({
               }}
             >
               <select
-                value={tarDate}
+                value={selectedOption}
                 onChange={ChangeDate}
                 style={{ width: "100%", height: "100%" }}
               >
@@ -181,15 +231,18 @@ const EMGChart = ({
               series={[
                 {
                   curve: "linear",
-                  data: firstPostData,
-                  label: firstName,
-                  color: "#008dda",
+                  data: tarNasalisData,
+                  label: "Nasalis",
                 },
                 {
                   curve: "linear",
-                  data: secPostData,
-                  label: secName,
-                  color: "#008dda",
+                  data: tarAbdData,
+                  label: "Abd",
+                },
+                {
+                  curve: "linear",
+                  data: tarTrapeziusData,
+                  label: "Trapezius",
                 },
               ]}
               xAxis={[{ scaleType: "point", data: postXLabel }]}
@@ -216,8 +269,8 @@ const EMGSmallChart = ({ historyData }: { historyData: EMG[] }) => {
         series={[
           {
             curve: "linear",
-            data: firstPreData,
-            label: firstName,
+            data: nasalisPreData,
+            label: "Nasalis",
             color: "#008dda",
           },
         ]}

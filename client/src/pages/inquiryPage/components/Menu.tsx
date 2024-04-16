@@ -30,6 +30,10 @@ const Menu = ({ patient_id }: { patient_id: string | undefined }) => {
         </Link>
         <div className="inquiry-menu-numbox">001</div>
       </div>
+      <div className="inquiry-menu-right-testdate">
+        <label htmlFor="testDate">Test Date:</label>
+        <input type="date" id="testDate" name="testDate" />
+      </div>
       <div className="inquiry-menu-right">
         <button className="inquiry-menu-button">新增量表</button>
         <button className="inquiry-menu-button">新增電生理訊號量表</button>

@@ -2,6 +2,7 @@ import { LineChart } from "@mui/x-charts";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import "./Chart.css";
 import { Visit } from "../../../types/Patient";
+import { useState } from "react";
 
 const VisitChart = ({
   setReplaceComponent,
@@ -29,6 +30,82 @@ const VisitChart = ({
     (item) => item.selfAssessment
   );
   const VisitChart_xLabels = historyData.map((item) => item.testDate);
+  const VisitData = [
+    {
+      curve: "linear",
+      data: VisitChart_pyridostigmineData,
+      label: "pyridostigmine",
+      color: "#FF204E",
+    },
+    {
+      curve: "linear",
+      data: VisitChart_compesoloneData,
+      label: "compesolone",
+      color: "#E36414",
+    },
+    {
+      curve: "linear",
+      data: VisitChart_cellceptData,
+      label: "cellcept",
+      color: "#0B666A",
+    },
+    {
+      curve: "linear",
+      data: VisitChart_imuranData,
+      label: "imuran",
+      color: "#2F58CD",
+    },
+    {
+      curve: "linear",
+      data: VisitChart_prografData,
+      label: "prograf",
+      color: "#9400FF",
+    },
+    {
+      curve: "linear",
+      data: VisitChart_selfAssessmentDaya,
+      label: "selfAssessment",
+      color: "#7C81AD",
+    },
+  ];
+  const [a, setA] =
+    useState<{ curve: string; data: number[]; label: string; color: string }[]>(
+      VisitData
+    );
+  const addToSelected = (item: {
+    curve: string;
+    data: number[];
+    label: string;
+    color: string;
+  }) => {
+    const exist = a.some((tarData) => tarData.label === item.label);
+    const deleteExist = a.filter((x) => x.label !== item.label);
+    if (!exist) {
+      setA([...a, item]);
+    } else if (exist == true) {
+      setA(deleteExist);
+    }
+  };
+
+  const selectData = (label: string) => {
+    const tarData = VisitData.find((item) => item.label === label);
+    if (tarData) {
+      addToSelected(tarData);
+    }
+  };
+  const VisitCheckbox = VisitData.map((item) => (
+    <>
+      <label style={{ color: item.color }}>
+        <input
+          type="checkbox"
+          name={item.label}
+          defaultChecked={true}
+          onChange={() => selectData(item.label)}
+        />
+        {item.label}
+      </label>
+    </>
+  ));
 
   return (
     <div className="chart-bg">
@@ -43,57 +120,28 @@ const VisitChart = ({
           <p>Visit</p>
         </div>
         <div className="chart-footer">
-          <LineChart
-            margin={{ top: 100 }}
-            slotProps={{
-              legend: {
-                itemGap: 20,
-                padding: -5,
-                itemMarkHeight: 5,
-              },
-            }}
-            width={700}
-            height={500}
-            series={[
-              {
-                curve: "linear",
-                data: VisitChart_pyridostigmineData,
-                label: "pyridostigmine",
-                color: "#FF204E",
-              },
-              {
-                curve: "linear",
-                data: VisitChart_compesoloneData,
-                label: "compesolone",
-                color: "#E36414",
-              },
-              {
-                curve: "linear",
-                data: VisitChart_cellceptData,
-                label: "cellcept",
-                color: "#0B666A",
-              },
-              {
-                curve: "linear",
-                data: VisitChart_imuranData,
-                label: "imuran",
-                color: "#2F58CD",
-              },
-              {
-                curve: "linear",
-                data: VisitChart_prografData,
-                label: "prograf",
-                color: "#9400FF",
-              },
-              {
-                curve: "linear",
-                data: VisitChart_selfAssessmentDaya,
-                label: "selfAssessment",
-                color: "#7C81AD",
-              },
-            ]}
-            xAxis={[{ scaleType: "point", data: VisitChart_xLabels }]}
-          />
+          <div className="chart-footer-chart">
+            <LineChart
+              margin={{ top: 30 }}
+              slotProps={{
+                legend: {
+                  itemGap: 12,
+                  padding: -5,
+                  itemMarkHeight: 5,
+                  hidden: true,
+                },
+              }}
+              width={600}
+              height={500}
+              series={a}
+              xAxis={[{ scaleType: "point", data: VisitChart_xLabels }]}
+            />
+          </div>
+          <div className="chart-footer-checkbox">
+            <div className="chart-footer-checkbox-inner">
+              目前顯示:{VisitCheckbox}
+            </div>
+          </div>
         </div>
       </div>
     </div>

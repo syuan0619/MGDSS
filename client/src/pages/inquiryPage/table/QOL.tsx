@@ -64,7 +64,7 @@ const QOL = ({
   };
 
   const blockLeft = Object.entries(QOLscore)
-    .slice(0, 7)
+    .slice(0, 8)
     .map(([key, value]) => (
       <>
         <div className="inquiry-table-QOL-content-sliderbox">
@@ -92,7 +92,7 @@ const QOL = ({
     ));
 
   const blockRight = Object.entries(QOLscore)
-    .slice(7, -2)
+    .slice(8, -2)
     .map(([key, value]) => (
       <>
         <div className="inquiry-table-QOL-content-sliderbox">
@@ -143,18 +143,6 @@ const QOL = ({
           </div>
           <div className="inquiry-table-QOL-content">
             <div className="inquiry-table-QOL-content-block-left">
-              <div className="inquiry-table-QOL-content-sliderbox">
-                <label htmlFor="testDate">Test Date:</label>
-                <input
-                  className="inquiry-table-QOL-content-block-textfield"
-                  type="date"
-                  value={QOLscore.testDate}
-                  onChange={(e) => {
-                    handleChange(e, 0);
-                  }}
-                  name="testDate"
-                />
-              </div>
               {blockLeft}
             </div>
             <div className="inquiry-table-QOL-content-block-right">

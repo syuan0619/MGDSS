@@ -99,16 +99,6 @@ const BloodTest = ({
         </div>
         <div className="inquiry-table-BloodTest-content">
           <div className="inquiry-table-BloodTest-content-row">
-            <div className="inquiry-table-BloodTest-content-row-testdate">
-              <label htmlFor="testDate">Test Date:</label>
-              <input
-                type="date"
-                id="testDate"
-                name="testDate"
-                value={BloodTestScore.testDate}
-                onChange={handleChange}
-              />
-            </div>
             <div className="inquiry-table-BloodTest-content-row-ACHR">
               <div className="inquiry-table-BloodTest-content-row-ACHR-head">
                 <label htmlFor="ACHR">ACHR</label>
@@ -131,33 +121,6 @@ const BloodTest = ({
                 </Stack>
                 {!BloodTestScore.ACHR && (
                   <div className="BloodTest-placeholder">(nmol/mL)</div>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="inquiry-table-BloodTest-content-row">
-            <div className="inquiry-table-BloodTest-content-row-TSH">
-              <div className="inquiry-table-BloodTest-content-row-TSH-head">
-                <label htmlFor="TSH">TSH</label>
-              </div>
-              <div style={{ position: "relative" }}>
-                <input
-                  defaultValue="0"
-                  onChange={handleChange}
-                  type="text"
-                  id="TSH"
-                  name="TSH"
-                />
-                {errors.TSH && (
-                  <div className="BloodTest-alert-input">{errors.TSH}</div>
-                )}
-                <Stack>
-                  {warnings.TSH && (
-                    <Alert severity="info">{warnings.TSH}</Alert>
-                  )}
-                </Stack>
-                {!BloodTestScore.TSH && (
-                  <div className="BloodTest-placeholder"> (uIU/mL)</div>
                 )}
               </div>
             </div>
@@ -190,26 +153,29 @@ const BloodTest = ({
             </div>
           </div>
           <div className="inquiry-table-BloodTest-content-row">
-            <div className="inquiry-table-BloodTest-content-row-ANA">
-              <div className="inquiry-table-BloodTest-content-row-ANA-head">
-                <label htmlFor="ANA">ANA</label>
+            <div className="inquiry-table-BloodTest-content-row-TSH">
+              <div className="inquiry-table-BloodTest-content-row-TSH-head">
+                <label htmlFor="TSH">TSH</label>
               </div>
               <div style={{ position: "relative" }}>
                 <input
                   defaultValue="0"
                   onChange={handleChange}
                   type="text"
-                  id="ANA"
-                  name="ANA"
+                  id="TSH"
+                  name="TSH"
                 />
-                {errors.ANA && (
-                  <div className="BloodTest-alert-input">{errors.ANA}</div>
+                {errors.TSH && (
+                  <div className="BloodTest-alert-input">{errors.TSH}</div>
                 )}
                 <Stack>
-                  {warnings.ANA && (
-                    <Alert severity="info">{warnings.ANA}</Alert>
+                  {warnings.TSH && (
+                    <Alert severity="info">{warnings.TSH}</Alert>
                   )}
                 </Stack>
+                {!BloodTestScore.TSH && (
+                  <div className="BloodTest-placeholder"> (uIU/mL)</div>
+                )}
               </div>
             </div>
             <div className="inquiry-table-BloodTest-content-row-uricAcid">
@@ -235,6 +201,40 @@ const BloodTest = ({
                 {!BloodTestScore.uricAcid && (
                   <div className="BloodTest-placeholder"> (mg/dL)</div>
                 )}
+              </div>
+            </div>
+          </div>
+          <div className="inquiry-table-BloodTest-content-row">
+            <div
+              style={{
+                width: "100%",
+                display: " flex",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                marginLeft: "10%",
+              }}
+            >
+              <div className="inquiry-table-BloodTest-content-row-ANA">
+                <div className="inquiry-table-BloodTest-content-row-ANA-head">
+                  <label htmlFor="ANA">ANA</label>
+                </div>
+                <div style={{ position: "relative" }}>
+                  <input
+                    defaultValue="0"
+                    onChange={handleChange}
+                    type="text"
+                    id="ANA"
+                    name="ANA"
+                  />
+                  {errors.ANA && (
+                    <div className="BloodTest-alert-input">{errors.ANA}</div>
+                  )}
+                  <Stack>
+                    {warnings.ANA && (
+                      <Alert severity="info">{warnings.ANA}</Alert>
+                    )}
+                  </Stack>
+                </div>
               </div>
             </div>
           </div>

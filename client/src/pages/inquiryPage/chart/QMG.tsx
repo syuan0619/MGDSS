@@ -1,4 +1,5 @@
 import { LineChart } from "@mui/x-charts/LineChart";
+import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { QMG } from "../../../types/Patient";
 import "./Chart.css";
@@ -45,6 +46,126 @@ const QMGChart = ({
     (item) => item.leftLegHeight
   );
 
+  const QMGData = [
+    {
+      curve: "linear",
+      data: QMGChart_doubleVisionData,
+      label: "doubleVision",
+      color: "#FF204E",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_ptosisData,
+      label: "ptosis",
+      color: "#F7418F",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_facialMuscleData,
+      label: "facialMuscle",
+      color: "#E36414",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_swallowingData,
+      label: "swallowing",
+      color: "#FFBB64",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_speakFluencyData,
+      label: "speakFluency",
+      color: "#FAEF5D",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_rightArmHeightData,
+      label: "rightArmHeight",
+      color: "#00DFA2",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_leftArmHeightData,
+      label: "leftArmHeight",
+      color: "#0B666A",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_vitalCapacityData,
+      label: "vitalCapacity",
+      color: "#2F58CD",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_rightHandGridData,
+      label: "rightHandGrid",
+      color: "#80B3FF",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_leftHandGridData,
+      label: "leftHandGrid",
+      color: "#9400FF",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_headLiftData,
+      label: "headLift",
+      color: "#E26EE5",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_rightLegHeightData,
+      label: "rightLegHeight",
+      color: "#7C81AD",
+    },
+    {
+      curve: "linear",
+      data: QMGChart_leftLegHeightData,
+      label: "leftLegHeight",
+      color: "#706233",
+    },
+  ];
+
+  const [a, setA] =
+    useState<{ curve: string; data: number[]; label: string; color: string }[]>(
+      QMGData
+    );
+  const addToSelected = (item: {
+    curve: string;
+    data: number[];
+    label: string;
+    color: string;
+  }) => {
+    const exist = a.some((tarData) => tarData.label === item.label);
+    const deleteExist = a.filter((x) => x.label !== item.label);
+    if (!exist) {
+      setA([...a, item]);
+    } else if (exist == true) {
+      setA(deleteExist);
+    }
+  };
+
+  const selectData = (label: string) => {
+    const tarData = QMGData.find((item) => item.label === label);
+    if (tarData) {
+      addToSelected(tarData);
+    }
+  };
+  const QMGCheckbox = QMGData.map((item) => (
+    <>
+      <label style={{ color: item.color }}>
+        <input
+          type="checkbox"
+          name={item.label}
+          defaultChecked={true}
+          onChange={() => selectData(item.label)}
+        />
+        {item.label}
+      </label>
+    </>
+  ));
+
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -58,99 +179,28 @@ const QMGChart = ({
           <p>QMG</p>
         </div>
         <div className="chart-footer">
-          <LineChart
-            margin={{ top: 150 }}
-            slotProps={{
-              legend: {
-                itemGap: 20,
-                padding: -5,
-                itemMarkHeight: 5,
-              },
-            }}
-            width={700}
-            height={500}
-            series={[
-              {
-                curve: "linear",
-                data: QMGChart_doubleVisionData,
-                label: "doubleVision",
-                color: "#FF204E",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_ptosisData,
-                label: "ptosis",
-                color: "#F7418F",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_facialMuscleData,
-                label: "facialMuscle",
-                color: "#E36414",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_swallowingData,
-                label: "swallowing",
-                color: "#FFBB64",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_speakFluencyData,
-                label: "speakFluency",
-                color: "#FAEF5D",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_rightArmHeightData,
-                label: "rightArmHeight",
-                color: "#00DFA2",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_leftArmHeightData,
-                label: "leftArmHeight",
-                color: "#0B666A",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_vitalCapacityData,
-                label: "vitalCapacity",
-                color: "#2F58CD",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_rightHandGridData,
-                label: "rightHandGrid",
-                color: "#80B3FF",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_leftHandGridData,
-                label: "leftHandGrid",
-                color: "#9400FF",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_headLiftData,
-                label: "headLift",
-                color: "#E26EE5",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_rightLegHeightData,
-                label: "rightLegHeight",
-                color: "#7C81AD",
-              },
-              {
-                curve: "linear",
-                data: QMGChart_leftLegHeightData,
-                label: "leftLegHeight",
-                color: "#706233",
-              },
-            ]}
-            xAxis={[{ scaleType: "point", data: QMGChart_xLabels }]}
-          />
+          <div className="chart-footer-chart">
+            <LineChart
+              margin={{ top: 30 }}
+              slotProps={{
+                legend: {
+                  itemGap: 15,
+                  padding: -5,
+                  itemMarkHeight: 5,
+                  hidden: true,
+                },
+              }}
+              width={600}
+              height={500}
+              series={a}
+              xAxis={[{ scaleType: "point", data: QMGChart_xLabels }]}
+            />
+          </div>
+          <div className="chart-footer-checkbox">
+            <div className="chart-footer-checkbox-inner">
+              目前顯示:{QMGCheckbox}
+            </div>
+          </div>
         </div>
       </div>
     </div>

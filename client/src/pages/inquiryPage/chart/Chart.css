@@ -10,6 +10,8 @@
   height: 95%;
   background-color: white;
   border-radius: 20px;
+  border: 10px solid white;
+  box-sizing: border-box;
 }
 .chart-header {
   width: 100%;
@@ -25,8 +27,6 @@
   font-size: 2rem;
   justify-self: center;
   margin-right: 10%;
-  /* position: relative;
-  right: 5%; */
 }
 .chart-footer {
   width: 100%;
@@ -39,12 +39,23 @@
 .chart-footer-chart {
   width: 80%;
 }
+
 .chart-footer-checkbox {
+  height: 85%;
+  overflow: auto;
+  box-sizing: border-box;
+}
+.chart-footer-checkbox-inner {
   display: flex;
   justify-content: center;
   flex-direction: column;
   font-size: 2vh;
   gap: 2vh;
+}
+
+.chart-footer-checkbox input[type="checkbox"] {
+  width: 2vh;
+  height: 2vh;
 }
 
 .chart-backToRight {
@@ -54,7 +65,4 @@
   color: #c7c8cc;
   justify-self: start;
   margin-left: 1rem;
-  /* position: relative;
-  top: 5%;
-  right: 40%; */
 }

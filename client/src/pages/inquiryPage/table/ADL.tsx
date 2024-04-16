@@ -78,39 +78,6 @@ const ADL = ({
         </div>
         <div className="inquiry-table-ADL-content">
           <div className="inquiry-table-ADL-content-row">
-            <div className="inquiry-table-ADL-content-row-testdate">
-              <label htmlFor="testDate">Test Date:</label>
-              <input
-                type="date"
-                id="testDate"
-                name="testDate"
-                value={ADLscore.testDate}
-                onChange={(e) => handleChange(e, 0)}
-              />
-            </div>
-            <div className="inquiry-table-ADL-content-row-talking">
-              <label htmlFor="talking">talking</label>
-              <input
-                defaultValue="0"
-                onChange={(e) => handleChange(e, ADLscore.talking)}
-                type="range"
-                id="talking"
-                name="talking"
-                min="0"
-                max="3"
-                step="1"
-                list="tickmarks"
-              />
-
-              <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-                <option value="2" label="2"></option>
-                <option value="3" label="3"></option>
-              </datalist>
-            </div>
-          </div>
-          <div className="inquiry-table-ADL-content-row">
             <div className="inquiry-table-ADL-content-row-chewing">
               <label htmlFor="chewing">chewing</label>
               <input
@@ -240,6 +207,39 @@ const ADL = ({
                 <option value="2" label="2"></option>
                 <option value="3" label="3"></option>
               </datalist>
+            </div>
+          </div>
+          <div className="inquiry-table-ADL-content-row">
+            <div
+              style={{
+                width: "100%",
+                display: " flex",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                marginLeft: "15%",
+              }}
+            >
+              <div className="inquiry-table-ADL-content-row-talking">
+                <label htmlFor="talking">talking</label>
+                <input
+                  defaultValue="0"
+                  onChange={(e) => handleChange(e, ADLscore.talking)}
+                  type="range"
+                  id="talking"
+                  name="talking"
+                  min="0"
+                  max="3"
+                  step="1"
+                  list="tickmarks"
+                />
+
+                <datalist id="tickmarks">
+                  <option value="0" label="0"></option>
+                  <option value="1" label="1"></option>
+                  <option value="2" label="2"></option>
+                  <option value="3" label="3"></option>
+                </datalist>
+              </div>
             </div>
           </div>
         </div>

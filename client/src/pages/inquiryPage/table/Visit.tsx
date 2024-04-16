@@ -121,28 +121,6 @@ const Visit = ({
         </div>
         <div className="inquiry-table-Visit-content">
           <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-testDate">
-              <label htmlFor="testDate">Test Date:</label>
-              <input
-                type="date"
-                id="testDate"
-                name="testDate"
-                value={VisitScore.testDate}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="inquiry-table-Visit-content-row-note">
-              <label htmlFor="note">note</label>
-              <input
-                defaultValue=""
-                onChange={handleChange}
-                type="text"
-                id="note"
-                name="note"
-              />
-            </div>
-          </div>
-          <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-SBP">
               <label htmlFor="SBP">SBP</label>
               <div style={{ position: "relative" }}>
@@ -166,6 +144,8 @@ const Visit = ({
                 )}
               </div>
             </div>
+          </div>
+          <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-DBP">
               <label htmlFor="DBP">DBP</label>
               <div style={{ position: "relative" }}>
@@ -190,6 +170,19 @@ const Visit = ({
               </div>
             </div>
           </div>
+          <div className="inquiry-table-Visit-content-row">
+            <div className="inquiry-table-Visit-content-row-note">
+              <label htmlFor="note">note</label>
+              <input
+                defaultValue=""
+                onChange={handleChange}
+                type="text"
+                id="note"
+                name="note"
+              />
+            </div>
+          </div>
+
           <div className="inquiry-table-Visit-content-row">
             <div className="inquiry-table-Visit-content-row-left">
               <label htmlFor="doubleVision">treat</label>
