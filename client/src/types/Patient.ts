@@ -54,8 +54,8 @@ type Visit = {
         dysarthria: number;
         dyspnea: number;
         limpWeakness: number;
-        MGFAclassification: string;
     };
+    MGFAclassification: string; // I, II, IIA, IIB, III, IIIA, IIIB, IV, IVA, IVB, V
 };
 
 // 胸腺掃描

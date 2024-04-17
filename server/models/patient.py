@@ -40,7 +40,6 @@ class Examination(BaseModel):
     dysarthria: int
     dyspnea: int
     limpWeakness: int
-    MGFAclassification: str
 
 
 # 看診紀錄
@@ -53,6 +52,7 @@ class Visit(BaseModel):
     note: str
     prescription: Prescription
     examination: Examination
+    MGFAclassification: str
 
 
 # 胸腺掃描
