@@ -81,28 +81,19 @@ input[type="range"]::-webkit-slider-thumb {
   height: 5vh;
 }
 .inquiry-table-Visit-content-row-testDate,
-.inquiry-table-Visit-content-row-note,
 .inquiry-table-Visit-content-row-left,
 .inquiry-table-Visit-content-row-right,
 .inquiry-table-Visit-content-row-pyridostigmine,
 .inquiry-table-Visit-content-row-compesolone,
 .inquiry-table-Visit-content-row-cellcept,
 .inquiry-table-Visit-content-row-imuran,
-.inquiry-table-Visit-content-row-prograf,
-.inquiry-table-Visit-content-row-MGFAclassification {
+.inquiry-table-Visit-content-row-prograf {
   display: flex;
   flex-direction: column;
 }
 
-.inquiry-table-Visit-content-row-SBP {
-  display: flex;
-  flex-direction: column;
-  width: 20vw;
-  height: 12vh;
-  margin-left: 4rem;
-}
-
-.inquiry-table-Visit-content-row-DBP {
+.inquiry-table-Visit-content-row-SBP,
+.inquiry-table-Visit-content-row-note {
   display: flex;
   flex-direction: column;
   width: 20vw;
@@ -110,10 +101,20 @@ input[type="range"]::-webkit-slider-thumb {
   margin-left: 4rem;
 }
 
-.inquiry-table-Visit-content-row-MGFAclassification {
-  margin-right: 20rem;
+.inquiry-table-Visit-content-row-DBP,
+.inquiry-table-Visit-content-row-nonefornote {
+  display: flex;
+  flex-direction: column;
+  width: 20vw;
+  height: 12vh;
 }
 
+.inquiry-table-Visit-content-row-MGFAclassification {
+  display: flex;
+  flex-direction: column;
+  width: 16vw;
+  height: 12vh;
+}
 .subTitle {
   width: 58vw;
   height: 10vh;

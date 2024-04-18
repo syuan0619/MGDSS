@@ -30,14 +30,14 @@
 }
 .chart-footer {
   width: 100%;
-  height: 85%;
+  height: 75%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
 }
 .chart-footer-chart {
-  width: 80%;
+  width: 70%;
 }
 
 .chart-footer-checkbox {
@@ -65,4 +65,8 @@
   color: #c7c8cc;
   justify-self: start;
   margin-left: 1rem;
+}
+.chart-backToRight:hover {
+  cursor: pointer;
+  color: #b4b4b8;
 }
