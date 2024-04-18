@@ -283,15 +283,18 @@ function PatientList() {
                 </TableCell>
                 {role === "nurse" ? (
                   <>
-                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
-                      修改病人基本資料
-                    </TableCell>
-                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
-                      新增電生理訊號量表
-                    </TableCell>
-                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
-                      新增抽血資訊
-                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ color: "#9E9FA5" }}
+                    ></TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ color: "#9E9FA5" }}
+                    ></TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ color: "#9E9FA5" }}
+                    ></TableCell>
                   </>
                 ) : null}
               </TableRow>
@@ -761,9 +764,31 @@ function PatientList() {
         </DialogActions>
       </Dialog>
       <Dialog
-        className="predictDialog"
         open={emgDialogOpen}
         onClose={handleEMGDialogClose}
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "1rem",
+            maxWidth: "100vw",
+            height: "85vh",
+            paddingTop: "2vh",
+            paddingBottom: "1vh",
+            paddingLeft: "5vh",
+            paddingRight: "5vh",
+            marginTop: "14vh",
+          },
+          "& .MuiSvgIcon-root": {
+            fill: "white",
+          },
+          " .MuiSvgIcon-root:hover": {
+            backgroundColor: "transparent",
+            fill: " rgba(41, 71, 118, 0.976)",
+          },
+          "& .MuiButtonBase-root": {
+            borderRadius: "0.7rem",
+            backgroundColor: "#40A2D8",
+          },
+        }}
       >
         {" "}
         <EMG setReplaceComponent={() => {}} />
@@ -786,10 +811,32 @@ function PatientList() {
       </Dialog>
 
       <Dialog
-        className="predictDialog"
         open={BloodTestDialogOpen}
         onClose={handleBloodTestDialogClose}
         aria-labelledby="新增病患抽血資訊"
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "1rem",
+            maxWidth: "80vw",
+            maxHeight: "120vh",
+            paddingTop: "2vh",
+            paddingBottom: "1vh",
+            paddingLeft: "5vh",
+            paddingRight: "5vh",
+            marginTop: "14vh",
+          },
+          "& .MuiSvgIcon-root": {
+            fill: "white",
+          },
+          " .MuiSvgIcon-root:hover": {
+            backgroundColor: "transparent",
+            fill: " rgba(41, 71, 118, 0.976)",
+          },
+          "& .MuiButtonBase-root": {
+            borderRadius: "0.7rem",
+            backgroundColor: "#40A2D8",
+          },
+        }}
       >
         <DialogContent>
           <BloodTest setReplaceComponent={() => {}} />
