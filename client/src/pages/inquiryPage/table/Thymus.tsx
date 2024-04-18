@@ -78,7 +78,7 @@ const Thymus = ({
                 name="thymusDescription"
               />
             </div>
-          </div>{" "}
+          </div>
           <div className="inquiry-table-Thymus-content-row-thymusStatus">
             <label htmlFor="thymusStatus">Thymus Status</label>
             <div>
