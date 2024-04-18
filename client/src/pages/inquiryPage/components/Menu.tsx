@@ -3,40 +3,55 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./menu.css";
 import PredictDialog from "./PredictDialog";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
-const Menu = ({ patient_id }: { patient_id: string | undefined }) => {
+const Menu = ({
+  patient_id,
+  selectedDate,
+  setSelectedDate,
+}: {
+  patient_id: string | undefined;
+  selectedDate: string;
+  setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  //handle date
+  const handleSelectedDate = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate(e.target.value);
+  };
+
   //病情預測dialog
   const [predictStatus, setPredictStatus] = useState(false);
-
   const predictDialogOpen = () => {
     setPredictStatus(true);
   };
   const predictDialogHide = () => {
     setPredictStatus(false);
   };
+
   return (
     <div className="inquiry-menu-all">
       <div className="inquiry-menu-left">
-        <Link to="/patient">
-          <Button>
-            <ArrowBackRounded
-              sx={{
-                fontSize: "3rem",
-                color: "#0080FF",
-              }}
-            />
-          </Button>
-        </Link>
+        <div>
+          <Link to="/patient">
+            <Button>
+              <ArrowBackRounded
+                sx={{
+                  fontSize: "3rem",
+                  color: "#0080FF",
+                }}
+              />
+            </Button>
+          </Link>
+        </div>
         <div className="inquiry-menu-numbox">001</div>
       </div>
-      <div className="inquiry-menu-right-testdate">
-        <label htmlFor="testDate">Test Date:</label>
-        <input type="date" id="testDate" name="testDate" />
-      </div>
       <div className="inquiry-menu-right">
-        <button className="inquiry-menu-button">新增量表</button>
-        <button className="inquiry-menu-button">新增電生理訊號量表</button>
+        <input
+          type="date"
+          className="inquiry-menu-input"
+          value={selectedDate}
+          onChange={handleSelectedDate}
+        />
         <button className="inquiry-menu-button" onClick={predictDialogOpen}>
           病情預測
         </button>

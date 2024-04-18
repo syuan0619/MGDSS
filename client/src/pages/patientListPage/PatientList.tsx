@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -59,14 +59,12 @@ function PatientList() {
     data();
   }, []);
 
-  // Timer
-  const [time, setTime] = useState(new Date());
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 60000);
-    return () => clearInterval(timer);
-  }, []);
+  //handle date
+  const newDate = new Date().toISOString().slice(0, 10);
+  const [selectedDate, setSelectedDate] = useState<string>(newDate);
+  const handleSelectedDate = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate(e.target.value);
+  };
 
   //新增病患dialog
   const [addPatient, setAddPatient] = useState<Info>({} as Info);
@@ -110,6 +108,7 @@ function PatientList() {
       navigate(`/`);
     }
   };
+
   //nav to patient's inquiry page.
   const nav = useNavigate();
   const navToInquiryPage = (id: string) => {
@@ -117,6 +116,7 @@ function PatientList() {
       nav(`/inquiry/${id}`);
     }
   };
+
   //EMG
   const handleEMGDialogOpen = () => {
     setEMGDialogOpen(true);
@@ -203,7 +203,13 @@ function PatientList() {
                     marginTop: "1rem",
                   }}
                 >
-                  {`現在時間：${time.toLocaleDateString()} ${time.getHours()}時${time.getMinutes()}分`}
+                  {/* {`現在時間：${time.toLocaleDateString()} ${time.getHours()}時${time.getMinutes()}分`} */}
+                  <input
+                    type="date"
+                    className="inquiry-menu-input"
+                    value={selectedDate}
+                    onChange={handleSelectedDate}
+                  />
                 </Box>
                 {/* <Button
                                     sx={{
@@ -396,6 +402,7 @@ function PatientList() {
           </Table>
         </Box>
       </TableContainer>
+
       <Dialog
         open={addPatientStatus}
         onClose={addPatientDialogHide}
@@ -582,6 +589,7 @@ function PatientList() {
           </Button>
         </DialogActions>
       </Dialog>
+
       <Dialog
         open={updatePatientStatus}
         onClose={updatePatientDialogHide}
@@ -760,6 +768,7 @@ function PatientList() {
           </Button>
         </DialogActions>
       </Dialog>
+
       <Dialog
         className="predictDialog"
         open={emgDialogOpen}
