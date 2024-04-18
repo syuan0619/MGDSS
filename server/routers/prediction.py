@@ -5,11 +5,10 @@ from prediction.predict import patient_to_dataframe, predict_MGCscore
 
 router = APIRouter(prefix="/prediction", tags=["prediction"])
 
-@router.post("/data")
-async def get_prediction_data(patient: models.PatientForPredict):
-	# try:
+@router.post("/predict", description="body: 要預測的病患資料(單次的)")
+async def predict(patient: models.PatientForPredict):
+	try:
 		df = patient_to_dataframe(patient.model_dump())	
-		print(predict_MGCscore(df))
-		# return predict_MGCscore(df)
-	# except Exception as e:
-	# 	return {"message": e}
+		return predict_MGCscore(df)
+	except Exception as e:
+		return {"message": e}
