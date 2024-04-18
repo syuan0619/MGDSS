@@ -144,6 +144,7 @@ const Visit = ({
                 )}
               </div>
             </div>
+
             <div className="inquiry-table-Visit-content-row-DBP">
               <label htmlFor="DBP">DBP</label>
               <div style={{ position: "relative" }}>
@@ -179,7 +180,27 @@ const Visit = ({
                 name="note"
               />
             </div>
-            <div className="inquiry-table-Visit-content-row-nonefornote"></div>
+            <div className="inquiry-table-Visit-content-row-MGFAclassification">
+              <label htmlFor="MGFAclassification">MGFAclassification</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="MGFAclassification"
+                name="MGFAclassification"
+                min="1"
+                max="5"
+                step="1"
+                list="tickmarks-to5"
+              />
+              <datalist id="tickmarks-to5">
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+                <option value="4" label="4"></option>
+                <option value="5" label="5"></option>
+              </datalist>
+            </div>
           </div>
 
           <div className="inquiry-table-Visit-content-row">
@@ -493,27 +514,6 @@ const Visit = ({
             </div>
           </div>
           <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-MGFAclassification">
-              <label htmlFor="MGFAclassification">MGFAclassification</label>
-              <input
-                defaultValue="0"
-                onChange={handleChange}
-                type="range"
-                id="MGFAclassification"
-                name="MGFAclassification"
-                min="1"
-                max="5"
-                step="1"
-                list="tickmarks-to5"
-              />
-              <datalist id="tickmarks-to5">
-                <option value="1" label="1"></option>
-                <option value="2" label="2"></option>
-                <option value="3" label="3"></option>
-                <option value="4" label="4"></option>
-                <option value="5" label="5"></option>
-              </datalist>
-            </div>
             <div className="inquiry-table-Visit-content-row-MGFAclassification"></div>
           </div>
         </div>

@@ -1,3 +1,7 @@
+import { Label } from "@mui/icons-material";
+import { ListItem } from "@mui/material";
+import useEnhancedEffect from "@mui/material/utils/useEnhancedEffect";
+import { keys } from "@mui/system";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
@@ -67,6 +71,7 @@ const ADLChart = ({
       color: "#0B666A",
     },
   ];
+
   const [a, setA] =
     useState<{ curve: string; data: number[]; label: string; color: string }[]>(
       data
@@ -92,8 +97,8 @@ const ADLChart = ({
       addToSelected(tarData);
     }
   };
-  const ADLCheckbox = data.map((item) => (
-    <label style={{ color: item.color }}>
+  const ADLCheckbox = data.map((item, index) => (
+    <label style={{ color: item.color }} key={index}>
       <input
         type="checkbox"
         name={item.label}
@@ -104,6 +109,7 @@ const ADLChart = ({
     </label>
   ));
 
+  console.log(a);
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -136,7 +142,11 @@ const ADLChart = ({
           </div>
           <div className="chart-footer-checkbox">
             <div className="chart-footer-checkbox-inner">
-              目前顯示:{ADLCheckbox}
+              <label>
+                <input type="checkbox" />
+                全選
+              </label>
+              {ADLCheckbox}
             </div>
           </div>
         </div>

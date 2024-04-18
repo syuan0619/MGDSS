@@ -10,7 +10,7 @@ const patientEMG = [
     testDate: "2024-04-13",
     image: "string",
     nasalis: {
-      preActivation: [],
+      preActivation: [null],
       postActivation: [],
     },
     abd: {
