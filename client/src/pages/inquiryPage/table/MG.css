@@ -63,19 +63,16 @@ input[type="range"]::-webkit-slider-thumb {
 .inquiry-table-MG-content-row-talking,
 .inquiry-table-MG-content-row-chewing,
 .inquiry-table-MG-content-row-swallowing,
-.inquiry-table-MG-content-row-breathing,
 .inquiry-table-MG-content-row-neckFlexion,
+.inquiry-table-MG-content-row-breathing,
 .inquiry-table-MG-content-row-shoulderAbduction,
 .inquiry-table-MG-content-row-hipFlexion {
   display: flex;
   flex-direction: column;
 }
-.inquiry-table-MG-content-row-ptosis {
-  margin-right: 0.5rem;
-}
 
 .inquiry-table-MG-content-row-shoulderAbduction {
-  margin-right: -0.5rem;
+  width: 16vw;
 }
 .inquiry-table-MG-content-row-sum {
   font-size: 1rem;
