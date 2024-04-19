@@ -43,14 +43,15 @@
 }
 
 .inquiry-table-Thymus-content-row {
-  width: 50%;
+  width: 45%;
   height: 100%;
   font-size: 1.6rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: flex-end;
+  margin-top: 6rem;
 }
 
 .inquiry-table-Thymus-content-row-head {
@@ -64,7 +65,7 @@
   flex-direction: column;
 }
 .inquiry-table-Thymus-content-row-thymusStatus {
-  width: 50%;
+  width: 45%;
   height: 100%;
   font-size: 1.6rem;
   display: flex;

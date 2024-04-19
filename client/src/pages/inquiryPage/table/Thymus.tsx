@@ -58,16 +58,6 @@ const Thymus = ({
         </div>
         <div className="inquiry-table-Thymus-content">
           <div className="inquiry-table-Thymus-content-row">
-            <div className="inquiry-table-Thymus-content-row-testdate">
-              <label htmlFor="testDate">Test Date:</label>
-              <input
-                type="date"
-                id="testDate"
-                name="testDate"
-                value={Thymusscore.testDate}
-                onChange={handleChange}
-              />
-            </div>{" "}
             <div className="inquiry-table-Thymus-content-row-thymusDescription">
               <label htmlFor="thymusDescription">Description:</label>
               <input
@@ -78,7 +68,7 @@ const Thymus = ({
                 name="thymusDescription"
               />
             </div>
-          </div>{" "}
+          </div>
           <div className="inquiry-table-Thymus-content-row-thymusStatus">
             <label htmlFor="thymusStatus">Thymus Status</label>
             <div>

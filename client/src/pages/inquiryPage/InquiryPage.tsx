@@ -24,6 +24,7 @@ import { BloodTestChart } from "./chart/BloodTest";
 import { EMGChart } from "./chart/EMG";
 
 const InquiryPage = () => {
+  //權限
   const navigate = useNavigate();
   const userData = sessionStorage.getItem("userData");
   useEffect(() => {
@@ -37,6 +38,8 @@ const InquiryPage = () => {
 
   //get patients data
   const [patients, setPatients] = useState<Patient>();
+  const newDate = new Date().toISOString().slice(0, 10);
+  const [selectedDate, setSelectedDate] = useState<string>(newDate);
 
   const data = async () => {
     const response = await api.get(`/inquiry/${routeParams.id}`);
@@ -50,7 +53,11 @@ const InquiryPage = () => {
   return (
     <div className="inquiry-all">
       <div className="inquiry-menu">
-        <Menu patient_id={routeParams.id} />
+        <Menu
+          patient_id={routeParams.id}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
       </div>
       <div className="inquiry-left-right-flex">
         <div className="inquiry-left">
@@ -62,7 +69,12 @@ const InquiryPage = () => {
               switch (replaceComponent) {
                 case "ADLtable":
                   {
-                    return <ADL setReplaceComponent={setReplaceComponent} />;
+                    return (
+                      <ADL
+                        setReplaceComponent={setReplaceComponent}
+                        selectedDate={selectedDate} //*************************
+                      />
+                    );
                   }
                   break;
 

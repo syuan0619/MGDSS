@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -34,6 +34,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
+import "./PatientList.css";
 
 function PatientList() {
   const navigate = useNavigate();
@@ -59,14 +60,12 @@ function PatientList() {
     data();
   }, []);
 
-  // Timer
-  const [time, setTime] = useState(new Date());
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 60000);
-    return () => clearInterval(timer);
-  }, []);
+  //handle date
+  const newDate = new Date().toISOString().slice(0, 10);
+  const [selectedDate, setSelectedDate] = useState<string>(newDate);
+  const handleSelectedDate = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate(e.target.value);
+  };
 
   //新增病患dialog
   const [addPatient, setAddPatient] = useState<Info>({} as Info);
@@ -110,6 +109,7 @@ function PatientList() {
       navigate(`/`);
     }
   };
+
   //nav to patient's inquiry page.
   const nav = useNavigate();
   const navToInquiryPage = (id: string) => {
@@ -117,6 +117,7 @@ function PatientList() {
       nav(`/inquiry/${id}`);
     }
   };
+
   //EMG
   const handleEMGDialogOpen = () => {
     setEMGDialogOpen(true);
@@ -203,7 +204,13 @@ function PatientList() {
                     marginTop: "1rem",
                   }}
                 >
-                  {`現在時間：${time.toLocaleDateString()} ${time.getHours()}時${time.getMinutes()}分`}
+                  {/* {`現在時間：${time.toLocaleDateString()} ${time.getHours()}時${time.getMinutes()}分`} */}
+                  <input
+                    type="date"
+                    className="inquiry-menu-input"
+                    value={selectedDate}
+                    onChange={handleSelectedDate}
+                  />
                 </Box>
                 {/* <Button
                                     sx={{
@@ -302,7 +309,11 @@ function PatientList() {
             <TableBody sx={{ cursor: "pointer" }}>
               {patients &&
                 patients.map((patient, index) => (
-                  <TableRow key={index} hover={true}>
+                  <TableRow
+                    className="patient-table-row"
+                    key={index}
+                    hover={true}
+                  >
                     <TableCell align="center">
                       <PatientStatus />
                     </TableCell>
@@ -332,13 +343,13 @@ function PatientList() {
                       {patient.info["ID#"]}
                     </TableCell>
                     <TableCell
+                      className="table-cell-other"
                       align="center"
                       onClick={() => navToInquiryPage(patient._id)}
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        height: "3rem",
                       }}
                     >
                       <ButtonBase
@@ -346,8 +357,7 @@ function PatientList() {
                         style={{
                           width: "auto",
                           minWidth: "5rem",
-                          paddingInline: "1em",
-                          height: "6vh",
+                          height: "5vh",
                           backgroundColor: "#FFE2E2",
                           textAlign: "center",
                           borderRadius: "0.6rem",
@@ -399,6 +409,7 @@ function PatientList() {
           </Table>
         </Box>
       </TableContainer>
+
       <Dialog
         open={addPatientStatus}
         onClose={addPatientDialogHide}
@@ -585,6 +596,7 @@ function PatientList() {
           </Button>
         </DialogActions>
       </Dialog>
+
       <Dialog
         open={updatePatientStatus}
         onClose={updatePatientDialogHide}
@@ -763,6 +775,7 @@ function PatientList() {
           </Button>
         </DialogActions>
       </Dialog>
+
       <Dialog
         open={emgDialogOpen}
         onClose={handleEMGDialogClose}
@@ -790,7 +803,6 @@ function PatientList() {
           },
         }}
       >
-        {" "}
         <EMG setReplaceComponent={() => {}} />
         <DialogActions>
           <IconButton

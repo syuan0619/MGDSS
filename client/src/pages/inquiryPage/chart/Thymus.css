@@ -33,6 +33,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: row;
+  margin-top: 5rem;
 }
 
 .thymus-chart-backToRight {
@@ -44,23 +45,28 @@
   margin-left: 1rem;
 }
 
+.thymus-chart-backToRight:hover {
+  cursor: pointer;
+  color: #b4b4b8;
+}
 .thymus-chart-smallchart {
   height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3.5vh;
+  font-size: 1.4rem;
   flex-direction: column;
+  margin-bottom: 5rem;
 }
 .thymus-chart-footer-left {
-  width: 50%;
+  width: 40%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 1.6rem;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 .thymus-chart-footer-left input {
   background-color: #eeeeee;
@@ -74,12 +80,11 @@
   font-size: 1.2rem;
 }
 .thymus-chart-footer-right {
-  width: 50%;
+  width: 40%;
   height: 100%;
   display: flex;
   font-size: 1.6rem;
   justify-content: flex-start;
-  padding-top: 8rem;
   box-sizing: border-box;
   flex-direction: column;
   align-items: center;

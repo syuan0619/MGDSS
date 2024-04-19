@@ -5,6 +5,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import "./Confirm.css";
 import { Visit } from "../../../types/Patient";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 type flatVisit = {
   testDate: string;
@@ -84,7 +85,7 @@ const ConfirmVisit = ({
           onChange={handleChange}
           sx={{ width: "10vw" }}
         >
-          <AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{title}</Typography>
           </AccordionSummary>
           <AccordionDetails>
