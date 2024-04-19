@@ -20,8 +20,8 @@ import api from "../../api";
 import * as React from "react";
 import SearchName from "./components/SearchName";
 import PatientStatus from "./components/PatientStatus";
-import EMG from "../../pages/inquiryPage/table/EMG";
-import BloodTest from "../../pages/inquiryPage/table/BloodTest";
+import EMG from "./EMG";
+import BloodTest from "./BloodTest";
 import IconButton from "@mui/material/IconButton";
 import {
   Dialog,
