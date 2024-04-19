@@ -37,7 +37,6 @@ import { useNavigate } from "react-router-dom";
 import "./PatientList.css";
 
 function PatientList() {
-  const navigate = useNavigate();
   useEffect(() => {
     const userData = sessionStorage.getItem("userData");
     console.log(userData);
@@ -50,6 +49,8 @@ function PatientList() {
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const Name = userData ? userData.name : null;
   const role = userData ? userData.role : null;
+
+  const navigate = useNavigate();
   const [patients, setPatients] = useState<{ _id: string; info: Info }[]>();
   const data = async () => {
     const response = await api.get("/patients");
@@ -146,15 +147,7 @@ function PatientList() {
           boxShadow: "0",
         }}
       >
-        <Box sx={{ width: "90vw", height: "100vh", marginTop: "2rem" }}>
-          <Box
-            sx={{
-              marginLeft: "0.3rem",
-              marginTop: "1rem",
-              fontSize: "0.95rem",
-            }}
-          ></Box>
-
+        <Box sx={{ width: "90vw", height: "100vh", marginTop: "3rem" }}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box
               sx={{
@@ -163,7 +156,9 @@ function PatientList() {
                 marginBottom: "2rem",
               }}
             >
-              <h2>病患清單</h2>
+              <div>
+                <h2>病患清單</h2>
+              </div>
               <Box
                 sx={{
                   display: "flex",
@@ -175,36 +170,9 @@ function PatientList() {
               >
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    marginTop: "1rem",
-                    marginRight: "2rem",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginRight: "0.3rem",
-                    }}
-                  >
-                    <MedicalServicesIcon sx={{ color: "#3081D0" }} />
-                  </Box>
-                  <Box
-                    sx={{
-                      fontSize: "0.95rem",
-                    }}
-                  >
-                    <p>{Name}</p>
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    marginRight: "2.5rem",
                     marginTop: "1rem",
                   }}
                 >
-                  {/* {`現在時間：${time.toLocaleDateString()} ${time.getHours()}時${time.getMinutes()}分`} */}
                   <input
                     type="date"
                     className="inquiry-menu-input"
@@ -212,25 +180,21 @@ function PatientList() {
                     onChange={handleSelectedDate}
                   />
                 </Box>
-                {/* <Button
-                                    sx={{
-                                        width: "6rem",
-                                        marginTop: "1rem",
-                                        marginRight: "1.5rem",
-                                        backgroundColor: "#4E3636",
-                                        color: "white",
-                                        borderRadius: "0.7rem",
-                                        "&:hover": {
-                                            color: "#4E3636",
-                                        },
-                                    }}
-                                >
-                                    建立模型
-                                </Button> */}
+
+                <Box
+                  sx={{
+                    marginTop: "1.7rem",
+                    display: "flex",
+                  }}
+                >
+                  <SearchName />
+                </Box>
+
                 <Button
                   sx={{
                     width: "6rem",
                     marginTop: "1rem",
+                    marginLeft: "2rem",
                     backgroundColor: "#0081C9",
                     color: "white",
                     borderRadius: "0.7rem",
@@ -245,12 +209,18 @@ function PatientList() {
 
                 <Box
                   sx={{
-                    marginTop: "1.7rem",
                     display: "flex",
+                    alignItems: "center",
+                    marginRight: "0.3rem",
+                    fontSize: "1.25rem",
+                    marginTop: "1rem",
+                    marginLeft: "2rem",
                   }}
                 >
-                  <SearchName />
+                  <MedicalServicesIcon sx={{ color: "#3081D0" }} />
+                  <p>{Name}</p>
                 </Box>
+
                 <Box>
                   <ExitToAppIcon
                     fontSize="large"
@@ -266,7 +236,6 @@ function PatientList() {
               </Box>
             </Box>
           </Box>
-
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
