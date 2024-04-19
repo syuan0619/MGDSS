@@ -100,8 +100,7 @@ input[type="range"]::-webkit-slider-thumb {
   flex-direction: column;
 }
 
-.inquiry-table-Visit-content-row-SBP,
-.inquiry-table-Visit-content-row-note {
+.inquiry-table-Visit-content-row-SBP {
   display: flex;
   flex-direction: column;
   width: 20vw;
@@ -109,8 +108,13 @@ input[type="range"]::-webkit-slider-thumb {
   margin-left: 4rem;
 }
 
-.inquiry-table-Visit-content-row-DBP,
-.inquiry-table-Visit-content-row-nonefornote {
+.inquiry-table-Visit-content-row-note {
+  display: flex;
+  flex-direction: column;
+  height: 12vh;
+}
+
+.inquiry-table-Visit-content-row-DBP {
   display: flex;
   flex-direction: column;
   width: 20vw;
@@ -139,7 +143,27 @@ input[type="range"]::-webkit-slider-thumb {
   flex-direction: column;
   width: 16vw;
   height: 12vh;
+  margin-left: 1vw;
 }
+
+.inquiry-table-Visit-content-row-MGFAclassification select {
+  width: 15vw;
+  height: 6vh;
+  font-size: 1.1rem;
+  margin-top: 0.5vh;
+  border-radius: 0.9rem;
+  border: none;
+  background-color: #eeeeee;
+}
+
+.inquiry-table-Visit-content-row-MGFAclassification select:hover {
+  cursor: pointer;
+}
+
+.inquiry-table-Visit-content-row-MGFAclassification select:focus {
+  outline: 0.15rem solid #7c7b7b;
+}
+
 .subTitle {
   width: 58vw;
   height: 10vh;
