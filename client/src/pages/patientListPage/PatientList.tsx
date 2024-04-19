@@ -775,7 +775,7 @@ function PatientList() {
             paddingBottom: "1vh",
             paddingLeft: "5vh",
             paddingRight: "5vh",
-            marginTop: "14vh",
+            marginTop: 5,
           },
           "& .MuiSvgIcon-root": {
             fill: "white",
@@ -818,19 +818,19 @@ function PatientList() {
           "& .MuiPaper-root": {
             borderRadius: "1rem",
             maxWidth: "80vw",
-            maxHeight: "120vh",
+            maxHeight: "100vh",
             paddingTop: "2vh",
             paddingBottom: "1vh",
             paddingLeft: "5vh",
             paddingRight: "5vh",
-            marginTop: "14vh",
+            marginTop: 5,
           },
           "& .MuiSvgIcon-root": {
             fill: "white",
           },
-          " .MuiSvgIcon-root:hover": {
+          ".MuiSvgIcon-root:hover": {
             backgroundColor: "transparent",
-            fill: " rgba(41, 71, 118, 0.976)",
+            fill: "rgba(41, 71, 118, 0.976)",
           },
           "& .MuiButtonBase-root": {
             borderRadius: "0.7rem",
