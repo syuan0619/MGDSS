@@ -34,8 +34,8 @@ const Visit = ({
       dysarthria: 0,
       dyspnea: 0,
       limpWeakness: 0,
-      MGFAclassification: "",
     },
+    MGFAclassification: "",
   });
 
   const maxValues: { [key: string]: number } = {
@@ -69,7 +69,11 @@ const Visit = ({
         setWarnings({ ...warnings, [name]: "" });
       }
 
-      if (name === "testDate" || name === "note") {
+      if (
+        name === "testDate" ||
+        name === "note" ||
+        name === "MGFAclassification"
+      ) {
         console.log(value);
         setVisitscore({ ...VisitScore, [name]: value });
       } else if (name in VisitScore.prescription) {
@@ -179,7 +183,27 @@ const Visit = ({
                 name="note"
               />
             </div>
-            <div className="inquiry-table-Visit-content-row-nonefornote"></div>
+            <div className="inquiry-table-Visit-content-row-MGFAclassification">
+              <label htmlFor="MGFAclassification">MGFAclassification</label>
+              <input
+                defaultValue="0"
+                onChange={handleChange}
+                type="range"
+                id="MGFAclassification"
+                name="MGFAclassification"
+                min="1"
+                max="5"
+                step="1"
+                list="tickmarks-to5"
+              />
+              <datalist id="tickmarks-to5">
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+                <option value="4" label="4"></option>
+                <option value="5" label="5"></option>
+              </datalist>
+            </div>{" "}
           </div>
 
           <div className="inquiry-table-Visit-content-row">
@@ -374,147 +398,189 @@ const Visit = ({
           <div className="subTitle">
             <p>examination</p>
           </div>
-          <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-left">
-              <label htmlFor="ptosis">ptosis</label>
-              <input
-                defaultValue="0"
-                onChange={handleChange}
-                type="range"
-                id="ptosis"
-                name="ptosis"
-                min="0"
-                max="1"
-                step="1"
-                list="tickmarks"
-              />
-              <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-              </datalist>
+
+          <div className="examination">
+            <div className="inquiry-table-Visit-content-row">
+              <label htmlFor="diplopia">ptosis</label>
+              <div className="radio">
+                <div className="radio-yes">
+                  <input
+                    type="radio"
+                    id="ptosis"
+                    name="ptosis"
+                    value="是"
+                    onChange={handleChange}
+                  />
+                  <label className="visit-radio-label" htmlFor="ptosis">
+                    是
+                  </label>
+                </div>
+                <div className="radio-no">
+                  <input
+                    type="radio"
+                    id="ptosis"
+                    name="ptosis"
+                    value="否"
+                    onChange={handleChange}
+                    checked
+                  />
+                  <label className="visit-radio-label" htmlFor="ptosis">
+                    否
+                  </label>
+                </div>
+              </div>
             </div>
-            <div className="inquiry-table-Visit-content-row-right">
+            <div className="inquiry-table-Visit-content-row">
               <label htmlFor="diplopia">diplopia</label>
-              <input
-                defaultValue="0"
-                onChange={handleChange}
-                type="range"
-                id="diplopia"
-                name="diplopia"
-                min="0"
-                max="1"
-                step="1"
-                list="tickmarks"
-              />
-
-              <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-              </datalist>
+              <div className="radio">
+                <div className="radio-yes">
+                  <input
+                    type="radio"
+                    id="diplopia"
+                    name="diplopia"
+                    value="是"
+                    onChange={handleChange}
+                  />
+                  <label className="visit-radio-label" htmlFor="diplopia">
+                    是
+                  </label>
+                </div>
+                <div className="radio-no">
+                  <input
+                    type="radio"
+                    id="diplopia"
+                    name="diplopia"
+                    value="否"
+                    onChange={handleChange}
+                    checked
+                  />
+                  <label className="visit-radio-label" htmlFor="diplopia">
+                    否
+                  </label>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-left">
+
+            <div className="inquiry-table-Visit-content-row">
               <label htmlFor="dysphagia">dysphagia</label>
-              <input
-                defaultValue="0"
-                onChange={handleChange}
-                type="range"
-                id="dysphagia"
-                name="dysphagia"
-                min="0"
-                max="1"
-                step="1"
-                list="tickmarks"
-              />
-
-              <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-              </datalist>
+              <div className="radio">
+                <div className="radio-yes">
+                  <input
+                    type="radio"
+                    id="dysphagia"
+                    name="dysphagia"
+                    value="是"
+                    onChange={handleChange}
+                  />
+                  <label className="visit-radio-label" htmlFor="dysphagia">
+                    是
+                  </label>
+                </div>
+                <div className="radio-no">
+                  <input
+                    type="radio"
+                    id="dysphagia"
+                    name="dysphagia"
+                    value="否"
+                    onChange={handleChange}
+                    checked
+                  />
+                  <label className="visit-radio-label" htmlFor="dysphagia">
+                    否
+                  </label>
+                </div>
+              </div>
             </div>
-            <div className="inquiry-table-Visit-content-row-right">
+            <div className="inquiry-table-Visit-content-row">
               <label htmlFor="dysarthria">dysarthria</label>
-              <input
-                defaultValue="0"
-                onChange={handleChange}
-                type="range"
-                id="dysarthria"
-                name="dysarthria"
-                min="0"
-                max="1"
-                step="1"
-                list="tickmarks"
-              />
-
-              <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-              </datalist>
+              <div className="radio">
+                <div className="radio-yes">
+                  <input
+                    type="radio"
+                    id="dysarthria"
+                    name="dysarthria"
+                    value="是"
+                    onChange={handleChange}
+                  />
+                  <label className="visit-radio-label" htmlFor="dysarthria">
+                    是
+                  </label>
+                </div>
+                <div className="radio-no">
+                  <input
+                    type="radio"
+                    id="dysarthria"
+                    name="dysarthria"
+                    value="否"
+                    onChange={handleChange}
+                    checked
+                  />
+                  <label className="visit-radio-label" htmlFor="dysarthria">
+                    否
+                  </label>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-left">
+            <div className="inquiry-table-Visit-content-row">
               <label htmlFor="dyspnea">dyspnea</label>
-              <input
-                defaultValue="0"
-                onChange={handleChange}
-                type="range"
-                id="dyspnea"
-                name="dyspnea"
-                min="0"
-                max="1"
-                step="1"
-                list="tickmarks"
-              />
-
-              <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-              </datalist>
+              <div className="radio">
+                <div className="radio-yes">
+                  <input
+                    type="radio"
+                    id="dyspnea"
+                    name="dyspnea"
+                    value="是"
+                    onChange={handleChange}
+                  />
+                  <label className="visit-radio-label" htmlFor="dyspnea">
+                    是
+                  </label>
+                </div>
+                <div className="radio-no">
+                  <input
+                    type="radio"
+                    id="dyspnea"
+                    name="dyspnea"
+                    value="否"
+                    onChange={handleChange}
+                    checked
+                  />
+                  <label className="visit-radio-label" htmlFor="dyspnea">
+                    否
+                  </label>
+                </div>
+              </div>
             </div>
-            <div className="inquiry-table-Visit-content-row-right">
+            <div className="inquiry-table-Visit-content-row">
               <label htmlFor="limpWeakness">limpWeakness</label>
-              <input
-                defaultValue="0"
-                onChange={handleChange}
-                type="range"
-                id="limpWeakness"
-                name="limpWeakness"
-                min="0"
-                max="1"
-                step="1"
-                list="tickmarks"
-              />
-              <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-              </datalist>
+              <div className="radio">
+                <div className="radio-yes">
+                  <input
+                    type="radio"
+                    id="limpWeakness"
+                    name="limpWeakness"
+                    value="是"
+                    onChange={handleChange}
+                  />
+                  <label className="visit-radio-label" htmlFor="limpWeakness">
+                    是
+                  </label>
+                </div>
+                <div className="radio-no">
+                  <input
+                    type="radio"
+                    id="limpWeakness"
+                    name="limpWeakness"
+                    value="否"
+                    onChange={handleChange}
+                    checked
+                  />
+                  <label className="visit-radio-label" htmlFor="limpWeakness">
+                    否
+                  </label>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-MGFAclassification">
-              <label htmlFor="MGFAclassification">MGFAclassification</label>
-              <input
-                defaultValue="0"
-                onChange={handleChange}
-                type="range"
-                id="MGFAclassification"
-                name="MGFAclassification"
-                min="1"
-                max="5"
-                step="1"
-                list="tickmarks-to5"
-              />
-              <datalist id="tickmarks-to5">
-                <option value="1" label="1"></option>
-                <option value="2" label="2"></option>
-                <option value="3" label="3"></option>
-                <option value="4" label="4"></option>
-                <option value="5" label="5"></option>
-              </datalist>
-            </div>
-            <div className="inquiry-table-Visit-content-row-MGFAclassification"></div>
           </div>
         </div>
         <div className="inquiry-table-Visit-submit">
