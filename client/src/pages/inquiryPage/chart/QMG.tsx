@@ -75,7 +75,7 @@ const QMGChart = ({
       curve: "linear",
       data: QMGChart_speakFluencyData,
       label: "speakFluency",
-      color: "#FAEF5D",
+      color: "#37B5B6",
     },
     {
       curve: "linear",
@@ -152,9 +152,14 @@ const QMGChart = ({
       addToSelected(tarData);
     }
   };
-  const QMGCheckbox = QMGData.map((item) => (
+
+  //selectAll
+  const handleSelectAll = () => {
+    setA(QMGData);
+  };
+  const QMGCheckbox = QMGData.map((item, index) => (
     <>
-      <label style={{ color: item.color }}>
+      <label style={{ color: item.color }} key={index}>
         <input
           type="checkbox"
           name={item.label}
@@ -165,6 +170,14 @@ const QMGChart = ({
       </label>
     </>
   ));
+
+  const cancelChecked = () => {
+    if (a.length < QMGData.length) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   return (
     <div className="chart-bg">
@@ -198,7 +211,16 @@ const QMGChart = ({
           </div>
           <div className="chart-footer-checkbox">
             <div className="chart-footer-checkbox-inner">
-              目前顯示:{QMGCheckbox}
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  defaultChecked={true}
+                  checked={cancelChecked()}
+                />
+                全選
+              </label>
+              {QMGCheckbox}
             </div>
           </div>
         </div>

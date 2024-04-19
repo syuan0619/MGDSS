@@ -1,7 +1,3 @@
-import { Label } from "@mui/icons-material";
-import { ListItem } from "@mui/material";
-import useEnhancedEffect from "@mui/material/utils/useEnhancedEffect";
-import { keys } from "@mui/system";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
@@ -56,7 +52,7 @@ const ADLChart = ({
       curve: "linear",
       data: ADLChart_brushTeethOrCombHairData,
       label: "brushTeethOrCombHair",
-      color: "#FAEF5D",
+      color: "#59B4C3",
     },
     {
       curve: "linear",
@@ -97,18 +93,42 @@ const ADLChart = ({
       addToSelected(tarData);
     }
   };
+
+  //selectAll
+  const handleSelectAll = () => {
+    setA(data);
+  };
+
+  // const handleChecked = () => {
+  //   const aLabel=a.map((item)=>item.label)
+  //   const dataLabel=data.map((item)=>item.label)
+  //   if ((a.length = data.length)) {
+  //     return true;
+  //   } else(aLabel.filter((x)=>dataLabel.includes(x))) {
+  //     return false;
+  //   }
+  // };
+
+  //ADLCheckbox
   const ADLCheckbox = data.map((item, index) => (
     <label style={{ color: item.color }} key={index}>
       <input
         type="checkbox"
         name={item.label}
-        defaultChecked={true}
         onChange={() => selectData(item.label)}
+        defaultChecked={true}
       />
       {item.label}
     </label>
   ));
 
+  const cancelChecked = () => {
+    if (a.length < data.length) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   console.log(a);
   return (
     <div className="chart-bg">
@@ -143,7 +163,12 @@ const ADLChart = ({
           <div className="chart-footer-checkbox">
             <div className="chart-footer-checkbox-inner">
               <label>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  defaultChecked={true}
+                  checked={cancelChecked()}
+                />
                 全選
               </label>
               {ADLCheckbox}
