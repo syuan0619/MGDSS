@@ -66,18 +66,14 @@
 .inquiry-table-ADL-content-row-breathing {
   display: flex;
   flex-direction: column;
-  margin-left: 1.8rem;
 }
 
 .inquiry-table-ADL-content-row-brushTeethOrCombHair {
   display: flex;
   flex-direction: column;
-  margin-left: 1.8rem;
-  margin-right: -2.5rem;
+  width: 16vw;
 }
-.inquiry-table-ADL-content-row-eyelid {
-  margin-left: 0.5rem;
-}
+
 .inquiry-table-ADL-content-row-ariseFromChair {
   display: flex;
   flex-direction: column;

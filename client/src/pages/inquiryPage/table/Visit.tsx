@@ -185,25 +185,28 @@ const Visit = ({
             </div>
             <div className="inquiry-table-Visit-content-row-MGFAclassification">
               <label htmlFor="MGFAclassification">MGFAclassification</label>
-              <input
-                defaultValue="0"
-                onChange={handleChange}
-                type="range"
-                id="MGFAclassification"
+              <select
                 name="MGFAclassification"
-                min="1"
-                max="5"
-                step="1"
-                list="tickmarks-to5"
-              />
-              <datalist id="tickmarks-to5">
-                <option value="1" label="1"></option>
-                <option value="2" label="2"></option>
-                <option value="3" label="3"></option>
-                <option value="4" label="4"></option>
-                <option value="5" label="5"></option>
-              </datalist>
-            </div>{" "}
+                id="MGFAclassification"
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  handleChange(e)
+                }
+                required
+              >
+                <option value="">Please choose</option>
+                <option value="I">I</option>
+                <option value="II">II</option>
+                <option value="IIA">IIA</option>
+                <option value="IIB">IIB</option>
+                <option value="III">III</option>
+                <option value="IIIA">IIIA</option>
+                <option value="IIIB">IIIB</option>
+                <option value="IV">IV</option>
+                <option value="IVA">IVA</option>
+                <option value="IVB">IVB</option>
+                <option value="V">V</option>
+              </select>
+            </div>
           </div>
 
           <div className="inquiry-table-Visit-content-row">
