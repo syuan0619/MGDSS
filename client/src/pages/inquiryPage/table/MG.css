@@ -45,7 +45,23 @@ input[type="range"]::-webkit-slider-thumb {
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+  box-sizing: border-box;
+  border: 2px solid white;
 }
+
+.inquiry-table-MG-content::-webkit-scrollbar {
+  width: 5px;
+}
+.inquiry-table-MG-content::-webkit-scrollbar-track-piece {
+  background: transparent;
+}
+
+.inquiry-table-MG-content::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgb(240, 240, 240);
+  border: 1px solid rgb(240, 240, 240);
+}
+
 .inquiry-table-MG-content-row {
   width: 58vw;
   height: 20vh;

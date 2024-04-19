@@ -194,11 +194,11 @@ const Visit = ({
                 list="tickmarks-to5"
               />
               <datalist id="tickmarks-to5">
-                <option value="1" label="1"></option>
-                <option value="2" label="2"></option>
-                <option value="3" label="3"></option>
-                <option value="4" label="4"></option>
-                <option value="5" label="5"></option>
+                <option value="1" label="I"></option>
+                <option value="2" label="II"></option>
+                <option value="3" label="III"></option>
+                <option value="4" label="IV"></option>
+                <option value="5" label="V"></option>
               </datalist>
             </div>
           </div>
@@ -241,9 +241,9 @@ const Visit = ({
               />
 
               <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-                <option value="2" label="2"></option>
+                <option value="0" label="Mild"></option>
+                <option value="1" label="Mod."></option>
+                <option value="2" label="Sev."></option>
               </datalist>
             </div>
           </div>
@@ -410,8 +410,8 @@ const Visit = ({
                 list="tickmarks"
               />
               <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
+                <option value="0" label="No"></option>
+                <option value="1" label="Yes"></option>
               </datalist>
             </div>
             <div className="inquiry-table-Visit-content-row-right">
@@ -429,8 +429,8 @@ const Visit = ({
               />
 
               <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
+                <option value="0" label="No"></option>
+                <option value="1" label="Yes"></option>
               </datalist>
             </div>
           </div>
@@ -450,8 +450,8 @@ const Visit = ({
               />
 
               <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
+                <option value="0" label="No"></option>
+                <option value="1" label="Yes"></option>
               </datalist>
             </div>
             <div className="inquiry-table-Visit-content-row-right">
@@ -469,8 +469,8 @@ const Visit = ({
               />
 
               <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
+                <option value="0" label="No"></option>
+                <option value="1" label="Yes"></option>
               </datalist>
             </div>
           </div>
@@ -490,8 +490,8 @@ const Visit = ({
               />
 
               <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
+                <option value="0" label="No"></option>
+                <option value="1" label="Yes"></option>
               </datalist>
             </div>
             <div className="inquiry-table-Visit-content-row-right">
@@ -508,13 +508,10 @@ const Visit = ({
                 list="tickmarks"
               />
               <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
+                <option value="0" label="No"></option>
+                <option value="1" label="Yes"></option>
               </datalist>
             </div>
-          </div>
-          <div className="inquiry-table-Visit-content-row">
-            <div className="inquiry-table-Visit-content-row-MGFAclassification"></div>
           </div>
         </div>
         <div className="inquiry-table-Visit-submit">
