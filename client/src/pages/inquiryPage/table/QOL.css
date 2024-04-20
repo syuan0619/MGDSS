@@ -78,6 +78,19 @@
   overflow-y: auto;
   font-size: 1.6rem;
 }
+
+.inquiry-table-QOL-content::-webkit-scrollbar {
+  width: 5px;
+}
+.inquiry-table-QOL-content::-webkit-scrollbar-track-piece {
+  background: transparent;
+}
+
+.inquiry-table-QOL-content::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgb(240, 240, 240);
+  border: 1px solid rgb(240, 240, 240);
+}
 .inquiry-table-QOL-content input:hover {
   cursor: pointer;
 }

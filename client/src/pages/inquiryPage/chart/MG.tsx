@@ -54,7 +54,7 @@ const MGChart = ({
       curve: "linear",
       data: MGChart_chewingData,
       label: "chewing",
-      color: "#FAEF5D",
+      color: "#37B5B6",
     },
     {
       curve: "linear",
@@ -113,20 +113,44 @@ const MGChart = ({
       addToSelected(tarData);
     }
   };
-  const MGCheckbox = MGData.map((item) => (
+
+  //selectAll
+  const handleSelectAll = () => {
+    setA(MGData);
+  };
+
+  const handleChecked = (label: string) => {
+    if (a.length == MGData.length) {
+      return true;
+    } else if (a.some((item) => item.label !== label) == false) {
+      return false;
+    }
+  };
+  const MGCheckbox = MGData.map((item, index) => (
     <>
-      <label style={{ color: item.color }}>
+      <label style={{ color: item.color }} key={index}>
         <input
           type="checkbox"
           name={item.label}
+          onChange={() => {
+            selectData(item.label);
+            handleChecked(item.label);
+          }}
           defaultChecked={true}
-          onChange={() => selectData(item.label)}
+          checked={handleChecked("item")}
         />
         {item.label}
       </label>
     </>
   ));
 
+  const cancelChecked = () => {
+    if (a.length < MGData.length) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -159,7 +183,16 @@ const MGChart = ({
           </div>
           <div className="chart-footer-checkbox">
             <div className="chart-footer-checkbox-inner">
-              目前顯示:{MGCheckbox}
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  defaultChecked={true}
+                  checked={cancelChecked()}
+                />
+                全選
+              </label>
+              {MGCheckbox}
             </div>
           </div>
         </div>

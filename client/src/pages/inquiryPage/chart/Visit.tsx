@@ -93,19 +93,45 @@ const VisitChart = ({
       addToSelected(tarData);
     }
   };
-  const VisitCheckbox = VisitData.map((item) => (
+
+  //selectAll
+  const handleSelectAll = () => {
+    setA(VisitData);
+  };
+
+  const handleChecked = (label: string) => {
+    if (a.length == VisitData.length) {
+      return true;
+    } else if (a.some((item) => item.label !== label) == false) {
+      return false;
+    }
+  };
+
+  const VisitCheckbox = VisitData.map((item, index) => (
     <>
-      <label style={{ color: item.color }}>
+      <label style={{ color: item.color }} key={index}>
         <input
           type="checkbox"
           name={item.label}
+          onChange={() => {
+            selectData(item.label);
+            handleChecked(item.label);
+          }}
           defaultChecked={true}
-          onChange={() => selectData(item.label)}
+          checked={handleChecked("item")}
         />
         {item.label}
       </label>
     </>
   ));
+
+  const cancelChecked = () => {
+    if (a.length < VisitData.length) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   return (
     <div className="chart-bg">
@@ -139,7 +165,16 @@ const VisitChart = ({
           </div>
           <div className="chart-footer-checkbox">
             <div className="chart-footer-checkbox-inner">
-              目前顯示:{VisitCheckbox}
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  defaultChecked={true}
+                  checked={cancelChecked()}
+                />
+                全選
+              </label>
+              {VisitCheckbox}
             </div>
           </div>
         </div>

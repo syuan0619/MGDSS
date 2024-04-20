@@ -148,6 +148,7 @@ const Visit = ({
                 )}
               </div>
             </div>
+
             <div className="inquiry-table-Visit-content-row-DBP">
               <label htmlFor="DBP">DBP</label>
               <div style={{ position: "relative" }}>
@@ -247,9 +248,9 @@ const Visit = ({
               />
 
               <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="1" label="1"></option>
-                <option value="2" label="2"></option>
+                <option value="0" label="Mild"></option>
+                <option value="1" label="Mod."></option>
+                <option value="2" label="Sev."></option>
               </datalist>
             </div>
           </div>

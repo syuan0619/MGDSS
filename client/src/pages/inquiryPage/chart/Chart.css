@@ -45,6 +45,19 @@
   overflow: auto;
   box-sizing: border-box;
 }
+
+.chart-footer-checkbox::-webkit-scrollbar {
+  width: 5px;
+}
+.chart-footer-checkbox::-webkit-scrollbar-track-piece {
+  background: transparent;
+}
+
+.chart-footer-checkbox::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgb(240, 240, 240);
+  border: 1px solid rgb(240, 240, 240);
+}
 .chart-footer-checkbox-inner {
   display: flex;
   justify-content: center;
