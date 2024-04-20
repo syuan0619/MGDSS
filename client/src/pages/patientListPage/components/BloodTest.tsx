@@ -1,9 +1,9 @@
 import "../../pages/inquiryPage/table/BloodTest.css";
 import { useState } from "react";
-import { BloodTest as typeBloodTest } from "../../types/Patient";
+import { BloodTest as typeBloodTest } from "../../../types/Patient";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import api from "../../api";
+import api from "../../../api";
 import { useParams } from "react-router-dom";
 
 const BloodTest = (
@@ -84,8 +84,8 @@ const BloodTest = (
   return (
     <div className="inquiry-table-BloodTest-all">
       <div className="inquiry-table-BloodTest-bg">
-        <div className="inquiry-table-BloodTest-head">
-          <p>BloodTest</p>
+        <div className="inquiry-table-BloodTest-heads">
+          <p text-align= "center">BloodTest</p>
         </div>
         <div className="inquiry-table-BloodTest-content">
           <div className="inquiry-table-BloodTest-content-row">

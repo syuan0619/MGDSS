@@ -1,19 +1,14 @@
-import api from "../../api";
+import api from "../../../api";
 import { useEffect, useRef, useState } from "react";
 import "../../pages/inquiryPage/table/EMG.css";
 
-const EMG = ({
-  setReplaceComponent,
-}: {
-  setReplaceComponent: (table: string) => void;
-}) => {
+const EMG = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string>();
   const [uploadedFile, setUploadedFile] = useState<File>();
   const [recognizedResult, setRecognizedResult] = useState<string>("");
   const [modifiedResult, setModifiedResult] = useState<string>("");
   console.log(modifiedResult);
-
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -123,7 +118,6 @@ const EMG = ({
                   if (confirm("確定送出結果嗎?")) {
                     console.log("送出結果：", recognizedResult);
                   }
-                  setReplaceComponent("right");
                 }}
               >
                 將結果加入病歷

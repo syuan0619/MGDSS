@@ -20,8 +20,8 @@ import api from "../../api";
 import * as React from "react";
 import SearchName from "./components/SearchName";
 import PatientStatus from "./components/PatientStatus";
-import EMG from "./EMG";
-import BloodTest from "./BloodTest";
+import EMG from "./components/EMG";
+import BloodTest from "./components/BloodTest";
 import IconButton from "@mui/material/IconButton";
 import {
   Dialog,
@@ -33,13 +33,14 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
+import InfoIcon from "@mui/icons-material/Info";
 import { useNavigate } from "react-router-dom";
 import "./PatientList.css";
 
 function PatientList() {
-  const navigate = useNavigate();
   useEffect(() => {
     const userData = sessionStorage.getItem("userData");
+    console.log(userData);
     if (!userData) {
       alert("請先登入!");
       navigate("/");
@@ -50,10 +51,10 @@ function PatientList() {
   const Name = userData ? userData.name : null;
   const role = userData ? userData.role : null;
 
-  //get patients
+  const navigate = useNavigate();
   const [patients, setPatients] = useState<{ _id: string; info: Info }[]>();
   const data = async () => {
-    const response = await api.get("/patients/");
+    const response = await api.get("/patients");
     setPatients(response.data);
   };
 
@@ -68,27 +69,29 @@ function PatientList() {
     setSelectedDate(e.target.value);
   };
 
-  //nav to patient's inquiry page.
-  const nav = useNavigate();
-  const navToInquiryPage = (id: string) => {
-    if (role == "doctor") {
-      nav(`/inquiry/${id}`);
-    }
-  };
-
-  //登出
-  const onclickLogout = () => {
-    const confirmLogout = window.confirm("確定要登出嗎?");
-    if (confirmLogout) {
-      sessionStorage.removeItem("userData");
-      console.log("userData", userData);
-      navigate(`/`);
-    }
-  };
-
   //新增病患dialog
-  const [addPatient, setAddPatient] = useState<Info>({} as Info);
+  const [addPatient, setAddPatient] = useState<Info>({
+    "ID#": "",
+    name: "",
+    DOB: "",
+    sex: "",
+    height: 0,
+    weight: 0,
+    status: "",
+    other: "",
+    attackDate: "",
+    beginSymptom: "",
+    otherHospitalRecord: {
+      recentlyDate: "",
+      totalTimes: 0,
+    },
+    otherDisease: [],
+    otherMedicine: [],
+  } as Info);
   const [addPatientStatus, setAddPatientStatus] = useState(false);
+  const [emgDialogOpen, setEMGDialogOpen] = useState(false);
+  const [BloodTestDialogOpen, setBloodTestDialogOpen] = useState(false);
+
   const addPatientDialogOpen = () => {
     setAddPatientStatus(true);
   };
@@ -98,19 +101,12 @@ function PatientList() {
   const changeAddPatient = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddPatient({ ...addPatient!, [e.target.name]: e.target.value });
   };
-  const submitAddPatient = async () => {
-    console.log("submitAddPatient", addPatient);
-    await api.post(`/patients/`, addPatient).then((res) => {
-      console.log(res.data);
-      data();
-    });
-  };
 
   //修改病患dialog
-  const [updatePatientId, setUpdatePatientId] = useState<string>();
-  const [updatePatient, setUpdatePatient] = useState<Info>();
+  const [updatePatient, setUpdatePatient] = useState<Info>({} as Info);
   const [updatePatientStatus, setUpdatePatientStatus] = useState(false);
-  const updatePatientDialogOpen = () => {
+  const updatePatientDialogOpen = (patientData: Info) => {
+    setUpdatePatient(patientData);
     setUpdatePatientStatus(true);
   };
   const updatePatientDialogHide = () => {
@@ -122,17 +118,26 @@ function PatientList() {
       [e.target.name]: e.target.value,
     });
   };
-  const submitUpdatePatient = async () => {
-    await api
-      .post(`/updateinfo/${updatePatientId}`, updatePatient)
-      .then((res) => {
-        console.log(res.data);
-        data();
-      });
+
+  //登出
+  const onclickLogout = () => {
+    const confirmLogout = window.confirm("確定要登出嗎?");
+    if (confirmLogout) {
+      sessionStorage.removeItem("userData");
+      navigate(`/`);
+    }
+  };
+
+  //nav to patient's inquiry page.
+  const nav = useNavigate();
+  const navToInquiryPage = (id: string) => {
+    if (role == "doctor") {
+      nav(`/inquiry/${id}`);
+    }
   };
 
   //EMG
-  const handleEMGDialogOpen = (patient_id: string) => {
+  const handleEMGDialogOpen = () => {
     setEMGDialogOpen(true);
   };
 
@@ -141,7 +146,7 @@ function PatientList() {
   };
 
   //BloodTest
-  const handleBloodTestDialogOpen = (_id: string) => {
+  const handleBloodTestDialogOpen = () => {
     setBloodTestDialogOpen(true);
   };
 
@@ -359,27 +364,26 @@ function PatientList() {
                         <TableCell align="center">
                           <Box>
                             <IconButton
-                              onClick={() => {
-                                setUpdatePatientId(patient._id);
-                                setUpdatePatient(patient.info);
-                                updatePatientDialogOpen();
-                              }}
+                              onClick={() =>
+                                updatePatientDialogOpen(patient.info)
+                              }
                             >
-                              <EditIcon />
+                              <InfoIcon />
                             </IconButton>
                           </Box>
                         </TableCell>
-
-                        <FindInPageRoundedIcon
-                          onClick={() => handleEMGDialogOpen(patient._id)}
-                        >
-                          <EditIcon />
-                        </FindInPageRoundedIcon>
+                        <TableCell>
+                          <FindInPageRoundedIcon
+                            onClick={() => handleEMGDialogOpen()}
+                          >
+                            <EditIcon />
+                          </FindInPageRoundedIcon>
+                        </TableCell>
                         <TableCell align="center">
                           <Box>
                             <VaccinesRoundedIcon
-                          onClick={() => handleBloodTestDialogOpen(patient._id)}
-                          >
+                              onClick={() => handleBloodTestDialogOpen()}
+                            >
                               <EditIcon />
                             </VaccinesRoundedIcon>
                           </Box>
@@ -426,7 +430,7 @@ function PatientList() {
             label="病歷號"
             variant="outlined"
             name="ID#"
-            value={addPatient!["ID#"] || ""}
+            value={addPatient!["ID#"]}
             onChange={changeAddPatient}
             required
             sx={{
@@ -440,7 +444,7 @@ function PatientList() {
             label="姓名"
             variant="outlined"
             name="name"
-            value={addPatient!.name || ""}
+            value={addPatient!.name}
             onChange={changeAddPatient}
             required
             sx={{
@@ -455,7 +459,7 @@ function PatientList() {
             label="生日"
             variant="outlined"
             name="DOB"
-            value={addPatient!.DOB || ""}
+            value={addPatient!.DOB}
             InputLabelProps={{
               shrink: true,
             }}
@@ -473,8 +477,9 @@ function PatientList() {
             label="性別"
             variant="outlined"
             name="sex"
-            value={addPatient!.sex || ""}
+            value={addPatient!.sex}
             required
+            select
             onChange={changeAddPatient}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -482,13 +487,16 @@ function PatientList() {
               },
               width: "100%",
             }}
-          ></TextField>
+          >
+            <MenuItem value="男">男</MenuItem>
+            <MenuItem value="女">女</MenuItem>
+          </TextField>
           <p />
           <TextField
             label="身高(cm)"
             variant="outlined"
             name="height"
-            value={addPatient!.height || ""}
+            value={addPatient!.height}
             required
             onChange={changeAddPatient}
             sx={{
@@ -502,7 +510,7 @@ function PatientList() {
             label="體重(kg)"
             variant="outlined"
             name="weight"
-            value={addPatient!.weight || ""}
+            value={addPatient!.weight}
             required
             onChange={changeAddPatient}
             sx={{
@@ -515,12 +523,12 @@ function PatientList() {
           <p />
           <TextField
             type="date"
-            label="初診日期"
+            label="發病日"
             variant="outlined"
             name="attackDate"
-            defaultValue={new Date().toLocaleDateString("en-CA")}
-            InputProps={{
-              readOnly: true,
+            value={addPatient!.attackDate}
+            InputLabelProps={{
+              shrink: true,
             }}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -528,6 +536,7 @@ function PatientList() {
               },
               width: "100%",
             }}
+            required
             onChange={changeAddPatient}
           />
           <p />
@@ -535,7 +544,7 @@ function PatientList() {
             label="初始症狀"
             variant="outlined"
             name="beginSymptom"
-            value={addPatient!.beginSymptom || ""}
+            value={addPatient!.beginSymptom}
             onChange={changeAddPatient}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -544,13 +553,57 @@ function PatientList() {
             }}
           />
           <p />
-
           <TextField
             label="其他註記"
             variant="outlined"
             name="other"
-            value={addPatient!.other || ""}
+            value={addPatient!.other}
             onChange={changeAddPatient}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+          <p />
+          <p />
+          <TextField
+            label="其他醫院就診紀錄"
+            variant="outlined"
+            name="otherHospitalRecord"
+            value={addPatient!.otherHospitalRecord}
+            onChange={changeAddPatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+
+          <p />
+          <TextField
+            label="其他疾病"
+            variant="outlined"
+            name="otherDisease"
+            value={addPatient!.otherDisease}
+            onChange={changeAddPatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+
+          <p />
+          <TextField
+            label="其他用藥紀錄"
+            variant="outlined"
+            name="otherMedicine"
+            value={addPatient!.otherMedicine}
+            onChange={changeAddPatient}
+            required
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
@@ -570,11 +623,7 @@ function PatientList() {
           >
             <CloseIcon />
           </IconButton>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={submitAddPatient}
-          >
+          <Button variant="contained" color="primary">
             新增
           </Button>
         </DialogActions>
@@ -583,7 +632,7 @@ function PatientList() {
       <Dialog
         open={updatePatientStatus}
         onClose={updatePatientDialogHide}
-        aria-labelledby="修改病患"
+        aria-labelledby="新增病患"
         sx={{
           "& .MuiPaper-root": {
             borderRadius: "1rem",
@@ -625,7 +674,7 @@ function PatientList() {
             label="姓名"
             variant="outlined"
             name="name"
-            defaultValue={updatePatient?.name}
+            defaultValue={updatePatient.name}
             onChange={changeUpdatePatient}
             required
             sx={{
@@ -640,7 +689,7 @@ function PatientList() {
             label="生日"
             variant="outlined"
             name="DOB"
-            defaultValue={updatePatient?.DOB}
+            defaultValue={updatePatient.DOB}
             InputLabelProps={{
               shrink: true,
             }}
@@ -658,7 +707,7 @@ function PatientList() {
             label="性別"
             variant="outlined"
             name="sex"
-            defaultValue={updatePatient?.sex}
+            defaultValue={updatePatient.sex}
             required
             select
             onChange={changeUpdatePatient}
@@ -677,7 +726,7 @@ function PatientList() {
             label="身高(cm)"
             variant="outlined"
             name="height"
-            defaultValue={updatePatient?.height}
+            defaultValue={updatePatient.height}
             required
             onChange={changeUpdatePatient}
             sx={{
@@ -691,7 +740,7 @@ function PatientList() {
             label="體重(kg)"
             variant="outlined"
             name="weight"
-            defaultValue={updatePatient?.weight}
+            defaultValue={updatePatient.weight}
             required
             onChange={changeUpdatePatient}
             sx={{
@@ -706,7 +755,7 @@ function PatientList() {
             label="初診日期"
             variant="outlined"
             name="attackDate"
-            defaultValue={updatePatient?.attackDate}
+            defaultValue={updatePatient.attackDate}
             InputProps={{
               readOnly: true,
             }}
@@ -723,7 +772,7 @@ function PatientList() {
             label="初始症狀"
             variant="outlined"
             name="beginSymptom"
-            defaultValue={updatePatient?.beginSymptom}
+            defaultValue={updatePatient.beginSymptom}
             onChange={changeUpdatePatient}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -736,7 +785,7 @@ function PatientList() {
             label="其他註記"
             variant="outlined"
             name="other"
-            defaultValue={updatePatient?.other}
+            defaultValue={updatePatient.other}
             onChange={changeUpdatePatient}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -748,7 +797,6 @@ function PatientList() {
         <DialogActions>
           <Button
             onClick={() => {
-              submitUpdatePatient();
               updatePatientDialogHide();
               console.log("修改後的病患信息：", updatePatient);
             }}
@@ -787,7 +835,7 @@ function PatientList() {
           },
         }}
       >
-        <EMG setReplaceComponent={() => {}} />
+        <EMG />
         <DialogActions>
           <IconButton
             className="deleteIcon-predict"
@@ -835,7 +883,7 @@ function PatientList() {
         }}
       >
         <DialogContent>
-          <BloodTest setReplaceComponent={() => {}} />
+          <BloodTest />
         </DialogContent>
         <DialogActions>
           <IconButton

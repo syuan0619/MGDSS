@@ -288,7 +288,7 @@ const RegisterPage = () => {
                 sx: { ...inputLabelcolor },
               }}
               fullWidth
-              label="醫師編號"
+              label="姓名"
               variant="outlined"
               id="account"
               size="small"
@@ -381,7 +381,7 @@ const RegisterPage = () => {
                 sx: { ...inputLabelcolor },
               }}
               fullWidth
-              label="護士編號"
+              label="姓名"
               variant="outlined"
               id="account"
               size="small"
