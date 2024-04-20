@@ -53,7 +53,7 @@ function PatientList() {
   //get patients
   const [patients, setPatients] = useState<{ _id: string; info: Info }[]>();
   const data = async () => {
-    const response = await api.get("/patients");
+    const response = await api.get("/patients/");
     setPatients(response.data);
   };
 
@@ -100,7 +100,7 @@ function PatientList() {
   };
   const submitAddPatient = async () => {
     console.log("submitAddPatient", addPatient);
-    await api.post(`/patients`, addPatient).then((res) => {
+    await api.post(`/patients/`, addPatient).then((res) => {
       console.log(res.data);
       data();
     });
