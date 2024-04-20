@@ -1,17 +1,13 @@
 import "../../pages/inquiryPage/table/BloodTest.css";
 import { useState } from "react";
 import { BloodTest as typeBloodTest } from "../../types/Patient";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import api from "../../api";
 import { useParams } from "react-router-dom";
 
-const BloodTest = ({
-  setReplaceComponent,
-}: {
-  setReplaceComponent: (table: string) => void;
-}) => {
+const BloodTest = (
+) => {
   const routeParams = useParams();
 
   const [BloodTestScore, setBloodTestScore] = useState<typeBloodTest>({
@@ -78,7 +74,7 @@ const BloodTest = ({
     if (confirmResult) {
       console.log(BloodTestScore);
       await api
-        .post(`/inquiry/${routeParams.id}/bloodTest`, BloodTestScore)
+        .post(`../${routeParams.id}/bloodTest`, BloodTestScore)
         .then((res) => {
           console.log(res.data);
         });

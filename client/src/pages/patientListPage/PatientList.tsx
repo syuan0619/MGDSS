@@ -372,17 +372,17 @@ function PatientList() {
                           </Box>
                         </TableCell>
 
-                        <TableCell align="center">
-                          <Box>
-                            <FindInPageRoundedIcon onClick={handleEMGDialogOpen}>
-                              <EditIcon />
-                            </FindInPageRoundedIcon>
-                          </Box>
-                        </TableCell>
+                        <FindInPageRoundedIcon
+                          onClick={() => handleEMGDialogOpen(patient._id)}
+                        >
+                          <EditIcon />
+                        </FindInPageRoundedIcon>
                         <TableCell align="center">
                           <Box>
                             <VaccinesRoundedIcon
-                              onClick={handleBloodTestDialogOpen}
+                              onClick={() =>
+                                handleBloodTestDialogOpen(patient._id)
+                              }
                             >
                               <EditIcon />
                             </VaccinesRoundedIcon>
