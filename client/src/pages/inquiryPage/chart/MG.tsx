@@ -118,14 +118,26 @@ const MGChart = ({
   const handleSelectAll = () => {
     setA(MGData);
   };
+
+  const handleChecked = (label: string) => {
+    if (a.length == MGData.length) {
+      return true;
+    } else if (a.some((item) => item.label !== label) == false) {
+      return false;
+    }
+  };
   const MGCheckbox = MGData.map((item, index) => (
     <>
       <label style={{ color: item.color }} key={index}>
         <input
           type="checkbox"
           name={item.label}
+          onChange={() => {
+            selectData(item.label);
+            handleChecked(item.label);
+          }}
           defaultChecked={true}
-          onChange={() => selectData(item.label)}
+          checked={handleChecked("item")}
         />
         {item.label}
       </label>

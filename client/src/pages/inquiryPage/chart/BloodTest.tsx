@@ -81,13 +81,24 @@ const BloodTestChart = ({
   const handleSelectAll = () => {
     setA(BloodData);
   };
+  const handleChecked = (label: string) => {
+    if (a.length == BloodData.length) {
+      return true;
+    } else if (a.some((item) => item.label !== label) == false) {
+      return false;
+    }
+  };
   const BloodCheckbox = BloodData.map((item, index) => (
     <label style={{ color: item.color }} key={index}>
       <input
         type="checkbox"
         name={item.label}
+        onChange={() => {
+          selectData(item.label);
+          handleChecked(item.label);
+        }}
         defaultChecked={true}
-        onChange={() => selectData(item.label)}
+        checked={handleChecked("item")}
       />
       {item.label}
     </label>

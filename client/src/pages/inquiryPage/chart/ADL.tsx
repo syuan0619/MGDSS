@@ -1,3 +1,4 @@
+import { Flag } from "@mui/icons-material";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
@@ -99,15 +100,13 @@ const ADLChart = ({
     setA(data);
   };
 
-  // const handleChecked = () => {
-  //   const aLabel=a.map((item)=>item.label)
-  //   const dataLabel=data.map((item)=>item.label)
-  //   if ((a.length = data.length)) {
-  //     return true;
-  //   } else(aLabel.filter((x)=>dataLabel.includes(x))) {
-  //     return false;
-  //   }
-  // };
+  const handleChecked = (label: string) => {
+    if (a.length == data.length) {
+      return true;
+    } else if (a.some((item) => item.label !== label) == false) {
+      return false;
+    }
+  };
 
   //ADLCheckbox
   const ADLCheckbox = data.map((item, index) => (
@@ -115,8 +114,12 @@ const ADLChart = ({
       <input
         type="checkbox"
         name={item.label}
-        onChange={() => selectData(item.label)}
+        onChange={() => {
+          selectData(item.label);
+          handleChecked(item.label);
+        }}
         defaultChecked={true}
+        checked={handleChecked("item")}
       />
       {item.label}
     </label>
