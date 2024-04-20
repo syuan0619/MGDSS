@@ -1,4 +1,4 @@
-import "../../pages/inquiryPage/table/BloodTest.css";
+import "../../inquiryPage/table/BloodTest.css";
 import { useState } from "react";
 import { BloodTest as typeBloodTest } from "../../../types/Patient";
 import Alert from "@mui/material/Alert";

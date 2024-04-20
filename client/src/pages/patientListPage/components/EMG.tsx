@@ -1,6 +1,6 @@
 import api from "../../../api";
 import { useEffect, useRef, useState } from "react";
-import "../../pages/inquiryPage/table/EMG.css";
+import "../../inquiryPage/table/EMG.css";
 
 const EMG = () => {
   const inputRef = useRef<HTMLInputElement>(null);

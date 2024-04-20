@@ -35,6 +35,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import "./PatientList.css";
+import InfoIcon from "@mui/icons-material/Info";
 
 function PatientList() {
   const navigate = useNavigate();
@@ -104,7 +105,7 @@ function PatientList() {
     },
     otherDisease: [],
     otherMedicine: [],
-  } as Info);
+  });
   const [addPatientStatus, setAddPatientStatus] = useState(false);
   const addPatientDialogOpen = () => {
     setAddPatientStatus(true);
@@ -377,7 +378,7 @@ function PatientList() {
                       <>
                         <TableCell align="center">
                           <Box>
-                            <IconButton
+                            <InfoIcon
                               onClick={() => {
                                 setUpdatePatientId(patient._id);
                                 setUpdatePatient(patient.info);
@@ -385,15 +386,16 @@ function PatientList() {
                               }}
                             >
                               <EditIcon />
-                            </IconButton>
+                            </InfoIcon>
                           </Box>
                         </TableCell>
-
-                        <FindInPageRoundedIcon
-                          onClick={() => handleEMGDialogOpen()}
-                        >
-                          <EditIcon />
-                        </FindInPageRoundedIcon>
+                        <TableCell align="center">
+                          <FindInPageRoundedIcon
+                            onClick={() => handleEMGDialogOpen()}
+                          >
+                            <EditIcon />
+                          </FindInPageRoundedIcon>
+                        </TableCell>
                         <TableCell align="center">
                           <Box>
                             <VaccinesRoundedIcon
@@ -439,7 +441,8 @@ function PatientList() {
           },
         }}
       >
-        <DialogTitle sx={{}}>新增病患</DialogTitle>
+        <DialogTitle sx={{}}
+        >新增病患</DialogTitle>
         <DialogContent sx={{ margingTop: "5vh" }}>
           <TextField
             label="病歷號"
@@ -533,12 +536,12 @@ function PatientList() {
           <p />
           <TextField
             type="date"
-            label="初診日期"
+            label="生日"
             variant="outlined"
-            name="attackDate"
-            defaultValue={new Date().toLocaleDateString("en-CA")}
-            InputProps={{
-              readOnly: true,
+            name="DOB"
+            value={addPatient!.DOB || ""}
+            InputLabelProps={{
+              shrink: true,
             }}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -546,6 +549,7 @@ function PatientList() {
               },
               width: "100%",
             }}
+            required
             onChange={changeAddPatient}
           />
           <p />
@@ -579,7 +583,7 @@ function PatientList() {
             label="其他醫院就診紀錄"
             variant="outlined"
             name="otherHospitalRecord"
-            value={addPatient!.otherHospitalRecord}
+            value={addPatient!.otherHospitalRecord|| "請輸入其他醫院就診紀錄及總看診次數"}
             onChange={changeAddPatient}
             required
             sx={{
@@ -593,7 +597,7 @@ function PatientList() {
             label="其他疾病"
             variant="outlined"
             name="otherDisease"
-            value={addPatient!.otherDisease}
+            value={addPatient!.otherDisease|| ""}
             onChange={changeAddPatient}
             required
             sx={{
@@ -607,7 +611,7 @@ function PatientList() {
             label="其他用藥紀錄"
             variant="outlined"
             name="otherMedicine"
-            value={addPatient!.otherMedicine}
+            value={addPatient!.otherMedicine|| ""}
             onChange={changeAddPatient}
             required
             sx={{
@@ -636,7 +640,7 @@ function PatientList() {
           >
             新增
           </Button>
-        </DialogActions>
+        </DialogActions>{" "}
       </Dialog>
 
       <Dialog
@@ -647,7 +651,7 @@ function PatientList() {
           "& .MuiPaper-root": {
             borderRadius: "1rem",
             width: "31vh",
-            height: "70vh",
+            height: "50vh",
             paddingTop: "2vh",
             paddingBottom: "1vh",
             paddingLeft: "5vh",
@@ -752,37 +756,6 @@ function PatientList() {
             name="weight"
             defaultValue={updatePatient?.weight}
             required
-            onChange={changeUpdatePatient}
-            sx={{
-              "& .MuiOutlinedInput-input": {
-                background: "#E0F4FF",
-              },
-            }}
-          />
-          <p />
-          <TextField
-            type="date"
-            label="初診日期"
-            variant="outlined"
-            name="attackDate"
-            defaultValue={updatePatient?.attackDate}
-            InputProps={{
-              readOnly: true,
-            }}
-            sx={{
-              "& .MuiOutlinedInput-input": {
-                background: "#E0F4FF",
-              },
-              width: "100%",
-            }}
-            onChange={changeUpdatePatient}
-          />
-          <p />
-          <TextField
-            label="初始症狀"
-            variant="outlined"
-            name="beginSymptom"
-            defaultValue={updatePatient?.beginSymptom}
             onChange={changeUpdatePatient}
             sx={{
               "& .MuiOutlinedInput-input": {
