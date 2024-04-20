@@ -5,7 +5,7 @@ from mongoDB import getAllPatients, addNewPatient, all_patients_to_csv
 import models
 import io
 
-router = APIRouter(prefix="/patients", tags=["patient"])
+router = APIRouter(prefix="/patients", tags=["patients"])
 
 # GET /patients/ -> return all patients
 @router.get("/", tags=["patients"])
