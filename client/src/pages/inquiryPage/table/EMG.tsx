@@ -2,6 +2,7 @@ import api from "../../../api";
 import { useEffect, useRef, useState } from "react";
 import "./EMG.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { EMG as typeEMG } from "../../../types/Patient";
 
 const EMG = ({
   setReplaceComponent,
@@ -13,7 +14,6 @@ const EMG = ({
   const [uploadedFile, setUploadedFile] = useState<File>();
   const [recognizedResult, setRecognizedResult] = useState<string>("");
   const [modifiedResult, setModifiedResult] = useState<string>("");
-  console.log(modifiedResult);
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -22,7 +22,7 @@ const EMG = ({
     }
   };
 
-  const buttonHandler = () => {
+  const uploadHandler = () => {
     inputRef.current?.click();
   };
 
@@ -50,11 +50,11 @@ const EMG = ({
             postActivation: string[];
           }) => {
             recognizedString += `測試部位: ${result.musclePart}\n`;
-            recognizedString += `\nPreActivation:\n\n       Amp\n1-5:  ${
+            recognizedString += `\nPreActivation:\n\n         Amp\n1-5:  ${
               result.preActivation[0].split(" ")[0]
             }\n`;
             if (result.postActivation.length > 0) {
-              recognizedString += `\nPostActivation:\n\n       Amp\n`;
+              recognizedString += `\nPostActivation:\n\n         Amp\n`;
               result.postActivation.forEach((postAct, idx) => {
                 if (idx % 3 === 0) {
                   recognizedString += `1-5:  ${postAct.split(" ")[0]}\n`;
@@ -70,6 +70,49 @@ const EMG = ({
       });
     }
   }, [uploadedFile]);
+
+  const noSpaceNewLineResult: string[] = [];
+  const handleModifiedResult = () => {
+    const modified = modifiedResult;
+    let word = "";
+    for (let i = 0; i < modifiedResult.length; i++) {
+      if (!(modified[i] == "\n" || modified[i] == "\r" || modified[i] == " ")) {
+        word += modified[i];
+      } else if (word.length > 0) {
+        noSpaceNewLineResult.push(word);
+        word = "";
+      }
+    }
+    console.log("first noSpaceNewLineResult: \n", noSpaceNewLineResult);
+  };
+
+  const modifiedResultToEMG = () => {
+    const sendResult: typeEMG = {
+      testDate: "2024-04-13",
+      img: new Blob(),
+      nasalis: {
+        preActivation: 0,
+        postActivation: [],
+      },
+      abd: {
+        preActivation: 0,
+        postActivation: [],
+      },
+      trapezius: {
+        preActivation: 0,
+        postActivation: [],
+      },
+    };
+    noSpaceNewLineResult.map((eachWord, index) => {
+      if (eachWord.toLowerCase() === "nasalis") {
+        if (noSpaceNewLineResult[index + 1].toLowerCase() === "preActivation") {
+          sendResult.nasalis.preActivation = Number(
+            noSpaceNewLineResult[index + 4]
+          );
+        }
+      }
+    });
+  };
 
   return (
     <div className="inquiry-table-EMG-all">
@@ -101,7 +144,7 @@ const EMG = ({
               {previewUrl ? (
                 <img src={previewUrl} alt="Preview" />
               ) : (
-                <button onClick={buttonHandler}>檔案上傳/預覽</button>
+                <button onClick={uploadHandler}>檔案上傳/預覽</button>
               )}
             </div>
           </div>
@@ -128,10 +171,11 @@ const EMG = ({
               <button
                 id="submitButton"
                 onClick={() => {
-                  if (confirm("確定送出結果嗎?")) {
-                    console.log("送出結果：", recognizedResult);
-                  }
-                  setReplaceComponent("right");
+                  handleModifiedResult();
+                  // if (confirm("確定送出結果嗎?")) {
+                  //   console.log("送出結果：", modifiedResult);
+                  // }
+                  // setReplaceComponent("right");
                 }}
               >
                 將結果加入病歷

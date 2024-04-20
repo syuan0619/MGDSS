@@ -10,7 +10,7 @@ const patientEMG = [
     testDate: "2024-04-13",
     image: "string",
     nasalis: {
-      preActivation: [],
+      preActivation: [null],
       postActivation: [],
     },
     abd: {
@@ -105,7 +105,7 @@ const EMGChart = ({
     setValue(newValue);
   };
 
-  //////date
+  //date
   const dateOptions = patientEMG.map((item) => (
     <option value={item.testDate}>{item.testDate}</option>
   ));

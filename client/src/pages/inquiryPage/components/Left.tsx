@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Info } from "../../../types/Patient.ts";
+import { FaPencil } from "react-icons/fa6";
+import { Info } from "../../../types/Patient";
 import "./Left.css";
 
 const Left = ({ info }: { info: Info }) => {
@@ -26,7 +27,22 @@ const Left = ({ info }: { info: Info }) => {
   return (
     <div className="inquiry-components-left-bg">
       <div className="inquiry-components-left">
-        <div className="inquiry-components-left-header">基本資料</div>
+        <div className="inquiry-components-left-header">
+          基本資料
+          <button
+            className="inquiry-components-edit-button"
+            onClick={() => {
+              switchReadOnly();
+              onSubmitChange();
+            }}
+          >
+            {readOnly ? (
+              <FaPencil className="tableIcon" />
+            ) : (
+              <FaPencil className="tableIcon" />
+            )}
+          </button>
+        </div>
         <div className="inquiry-components-left-footer">
           <div className="inquiry-components-left-footer-basicdata">
             <div>
@@ -140,17 +156,7 @@ const Left = ({ info }: { info: Info }) => {
               ></input>
             </div>
           </div>
-          <div className="inquiry-inquiry-components-left-submit">
-            <button
-              className="inquiry-components-left-buttom"
-              onClick={() => {
-                switchReadOnly();
-                onSubmitChange();
-              }}
-            >
-              {readOnly ? "編輯" : "完成"}
-            </button>
-          </div>
+          <div className="inquiry-inquiry-components-left-submit"></div>
         </div>
       </div>
     </div>

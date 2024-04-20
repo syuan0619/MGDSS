@@ -1,3 +1,4 @@
+import { Flag } from "@mui/icons-material";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
@@ -52,7 +53,7 @@ const ADLChart = ({
       curve: "linear",
       data: ADLChart_brushTeethOrCombHairData,
       label: "brushTeethOrCombHair",
-      color: "#FAEF5D",
+      color: "#59B4C3",
     },
     {
       curve: "linear",
@@ -67,6 +68,7 @@ const ADLChart = ({
       color: "#0B666A",
     },
   ];
+
   const [a, setA] =
     useState<{ curve: string; data: number[]; label: string; color: string }[]>(
       data
@@ -92,18 +94,45 @@ const ADLChart = ({
       addToSelected(tarData);
     }
   };
-  const ADLCheckbox = data.map((item) => (
-    <label style={{ color: item.color }}>
+
+  //selectAll
+  const handleSelectAll = () => {
+    setA(data);
+  };
+
+  const handleChecked = (label: string) => {
+    if (a.length == data.length) {
+      return true;
+    } else if (a.some((item) => item.label !== label) == false) {
+      return false;
+    }
+  };
+
+  //ADLCheckbox
+  const ADLCheckbox = data.map((item, index) => (
+    <label style={{ color: item.color }} key={index}>
       <input
         type="checkbox"
         name={item.label}
+        onChange={() => {
+          selectData(item.label);
+          handleChecked(item.label);
+        }}
         defaultChecked={true}
-        onChange={() => selectData(item.label)}
+        checked={handleChecked("item")}
       />
       {item.label}
     </label>
   ));
 
+  const cancelChecked = () => {
+    if (a.length < data.length) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  console.log(a);
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -136,7 +165,16 @@ const ADLChart = ({
           </div>
           <div className="chart-footer-checkbox">
             <div className="chart-footer-checkbox-inner">
-              目前顯示:{ADLCheckbox}
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  defaultChecked={true}
+                  checked={cancelChecked()}
+                />
+                全選
+              </label>
+              {ADLCheckbox}
             </div>
           </div>
         </div>

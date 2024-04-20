@@ -65,9 +65,9 @@ const QOL = ({
 
   const blockLeft = Object.entries(QOLscore)
     .slice(0, 8)
-    .map(([key, value]) => (
+    .map(([key, value], index) => (
       <>
-        <div className="inquiry-table-QOL-content-sliderbox">
+        <div className="inquiry-table-QOL-content-sliderbox" key={index}>
           <p>{key}</p>
           <input
             defaultValue="0"

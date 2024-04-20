@@ -78,6 +78,19 @@
   font-size: 1.6rem;
 }
 
+.inquiry-table-QMG-content::-webkit-scrollbar {
+  width: 5px;
+}
+.inquiry-table-QMG-content::-webkit-scrollbar-track-piece {
+  background: transparent;
+}
+
+.inquiry-table-QMG-content::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgb(240, 240, 240);
+  border: 1px solid rgb(240, 240, 240);
+}
+
 .inquiry-table-QMG-content input:hover {
   cursor: pointer;
 }
