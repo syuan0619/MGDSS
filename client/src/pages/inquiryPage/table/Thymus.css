@@ -43,14 +43,15 @@
 }
 
 .inquiry-table-Thymus-content-row {
-  width: 50%;
+  width: 45%;
   height: 100%;
   font-size: 1.6rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: flex-end;
+  margin-top: 6rem;
 }
 
 .inquiry-table-Thymus-content-row-head {
@@ -64,7 +65,7 @@
   flex-direction: column;
 }
 .inquiry-table-Thymus-content-row-thymusStatus {
-  width: 50%;
+  width: 45%;
   height: 100%;
   font-size: 1.6rem;
   display: flex;
@@ -72,6 +73,15 @@
   align-items: center;
   justify-content: flex-start;
   margin-top: 6rem;
+}
+
+.thymus-radio-all {
+  margin-top: 3vh;
+}
+
+.thymus-radio {
+  display: flex;
+  height: 7vh;
 }
 .inquiry-table-Thymus-content-row input[type="date"] {
   font-size: 1.2rem;
@@ -90,8 +100,7 @@
 }
 .inquiry-table-Thymus-content-row-thymusStatus input[type="radio"] {
   height: 3vh;
-  width: 3vw;
-  margin-top: 4vh;
+  width: 7vw;
 }
 
 .inquiry-table-Thymus-content-row input {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -34,12 +34,12 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
+import "./PatientList.css";
 
 function PatientList() {
   const navigate = useNavigate();
   useEffect(() => {
     const userData = sessionStorage.getItem("userData");
-    console.log(userData);
     if (!userData) {
       alert("請先登入!");
       navigate("/");
@@ -49,6 +49,8 @@ function PatientList() {
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const Name = userData ? userData.name : null;
   const role = userData ? userData.role : null;
+
+  //get patients
   const [patients, setPatients] = useState<{ _id: string; info: Info }[]>();
   const data = async () => {
     const response = await api.get("/patients");
@@ -59,46 +61,19 @@ function PatientList() {
     data();
   }, []);
 
-  // Timer
-  const [time, setTime] = useState(new Date());
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 60000);
-    return () => clearInterval(timer);
-  }, []);
-
-  //新增病患dialog
-  const [addPatient, setAddPatient] = useState<Info>({} as Info);
-  const [addPatientStatus, setAddPatientStatus] = useState(false);
-  const [emgDialogOpen, setEMGDialogOpen] = useState(false);
-  const [BloodTestDialogOpen, setBloodTestDialogOpen] = useState(false);
-
-  const addPatientDialogOpen = () => {
-    setAddPatientStatus(true);
-  };
-  const addPatientDialogHide = () => {
-    setAddPatientStatus(false);
-  };
-  const changeAddPatient = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddPatient({ ...addPatient!, [e.target.name]: e.target.value });
+  //handle date
+  const newDate = new Date().toISOString().slice(0, 10);
+  const [selectedDate, setSelectedDate] = useState<string>(newDate);
+  const handleSelectedDate = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate(e.target.value);
   };
 
-  //修改病患dialog
-  const [updatePatient, setUpdatePatient] = useState<Info>({} as Info);
-  const [updatePatientStatus, setUpdatePatientStatus] = useState(false);
-  const updatePatientDialogOpen = (patientData: Info) => {
-    setUpdatePatient(patientData);
-    setUpdatePatientStatus(true);
-  };
-  const updatePatientDialogHide = () => {
-    setUpdatePatientStatus(false);
-  };
-  const changeUpdatePatient = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdatePatient({
-      ...updatePatient!,
-      [e.target.name]: e.target.value,
-    });
+  //nav to patient's inquiry page.
+  const nav = useNavigate();
+  const navToInquiryPage = (id: string) => {
+    if (role == "doctor") {
+      nav(`/inquiry/${id}`);
+    }
   };
 
   //登出
@@ -110,14 +85,54 @@ function PatientList() {
       navigate(`/`);
     }
   };
-  //nav to patient's inquiry page.
-  const nav = useNavigate();
-  const navToInquiryPage = (id: string) => {
-    if (role == "doctor") {
-      nav(`/inquiry/${id}`);
-    }
+
+  //新增病患dialog
+  const [addPatient, setAddPatient] = useState<Info>({} as Info);
+  const [addPatientStatus, setAddPatientStatus] = useState(false);
+  const addPatientDialogOpen = () => {
+    setAddPatientStatus(true);
   };
+  const addPatientDialogHide = () => {
+    setAddPatientStatus(false);
+  };
+  const changeAddPatient = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddPatient({ ...addPatient!, [e.target.name]: e.target.value });
+  };
+  const submitAddPatient = async () => {
+    console.log("submitAddPatient", addPatient);
+    await api.post(`/patients`, addPatient).then((res) => {
+      console.log(res.data);
+      data();
+    });
+  };
+
+  //修改病患dialog
+  const [updatePatientId, setUpdatePatientId] = useState<string>();
+  const [updatePatient, setUpdatePatient] = useState<Info>();
+  const [updatePatientStatus, setUpdatePatientStatus] = useState(false);
+  const updatePatientDialogOpen = () => {
+    setUpdatePatientStatus(true);
+  };
+  const updatePatientDialogHide = () => {
+    setUpdatePatientStatus(false);
+  };
+  const changeUpdatePatient = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdatePatient({
+      ...updatePatient!,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const submitUpdatePatient = async () => {
+    await api
+      .post(`/updateinfo/${updatePatientId}`, updatePatient)
+      .then((res) => {
+        console.log(res.data);
+        data();
+      });
+  };
+
   //EMG
+  const [emgDialogOpen, setEMGDialogOpen] = useState(false);
   const handleEMGDialogOpen = () => {
     setEMGDialogOpen(true);
   };
@@ -127,6 +142,7 @@ function PatientList() {
   };
 
   //BloodTest
+  const [BloodTestDialogOpen, setBloodTestDialogOpen] = useState(false);
   const handleBloodTestDialogOpen = () => {
     setBloodTestDialogOpen(true);
   };
@@ -145,15 +161,7 @@ function PatientList() {
           boxShadow: "0",
         }}
       >
-        <Box sx={{ width: "90vw", height: "100vh", marginTop: "2rem" }}>
-          <Box
-            sx={{
-              marginLeft: "0.3rem",
-              marginTop: "1rem",
-              fontSize: "0.95rem",
-            }}
-          ></Box>
-
+        <Box sx={{ width: "90vw", height: "100vh", marginTop: "3rem" }}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box
               sx={{
@@ -162,7 +170,9 @@ function PatientList() {
                 marginBottom: "2rem",
               }}
             >
-              <h2>病患清單</h2>
+              <div>
+                <h2>病患清單</h2>
+              </div>
               <Box
                 sx={{
                   display: "flex",
@@ -174,56 +184,31 @@ function PatientList() {
               >
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
                     marginTop: "1rem",
-                    marginRight: "2rem",
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginRight: "0.3rem",
-                    }}
-                  >
-                    <MedicalServicesIcon sx={{ color: "#3081D0" }} />
-                  </Box>
-                  <Box
-                    sx={{
-                      fontSize: "0.95rem",
-                    }}
-                  >
-                    <p>{Name}</p>
-                  </Box>
+                  <input
+                    type="date"
+                    className="inquiry-menu-input"
+                    value={selectedDate}
+                    onChange={handleSelectedDate}
+                  />
                 </Box>
+
                 <Box
                   sx={{
-                    marginRight: "2.5rem",
-                    marginTop: "1rem",
+                    marginTop: "1.7rem",
+                    display: "flex",
                   }}
                 >
-                  {`現在時間：${time.toLocaleDateString()} ${time.getHours()}時${time.getMinutes()}分`}
+                  <SearchName />
                 </Box>
-                {/* <Button
-                                    sx={{
-                                        width: "6rem",
-                                        marginTop: "1rem",
-                                        marginRight: "1.5rem",
-                                        backgroundColor: "#4E3636",
-                                        color: "white",
-                                        borderRadius: "0.7rem",
-                                        "&:hover": {
-                                            color: "#4E3636",
-                                        },
-                                    }}
-                                >
-                                    建立模型
-                                </Button> */}
+
                 <Button
                   sx={{
                     width: "6rem",
                     marginTop: "1rem",
+                    marginLeft: "2rem",
                     backgroundColor: "#0081C9",
                     color: "white",
                     borderRadius: "0.7rem",
@@ -238,12 +223,18 @@ function PatientList() {
 
                 <Box
                   sx={{
-                    marginTop: "1.7rem",
                     display: "flex",
+                    alignItems: "center",
+                    marginRight: "0.3rem",
+                    fontSize: "1.25rem",
+                    marginTop: "1rem",
+                    marginLeft: "2rem",
                   }}
                 >
-                  <SearchName />
+                  <MedicalServicesIcon sx={{ color: "#3081D0" }} />
+                  <p>{Name}</p>
                 </Box>
+
                 <Box>
                   <ExitToAppIcon
                     fontSize="large"
@@ -259,7 +250,6 @@ function PatientList() {
               </Box>
             </Box>
           </Box>
-
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -283,15 +273,18 @@ function PatientList() {
                 </TableCell>
                 {role === "nurse" ? (
                   <>
-                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
-                      修改病人基本資料
-                    </TableCell>
-                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
-                      新增電生理訊號量表
-                    </TableCell>
-                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
-                      新增抽血資訊
-                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ color: "#9E9FA5" }}
+                    ></TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ color: "#9E9FA5" }}
+                    ></TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ color: "#9E9FA5" }}
+                    ></TableCell>
                   </>
                 ) : null}
               </TableRow>
@@ -299,7 +292,11 @@ function PatientList() {
             <TableBody sx={{ cursor: "pointer" }}>
               {patients &&
                 patients.map((patient, index) => (
-                  <TableRow key={index} hover={true}>
+                  <TableRow
+                    className="patient-table-row"
+                    key={index}
+                    hover={true}
+                  >
                     <TableCell align="center">
                       <PatientStatus />
                     </TableCell>
@@ -329,13 +326,13 @@ function PatientList() {
                       {patient.info["ID#"]}
                     </TableCell>
                     <TableCell
+                      className="table-cell-other"
                       align="center"
                       onClick={() => navToInquiryPage(patient._id)}
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        height: "3rem",
                       }}
                     >
                       <ButtonBase
@@ -343,8 +340,7 @@ function PatientList() {
                         style={{
                           width: "auto",
                           minWidth: "5rem",
-                          paddingInline: "1em",
-                          height: "6vh",
+                          height: "5vh",
                           backgroundColor: "#FFE2E2",
                           textAlign: "center",
                           borderRadius: "0.6rem",
@@ -365,9 +361,11 @@ function PatientList() {
                         <TableCell align="center">
                           <Box>
                             <IconButton
-                              onClick={() =>
-                                updatePatientDialogOpen(patient.info)
-                              }
+                              onClick={() => {
+                                setUpdatePatientId(patient._id);
+                                setUpdatePatient(patient.info);
+                                updatePatientDialogOpen();
+                              }}
                             >
                               <EditIcon />
                             </IconButton>
@@ -396,6 +394,7 @@ function PatientList() {
           </Table>
         </Box>
       </TableContainer>
+
       <Dialog
         open={addPatientStatus}
         onClose={addPatientDialogHide}
@@ -429,7 +428,7 @@ function PatientList() {
             label="病歷號"
             variant="outlined"
             name="ID#"
-            value={addPatient!["ID#"]}
+            value={addPatient!["ID#"] || ""}
             onChange={changeAddPatient}
             required
             sx={{
@@ -443,7 +442,7 @@ function PatientList() {
             label="姓名"
             variant="outlined"
             name="name"
-            value={addPatient!.name}
+            value={addPatient!.name || ""}
             onChange={changeAddPatient}
             required
             sx={{
@@ -458,7 +457,7 @@ function PatientList() {
             label="生日"
             variant="outlined"
             name="DOB"
-            value={addPatient!.DOB}
+            value={addPatient!.DOB || ""}
             InputLabelProps={{
               shrink: true,
             }}
@@ -476,9 +475,8 @@ function PatientList() {
             label="性別"
             variant="outlined"
             name="sex"
-            value={addPatient!.sex}
+            value={addPatient!.sex || ""}
             required
-            select
             onChange={changeAddPatient}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -486,16 +484,13 @@ function PatientList() {
               },
               width: "100%",
             }}
-          >
-            <MenuItem value="男">男</MenuItem>
-            <MenuItem value="女">女</MenuItem>
-          </TextField>
+          ></TextField>
           <p />
           <TextField
             label="身高(cm)"
             variant="outlined"
             name="height"
-            value={addPatient!.height}
+            value={addPatient!.height || ""}
             required
             onChange={changeAddPatient}
             sx={{
@@ -509,7 +504,7 @@ function PatientList() {
             label="體重(kg)"
             variant="outlined"
             name="weight"
-            value={addPatient!.weight}
+            value={addPatient!.weight || ""}
             required
             onChange={changeAddPatient}
             sx={{
@@ -542,7 +537,7 @@ function PatientList() {
             label="初始症狀"
             variant="outlined"
             name="beginSymptom"
-            value={addPatient!.beginSymptom}
+            value={addPatient!.beginSymptom || ""}
             onChange={changeAddPatient}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -556,7 +551,7 @@ function PatientList() {
             label="其他註記"
             variant="outlined"
             name="other"
-            value={addPatient!.other}
+            value={addPatient!.other || ""}
             onChange={changeAddPatient}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -577,15 +572,20 @@ function PatientList() {
           >
             <CloseIcon />
           </IconButton>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={submitAddPatient}
+          >
             新增
           </Button>
         </DialogActions>
       </Dialog>
+
       <Dialog
         open={updatePatientStatus}
         onClose={updatePatientDialogHide}
-        aria-labelledby="新增病患"
+        aria-labelledby="修改病患"
         sx={{
           "& .MuiPaper-root": {
             borderRadius: "1rem",
@@ -627,7 +627,7 @@ function PatientList() {
             label="姓名"
             variant="outlined"
             name="name"
-            defaultValue={updatePatient.name}
+            defaultValue={updatePatient?.name}
             onChange={changeUpdatePatient}
             required
             sx={{
@@ -642,7 +642,7 @@ function PatientList() {
             label="生日"
             variant="outlined"
             name="DOB"
-            defaultValue={updatePatient.DOB}
+            defaultValue={updatePatient?.DOB}
             InputLabelProps={{
               shrink: true,
             }}
@@ -660,7 +660,7 @@ function PatientList() {
             label="性別"
             variant="outlined"
             name="sex"
-            defaultValue={updatePatient.sex}
+            defaultValue={updatePatient?.sex}
             required
             select
             onChange={changeUpdatePatient}
@@ -679,7 +679,7 @@ function PatientList() {
             label="身高(cm)"
             variant="outlined"
             name="height"
-            defaultValue={updatePatient.height}
+            defaultValue={updatePatient?.height}
             required
             onChange={changeUpdatePatient}
             sx={{
@@ -693,7 +693,7 @@ function PatientList() {
             label="體重(kg)"
             variant="outlined"
             name="weight"
-            defaultValue={updatePatient.weight}
+            defaultValue={updatePatient?.weight}
             required
             onChange={changeUpdatePatient}
             sx={{
@@ -708,7 +708,7 @@ function PatientList() {
             label="初診日期"
             variant="outlined"
             name="attackDate"
-            defaultValue={updatePatient.attackDate}
+            defaultValue={updatePatient?.attackDate}
             InputProps={{
               readOnly: true,
             }}
@@ -725,7 +725,7 @@ function PatientList() {
             label="初始症狀"
             variant="outlined"
             name="beginSymptom"
-            defaultValue={updatePatient.beginSymptom}
+            defaultValue={updatePatient?.beginSymptom}
             onChange={changeUpdatePatient}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -738,7 +738,7 @@ function PatientList() {
             label="其他註記"
             variant="outlined"
             name="other"
-            defaultValue={updatePatient.other}
+            defaultValue={updatePatient?.other}
             onChange={changeUpdatePatient}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -750,6 +750,7 @@ function PatientList() {
         <DialogActions>
           <Button
             onClick={() => {
+              submitUpdatePatient();
               updatePatientDialogHide();
               console.log("修改後的病患信息：", updatePatient);
             }}
@@ -760,12 +761,34 @@ function PatientList() {
           </Button>
         </DialogActions>
       </Dialog>
+
       <Dialog
-        className="predictDialog"
         open={emgDialogOpen}
         onClose={handleEMGDialogClose}
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "1rem",
+            maxWidth: "100vw",
+            height: "85vh",
+            paddingTop: "2vh",
+            paddingBottom: "1vh",
+            paddingLeft: "5vh",
+            paddingRight: "5vh",
+            marginTop: 5,
+          },
+          "& .MuiSvgIcon-root": {
+            fill: "white",
+          },
+          " .MuiSvgIcon-root:hover": {
+            backgroundColor: "transparent",
+            fill: " rgba(41, 71, 118, 0.976)",
+          },
+          "& .MuiButtonBase-root": {
+            borderRadius: "0.7rem",
+            backgroundColor: "#40A2D8",
+          },
+        }}
       >
-        {" "}
         <EMG setReplaceComponent={() => {}} />
         <DialogActions>
           <IconButton
@@ -786,10 +809,32 @@ function PatientList() {
       </Dialog>
 
       <Dialog
-        className="predictDialog"
         open={BloodTestDialogOpen}
         onClose={handleBloodTestDialogClose}
         aria-labelledby="新增病患抽血資訊"
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "1rem",
+            maxWidth: "80vw",
+            maxHeight: "100vh",
+            paddingTop: "2vh",
+            paddingBottom: "1vh",
+            paddingLeft: "5vh",
+            paddingRight: "5vh",
+            marginTop: 5,
+          },
+          "& .MuiSvgIcon-root": {
+            fill: "white",
+          },
+          ".MuiSvgIcon-root:hover": {
+            backgroundColor: "transparent",
+            fill: "rgba(41, 71, 118, 0.976)",
+          },
+          "& .MuiButtonBase-root": {
+            borderRadius: "0.7rem",
+            backgroundColor: "#40A2D8",
+          },
+        }}
       >
         <DialogContent>
           <BloodTest setReplaceComponent={() => {}} />

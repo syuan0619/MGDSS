@@ -5,6 +5,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { EMG as typeEMG } from "../../../types/Patient";
 import "./Confirm.css";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const ConfirmEMG = () => {
   const [EMGscore] = useState<typeEMG>({
@@ -35,7 +36,7 @@ const ConfirmEMG = () => {
         onChange={(e, isExpanded) => handleChange(isExpanded)}
         sx={{ width: "10vw" }}
       >
-        <AccordionSummary>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>EMG</Typography>
         </AccordionSummary>
         <AccordionDetails>

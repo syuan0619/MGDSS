@@ -7,19 +7,22 @@ import { useParams } from "react-router-dom";
 
 const ADL = ({
   setReplaceComponent,
+  selectedDate, //*************************
 }: {
   setReplaceComponent: (table: string) => void;
+  selectedDate: string; //*************************
 }) => {
   const routeParams = useParams();
 
   const [ADLscore, setADLscore] = useState<typeADL>({
-    testDate: "",
+    testDate: selectedDate, //*************************
     talking: 0,
     chewing: 0,
     swallowing: 0,
     breathing: 0,
     brushTeethOrCombHair: 0,
     ariseFromChair: 0,
+    doubleVision: 0,
     eyelid: 0,
     sum: 0,
   });
