@@ -53,7 +53,11 @@ const Visit = ({
     DBP: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
 
     const numericValue = value.trim() !== "" ? parseFloat(value) : 0;
