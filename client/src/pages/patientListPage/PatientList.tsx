@@ -120,7 +120,7 @@ function PatientList() {
   };
 
   //EMG
-  const handleEMGDialogOpen = () => {
+  const handleEMGDialogOpen = (patient_id: string) => {
     setEMGDialogOpen(true);
   };
 
@@ -129,7 +129,7 @@ function PatientList() {
   };
 
   //BloodTest
-  const handleBloodTestDialogOpen = () => {
+  const handleBloodTestDialogOpen = (_id: string) => {
     setBloodTestDialogOpen(true);
   };
 
@@ -356,18 +356,16 @@ function PatientList() {
                           </Box>
                         </TableCell>
 
-                        <TableCell align="center">
-                          <Box>
-                            <FindInPageRoundedIcon onClick={handleEMGDialogOpen}>
-                              <EditIcon />
-                            </FindInPageRoundedIcon>
-                          </Box>
-                        </TableCell>
+                        <FindInPageRoundedIcon
+                          onClick={() => handleEMGDialogOpen(patient._id)}
+                        >
+                          <EditIcon />
+                        </FindInPageRoundedIcon>
                         <TableCell align="center">
                           <Box>
                             <VaccinesRoundedIcon
-                              onClick={handleBloodTestDialogOpen}
-                            >
+                          onClick={() => handleBloodTestDialogOpen(patient._id)}
+                          >
                               <EditIcon />
                             </VaccinesRoundedIcon>
                           </Box>
