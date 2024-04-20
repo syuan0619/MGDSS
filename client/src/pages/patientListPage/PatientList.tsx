@@ -11,8 +11,8 @@ import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import WaterDropIcon from "@mui/icons-material/WaterDrop";
-import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
+import VaccinesRoundedIcon from "@mui/icons-material/VaccinesRounded";
+import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
 import { Button } from "@mui/material";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import { Info } from "../../types/Patient";
@@ -20,8 +20,8 @@ import api from "../../api";
 import * as React from "react";
 import SearchName from "./components/SearchName";
 import PatientStatus from "./components/PatientStatus";
-import EMG from "../../pages/inquiryPage/table/EMG";
-import BloodTest from "../../pages/inquiryPage/table/BloodTest";
+import EMG from "./EMG";
+import BloodTest from "./BloodTest";
 import IconButton from "@mui/material/IconButton";
 import {
   Dialog,
@@ -374,16 +374,18 @@ function PatientList() {
 
                         <TableCell align="center">
                           <Box>
-                            <ElectricBoltIcon onClick={handleEMGDialogOpen}>
+                            <FindInPageRoundedIcon onClick={handleEMGDialogOpen}>
                               <EditIcon />
-                            </ElectricBoltIcon>
+                            </FindInPageRoundedIcon>
                           </Box>
                         </TableCell>
                         <TableCell align="center">
                           <Box>
-                            <WaterDropIcon onClick={handleBloodTestDialogOpen}>
+                            <VaccinesRoundedIcon
+                              onClick={handleBloodTestDialogOpen}
+                            >
                               <EditIcon />
-                            </WaterDropIcon>
+                            </VaccinesRoundedIcon>
                           </Box>
                         </TableCell>
                       </>
