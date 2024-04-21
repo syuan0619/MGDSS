@@ -26,6 +26,9 @@ def getAllPatients():
 def getPatientById(patientId):
     patient = patientCollection.find_one({"_id": ObjectId(patientId)})
     patient["_id"] = str(patient["_id"])
+    for emg in patient["EMG"]:
+        if "image" in emg:
+            emg.pop("image")
     return patient
 
 
@@ -33,7 +36,7 @@ def getPatientByDate(patientId: str, date: str):
     patient = getPatientById(patientId)
     tablesAtDate = {}
     for key in patient:
-        if key != "_id" and key != "info" and key != "visit":
+        if key != "_id" and key != "info":
             for table in patient[key]:
                 if table["testDate"] == date:
                     tablesAtDate[key] = table
@@ -64,6 +67,7 @@ def updatePatient(patientId: str, tableName: str, table: dict):
         {"$push": {tableName: table}},
         return_document=pymongo.ReturnDocument.AFTER,
     )
+    # patientCollection.aggregate([{"$match": {"_id": ObjectId(patientId)}}, {"$sortArray": {"input": '{tableName}', "sortBy": {"testDate": 1}}}])
     updatedPatient["_id"] = str(updatedPatient["_id"])
     return updatedPatient
 
