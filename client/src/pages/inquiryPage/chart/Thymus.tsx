@@ -61,7 +61,6 @@ const ThymusChart = ({
 };
 
 const ThymusSmallChart = ({ historyData }: { historyData: Thymus[] }) => {
-  console.log(historyData);
   const ThymusData = historyData[0]["thymusStatus"];
   let thymusResult = "";
 

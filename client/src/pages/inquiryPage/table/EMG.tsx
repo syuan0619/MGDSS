@@ -230,8 +230,6 @@ const EMG = ({
   };
 
   const sendResult = async () => {
-    handleModifiedResult();
-    modifiedResultToEMG();
     console.log(resultHeader);
     const formdata = new FormData();
     formdata.append("file", resultBody!);
@@ -250,6 +248,12 @@ const EMG = ({
         });
     }
   };
+
+  useEffect(() => {
+    if (resultHeader) {
+      sendResult();
+    }
+  }, [resultHeader]);
 
   return (
     <div className="inquiry-table-EMG-all">
@@ -308,7 +312,8 @@ const EMG = ({
               <button
                 id="submitButton"
                 onClick={() => {
-                  sendResult();
+                  handleModifiedResult();
+                  modifiedResultToEMG();
                   // setReplaceComponent("right");
                 }}
               >

@@ -36,7 +36,7 @@ const ConfirmPanel = ({ selectedDate }: { selectedDate: string }) => {
         <div className="row-of-confirm-panel">
           <Confirm title="ADL" initialData={patients.ADL} />
           <Confirm title="BloodTest" initialData={patients.bloodTest} />
-          <ConfirmEMG />
+          <ConfirmEMG title="BloodTest" initialData={patients.EMG} />
           <Confirm title="MG" initialData={patients.MG} />
         </div>
         <div className="row-of-confirm-panel">
