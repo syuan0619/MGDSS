@@ -16,7 +16,6 @@ class Info(BaseModel):
     sex: str
     height: float
     weight: float
-    status: str
     other: str
     attackDate: str
     beginSymptom: str
@@ -41,6 +40,9 @@ class Examination(BaseModel):
     dyspnea: int
     limpWeakness: int
 
+class Status(BaseModel):
+    isWaiting: bool
+    description: str
 
 # 看診紀錄
 class Visit(BaseModel):
@@ -53,6 +55,7 @@ class Visit(BaseModel):
     prescription: Prescription
     examination: Examination
     MGFAclassification: str
+    status: Status
 
 
 # 胸腺掃描
