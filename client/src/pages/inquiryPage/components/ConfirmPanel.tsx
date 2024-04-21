@@ -11,99 +11,18 @@ import api from "../../../api";
 import { Patient } from "../../../types/Patient";
 import ConfirmEMG from "./ConfirmEMG";
 import ConfirmVisit from "./ConfirmVisit";
+import { useParams } from "react-router-dom";
 
-const ConfirmPanel = ({ patient_id }: { patient_id: string | undefined }) => {
-  // const [ADLscore] = useState<typeADL>({
-  //   testDate: "",
-  //   talking: 0,
-  //   chewing: 0,
-  //   swallowing: 0,
-  //   breathing: 0,
-  //   brushTeethOrCombHair: 0,
-  //   ariseFromChair: 0,
-  //   eyelid: 0,
-  //   sum: 0,
-  // });
-  // const [BloodTestscore] = useState<typeBloodTest>({
-  //   testDate: "",
-  //   ACHR: 0,
-  //   TSH: 0,
-  //   freeThyroxine: 0,
-  //   ANA: 0,
-  //   uricAcid: 0,
-  // });
-  // const [MGscore] = useState<typeMG>({
-  //   testDate: "",
-  //   ptosis: 0,
-  //   doubleVision: 0,
-  //   eyeClosure: 0,
-  //   talking: 0,
-  //   chewing: 0,
-  //   swallowing: 0,
-  //   breathing: 0,
-  //   neckFlexion: 0,
-  //   shoulderAbduction: 0,
-  //   hipFlexion: 0,
-  //   sum: 0,
-  // });
-  // const [QMGscore] = useState<typeQMG>({
-  //   testDate: "",
-  //   doubleVision: 0,
-  //   ptosis: 0,
-  //   facialMuscle: 0,
-  //   swallowing: 0,
-  //   speakFluency: 0,
-  //   rightArmHeight: 0,
-  //   leftArmHeight: 0,
-  //   vitalCapacity: 0,
-  //   rightHandGrid: 0,
-  //   leftHandGrid: 0,
-  //   headLift: 0,
-  //   rightLegHeight: 0,
-  //   leftLegHeight: 0,
-  //   sum: 0,
-  // });
-  // const [QOLscore] = useState<typeQOL>({
-  //   testDate: "",
-  //   frustration: 0,
-  //   eyeUsing: 0,
-  //   eating: 0,
-  //   social: 0,
-  //   entertainment: 0,
-  //   fullfillFamilyNeeds: 0,
-  //   plansNecessity: 0,
-  //   jobState: 0,
-  //   speaking: 0,
-  //   driving: 0,
-  //   depression: 0,
-  //   walking: 0,
-  //   beingInPublicPlaces: 0,
-  //   overwhelm: 0,
-  //   freshenUp: 0,
-  //   sum: 0,
-  // });
-  // const [Thymusscore] = useState<typeThymus>({
-  //   testDate: "",
-  //   thymusStatus: 0,
-  //   thymusDescription: "",
-  // });
-
-  // Timer
-  const [time, setTime] = useState(new Date().toISOString());
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date().toISOString());
-    }, 60000);
-    return () => clearInterval(timer);
-  }, []);
+const ConfirmPanel = ({ selectedDate }: { selectedDate: string }) => {
+  const routeParams = useParams();
 
   //get patient data by date
   const [patients, setPatients] = useState<Patient>();
-  console.log(patients);
-  console.log(time.slice(0, 10));
 
   const data = async () => {
-    const response = await api.get(`/inquiry/${patient_id}/2024-04-05`);
+    const response = await api.get(
+      `/inquiry/${routeParams.id}/${selectedDate}`
+    );
     setPatients(response.data.tables);
   };
 
@@ -132,3 +51,78 @@ const ConfirmPanel = ({ patient_id }: { patient_id: string | undefined }) => {
 };
 
 export default ConfirmPanel;
+
+// const [ADLscore] = useState<typeADL>({
+//   testDate: "",
+//   talking: 0,
+//   chewing: 0,
+//   swallowing: 0,
+//   breathing: 0,
+//   brushTeethOrCombHair: 0,
+//   ariseFromChair: 0,
+//   eyelid: 0,
+//   sum: 0,
+// });
+// const [BloodTestscore] = useState<typeBloodTest>({
+//   testDate: "",
+//   ACHR: 0,
+//   TSH: 0,
+//   freeThyroxine: 0,
+//   ANA: 0,
+//   uricAcid: 0,
+// });
+// const [MGscore] = useState<typeMG>({
+//   testDate: "",
+//   ptosis: 0,
+//   doubleVision: 0,
+//   eyeClosure: 0,
+//   talking: 0,
+//   chewing: 0,
+//   swallowing: 0,
+//   breathing: 0,
+//   neckFlexion: 0,
+//   shoulderAbduction: 0,
+//   hipFlexion: 0,
+//   sum: 0,
+// });
+// const [QMGscore] = useState<typeQMG>({
+//   testDate: "",
+//   doubleVision: 0,
+//   ptosis: 0,
+//   facialMuscle: 0,
+//   swallowing: 0,
+//   speakFluency: 0,
+//   rightArmHeight: 0,
+//   leftArmHeight: 0,
+//   vitalCapacity: 0,
+//   rightHandGrid: 0,
+//   leftHandGrid: 0,
+//   headLift: 0,
+//   rightLegHeight: 0,
+//   leftLegHeight: 0,
+//   sum: 0,
+// });
+// const [QOLscore] = useState<typeQOL>({
+//   testDate: "",
+//   frustration: 0,
+//   eyeUsing: 0,
+//   eating: 0,
+//   social: 0,
+//   entertainment: 0,
+//   fullfillFamilyNeeds: 0,
+//   plansNecessity: 0,
+//   jobState: 0,
+//   speaking: 0,
+//   driving: 0,
+//   depression: 0,
+//   walking: 0,
+//   beingInPublicPlaces: 0,
+//   overwhelm: 0,
+//   freshenUp: 0,
+//   sum: 0,
+// });
+// const [Thymusscore] = useState<typeThymus>({
+//   testDate: "",
+//   thymusStatus: 0,
+//   thymusDescription: "",
+// });

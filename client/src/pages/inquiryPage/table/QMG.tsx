@@ -8,8 +8,10 @@ import { useParams } from "react-router-dom";
 
 const QMG = ({
   setReplaceComponent,
+  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
+  selectedDate: string;
 }) => {
   const routeParams = useParams();
 
@@ -28,7 +30,7 @@ const QMG = ({
     rightLegHeight: 0,
     leftLegHeight: 0,
     sum: 0,
-    testDate: "",
+    testDate: selectedDate,
   });
 
   const handleChange = (

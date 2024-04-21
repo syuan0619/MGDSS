@@ -7,12 +7,14 @@ import { useParams } from "react-router-dom";
 
 const MG = ({
   setReplaceComponent,
+  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
+  selectedDate: string;
 }) => {
   const routeParams = useParams();
   const [MGscore, setMGScore] = useState<typeMG>({
-    testDate: "",
+    testDate: selectedDate,
     ptosis: 0,
     doubleVision: 0,
     eyeClosure: 0,
