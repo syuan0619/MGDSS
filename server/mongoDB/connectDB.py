@@ -33,7 +33,7 @@ def getPatientByDate(patientId: str, date: str):
     patient = getPatientById(patientId)
     tablesAtDate = {}
     for key in patient:
-        if key != "_id" and key != "info" and key != "visit":
+        if key != "_id" and key != "info":
             for table in patient[key]:
                 if table["testDate"] == date:
                     tablesAtDate[key] = table
@@ -64,6 +64,7 @@ def updatePatient(patientId: str, tableName: str, table: dict):
         {"$push": {tableName: table}},
         return_document=pymongo.ReturnDocument.AFTER,
     )
+    # patientCollection.aggregate([{"$match": {"_id": ObjectId(patientId)}}, {"$sortArray": {"input": '{tableName}', "sortBy": {"testDate": 1}}}])
     updatedPatient["_id"] = str(updatedPatient["_id"])
     return updatedPatient
 
