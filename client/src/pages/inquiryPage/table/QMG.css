@@ -31,29 +31,35 @@
   font-size: 2rem;
 }
 
+.inquiry-table-QMG-return {
+  width: 14vw;
+  display: flex;
+  justify-content: center;
+}
+.inquiry-table-QMG-head-title {
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+}
+
 .QMG-backToRight {
   border: 0;
   background-color: white;
   font-size: 3.7rem;
   color: #c7c8cc;
-  margin-left: -5rem;
-  position: absolute;
-  top: 20%;
-  left: 40%;
 }
+
 .QMG-backToRight:hover {
   cursor: pointer;
   color: #b4b4b8;
 }
 
 .inquiry-table-QMG-content-row-sum {
+  width: 14vw;
   font-size: 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  position: absolute;
-  top: 23%;
-  right: 5%;
 }
 
 .inquiry-table-QMG-content-row-sum input {

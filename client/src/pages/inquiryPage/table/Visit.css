@@ -21,7 +21,6 @@ input[type="range"]::-webkit-slider-thumb {
   background-color: white;
   font-size: 3.7rem;
   color: #c7c8cc;
-  margin-left: -5rem;
 }
 .Visit-backToRight:hover {
   cursor: pointer;
@@ -35,6 +34,20 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 2rem;
 }
 
+.inquiry-table-Visit-return {
+  width: 14vw;
+  display: flex;
+  justify-content: center;
+}
+.inquiry-table-Visit-head-title {
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+}
+
+.inquiry-table-Visit-content-row-sum {
+  width: 14vw;
+}
 .Visit-alert-input {
   position: absolute;
   top: 100%;
@@ -125,6 +138,7 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   flex-direction: column;
   height: 12vh;
+  margin-left: 1vw;
 }
 
 .inquiry-table-Visit-content-row-DBP {
@@ -163,7 +177,7 @@ input[type="range"]::-webkit-slider-thumb {
   height: 6vh;
   font-size: 1.1rem;
   margin-top: 0.5vh;
-  border-radius: 0.9rem;
+  border-radius: 0.7rem;
   border: none;
   background-color: #eeeeee;
 }

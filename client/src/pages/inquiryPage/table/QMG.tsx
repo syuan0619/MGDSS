@@ -126,13 +126,17 @@ const QMG = ({
       <div className="inquiry-table-QMG-bg">
         <div className="inquiry-table-QMG">
           <div className="inquiry-table-QMG-head">
-            <button
-              className="QMG-backToRight"
-              onClick={() => setReplaceComponent("right")}
-            >
-              <IoIosArrowDropleftCircle />
-            </button>
-            <p>QMG</p>
+            <div className="inquiry-table-QMG-return">
+              <button
+                className="QMG-backToRight"
+                onClick={() => setReplaceComponent("right")}
+              >
+                <IoIosArrowDropleftCircle />
+              </button>
+            </div>
+            <div className="inquiry-table-QMG-head-title">
+              <p>QMG</p>
+            </div>
             <div className="inquiry-table-QMG-content-row-sum">
               <label htmlFor="sum">總分 : </label>
               <input

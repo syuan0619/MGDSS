@@ -61,13 +61,17 @@ const MG = ({
     <div className="inquiry-table-MG-all">
       <div className="inquiry-table-MG-bg">
         <div className="inquiry-table-MG-head">
-          <button
-            className="MG-backToRight"
-            onClick={() => setReplaceComponent("right")}
-          >
-            <IoIosArrowDropleftCircle />
-          </button>
-          <p>MG</p>
+          <div className="inquiry-table-MG-return">
+            <button
+              className="MG-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+          </div>
+          <div className="inquiry-table-MG-head-title">
+            <p>MG</p>
+          </div>
           <div className="inquiry-table-MG-content-row-sum">
             <label htmlFor="sum">總分 : </label>
             <input

@@ -125,13 +125,17 @@ const QOL = ({
       <div className="inquiry-table-QOL-bg">
         <div className="inquiry-table-QOL">
           <div className="inquiry-table-QOL-head">
-            <button
-              className="QOL-backToRight"
-              onClick={() => setReplaceComponent("right")}
-            >
-              <IoIosArrowDropleftCircle />
-            </button>
-            <p>QOL</p>
+            <div className="inquiry-table-QOL-return">
+              <button
+                className="QOL-backToRight"
+                onClick={() => setReplaceComponent("right")}
+              >
+                <IoIosArrowDropleftCircle />
+              </button>
+            </div>
+            <div className="inquiry-table-QOL-head-title">
+              <p>QOL</p>
+            </div>
             <div className="inquiry-table-QOL-content-row-sum">
               <label htmlFor="sum">總分 : </label>
               <input

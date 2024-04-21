@@ -120,13 +120,17 @@ const Visit = ({
     <div className="inquiry-table-Visit-all">
       <div className="inquiry-table-Visit-bg">
         <div className="inquiry-table-Visit-head">
-          <button
-            className="Visit-backToRight"
-            onClick={() => setReplaceComponent("right")}
-          >
-            <IoIosArrowDropleftCircle />
-          </button>
-          <p>Visit</p>
+          <div className="inquiry-table-Visit-return">
+            <button
+              className="Visit-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+          </div>
+          <div className="inquiry-table-Visit-head-title">
+            <p>Visit</p>
+          </div>
           <div className="inquiry-table-Visit-content-row-sum"></div>
         </div>
         <div className="inquiry-table-Visit-content">

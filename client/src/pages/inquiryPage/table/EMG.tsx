@@ -259,7 +259,7 @@ const EMG = ({
     <div className="inquiry-table-EMG-all">
       <div className="inquiry-table-EMG-head-content">
         <div className="inquiry-table-EMG-head">
-          <div>
+          <div className="inquiry-table-EMG-return">
             <button
               className="EMG-backToRight"
               onClick={() => setReplaceComponent("right")}
@@ -267,10 +267,10 @@ const EMG = ({
               <IoIosArrowDropleftCircle />
             </button>
           </div>
-          <div>
+          <div className="inquiry-table-EMG-head-title">
             <p>電生理訊號</p>
           </div>
-          <div></div>
+          <div className="inquiry-table-EMG-content-row-sum"></div>
         </div>
 
         <div className="inquiry-table-EMG-content">

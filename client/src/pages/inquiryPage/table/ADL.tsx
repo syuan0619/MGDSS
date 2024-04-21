@@ -61,13 +61,17 @@ const ADL = ({
     <div className="inquiry-table-ADL-all">
       <div className="inquiry-table-ADL-bg">
         <div className="inquiry-table-ADL-head">
-          <button
-            className="ADL-backToRight"
-            onClick={() => setReplaceComponent("right")}
-          >
-            <IoIosArrowDropleftCircle />
-          </button>
-          <p>ADL</p>
+          <div className="inquiry-table-ADL-return">
+            <button
+              className="ADL-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+          </div>
+          <div className="inquiry-table-ADL-head-title">
+            <p>ADL</p>
+          </div>
           <div className="inquiry-table-ADL-content-row-sum">
             <label htmlFor="sum">總分 : </label>
             <input

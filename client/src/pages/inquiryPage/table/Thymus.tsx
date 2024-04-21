@@ -50,13 +50,18 @@ const Thymus = ({
     <div className="inquiry-table-Thymus-all">
       <div className="inquiry-table-Thymus-bg">
         <div className="inquiry-table-Thymus-head">
-          <button
-            className="Thymus-backToRight"
-            onClick={() => setReplaceComponent("right")}
-          >
-            <IoIosArrowDropleftCircle />
-          </button>
-          <p>Thymus</p>
+          <div className="inquiry-table-Thymus-return">
+            <button
+              className="Thymus-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+          </div>
+          <div className="inquiry-table-Thymus-head-title">
+            <p>Thymus</p>
+          </div>
+          <div className="inquiry-table-Thymus-content-row-sum"></div>
         </div>
         <div className="inquiry-table-Thymus-content">
           <div className="inquiry-table-Thymus-content-row">

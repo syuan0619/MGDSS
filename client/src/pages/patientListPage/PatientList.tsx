@@ -36,6 +36,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import "./PatientList.css";
 import InfoIcon from "@mui/icons-material/Info";
+import { blue } from "@mui/material/colors";
 
 function PatientList() {
   const navigate = useNavigate();
@@ -244,7 +245,21 @@ function PatientList() {
                 >
                   新增病患
                 </Button>
-
+                <Button
+                  sx={{
+                    width: "6rem",
+                    marginTop: "1rem",
+                    marginLeft: "2rem",
+                    backgroundColor: "#1679AB",
+                    color: "white",
+                    borderRadius: "0.7rem",
+                    "&:hover": {
+                      color: "#1679AB",
+                    },
+                  }}
+                >
+                  匯出
+                </Button>
                 <Box
                   sx={{
                     display: "flex",
