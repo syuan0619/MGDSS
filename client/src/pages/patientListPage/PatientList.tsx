@@ -73,7 +73,7 @@ function PatientList() {
   const nav = useNavigate();
   const navToInquiryPage = (id: string) => {
     if (role == "doctor") {
-      nav(`/inquiry/${id}`);
+      nav(`/inquiry/${id}/${selectedDate}`);
     }
   };
 
@@ -441,8 +441,7 @@ function PatientList() {
           },
         }}
       >
-        <DialogTitle sx={{}}
-        >新增病患</DialogTitle>
+        <DialogTitle sx={{}}>新增病患</DialogTitle>
         <DialogContent sx={{ margingTop: "5vh" }}>
           <TextField
             label="病歷號"
@@ -578,48 +577,6 @@ function PatientList() {
               },
             }}
           />
-          <p />
-          <TextField
-            label="其他醫院就診紀錄"
-            variant="outlined"
-            name="otherHospitalRecord"
-            value={addPatient!.otherHospitalRecord|| "請輸入其他醫院就診紀錄及總看診次數"}
-            onChange={changeAddPatient}
-            required
-            sx={{
-              "& .MuiOutlinedInput-input": {
-                background: "#E0F4FF",
-              },
-            }}
-          />
-          <p />
-          <TextField
-            label="其他疾病"
-            variant="outlined"
-            name="otherDisease"
-            value={addPatient!.otherDisease|| ""}
-            onChange={changeAddPatient}
-            required
-            sx={{
-              "& .MuiOutlinedInput-input": {
-                background: "#E0F4FF",
-              },
-            }}
-          />
-          <p />
-          <TextField
-            label="其他用藥紀錄"
-            variant="outlined"
-            name="otherMedicine"
-            value={addPatient!.otherMedicine|| ""}
-            onChange={changeAddPatient}
-            required
-            sx={{
-              "& .MuiOutlinedInput-input": {
-                background: "#E0F4FF",
-              },
-            }}
-          />{" "}
         </DialogContent>
         <DialogActions>
           <IconButton

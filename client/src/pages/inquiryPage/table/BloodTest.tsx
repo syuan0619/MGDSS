@@ -9,13 +9,15 @@ import { useParams } from "react-router-dom";
 
 const BloodTest = ({
   setReplaceComponent,
+  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
+  selectedDate: string;
 }) => {
   const routeParams = useParams();
 
   const [BloodTestScore, setBloodTestScore] = useState<typeBloodTest>({
-    testDate: "",
+    testDate: selectedDate,
     ACHR: 0,
     TSH: 0,
     freeThyroxine: 0,

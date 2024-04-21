@@ -6,11 +6,9 @@ import PredictDialog from "./PredictDialog";
 import { ChangeEvent, useState } from "react";
 
 const Menu = ({
-  patient_id,
   selectedDate,
   setSelectedDate,
 }: {
-  patient_id: string | undefined;
   selectedDate: string;
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
 }) => {
@@ -43,7 +41,7 @@ const Menu = ({
             </Button>
           </Link>
         </div>
-        <div className="inquiry-menu-numbox">001</div>
+        {/* <div className="inquiry-menu-numbox">001</div> */}
       </div>
       <div className="inquiry-menu-right">
         <input
@@ -58,7 +56,7 @@ const Menu = ({
         <PredictDialog
           open={predictStatus}
           handleClose={predictDialogHide}
-          patient_id={patient_id}
+          selectedDate={selectedDate}
         />
         <button className="inquiry-menu-button">結束看診</button>
       </div>
