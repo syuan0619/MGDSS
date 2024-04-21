@@ -223,7 +223,8 @@ async def inquiry_EMG(
 ):
     try:
         table = json.loads(table)
-        updatePatient(patientId, "EMG", {**table, "image": file.file.read()})
+        # updatePatient(patientId, "EMG", {**table, "image": file.file.read()})
+        updatePatient(patientId, "EMG", {**table})
         return {"message": "Success add new EMG table!", "updatedPatient": table}
     except ValidationError as e:
         print("error: ", str(e))
