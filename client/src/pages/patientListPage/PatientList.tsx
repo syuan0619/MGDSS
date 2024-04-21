@@ -177,9 +177,15 @@ function PatientList() {
           display: "flex",
           justifyContent: "center",
           boxShadow: "0",
+          overflowY: "hidden",
         }}
       >
-        <Box sx={{ width: "90vw", height: "100vh", marginTop: "3rem" }}>
+        <Box
+          sx={{
+            width: "90vw",
+            marginTop: "3rem",
+          }}
+        >
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box
               sx={{
