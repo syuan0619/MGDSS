@@ -74,6 +74,15 @@
   justify-content: flex-start;
   margin-top: 6rem;
 }
+
+.thymus-radio-all {
+  margin-top: 3vh;
+}
+
+.thymus-radio {
+  display: flex;
+  height: 7vh;
+}
 .inquiry-table-Thymus-content-row input[type="date"] {
   font-size: 1.2rem;
   margin-top: 1rem;
@@ -91,8 +100,7 @@
 }
 .inquiry-table-Thymus-content-row-thymusStatus input[type="radio"] {
   height: 3vh;
-  width: 3vw;
-  margin-top: 4vh;
+  width: 7vw;
 }
 
 .inquiry-table-Thymus-content-row input {

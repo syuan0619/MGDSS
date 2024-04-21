@@ -71,8 +71,8 @@ const Thymus = ({
           </div>
           <div className="inquiry-table-Thymus-content-row-thymusStatus">
             <label htmlFor="thymusStatus">Thymus Status</label>
-            <div>
-              <div>
+            <div className="thymus-radio-all">
+              <div className="thymus-radio">
                 <input
                   onChange={handleChange}
                   type="radio"
@@ -82,7 +82,7 @@ const Thymus = ({
                 />
                 <label>胸腺正常</label>
               </div>
-              <div>
+              <div className="thymus-radio">
                 <input
                   onChange={handleChange}
                   type="radio"
@@ -92,7 +92,7 @@ const Thymus = ({
                 />
                 <label>胸腺委縮</label>
               </div>
-              <div>
+              <div className="thymus-radio">
                 <input
                   onChange={handleChange}
                   type="radio"
@@ -102,7 +102,7 @@ const Thymus = ({
                 />
                 <label>胸腺增生</label>
               </div>
-              <div>
+              <div className="thymus-radio">
                 <input
                   onChange={handleChange}
                   type="radio"
