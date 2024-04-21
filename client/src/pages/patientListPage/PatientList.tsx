@@ -15,7 +15,7 @@ import VaccinesRoundedIcon from "@mui/icons-material/VaccinesRounded";
 import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
 import { Button } from "@mui/material";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
-import { Info } from "../../types/Patient";
+import { Info, Visit } from "../../types/Patient";
 import api from "../../api";
 import * as React from "react";
 import SearchName from "./components/SearchName";
@@ -36,7 +36,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import "./PatientList.css";
 import InfoIcon from "@mui/icons-material/Info";
-import { blue } from "@mui/material/colors";
 
 function PatientList() {
   const navigate = useNavigate();
@@ -53,7 +52,8 @@ function PatientList() {
   const role = userData ? userData.role : null;
 
   //get patients
-  const [patients, setPatients] = useState<{ _id: string; info: Info }[]>();
+  const [patients, setPatients] =
+    useState<{ _id: string; info: Info; visit: Visit }[]>();
   const data = async () => {
     const response = await api.get("/patients/");
     setPatients(response.data);
@@ -62,6 +62,8 @@ function PatientList() {
   useEffect(() => {
     data();
   }, []);
+
+  //sort patients
 
   //handle date
   const newDate = new Date().toISOString().slice(0, 10);
@@ -96,7 +98,6 @@ function PatientList() {
     sex: "",
     height: 0,
     weight: 0,
-    status: "",
     other: "",
     attackDate: "",
     beginSymptom: "",
@@ -250,11 +251,11 @@ function PatientList() {
                     width: "6rem",
                     marginTop: "1rem",
                     marginLeft: "2rem",
-                    backgroundColor: "#1679AB",
+                    backgroundColor: "#00b4c9",
                     color: "white",
                     borderRadius: "0.7rem",
                     "&:hover": {
-                      color: "#1679AB",
+                      color: "#00b4c9",
                     },
                   }}
                 >
@@ -337,7 +338,7 @@ function PatientList() {
                     hover={true}
                   >
                     <TableCell align="center">
-                      <PatientStatus />
+                      <PatientStatus visit={patient.visit} />
                     </TableCell>
                     <TableCell
                       onClick={() => navToInquiryPage(patient._id)}

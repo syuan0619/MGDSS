@@ -65,9 +65,9 @@ const QMG = ({
 
   const blockLeft = Object.entries(QMGscore)
     .slice(0, 7)
-    .map(([key, value]) => (
+    .map(([key, value], index) => (
       <>
-        <div className="inquiry-table-QMG-content-sliderbox">
+        <div className="inquiry-table-QMG-content-sliderbox" key={index}>
           <p>{key}</p>
           <input
             defaultValue="0"

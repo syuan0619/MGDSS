@@ -1,7 +1,8 @@
 import { Box, FormControl, InputLabel, Select } from "@mui/material";
 import { useState } from "react";
+import { Visit } from "../../../types/Patient";
 
-function PatientStatus() {
+function PatientStatus({ visit }: { visit: Visit }) {
   const [status, setStatus] = useState<string>("");
   const [isChange, setIsChange] = useState<boolean>(false);
 

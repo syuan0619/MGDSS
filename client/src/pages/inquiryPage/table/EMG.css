@@ -25,7 +25,10 @@
 .inquiry-table-EMG-return {
   width: 14vw;
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
+  padding-top: 1rem;
 }
 
 .EMG-backToRight {
