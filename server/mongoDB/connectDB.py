@@ -26,6 +26,9 @@ def getAllPatients():
 def getPatientById(patientId):
     patient = patientCollection.find_one({"_id": ObjectId(patientId)})
     patient["_id"] = str(patient["_id"])
+    for emg in patient["EMG"]:
+        if "image" in emg:
+            emg.pop("image")
     return patient
 
 
