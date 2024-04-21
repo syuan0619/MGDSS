@@ -155,7 +155,11 @@ const QMGChart = ({
 
   //selectAll
   const handleSelectAll = () => {
-    setA(QMGData);
+    if (a.length !== QMGData.length) {
+      setA(QMGData);
+    } else {
+      setA([]);
+    }
   };
 
   const handleChecked = (label: string) => {
@@ -175,8 +179,7 @@ const QMGChart = ({
             selectData(item.label);
             handleChecked(item.label);
           }}
-          defaultChecked={true}
-          checked={handleChecked("item")}
+          checked={a.some((selectedItem) => selectedItem.label === item.label)}
         />
         {item.label}
       </label>

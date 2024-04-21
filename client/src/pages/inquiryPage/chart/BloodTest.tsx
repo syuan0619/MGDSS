@@ -79,7 +79,11 @@ const BloodTestChart = ({
 
   //selectAll
   const handleSelectAll = () => {
-    setA(BloodData);
+    if (a.length !== BloodData.length) {
+      setA(BloodData);
+    } else {
+      setA([]);
+    }
   };
   const handleChecked = (label: string) => {
     if (a.length == BloodData.length) {
@@ -97,8 +101,7 @@ const BloodTestChart = ({
           selectData(item.label);
           handleChecked(item.label);
         }}
-        defaultChecked={true}
-        checked={handleChecked("item")}
+        checked={a.some((selectedItem) => selectedItem.label === item.label)}
       />
       {item.label}
     </label>

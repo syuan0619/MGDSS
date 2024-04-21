@@ -97,7 +97,11 @@ const ADLChart = ({
 
   //selectAll
   const handleSelectAll = () => {
-    setA(data);
+    if (a.length !== data.length) {
+      setA(data);
+    } else {
+      setA([]);
+    }
   };
 
   const handleChecked = (label: string) => {
@@ -118,8 +122,7 @@ const ADLChart = ({
           selectData(item.label);
           handleChecked(item.label);
         }}
-        defaultChecked={true}
-        checked={handleChecked("item")}
+        checked={a.some((selectedItem) => selectedItem.label === item.label)}
       />
       {item.label}
     </label>
@@ -132,7 +135,6 @@ const ADLChart = ({
       return true;
     }
   };
-  console.log(a);
   return (
     <div className="chart-bg">
       <div className="chart">
