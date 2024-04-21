@@ -7,13 +7,15 @@ import { useParams } from "react-router-dom";
 
 const Thymus = ({
   setReplaceComponent,
+  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
+  selectedDate: string;
 }) => {
   const routeParams = useParams();
 
   const [Thymusscore, setThymusScore] = useState<typeThymus>({
-    testDate: "",
+    testDate: selectedDate,
     thymusStatus: 0,
     thymusDescription: "",
   });

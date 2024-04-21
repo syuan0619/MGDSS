@@ -5,8 +5,10 @@ import { IoIosArrowDropleftCircle } from "react-icons/io";
 
 const EMG = ({
   setReplaceComponent,
+  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
+  selectedDate: string;
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string>();
@@ -71,6 +73,166 @@ const EMG = ({
     }
   }, [uploadedFile]);
 
+<<<<<<< Updated upstream
+=======
+  const noSpaceNewLineResult: string[] = [];
+  const handleModifiedResult = () => {
+    const modified = modifiedResult;
+    let word = "";
+    for (let i = 0; i < modifiedResult.length; i++) {
+      if (!(modified[i] == "\n" || modified[i] == "\r" || modified[i] == " ")) {
+        word += modified[i];
+      } else if (word.length > 0) {
+        noSpaceNewLineResult.push(word);
+        word = "";
+      }
+    }
+  };
+
+  const modifiedResultToEMG = () => {
+    const sendResult: noImageType = {
+      testDate: selectedDate,
+      nasalis: {
+        preActivation: 0,
+        postActivation: [],
+      },
+      abd: {
+        preActivation: 0,
+        postActivation: [],
+      },
+      trapezius: {
+        preActivation: 0,
+        postActivation: [],
+      },
+    };
+
+    noSpaceNewLineResult.map((eachWord, index) => {
+      if (eachWord.toLowerCase() === "nasalis") {
+        if (
+          noSpaceNewLineResult[index + 1]
+            .toLowerCase()
+            .includes("preactivation")
+        ) {
+          sendResult.nasalis.preActivation = toPureNumber(
+            noSpaceNewLineResult[index + 4]
+          );
+        }
+        if (
+          noSpaceNewLineResult[index + 5]
+            .toLowerCase()
+            .includes("postactivation")
+        ) {
+          console.log("nasalis postactivation");
+          sendResult.nasalis.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 8])
+          );
+          sendResult.nasalis.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 10])
+          );
+          sendResult.nasalis.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 12])
+          );
+          sendResult.nasalis.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 14])
+          );
+        }
+      }
+      if (eachWord.toLowerCase() === "abd") {
+        if (
+          noSpaceNewLineResult[index + 1]
+            .toLowerCase()
+            .includes("preactivation")
+        ) {
+          sendResult.abd.preActivation = toPureNumber(
+            noSpaceNewLineResult[index + 4]
+          );
+        }
+        if (
+          noSpaceNewLineResult[index + 5]
+            .toLowerCase()
+            .includes("postactivation")
+        ) {
+          console.log("abd postactivation");
+          sendResult.abd.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 8])
+          );
+          sendResult.abd.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 10])
+          );
+          sendResult.abd.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 12])
+          );
+          sendResult.abd.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 14])
+          );
+        }
+      }
+      if (eachWord.toLowerCase() === "trapezius") {
+        if (
+          noSpaceNewLineResult[index + 1]
+            .toLowerCase()
+            .includes("preactivation")
+        ) {
+          sendResult.trapezius.preActivation = toPureNumber(
+            noSpaceNewLineResult[index + 4]
+          );
+        }
+        if (
+          noSpaceNewLineResult[index + 5]
+            .toLowerCase()
+            .includes("postactivation")
+        ) {
+          sendResult.trapezius.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 8])
+          );
+          sendResult.trapezius.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 10])
+          );
+          sendResult.trapezius.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 12])
+          );
+          sendResult.trapezius.postActivation.push(
+            toPureNumber(noSpaceNewLineResult[index + 14])
+          );
+        }
+      }
+    });
+    setResultHeader(sendResult);
+  };
+
+  const toPureNumber = (str: string) => {
+    let newStr = "";
+    for (let i = 0; i < str.length; i++) {
+      if (!(str[i] === "%" || str[i] === "-")) {
+        newStr += str[i];
+      }
+    }
+    return Number(newStr);
+  };
+
+  const sendResult = async () => {
+    handleModifiedResult();
+    modifiedResultToEMG();
+    console.log(resultHeader);
+    console.log(resultBody);
+    console.log(routeParams.id);
+    const confirmResult = confirm("確定送出結果嗎?");
+    if (confirmResult && resultHeader && resultBody) {
+      console.log(JSON.stringify(resultHeader));
+      await api
+        .post(`/inquiry/${routeParams.id}/EMG`, resultBody, {
+          headers: {
+            table: JSON.stringify(resultHeader),
+            "Access-Control-Expose-Headers": "table",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
+    }
+  };
+
+>>>>>>> Stashed changes
   return (
     <div className="inquiry-table-EMG-all">
       <div className="inquiry-table-EMG-head-content">

@@ -8,13 +8,15 @@ import { useParams } from "react-router-dom";
 
 const Visit = ({
   setReplaceComponent,
+  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
+  selectedDate: string;
 }) => {
   const routeParams = useParams();
 
   const [VisitScore, setVisitscore] = useState<typeVisit>({
-    testDate: "",
+    testDate: selectedDate,
     treat: 0,
     selfAssessment: 0,
     note: "",

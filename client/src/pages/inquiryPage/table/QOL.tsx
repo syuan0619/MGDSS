@@ -8,8 +8,10 @@ import { useParams } from "react-router-dom";
 
 const QOL = ({
   setReplaceComponent,
+  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
+  selectedDate: string;
 }) => {
   const routeParams = useParams();
 
@@ -30,7 +32,7 @@ const QOL = ({
     overwhelm: 0,
     freshenUp: 0,
     sum: 0,
-    testDate: "",
+    testDate: selectedDate,
   });
 
   const handleChange = (

@@ -75,7 +75,6 @@ const ConfirmVisit = ({
       }
     }
   }
-  console.log(flattenObject);
 
   return (
     initialData && (

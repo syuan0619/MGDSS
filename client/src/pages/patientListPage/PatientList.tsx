@@ -72,7 +72,7 @@ function PatientList() {
   const nav = useNavigate();
   const navToInquiryPage = (id: string) => {
     if (role == "doctor") {
-      nav(`/inquiry/${id}`);
+      nav(`/inquiry/${id}/${selectedDate}`);
     }
   };
 
@@ -559,6 +559,54 @@ function PatientList() {
               },
             }}
           />
+<<<<<<< Updated upstream
+=======
+          <p />
+          <TextField
+            label="其他醫院就診紀錄"
+            variant="outlined"
+            name="otherHospitalRecord"
+            value={
+              addPatient!.otherHospitalRecord ||
+              "請輸入其他醫院就診紀錄及總看診次數"
+            }
+            onChange={changeAddPatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+          <p />
+          <TextField
+            label="其他疾病"
+            variant="outlined"
+            name="otherDisease"
+            value={addPatient!.otherDisease || ""}
+            onChange={changeAddPatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+          <p />
+          <TextField
+            label="其他用藥紀錄"
+            variant="outlined"
+            name="otherMedicine"
+            value={addPatient!.otherMedicine || ""}
+            onChange={changeAddPatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />{" "}
+>>>>>>> Stashed changes
         </DialogContent>
         <DialogActions>
           <IconButton
