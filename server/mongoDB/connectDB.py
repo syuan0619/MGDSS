@@ -1,5 +1,6 @@
 import pymongo
 import models
+import pandas as pd
 from bson.objectid import ObjectId
 from bson.binary import Binary
 from datetime import date
@@ -125,4 +126,59 @@ def deleteAccount(accountId: str):
     return accountCollection.delete_one({"_id": ObjectId(accountId)})
 
 
-### Prediction ###
+### Analyze ###
+
+def all_patients_to_csv() -> pd.DataFrame:
+    # patients = list(patientCollection.find({"_id": ObjectId("65e43cbafe46cf205a0e4886")})) # 測試用
+    patients = list(patientCollection.find())
+    records_list = []
+    for patient in patients:
+        patient_info = {
+            "ID": patient["info"]["ID#"],
+            "姓名": patient["info"]["name"],
+            "生日": patient["info"]["DOB"],
+            "性別": patient["info"]["sex"],
+            "身高": patient["info"]["height"],
+            "體重": patient["info"]["weight"],
+            "狀態": patient["info"]["status"],
+            "特殊註記": patient["info"]["other"],
+            "發病日期": patient["info"]["attackDate"],
+            "初始症狀": patient["info"]["beginSymptom"],
+            "其他醫院住院日期": patient["info"]["otherHospitalRecord"]["recentlyDate"],
+            "其他醫院住院次數": patient["info"]["otherHospitalRecord"]["totalTimes"],
+            "其他疾病": patient["info"]["otherDisease"],
+            "其他用藥紀錄": patient["info"]["otherMedicine"],
+        }
+        for visit in patient["visit"]:
+            record = patient_info.copy()
+            record.update({
+                "看診日期": visit["testDate"],
+                "治療": visit["treat"],
+                "SBP": visit["SBP"],
+                "DBP": visit["DBP"],
+                "自覺嚴重程度": visit["selfAssessment"],
+                "註記": visit["note"],
+                "用藥_pyridostigmine": visit["prescription"]["pyridostigmine"],
+                "用藥_compesolone": visit["prescription"]["compesolone"],
+                "用藥_cellcept": visit["prescription"]["cellcept"],
+                "用藥_imuran": visit["prescription"]["imuran"],
+                "用藥_prograf": visit["prescription"]["prograf"],
+                "症狀_ptosis": visit["examination"]["ptosis"],
+                "症狀_diplopia": visit["examination"]["diplopia"],
+                "症狀_dysphagia": visit["examination"]["dysphagia"],
+                "症狀_dysarthria": visit["examination"]["dysarthria"],
+                "症狀_dyspnea": visit["examination"]["dyspnea"],
+                "症狀_limpWeakness": visit["examination"]["limpWeakness"],
+                "MGFA分級": visit["MGFAclassification"],
+            })
+            records_list.append(record)
+        for table in ["thymus", "bloodTest", "QOL", "QMG", "MG", "ADL"]:
+            for record in patient[table]:
+                matching_record = next((r for r in records_list if r["看診日期"] == record["testDate"]), None)
+                if matching_record:
+                    for key, value in record.items():
+                        if key != "testDate":
+                            matching_record[f"{table}_{key}"] = value
+            
+    records_df = pd.DataFrame(records_list)
+    return records_df

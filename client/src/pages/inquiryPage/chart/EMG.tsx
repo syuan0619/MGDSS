@@ -105,7 +105,7 @@ const EMGChart = ({
     setValue(newValue);
   };
 
-  //////date
+  //date
   const dateOptions = patientEMG.map((item) => (
     <option value={item.testDate}>{item.testDate}</option>
   ));

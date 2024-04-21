@@ -35,6 +35,13 @@
 .inquiry-table-BloodTest-head p {
   margin-left: 12rem;
 }
+.inquiry-table-BloodTest-heads p {
+  text-align: center;
+  font-size: 2rem;
+
+
+}
+
 .inquiry-table-BloodTest-content {
   height: 65vh;
   display: flex;

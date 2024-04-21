@@ -1,38 +1,14 @@
 import api from "../../../api";
 import { useEffect, useRef, useState } from "react";
-import "./EMG.css";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
-import { useParams } from "react-router-dom";
+import "../../inquiryPage/table/EMG.css";
 
-type noImageType = {
-  testDate: string;
-  nasalis: {
-    preActivation: number;
-    postActivation: number[];
-  };
-  abd: {
-    preActivation: number;
-    postActivation: number[];
-  };
-  trapezius: {
-    preActivation: number;
-    postActivation: number[];
-  };
-};
-
-const EMG = ({
-  setReplaceComponent,
-}: {
-  setReplaceComponent: (table: string) => void;
-}) => {
-  const routeParams = useParams();
+const EMG = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string>();
   const [uploadedFile, setUploadedFile] = useState<File>();
   const [recognizedResult, setRecognizedResult] = useState<string>("");
   const [modifiedResult, setModifiedResult] = useState<string>("");
-  const [resultHeader, setResultHeader] = useState<noImageType>();
-  const [resultBody, setResultBody] = useState<File>();
+  console.log(modifiedResult);
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -41,7 +17,7 @@ const EMG = ({
     }
   };
 
-  const uploadHandler = () => {
+  const buttonHandler = () => {
     inputRef.current?.click();
   };
 
@@ -57,8 +33,6 @@ const EMG = ({
       const image = uploadedFile;
       formData.append("file", image);
       getRecognized(formData).then((res) => {
-        setResultBody(res.data);
-
         const imageBlob = URL.createObjectURL(res.data);
         setPreviewUrl(imageBlob);
 
@@ -71,11 +45,11 @@ const EMG = ({
             postActivation: string[];
           }) => {
             recognizedString += `測試部位: ${result.musclePart}\n`;
-            recognizedString += `\nPreActivation:\n\n         Amp\n1-5:  ${
+            recognizedString += `\nPreActivation:\n\n       Amp\n1-5:  ${
               result.preActivation[0].split(" ")[0]
             }\n`;
             if (result.postActivation.length > 0) {
-              recognizedString += `\nPostActivation:\n\n         Amp\n`;
+              recognizedString += `\nPostActivation:\n\n       Amp\n`;
               result.postActivation.forEach((postAct, idx) => {
                 if (idx % 3 === 0) {
                   recognizedString += `1-5:  ${postAct.split(" ")[0]}\n`;
@@ -92,171 +66,10 @@ const EMG = ({
     }
   }, [uploadedFile]);
 
-  const noSpaceNewLineResult: string[] = [];
-  const handleModifiedResult = () => {
-    const modified = modifiedResult;
-    let word = "";
-    for (let i = 0; i < modifiedResult.length; i++) {
-      if (!(modified[i] == "\n" || modified[i] == "\r" || modified[i] == " ")) {
-        word += modified[i];
-      } else if (word.length > 0) {
-        noSpaceNewLineResult.push(word);
-        word = "";
-      }
-    }
-  };
-
-  const modifiedResultToEMG = () => {
-    const sendResult: noImageType = {
-      testDate: "2024-04-13",
-      nasalis: {
-        preActivation: 0,
-        postActivation: [],
-      },
-      abd: {
-        preActivation: 0,
-        postActivation: [],
-      },
-      trapezius: {
-        preActivation: 0,
-        postActivation: [],
-      },
-    };
-
-    noSpaceNewLineResult.map((eachWord, index) => {
-      if (eachWord.toLowerCase() === "nasalis") {
-        if (
-          noSpaceNewLineResult[index + 1]
-            .toLowerCase()
-            .includes("preactivation")
-        ) {
-          sendResult.nasalis.preActivation = toPureNumber(
-            noSpaceNewLineResult[index + 4]
-          );
-        }
-        if (
-          noSpaceNewLineResult[index + 5]
-            .toLowerCase()
-            .includes("postactivation")
-        ) {
-          console.log("nasalis postactivation");
-          sendResult.nasalis.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 8])
-          );
-          sendResult.nasalis.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 10])
-          );
-          sendResult.nasalis.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 12])
-          );
-          sendResult.nasalis.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 14])
-          );
-        }
-      }
-      if (eachWord.toLowerCase() === "abd") {
-        if (
-          noSpaceNewLineResult[index + 1]
-            .toLowerCase()
-            .includes("preactivation")
-        ) {
-          sendResult.abd.preActivation = toPureNumber(
-            noSpaceNewLineResult[index + 4]
-          );
-        }
-        if (
-          noSpaceNewLineResult[index + 5]
-            .toLowerCase()
-            .includes("postactivation")
-        ) {
-          console.log("abd postactivation");
-          sendResult.abd.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 8])
-          );
-          sendResult.abd.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 10])
-          );
-          sendResult.abd.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 12])
-          );
-          sendResult.abd.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 14])
-          );
-        }
-      }
-      if (eachWord.toLowerCase() === "trapezius") {
-        if (
-          noSpaceNewLineResult[index + 1]
-            .toLowerCase()
-            .includes("preactivation")
-        ) {
-          sendResult.trapezius.preActivation = toPureNumber(
-            noSpaceNewLineResult[index + 4]
-          );
-        }
-        if (
-          noSpaceNewLineResult[index + 5]
-            .toLowerCase()
-            .includes("postactivation")
-        ) {
-          sendResult.trapezius.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 8])
-          );
-          sendResult.trapezius.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 10])
-          );
-          sendResult.trapezius.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 12])
-          );
-          sendResult.trapezius.postActivation.push(
-            toPureNumber(noSpaceNewLineResult[index + 14])
-          );
-        }
-      }
-    });
-    setResultHeader(sendResult);
-  };
-
-  const toPureNumber = (str: string) => {
-    let newStr = "";
-    for (let i = 0; i < str.length; i++) {
-      if (!(str[i] === "%" || str[i] === "-")) {
-        newStr += str[i];
-      }
-    }
-    return Number(newStr);
-  };
-
-  const sendResult = async () => {
-    handleModifiedResult();
-    modifiedResultToEMG();
-    console.log(resultHeader);
-    console.log(resultBody);
-    const confirmResult = confirm("確定送出結果嗎?");
-    if (confirmResult && resultHeader && resultBody) {
-      console.log(JSON.stringify(resultHeader));
-      await api
-        .post(`/inquiry/${routeParams.id}/EMG`, resultBody, {
-          headers: { table: JSON.stringify(resultHeader) },
-        })
-        .then((res) => {
-          console.log(res.data);
-        });
-    }
-  };
-
   return (
     <div className="inquiry-table-EMG-all">
       <div className="inquiry-table-EMG-head-content">
         <div className="inquiry-table-EMG-head">
-          <div>
-            <button
-              className="EMG-backToRight"
-              onClick={() => setReplaceComponent("right")}
-            >
-              <IoIosArrowDropleftCircle />
-            </button>
-          </div>
           <div>
             <p>電生理訊號</p>
           </div>
@@ -275,7 +88,7 @@ const EMG = ({
               {previewUrl ? (
                 <img src={previewUrl} alt="Preview" />
               ) : (
-                <button onClick={uploadHandler}>檔案上傳/預覽</button>
+                <button onClick={buttonHandler}>檔案上傳/預覽</button>
               )}
             </div>
           </div>
@@ -302,8 +115,9 @@ const EMG = ({
               <button
                 id="submitButton"
                 onClick={() => {
-                  sendResult();
-                  // setReplaceComponent("right");
+                  if (confirm("確定送出結果嗎?")) {
+                    console.log("送出結果：", recognizedResult);
+                  }
                 }}
               >
                 將結果加入病歷
