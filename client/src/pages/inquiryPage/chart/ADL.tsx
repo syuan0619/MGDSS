@@ -1,4 +1,3 @@
-import { Flag } from "@mui/icons-material";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
