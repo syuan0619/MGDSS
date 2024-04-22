@@ -17,7 +17,7 @@ function App() {
         <Route path="/patient" element={<PatientList />}></Route>
         <Route path="/backstage" element={<Backstage />}></Route>
         <Route path="/upload" element={<UploadOCR />}></Route>
-        <Route path="/inquiry/:id/:selectedDate" element={<Inquiry />}></Route>
+        <Route path="/inquiry/:id" element={<Inquiry />}></Route>
       </Routes>
     </BrowserRouter>
   );

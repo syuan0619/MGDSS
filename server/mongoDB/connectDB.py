@@ -19,7 +19,7 @@ def getAllPatients():
     patients = patientCollection.find()
     response = []
     for patient in patients:
-        response.append({"_id": str(patient["_id"]), "info": patient["info"], "visit": patient["visit"]})
+        response.append({"_id": str(patient["_id"]), "info": patient["info"]})
     return response
 
 

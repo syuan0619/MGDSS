@@ -14,11 +14,11 @@ import AIDialog from "./AIDialog";
 const PredictDialog = ({
   open,
   handleClose,
-  selectedDate,
+  patient_id,
 }: {
   open: boolean;
   handleClose: () => void;
-  selectedDate: string | undefined;
+  patient_id: string | undefined;
 }) => {
   const [AIStatus, setAIStatus] = useState(false);
   const AIDialogOpen = () => {
@@ -35,7 +35,7 @@ const PredictDialog = ({
     <Dialog className="predictDialog" open={open} onClose={handleClose}>
       <DialogTitle sx={{ fontSize: "1.5rem" }}>確認病患資訊</DialogTitle>
       <DialogContent className="predictDialog-content">
-        <ConfirmPanel selectedDate={selectedDate ? selectedDate : ""} />
+        <ConfirmPanel patient_id={patient_id} />
       </DialogContent>
       <DialogActions>
         <IconButton

@@ -38,12 +38,8 @@ const InquiryPage = () => {
 
   //get patients data
   const [patients, setPatients] = useState<Patient>();
-  const [selectedDate, setSelectedDate] = useState<string>(
-    `${routeParams.selectedDate}`
-  );
-
-  //get SELECTEED DATE patient
-  // const [selectedDatePatient, setSelectedDatePatient]=useState<Patient>();
+  const newDate = new Date().toISOString().slice(0, 10);
+  const [selectedDate, setSelectedDate] = useState<string>(newDate);
 
   const data = async () => {
     const response = await api.get(`/inquiry/${routeParams.id}`);
@@ -57,7 +53,11 @@ const InquiryPage = () => {
   return (
     <div className="inquiry-all">
       <div className="inquiry-menu">
-        <Menu selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+        <Menu
+          patient_id={routeParams.id}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
       </div>
       <div className="inquiry-left-right-flex">
         <div className="inquiry-left">
@@ -72,7 +72,7 @@ const InquiryPage = () => {
                     return (
                       <ADL
                         setReplaceComponent={setReplaceComponent}
-                        selectedDate={selectedDate}
+                        selectedDate={selectedDate} //*************************
                       />
                     );
                   }
@@ -81,77 +81,44 @@ const InquiryPage = () => {
                 case "BloodTesttable":
                   {
                     return (
-                      <BloodTest
-                        setReplaceComponent={setReplaceComponent}
-                        selectedDate={selectedDate}
-                      />
+                      <BloodTest setReplaceComponent={setReplaceComponent} />
                     );
                   }
 
                   break;
                 case "EMGtable":
                   {
-                    return (
-                      <EMG
-                        setReplaceComponent={setReplaceComponent}
-                        selectedDate={selectedDate}
-                      />
-                    );
+                    return <EMG setReplaceComponent={setReplaceComponent} />;
                   }
                   break;
 
                 case "MGtable":
                   {
-                    return (
-                      <MG
-                        setReplaceComponent={setReplaceComponent}
-                        selectedDate={selectedDate}
-                      />
-                    );
+                    return <MG setReplaceComponent={setReplaceComponent} />;
                   }
                   break;
 
                 case "QMGtable":
                   {
-                    return (
-                      <QMG
-                        setReplaceComponent={setReplaceComponent}
-                        selectedDate={selectedDate}
-                      />
-                    );
+                    return <QMG setReplaceComponent={setReplaceComponent} />;
                   }
                   break;
 
                 case "QOLtable":
                   {
-                    return (
-                      <QOL
-                        setReplaceComponent={setReplaceComponent}
-                        selectedDate={selectedDate}
-                      />
-                    );
+                    return <QOL setReplaceComponent={setReplaceComponent} />;
                   }
                   break;
 
                 case "Thymustable":
                   {
-                    return (
-                      <Thymus
-                        setReplaceComponent={setReplaceComponent}
-                        selectedDate={selectedDate}
-                      />
-                    );
+                    return <Thymus setReplaceComponent={setReplaceComponent} />;
                   }
                   break;
 
                 case "Visittable":
                   {
-                    return (
-                      <Visit
-                        setReplaceComponent={setReplaceComponent}
-                        selectedDate={selectedDate}
-                      />
-                    );
+                    return <Visit setReplaceComponent={setReplaceComponent} />;
                   }
                   break;
 

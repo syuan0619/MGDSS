@@ -28,23 +28,20 @@ const Left = ({ info }: { info: Info }) => {
     <div className="inquiry-components-left-bg">
       <div className="inquiry-components-left">
         <div className="inquiry-components-left-header">
-          <div className="inquiry-components-left-space"></div>
-          <div className="inquiry-components-left-title">基本資料</div>
-          <div className="inquiry-components-left-button">
-            <button
-              className="inquiry-components-edit-button"
-              onClick={() => {
-                switchReadOnly();
-                onSubmitChange();
-              }}
-            >
-              {readOnly ? (
-                <FaPencil className="tableIcon" />
-              ) : (
-                <FaPencil className="tableIcon" />
-              )}
-            </button>
-          </div>
+          基本資料
+          <button
+            className="inquiry-components-edit-button"
+            onClick={() => {
+              switchReadOnly();
+              onSubmitChange();
+            }}
+          >
+            {readOnly ? (
+              <FaPencil className="tableIcon" />
+            ) : (
+              <FaPencil className="tableIcon" />
+            )}
+          </button>
         </div>
         <div className="inquiry-components-left-footer">
           <div className="inquiry-components-left-footer-basicdata">

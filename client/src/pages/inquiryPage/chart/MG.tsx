@@ -116,11 +116,7 @@ const MGChart = ({
 
   //selectAll
   const handleSelectAll = () => {
-    if (a.length !== MGData.length) {
-      setA(MGData);
-    } else {
-      setA([]);
-    }
+    setA(MGData);
   };
 
   const handleChecked = (label: string) => {
@@ -140,7 +136,8 @@ const MGChart = ({
             selectData(item.label);
             handleChecked(item.label);
           }}
-          checked={a.some((selectedItem) => selectedItem.label === item.label)}
+          defaultChecked={true}
+          checked={handleChecked("item")}
         />
         {item.label}
       </label>

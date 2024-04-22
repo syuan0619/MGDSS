@@ -1,3 +1,4 @@
+import { Flag } from "@mui/icons-material";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
@@ -96,11 +97,7 @@ const ADLChart = ({
 
   //selectAll
   const handleSelectAll = () => {
-    if (a.length !== data.length) {
-      setA(data);
-    } else {
-      setA([]);
-    }
+    setA(data);
   };
 
   const handleChecked = (label: string) => {
@@ -121,7 +118,8 @@ const ADLChart = ({
           selectData(item.label);
           handleChecked(item.label);
         }}
-        checked={a.some((selectedItem) => selectedItem.label === item.label)}
+        defaultChecked={true}
+        checked={handleChecked("item")}
       />
       {item.label}
     </label>
@@ -134,6 +132,7 @@ const ADLChart = ({
       return true;
     }
   };
+  console.log(a);
   return (
     <div className="chart-bg">
       <div className="chart">

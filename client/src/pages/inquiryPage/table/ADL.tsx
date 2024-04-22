@@ -7,15 +7,15 @@ import { useParams } from "react-router-dom";
 
 const ADL = ({
   setReplaceComponent,
-  selectedDate,
+  selectedDate, //*************************
 }: {
   setReplaceComponent: (table: string) => void;
-  selectedDate: string;
+  selectedDate: string; //*************************
 }) => {
   const routeParams = useParams();
 
   const [ADLscore, setADLscore] = useState<typeADL>({
-    testDate: selectedDate,
+    testDate: selectedDate, //*************************
     talking: 0,
     chewing: 0,
     swallowing: 0,
@@ -61,17 +61,13 @@ const ADL = ({
     <div className="inquiry-table-ADL-all">
       <div className="inquiry-table-ADL-bg">
         <div className="inquiry-table-ADL-head">
-          <div className="inquiry-table-ADL-return">
-            <button
-              className="ADL-backToRight"
-              onClick={() => setReplaceComponent("right")}
-            >
-              <IoIosArrowDropleftCircle />
-            </button>
-          </div>
-          <div className="inquiry-table-ADL-head-title">
-            <p>ADL</p>
-          </div>
+          <button
+            className="ADL-backToRight"
+            onClick={() => setReplaceComponent("right")}
+          >
+            <IoIosArrowDropleftCircle />
+          </button>
+          <p>ADL</p>
           <div className="inquiry-table-ADL-content-row-sum">
             <label htmlFor="sum">總分 : </label>
             <input

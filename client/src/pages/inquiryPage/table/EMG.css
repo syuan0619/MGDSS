@@ -22,38 +22,17 @@
   font-size: 1.6rem;
 }
 
-.inquiry-table-EMG-return {
-  width: 14vw;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding-top: 1rem;
-}
-
 .EMG-backToRight {
-  height: 10vh;
   border: 0;
   background-color: white;
-  font-size: 3.7rem;
+  font-size: 3.2rem;
   color: #c7c8cc;
+  margin-left: -20rem;
 }
-
 .EMG-backToRight:hover {
   cursor: pointer;
   color: #b4b4b8;
 }
-
-.inquiry-table-EMG-head-title {
-  width: 40vw;
-  display: flex;
-  justify-content: center;
-}
-
-.inquiry-table-EMG-content-row-sum {
-  width: 14vw;
-}
-
 .inquiry-table-EMG-content {
   display: flex;
   flex-direction: row;

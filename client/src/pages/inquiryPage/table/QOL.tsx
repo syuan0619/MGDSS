@@ -8,10 +8,8 @@ import { useParams } from "react-router-dom";
 
 const QOL = ({
   setReplaceComponent,
-  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
-  selectedDate: string;
 }) => {
   const routeParams = useParams();
 
@@ -32,7 +30,7 @@ const QOL = ({
     overwhelm: 0,
     freshenUp: 0,
     sum: 0,
-    testDate: selectedDate,
+    testDate: "",
   });
 
   const handleChange = (
@@ -95,9 +93,9 @@ const QOL = ({
 
   const blockRight = Object.entries(QOLscore)
     .slice(8, -2)
-    .map(([key, value], index) => (
+    .map(([key, value]) => (
       <>
-        <div className="inquiry-table-QOL-content-sliderbox" key={index}>
+        <div className="inquiry-table-QOL-content-sliderbox">
           <p>{key}</p>
           <input
             defaultValue="0"
@@ -125,17 +123,13 @@ const QOL = ({
       <div className="inquiry-table-QOL-bg">
         <div className="inquiry-table-QOL">
           <div className="inquiry-table-QOL-head">
-            <div className="inquiry-table-QOL-return">
-              <button
-                className="QOL-backToRight"
-                onClick={() => setReplaceComponent("right")}
-              >
-                <IoIosArrowDropleftCircle />
-              </button>
-            </div>
-            <div className="inquiry-table-QOL-head-title">
-              <p>QOL</p>
-            </div>
+            <button
+              className="QOL-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+            <p>QOL</p>
             <div className="inquiry-table-QOL-content-row-sum">
               <label htmlFor="sum">總分 : </label>
               <input

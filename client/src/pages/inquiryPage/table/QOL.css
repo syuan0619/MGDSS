@@ -32,22 +32,15 @@
   font-size: 2rem;
 }
 
-.inquiry-table-QOL-return {
-  width: 14vw;
-  display: flex;
-  justify-content: center;
-}
-.inquiry-table-QOL-head-title {
-  width: 40vw;
-  display: flex;
-  justify-content: center;
-}
-
 .QOL-backToRight {
   border: 0;
   background-color: white;
   font-size: 3.7rem;
   color: #c7c8cc;
+  margin-left: -5rem;
+  position: absolute;
+  top: 20%;
+  left: 40%;
 }
 .QOL-backToRight:hover {
   cursor: pointer;
@@ -55,11 +48,13 @@
 }
 
 .inquiry-table-QOL-content-row-sum {
-  width: 14vw;
   font-size: 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: absolute;
+  top: 22%;
+  right: 5%;
 }
 
 .inquiry-table-QOL-content-row-sum input {

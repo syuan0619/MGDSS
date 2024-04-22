@@ -8,10 +8,8 @@ import { useParams } from "react-router-dom";
 
 const QMG = ({
   setReplaceComponent,
-  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
-  selectedDate: string;
 }) => {
   const routeParams = useParams();
 
@@ -30,7 +28,7 @@ const QMG = ({
     rightLegHeight: 0,
     leftLegHeight: 0,
     sum: 0,
-    testDate: selectedDate,
+    testDate: "",
   });
 
   const handleChange = (
@@ -65,9 +63,9 @@ const QMG = ({
 
   const blockLeft = Object.entries(QMGscore)
     .slice(0, 7)
-    .map(([key, value], index) => (
+    .map(([key, value]) => (
       <>
-        <div className="inquiry-table-QMG-content-sliderbox" key={index}>
+        <div className="inquiry-table-QMG-content-sliderbox">
           <p>{key}</p>
           <input
             defaultValue="0"
@@ -126,17 +124,13 @@ const QMG = ({
       <div className="inquiry-table-QMG-bg">
         <div className="inquiry-table-QMG">
           <div className="inquiry-table-QMG-head">
-            <div className="inquiry-table-QMG-return">
-              <button
-                className="QMG-backToRight"
-                onClick={() => setReplaceComponent("right")}
-              >
-                <IoIosArrowDropleftCircle />
-              </button>
-            </div>
-            <div className="inquiry-table-QMG-head-title">
-              <p>QMG</p>
-            </div>
+            <button
+              className="QMG-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+            <p>QMG</p>
             <div className="inquiry-table-QMG-content-row-sum">
               <label htmlFor="sum">總分 : </label>
               <input

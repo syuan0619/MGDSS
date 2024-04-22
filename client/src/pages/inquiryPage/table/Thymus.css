@@ -18,6 +18,7 @@
   background-color: white;
   font-size: 3.7rem;
   color: #c7c8cc;
+  margin-left: -20rem;
 }
 .Thymus-backToRight:hover {
   cursor: pointer;
@@ -31,17 +32,9 @@
   font-size: 2rem;
 }
 
-.inquiry-table-Thymus-return {
-  width: 14vw;
-  display: flex;
-  justify-content: center;
+.inquiry-table-Thymus-head p {
+  margin-left: 15rem;
 }
-.inquiry-table-Thymus-head-title {
-  width: 40vw;
-  display: flex;
-  justify-content: center;
-}
-
 .inquiry-table-Thymus-content {
   height: 50vh;
   display: flex;
@@ -65,11 +58,6 @@
   display: flex;
   align-items: center;
 }
-
-.inquiry-table-Thymus-content-row-sum {
-  width: 14vw;
-}
-
 .inquiry-table-Thymus-content-row-testdate,
 .inquiry-table-Thymus-content-row-thymusStatus,
 .inquiry-table-Thymus-content-row-thymusDescription {

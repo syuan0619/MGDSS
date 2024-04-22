@@ -155,11 +155,7 @@ const QOLChart = ({
 
   //selectAll
   const handleSelectAll = () => {
-    if (a.length !== QOLData.length) {
-      setA(QOLData);
-    } else {
-      setA([]);
-    }
+    setA(QOLData);
   };
 
   const handleChecked = (label: string) => {
@@ -180,7 +176,8 @@ const QOLChart = ({
             selectData(item.label);
             handleChecked(item.label);
           }}
-          checked={a.some((selectedItem) => selectedItem.label === item.label)}
+          defaultChecked={true}
+          checked={handleChecked("item")}
         />
         {item.label}
       </label>

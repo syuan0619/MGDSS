@@ -51,16 +51,16 @@ const AccountsPage = () => {
   };
 
   const [account, setAccount] = useState<returnAccount[]>();
-  const [fixedAccount, setFixedAccount] = useState<returnAccount[]>();
   const data = async () => {
     const response = await api.get("/account");
     setAccount(response.data);
-    setFixedAccount(response.data);
   };
 
   useEffect(() => {
     data();
   }, []);
+
+  console.log(account);
 
   //搜尋病患
   const [search, setSearch] = useState("");
@@ -69,35 +69,7 @@ const AccountsPage = () => {
   };
   const SearchName = (e: React.FormEvent) => {
     e.preventDefault();
-    const searchedAccount: returnAccount[] = [];
-    fixedAccount?.forEach((eachAccount) => {
-      if (
-        eachAccount.authCode.includes(search) ||
-        eachAccount.email.includes(search) ||
-        eachAccount.name.includes(search)
-      ) {
-        searchedAccount.push(eachAccount);
-      } else if (search === "審" || search === "核" || search === "審核") {
-        searchedAccount.push(eachAccount);
-      } else if (
-        eachAccount.isVerified &&
-        (search.includes("通") ||
-          search.includes("過") ||
-          search.includes("審核通") ||
-          search.includes("審核通過"))
-      ) {
-        searchedAccount.push(eachAccount);
-      } else if (
-        !eachAccount.isVerified &&
-        (search.includes("等") ||
-          search.includes("待") ||
-          search.includes("等待審") ||
-          search.includes("等待審核"))
-      ) {
-        searchedAccount.push(eachAccount);
-      }
-    });
-    setAccount(searchedAccount);
+    console.log(search);
   };
 
   //check
@@ -342,7 +314,7 @@ const AccountsPage = () => {
                       {item.email}
                     </TableCell>
                     <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                      {item.authCode}
+                      {item.role}
                     </TableCell>
                     <TableCell align="center" sx={{ fontSize: "2vh" }}>
                       {!item.isVerified ? "等待審核" : "審核通過"}
