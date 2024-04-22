@@ -648,7 +648,7 @@ function PatientList() {
             type="date"
             label="發病日"
             variant="outlined"
-            name="DOB"
+            name="attackDate"
             value={addPatient!.attackDate || ""}
             InputLabelProps={{
               shrink: true,
