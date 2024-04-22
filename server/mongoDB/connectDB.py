@@ -52,6 +52,8 @@ def update_patient_info(patientId: str, updatedInfo: dict):
     updatedPatient["_id"] = str(updatedPatient["_id"])
     return {"_id": updatedPatient["_id"], "info": updatedPatient["info"]}
 
+def delete_patient(patient_id: str):
+    return patientCollection.delete_one({"_id": ObjectId(patient_id)})
 
 # return dict with _id
 def addNewPatient(newPatientInfo: dict):
@@ -61,15 +63,23 @@ def addNewPatient(newPatientInfo: dict):
     return newPatient
 
 
-def updatePatient(patientId: str, tableName: str, table: dict):
-    updatedPatient = patientCollection.find_one_and_update(
+def add_new_table(patientId: str, tableName: str, table: dict):
+    # updatedPatient = patientCollection.find_one_and_update(
+    #     {"_id": ObjectId(patientId)},
+    #     {"$push": {tableName: table}},
+    #     return_document=pymongo.ReturnDocument.AFTER,
+    # )
+    old_patient = patientCollection.find_one({"_id": ObjectId(patientId)})
+    old_patient["_id"] = str(old_patient["_id"])
+    old_patient[tableName].append(table)
+    old_patient[tableName].sort(key=lambda x: date.fromisoformat(x["testDate"]))
+    updated_patient = patientCollection.find_one_and_update(
         {"_id": ObjectId(patientId)},
-        {"$push": {tableName: table}},
+        {"$set": {tableName: old_patient[tableName]}},
         return_document=pymongo.ReturnDocument.AFTER,
     )
-    # patientCollection.aggregate([{"$match": {"_id": ObjectId(patientId)}}, {"$sortArray": {"input": '{tableName}', "sortBy": {"testDate": 1}}}])
-    updatedPatient["_id"] = str(updatedPatient["_id"])
-    return updatedPatient
+    updated_patient["_id"] = str(updated_patient["_id"])
+    return updated_patient
 
 
 def uploadImage(patientId: str, image: Binary):

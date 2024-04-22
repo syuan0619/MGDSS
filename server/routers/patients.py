@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse, Response
 from pydantic import ValidationError
-from mongoDB import getAllPatients, addNewPatient, all_patients_to_csv
+from mongoDB import getAllPatients, addNewPatient, delete_patient, all_patients_to_csv
 import models
 import io
 
@@ -21,6 +21,16 @@ async def add_new_patient(newPatientInfo: models.Info):
     except ValidationError as e:
         print("error: ", str(e))
         return JSONResponse(status_code=400, content={"message": "Invalid patient info"})
+    
+# DELETE /patients/{patient_id} -> delete patient by id
+@router.delete("/{patient_id}", tags=["patients"], summary="刪除病患")
+async def delete_patient(patient_id: str):
+    try:
+        delete_patient(patient_id)
+    except Exception as e:
+        print("error: ", str(e))
+        return Response(status_code=500, content={"message": str(e)})
+    return {"message": "Success delete patient!"}
     
 @router.get("/csv", tags=["patients"], description="下載之後還要右鍵->編輯->另存新檔->編碼選帶有BOM的UTF-8 再用excel開啟才不會亂碼")
 async def get_all_patients_to_csv():

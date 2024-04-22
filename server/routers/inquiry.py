@@ -6,7 +6,7 @@ from fastapi import APIRouter, Response, UploadFile, File, Header
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import ValidationError
 from mongoDB.connectDB import (
-    updatePatient,
+    add_new_table,
     updateEntirePatient,
     getPatientById,
     getPatientByDate,
@@ -74,7 +74,7 @@ async def inquiry_update_entire_patient(patientId: str, table: models.Patient):
 )
 async def inquiry_visit(patientId: str, table: models.Visit):
     try:
-        updatedPatient = updatePatient(
+        updatedPatient = add_new_table(
             patientId, "visit", table.model_dump(by_alias=True)
         )
         return {
@@ -94,7 +94,7 @@ async def inquiry_visit(patientId: str, table: models.Visit):
 @router.post("/{patientId}/thymus")
 async def inquiry_thymus(patientId: str, table: models.Thymus):
     try:
-        updatedPatient = updatePatient(
+        updatedPatient = add_new_table(
             patientId, "thymus", table.model_dump(by_alias=True)
         )
         return {
@@ -116,7 +116,7 @@ async def inquiry_thymus(patientId: str, table: models.Thymus):
 @router.post("/{patientId}/bloodTest")
 async def inquiry_bloodTest(patientId: str, table: models.BloodTest):
     try:
-        updatedPatient = updatePatient(
+        updatedPatient = add_new_table(
             patientId, "bloodTest", table.model_dump(by_alias=True)
         )
         return {
@@ -138,7 +138,7 @@ async def inquiry_bloodTest(patientId: str, table: models.BloodTest):
 @router.post("/{patientId}/QOL")
 async def inquiry_QOL(patientId: str, table: models.QOL):
     try:
-        updatedPatient = updatePatient(
+        updatedPatient = add_new_table(
             patientId, "QOL", table.model_dump(by_alias=True)
         )
         return {
@@ -158,7 +158,7 @@ async def inquiry_QOL(patientId: str, table: models.QOL):
 @router.post("/{patientId}/QMG")
 async def inquiry_QMG(patientId: str, table: models.QMG):
     try:
-        updatedPatient = updatePatient(
+        updatedPatient = add_new_table(
             patientId, "QMG", table.model_dump(by_alias=True)
         )
         return {
@@ -178,7 +178,7 @@ async def inquiry_QMG(patientId: str, table: models.QMG):
 @router.post("/{patientId}/MG")
 async def inquiry_MG(patientId: str, table: models.MG):
     try:
-        updatedPatient = updatePatient(patientId, "MG", table.model_dump(by_alias=True))
+        updatedPatient = add_new_table(patientId, "MG", table.model_dump(by_alias=True))
         return {
             "message": "Success add new MG table!",
             "updatedPatient": updatedPatient,
@@ -196,7 +196,7 @@ async def inquiry_MG(patientId: str, table: models.MG):
 @router.post("/{patientId}/ADL")
 async def inquiry_ADL(patientId: str, table: models.ADL):
     try:
-        updatedPatient = updatePatient(
+        updatedPatient = add_new_table(
             patientId, "ADL", table.model_dump(by_alias=True)
         )
         return {
@@ -223,8 +223,8 @@ async def inquiry_EMG(
 ):
     try:
         table = json.loads(table)
-        # updatePatient(patientId, "EMG", {**table, "image": file.file.read()})
-        updatePatient(patientId, "EMG", {**table})
+        # add_new_table(patientId, "EMG", {**table, "image": file.file.read()})
+        add_new_table(patientId, "EMG", {**table})
         return {"message": "Success add new EMG table!", "updatedPatient": table}
     except ValidationError as e:
         print("error: ", str(e))
