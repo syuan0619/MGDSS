@@ -97,8 +97,6 @@ const EMGChart = ({
   setReplaceComponent: (table: string) => void;
   historyData: EMG[];
 }) => {
-  console.log(historyData);
-
   //tab
   const [value, setValue] = React.useState(0);
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -255,7 +253,6 @@ const EMGChart = ({
 };
 
 const EMGSmallChart = ({ historyData }: { historyData: EMG[] }) => {
-  console.log(historyData);
   return (
     <div>
       <LineChart

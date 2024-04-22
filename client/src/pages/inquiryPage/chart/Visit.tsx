@@ -96,9 +96,12 @@ const VisitChart = ({
 
   //selectAll
   const handleSelectAll = () => {
-    setA(VisitData);
+    if (a.length !== VisitData.length) {
+      setA(VisitData);
+    } else {
+      setA([]);
+    }
   };
-
   const handleChecked = (label: string) => {
     if (a.length == VisitData.length) {
       return true;
@@ -117,8 +120,7 @@ const VisitChart = ({
             selectData(item.label);
             handleChecked(item.label);
           }}
-          defaultChecked={true}
-          checked={handleChecked("item")}
+          checked={a.some((selectedItem) => selectedItem.label === item.label)}
         />
         {item.label}
       </label>

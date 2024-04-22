@@ -14,11 +14,11 @@
 }
 
 .BloodTest-backToRight {
+  width: 14vw;
   border: 0;
   background-color: white;
   font-size: 3.7rem;
   color: #c7c8cc;
-  margin-left: -17rem;
 }
 .BloodTest-backToRight:hover {
   cursor: pointer;
@@ -32,16 +32,23 @@
   font-size: 2rem;
 }
 
-.inquiry-table-BloodTest-head p {
-  margin-left: 12rem;
-}
 .inquiry-table-BloodTest-heads p {
   text-align: center;
   font-size: 2rem;
-
-
 }
 
+.inquiry-table-BloodTest-head-title {
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+}
+.inquiry-table-BloodTest-content-row-sum {
+  width: 14vw;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 .inquiry-table-BloodTest-content {
   height: 65vh;
   display: flex;

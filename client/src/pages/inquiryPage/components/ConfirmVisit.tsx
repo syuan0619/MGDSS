@@ -39,8 +39,6 @@ const ConfirmVisit = ({
   const handleChange = () => {
     setExpanded(!expanded);
   };
-  console.log(initialData);
-
   const flattenObject: flatVisit = {
     testDate: "",
     treat: 0,
@@ -75,7 +73,6 @@ const ConfirmVisit = ({
       }
     }
   }
-  console.log(flattenObject);
 
   return (
     initialData && (

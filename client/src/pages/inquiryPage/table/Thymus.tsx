@@ -7,13 +7,15 @@ import { useParams } from "react-router-dom";
 
 const Thymus = ({
   setReplaceComponent,
+  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
+  selectedDate: string;
 }) => {
   const routeParams = useParams();
 
   const [Thymusscore, setThymusScore] = useState<typeThymus>({
-    testDate: "",
+    testDate: selectedDate,
     thymusStatus: 0,
     thymusDescription: "",
   });
@@ -48,13 +50,18 @@ const Thymus = ({
     <div className="inquiry-table-Thymus-all">
       <div className="inquiry-table-Thymus-bg">
         <div className="inquiry-table-Thymus-head">
-          <button
-            className="Thymus-backToRight"
-            onClick={() => setReplaceComponent("right")}
-          >
-            <IoIosArrowDropleftCircle />
-          </button>
-          <p>Thymus</p>
+          <div className="inquiry-table-Thymus-return">
+            <button
+              className="Thymus-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+          </div>
+          <div className="inquiry-table-Thymus-head-title">
+            <p>Thymus</p>
+          </div>
+          <div className="inquiry-table-Thymus-content-row-sum"></div>
         </div>
         <div className="inquiry-table-Thymus-content">
           <div className="inquiry-table-Thymus-content-row">

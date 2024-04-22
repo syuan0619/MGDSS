@@ -9,13 +9,15 @@ import { useParams } from "react-router-dom";
 
 const BloodTest = ({
   setReplaceComponent,
+  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
+  selectedDate: string;
 }) => {
   const routeParams = useParams();
 
   const [BloodTestScore, setBloodTestScore] = useState<typeBloodTest>({
-    testDate: "",
+    testDate: selectedDate,
     ACHR: 0,
     TSH: 0,
     freeThyroxine: 0,
@@ -89,13 +91,18 @@ const BloodTest = ({
     <div className="inquiry-table-BloodTest-all">
       <div className="inquiry-table-BloodTest-bg">
         <div className="inquiry-table-BloodTest-head">
-          <button
-            className="BloodTest-backToRight"
-            onClick={() => setReplaceComponent("right")}
-          >
-            <IoIosArrowDropleftCircle />
-          </button>
-          <p>BloodTest</p>
+          <div className="inquiry-table-BloodTest-return">
+            <button
+              className="BloodTest-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+          </div>
+          <div className="inquiry-table-BloodTest-head-title">
+            <p>BloodTest</p>
+          </div>
+          <div className="inquiry-table-BloodTest-content-row-sum"></div>
         </div>
         <div className="inquiry-table-BloodTest-content">
           <div className="inquiry-table-BloodTest-content-row">

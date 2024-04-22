@@ -8,13 +8,15 @@ import { useParams } from "react-router-dom";
 
 const Visit = ({
   setReplaceComponent,
+  selectedDate,
 }: {
   setReplaceComponent: (table: string) => void;
+  selectedDate: string;
 }) => {
   const routeParams = useParams();
 
   const [VisitScore, setVisitscore] = useState<typeVisit>({
-    testDate: "",
+    testDate: selectedDate,
     treat: 0,
     selfAssessment: 0,
     note: "",
@@ -118,13 +120,17 @@ const Visit = ({
     <div className="inquiry-table-Visit-all">
       <div className="inquiry-table-Visit-bg">
         <div className="inquiry-table-Visit-head">
-          <button
-            className="Visit-backToRight"
-            onClick={() => setReplaceComponent("right")}
-          >
-            <IoIosArrowDropleftCircle />
-          </button>
-          <p>Visit</p>
+          <div className="inquiry-table-Visit-return">
+            <button
+              className="Visit-backToRight"
+              onClick={() => setReplaceComponent("right")}
+            >
+              <IoIosArrowDropleftCircle />
+            </button>
+          </div>
+          <div className="inquiry-table-Visit-head-title">
+            <p>Visit</p>
+          </div>
           <div className="inquiry-table-Visit-content-row-sum"></div>
         </div>
         <div className="inquiry-table-Visit-content">
@@ -152,7 +158,6 @@ const Visit = ({
                 )}
               </div>
             </div>
-
             <div className="inquiry-table-Visit-content-row-DBP">
               <label htmlFor="DBP">DBP</label>
               <div style={{ position: "relative" }}>
@@ -252,9 +257,9 @@ const Visit = ({
               />
 
               <datalist id="tickmarks">
-                <option value="0" label="Mild"></option>
-                <option value="1" label="Mod."></option>
-                <option value="2" label="Sev."></option>
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
               </datalist>
             </div>
           </div>
