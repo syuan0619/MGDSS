@@ -601,8 +601,9 @@ function PatientList() {
             label="性別"
             variant="outlined"
             name="sex"
-            value={addPatient!.sex || ""}
+            defaultValue={addPatient?.sex}
             required
+            select
             onChange={changeAddPatient}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -610,7 +611,10 @@ function PatientList() {
               },
               width: "100%",
             }}
-          ></TextField>
+          >
+            <MenuItem value="男">男</MenuItem>
+            <MenuItem value="女">女</MenuItem>
+          </TextField>
           <p />
           <TextField
             label="身高(cm)"
@@ -642,10 +646,10 @@ function PatientList() {
           <p />
           <TextField
             type="date"
-            label="生日"
+            label="發病日"
             variant="outlined"
             name="DOB"
-            value={addPatient!.DOB || ""}
+            value={addPatient!.attackDate || ""}
             InputLabelProps={{
               shrink: true,
             }}
@@ -684,6 +688,50 @@ function PatientList() {
               },
             }}
           />
+          <p />
+          <TextField
+            label="其他醫院就診紀錄"
+            variant="outlined"
+            name="otherHospitalRecord"
+            value={addPatient!.otherHospitalRecord}
+            onChange={changeAddPatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+
+          <p />
+          <TextField
+            label="其他疾病"
+            variant="outlined"
+            name="otherDisease"
+            value={addPatient!.otherDisease}
+            onChange={changeAddPatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+
+          <p />
+          <TextField
+            label="其他用藥紀錄"
+            variant="outlined"
+            name="otherMedicine"
+            value={addPatient!.otherMedicine}
+            onChange={changeAddPatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
         </DialogContent>
         <DialogActions>
           <IconButton
@@ -714,8 +762,8 @@ function PatientList() {
         sx={{
           "& .MuiPaper-root": {
             borderRadius: "1rem",
-            width: "31vh",
-            height: "50vh",
+            width: "40vh",
+            height: "90vh",
             paddingTop: "2vh",
             paddingBottom: "1vh",
             paddingLeft: "5vh",
