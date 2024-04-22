@@ -64,7 +64,8 @@
 .inquiry-table-ADL-content-row-testdate,
 .inquiry-table-ADL-content-row-chewing,
 .inquiry-table-ADL-content-row-swallowing,
-.inquiry-table-ADL-content-row-eyelid {
+.inquiry-table-ADL-content-row-eyelid,
+.inquiry-table-ADL-content-row-doubleVision {
   display: flex;
   flex-direction: column;
 }
