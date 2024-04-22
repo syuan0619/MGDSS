@@ -693,7 +693,7 @@ function PatientList() {
             label="其他醫院就診紀錄"
             variant="outlined"
             name="otherHospitalRecord"
-            value={addPatient!.otherHospitalRecord}
+            value={addPatient!.otherHospitalRecord || ""}
             onChange={changeAddPatient}
             required
             sx={{
