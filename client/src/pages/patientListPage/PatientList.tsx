@@ -15,7 +15,7 @@ import VaccinesRoundedIcon from "@mui/icons-material/VaccinesRounded";
 import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
 import { Button, InputBase } from "@mui/material";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
-import { Info, Patient, Visit } from "../../types/Patient";
+import { Info, Visit } from "../../types/Patient";
 import api from "../../api";
 import * as React from "react";
 import PatientStatus from "./components/PatientStatus";
@@ -36,6 +36,7 @@ import { useNavigate } from "react-router-dom";
 import "./PatientList.css";
 import SearchIcon from "@mui/icons-material/Search";
 import InfoIcon from "@mui/icons-material/Info";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 function PatientList() {
   const navigate = useNavigate();
@@ -95,12 +96,29 @@ function PatientList() {
   const handleSelectedDate = (e: ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(e.target.value);
   };
+  useEffect(() => {
+    setSelectedDate;
+  }, []);
 
   //nav to patient's inquiry page.
   const nav = useNavigate();
   const navToInquiryPage = (id: string) => {
     if (role == "doctor") {
       nav(`/inquiry/${id}/${selectedDate}`);
+    }
+  };
+
+  //delete patient
+  const deletePatient = async (id: string) => {
+    const confirmLogout = window.confirm("確定要刪除嗎?");
+    if (confirmLogout) {
+      const doubleCheckDelete = window.confirm("此操作無法復原，確定要刪除嗎?");
+      if (doubleCheckDelete) {
+        // await api.delete(`/patients/${id}`).then((res) => {
+        //   console.log(res.data);
+        // });
+        console.log(id);
+      }
     }
   };
 
@@ -387,6 +405,7 @@ function PatientList() {
                     ></TableCell>
                   </>
                 ) : null}
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}></TableCell>
               </TableRow>
             </TableHead>
             <TableBody sx={{ cursor: "pointer" }}>
@@ -489,6 +508,12 @@ function PatientList() {
                         </TableCell>
                       </>
                     ) : null}
+                    <TableCell
+                      onClick={() => deletePatient(patient._id)}
+                      align="center"
+                    >
+                      <DeleteOutlineOutlinedIcon />
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
