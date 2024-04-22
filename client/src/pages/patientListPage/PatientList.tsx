@@ -13,12 +13,11 @@ import Typography from "@mui/material/Typography";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import VaccinesRoundedIcon from "@mui/icons-material/VaccinesRounded";
 import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
-import { Button } from "@mui/material";
+import { Button, InputBase } from "@mui/material";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
-import { Info, Visit } from "../../types/Patient";
+import { Info, Patient, Visit } from "../../types/Patient";
 import api from "../../api";
 import * as React from "react";
-import SearchName from "./components/SearchName";
 import PatientStatus from "./components/PatientStatus";
 import EMG from "./components/EMG";
 import BloodTest from "./components/BloodTest";
@@ -35,6 +34,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import "./PatientList.css";
+import SearchIcon from "@mui/icons-material/Search";
 import InfoIcon from "@mui/icons-material/Info";
 
 function PatientList() {
@@ -54,16 +54,40 @@ function PatientList() {
   //get patients
   const [patients, setPatients] =
     useState<{ _id: string; info: Info; visit: Visit }[]>();
+  const [fixedPatients, setFixedPatients] =
+    useState<{ _id: string; info: Info; visit: Visit }[]>();
   const data = async () => {
     const response = await api.get("/patients/");
     setPatients(response.data);
+    setFixedPatients(response.data);
   };
 
   useEffect(() => {
     data();
   }, []);
 
-  //sort patients
+  //sort & search patients
+  const [search, setSearch] = useState<string>("");
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+  const searchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const searchedPatient: { _id: string; info: Info; visit: Visit }[] = [];
+    fixedPatients?.forEach((eachPatient) => {
+      const age =
+        new Date().getFullYear() - new Date(eachPatient.info.DOB).getFullYear();
+      if (
+        eachPatient.info.name.includes(search) ||
+        eachPatient.info.sex.includes(search) ||
+        eachPatient.info["ID#"].includes(search) ||
+        String(age).includes(search)
+      ) {
+        searchedPatient.push(eachPatient);
+      }
+    });
+    setPatients(searchedPatient);
+  };
 
   //handle date
   const newDate = new Date().toISOString().slice(0, 10);
@@ -227,7 +251,43 @@ function PatientList() {
                     display: "flex",
                   }}
                 >
-                  <SearchName />
+                  <Paper
+                    component="form"
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      width: "13rem",
+                      height: "2.5rem",
+                      borderRadius: "0.7rem",
+                      "&:hover": {
+                        backgroundColor: "#DDDDDD",
+                      },
+                      marginLeft: "2.5rem",
+                      marginTop: "-0.6rem",
+                      backgroundColor: "#F3F3F3",
+                      boxShadow: "0",
+                    }}
+                    onSubmit={searchSubmit}
+                  >
+                    <InputBase
+                      sx={{ ml: 1, flex: 1 }}
+                      placeholder="搜尋病患"
+                      inputProps={{ "aria-label": "搜尋病患" }}
+                      value={search}
+                      onChange={handleSearch}
+                    />
+                    <IconButton
+                      type="button"
+                      sx={{ p: "10px", cursor: "pointer" }}
+                      aria-label="search"
+                      onClick={() => {
+                        searchSubmit;
+                      }}
+                    >
+                      <SearchIcon />
+                    </IconButton>
+                  </Paper>
                 </Box>
 
                 <Button
