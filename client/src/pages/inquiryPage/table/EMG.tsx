@@ -228,6 +228,7 @@ const EMG = ({
         })
         .then((res) => {
           console.log(res.data);
+          setReplaceComponent("right");
         });
     }
   };

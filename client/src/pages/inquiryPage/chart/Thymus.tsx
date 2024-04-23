@@ -71,22 +71,27 @@ const ThymusChart = ({
 };
 
 const ThymusSmallChart = ({ historyData }: { historyData: Thymus[] }) => {
+<<<<<<< Updated upstream
   const ThymusData = patientThymus[0]["thymusStatus"];
   let thymusResult = "";
+=======
+  // const ThymusData = historyData[0]["thymusStatus"];
+  // let thymusResult = "";
+>>>>>>> Stashed changes
 
-  if (ThymusData === 0) {
-    thymusResult = "正常";
-  } else if (ThymusData === 1) {
-    thymusResult = "胸腺萎縮";
-  } else if (ThymusData === 2) {
-    thymusResult = "胸腺增生";
-  } else if (ThymusData === 3) {
-    thymusResult = "胸腺瘤";
-  }
+  // if (ThymusData === 0) {
+  //   thymusResult = "正常";
+  // } else if (ThymusData === 1) {
+  //   thymusResult = "胸腺萎縮";
+  // } else if (ThymusData === 2) {
+  //   thymusResult = "胸腺增生";
+  // } else if (ThymusData === 3) {
+  //   thymusResult = "胸腺瘤";
+  // }
 
   return (
     <div className="thymus-chart-smallchart">
-      <div>胸腺掃描結果:{thymusResult}</div>
+      <div>胸腺掃描結果:</div>
     </div>
   );
 };

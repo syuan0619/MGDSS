@@ -13,7 +13,6 @@ const ADL = ({
   selectedDate: string;
 }) => {
   const routeParams = useParams();
-
   const [ADLscore, setADLscore] = useState<typeADL>({
     testDate: selectedDate,
     talking: 0,
@@ -53,6 +52,7 @@ const ADL = ({
       console.log(ADLscore);
       await api.post(`/inquiry/${routeParams.id}/ADL`, ADLscore).then((res) => {
         console.log(res.data);
+        setReplaceComponent("right");
       });
     }
   };

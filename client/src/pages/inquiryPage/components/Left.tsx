@@ -96,17 +96,6 @@ const Left = ({ info }: { info: Info }) => {
               ></input>
             </div>
             <div>
-              狀態:
-              <input
-                type="text"
-                className="textfield"
-                name="state"
-                onChange={changeInput}
-                readOnly={readOnly}
-                value={info.status}
-              ></input>
-            </div>
-            <div>
               其他:
               <input
                 type="text"
@@ -115,6 +104,17 @@ const Left = ({ info }: { info: Info }) => {
                 onChange={changeInput}
                 readOnly={readOnly}
                 value={info.other}
+              ></input>
+            </div>
+            <div>
+              其他疾病:
+              <input
+                type="text"
+                className="textfield"
+                name="state"
+                onChange={changeInput}
+                readOnly={readOnly}
+                value={info.otherDisease}
               ></input>
             </div>
             <div>

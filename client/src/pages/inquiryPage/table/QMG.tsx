@@ -59,6 +59,7 @@ const QMG = ({
       console.log(QMGscore);
       await api.post(`/inquiry/${routeParams.id}/QMG`, QMGscore).then((res) => {
         console.log(res.data);
+        setReplaceComponent("right");
       });
     }
   };

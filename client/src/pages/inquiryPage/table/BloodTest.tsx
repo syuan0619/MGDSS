@@ -83,6 +83,7 @@ const BloodTest = ({
         .post(`/inquiry/${routeParams.id}/bloodTest`, BloodTestScore)
         .then((res) => {
           console.log(res.data);
+          setReplaceComponent("right");
         });
     }
   };
