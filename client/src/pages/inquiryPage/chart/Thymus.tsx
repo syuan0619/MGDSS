@@ -71,13 +71,8 @@ const ThymusChart = ({
 };
 
 const ThymusSmallChart = ({ historyData }: { historyData: Thymus[] }) => {
-<<<<<<< Updated upstream
-  const ThymusData = patientThymus[0]["thymusStatus"];
-  let thymusResult = "";
-=======
   // const ThymusData = historyData[0]["thymusStatus"];
   // let thymusResult = "";
->>>>>>> Stashed changes
 
   // if (ThymusData === 0) {
   //   thymusResult = "正常";

@@ -136,9 +136,6 @@ const ADLChart = ({
           </div>
           <div className="chart-footer-checkbox">
             <div className="chart-footer-checkbox-inner">
-<<<<<<< Updated upstream
-              目前顯示:{ADLCheckbox}
-=======
               <label>
                 <input
                   type="checkbox"
@@ -148,7 +145,6 @@ const ADLChart = ({
                 全選
               </label>
               {ADLCheckbox}
->>>>>>> Stashed changes
             </div>
           </div>
         </div>
