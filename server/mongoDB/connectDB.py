@@ -83,9 +83,20 @@ def update_patient_by_date(patient_id: str, table_name: str, table: dict, date: 
     old_patient = patientCollection.find_one({"_id": ObjectId(patient_id)})
     old_patient["_id"] = str(old_patient["_id"])
     for old_table in old_patient[table_name]:
+        print(old_table["testDate"], date)
         if old_table["testDate"] == date:
             old_table.update(table)
-            break
+            old_table["testDate"] = date
+            updated_patient = patientCollection.find_one_and_update(
+                {"_id": ObjectId(patient_id)},
+                {"$set": {table_name: old_patient[table_name]}},
+                return_document=pymongo.ReturnDocument.AFTER,
+            )
+            updated_patient["_id"] = str(updated_patient["_id"])
+            return updated_patient
+        else:
+            continue
+    return None
 
 
 ### Account ###

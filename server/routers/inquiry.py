@@ -8,6 +8,7 @@ from mongoDB.connectDB import (
     add_new_table,
     getPatientById,
     getPatientByDate,
+    update_patient_by_date
 )
 from OCR.functionalRecognize import functionalRecognize
 from models import *
@@ -43,23 +44,19 @@ async def get_patient_date(patientId: str, date: datetime.date):
 
 
 @router.post(
-    "/{patientId}/visit/{date}",
+    "/{patientId}/visit",
     description="request body: visit table",
     summary="新增visit表格",
 )
-async def inquiry_visit(patientId: str, table: Visit, date: str | None = None):
+async def inquiry_visit(patientId: str, table: Visit):
     try:
-        if date:
-            
-            return
-        elif date is None:
-            updatedPatient = add_new_table(
-                patientId, "visit", table.model_dump(by_alias=True)
-            )
-            return {
-                "message": "Success add new visit table!",
-                "updatedPatient": updatedPatient,
-            }
+        updatedPatient = add_new_table(
+            patientId, "visit", table.model_dump(by_alias=True)
+        )
+        return {
+            "message": "Success add new visit table!",
+            "updatedPatient": updatedPatient,
+        }
     except ValidationError as e:
         print("error: ", str(e))
         return JSONResponse(status_code=400, content={"message": "Invalid visit table"})
@@ -239,7 +236,18 @@ async def recognize_text(file: UploadFile = File(...)):
         media_type="image/*",
     )
 
-@router.put("/{patient_id}/{table_name}/{date}")
+# PUT /inquiry/{patient_id}/{table_name}/{date} -> update table on date
+@router.put("/{patient_id}/{table_name}/{date}", summary="指定日期更新(覆蓋)table", description="date: 日期, tabe_name: visit、QOL等, request body: 更新的table\n 例如: /inquiry/123/visit/2021-01-01, 更新123病患2021-01-01的visit table")
 async def update_table_on_date(patient_id: str, table_name: str, date: str, updated_table: Visit| Thymus| BloodTest| QOL| QMG| MG| ADL| EMG):
-
-    return
+    if table_name not in ["visit", "thymus", "bloodTest", "QOL", "QMG", "MG", "ADL", "EMG"]:
+        return JSONResponse(status_code=400, content={"message": "Invalid table name"})
+    else:
+        try:
+            updated_patient = update_patient_by_date(patient_id, table_name, updated_table.model_dump(by_alias=True), date)
+            if updated_patient:
+                return {"message": f"Success update {table_name} table on {date}", "updatedPatient": updated_patient}
+            else:
+                return JSONResponse(status_code=404, content={"message": f"No {table_name} table on {date}"})
+        except Exception as e:
+            print("Exception: ", str(e))
+            return JSONResponse(status_code=500, content={"message": str(e)})
