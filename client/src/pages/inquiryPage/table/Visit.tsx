@@ -112,6 +112,7 @@ const Visit = ({
         .post(`/inquiry/${routeParams.id}/visit`, VisitScore)
         .then((res) => {
           console.log(res.data);
+          setReplaceComponent("right");
         });
     }
   };

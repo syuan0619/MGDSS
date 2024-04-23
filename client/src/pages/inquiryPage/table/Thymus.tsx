@@ -42,6 +42,7 @@ const Thymus = ({
         .post(`/inquiry/${routeParams.id}/thymus`, Thymusscore)
         .then((res) => {
           console.log(res.data);
+          setReplaceComponent("right");
         });
     }
   };

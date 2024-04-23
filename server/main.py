@@ -13,26 +13,6 @@ app.include_router(account.router)
 app.include_router(prediction.router)
 app.include_router(patients.router)
 
-@app.post("/updateinfo/{patientId}", tags=["patients"], description="request body: 更新後的info, return: {_id: _id, info:執行後的info}")
-async def update_info(patientId: str, updatedPatientInfo: models.Info):
-    try:
-        updatedPatient = update_patient_info(patientId, updatedPatientInfo.model_dump(by_alias=True))
-        return {
-            "message": "Success update patient info!",
-            "updatedPatient": updatedPatient,
-        }
-    except ValidationError as e:
-        print("error: ", str(e))
-        return JSONResponse(
-            status_code=400, content={"message": "Invalid patient info"}
-        )
-    except Exception as e:
-        print("error: ", str(e))
-        return JSONResponse(
-            status_code=500, content={"message": "Internal server error"}
-        )
-
-
 @app.get("/")
 async def root():
     content = {"message": "Hello World"}

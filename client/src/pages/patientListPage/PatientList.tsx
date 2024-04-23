@@ -166,6 +166,7 @@ function PatientList() {
       console.log(res.data);
       data();
     });
+    setAddPatientStatus(false);
   };
 
   //修改病患dialog
@@ -186,7 +187,7 @@ function PatientList() {
   };
   const submitUpdatePatient = async () => {
     await api
-      .post(`/updateinfo/${updatePatientId}`, updatePatient)
+      .post(`/patients/${updatePatientId}/info`, updatePatient)
       .then((res) => {
         console.log(res.data);
         data();

@@ -61,6 +61,7 @@ const QOL = ({
       console.log(QOLscore);
       await api.post(`/inquiry/${routeParams.id}/QOL`, QOLscore).then((res) => {
         console.log(res.data);
+        setReplaceComponent("right");
       });
     }
   };
