@@ -6,8 +6,9 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import ValidationError
 from mongoDB.connectDB import (
     add_new_table,
-    getPatientById,
+    get_patient_by_id,
     getPatientByDate,
+    get_table_by_date,
     update_patient_by_date
 )
 from OCR.functionalRecognize import functionalRecognize
@@ -17,10 +18,10 @@ from models import *
 router = APIRouter(prefix="/inquiry", tags=["inquiry"])
 
 
-@router.get("/{patientId}", summary="Get patient by id")
-async def get_patient_by_id(patientId: str):
+@router.get("/{patient_id}", summary="Get patient by id")
+async def get_patient_with_patient_id(patient_id: str):
     try:
-        patient = getPatientById(patientId)
+        patient = get_patient_by_id(patient_id)
         return patient
     except Exception as e:
         print("error: ", str(e))
@@ -28,6 +29,21 @@ async def get_patient_by_id(patientId: str):
             status_code=500, content={"message": "Internal server error"}
         )
 
+
+@router.get("/{patient_id}/{table_name}/{date}", summary="取得指定日期之單一table")
+async def get_table_with_date(patient_id: str, table_name: str, date: str):
+    if table_name not in ["visit", "thymus", "bloodTest", "QOL", "QMG", "MG", "ADL", "EMG"]:
+        return JSONResponse(status_code=400, content={"message": "Invalid table name"})
+    else:
+        try:
+            table = get_table_by_date(patient_id, table_name, date)
+            if table:
+                return {"message": f"Success get {table_name} table on {date}", "table": table}
+            else:
+                return JSONResponse(status_code=404, content={"message": f"No {table_name} table on {date}"})
+        except Exception as e:
+            print("Exception: ", str(e))
+            return JSONResponse(status_code=500, content={"message": str(e)})
 
 @router.get(
     "/{patientId}/{date}",
@@ -237,7 +253,7 @@ async def recognize_text(file: UploadFile = File(...)):
     )
 
 # PUT /inquiry/{patient_id}/{table_name}/{date} -> update table on date
-@router.put("/{patient_id}/{table_name}/{date}", summary="指定日期更新(覆蓋)table", description="date: 日期, tabe_name: visit、QOL等, request body: 更新的table\n 例如: /inquiry/123/visit/2021-01-01, 更新123病患2021-01-01的visit table")
+@router.put("/{patient_id}/{table_name}/{date}", summary="更新(覆蓋)指定日期之table", description="date: 日期, tabe_name: visit、QOL等, request body: 更新的table\n 例如: /inquiry/123/visit/2021-01-01, 更新123病患2021-01-01的visit table")
 async def update_table_on_date(patient_id: str, table_name: str, date: str, updated_table: Visit| Thymus| BloodTest| QOL| QMG| MG| ADL| EMG):
     if table_name not in ["visit", "thymus", "bloodTest", "QOL", "QMG", "MG", "ADL", "EMG"]:
         return JSONResponse(status_code=400, content={"message": "Invalid table name"})

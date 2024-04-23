@@ -22,16 +22,16 @@ def getAllPatients():
         response.append({"_id": str(patient["_id"]), "info": patient["info"], "visit": patient["visit"]})
     return response
 
-def getPatientById(patientId):
+def get_patient_by_id(patientId):
     patient = patientCollection.find_one({"_id": ObjectId(patientId)})
     patient["_id"] = str(patient["_id"])
-    for emg in patient["EMG"]:
-        if "image" in emg:
-            emg.pop("image")
+    # for emg in patient["EMG"]:
+    #     if "image" in emg:
+    #         emg.pop("image")
     return patient
 
 def getPatientByDate(patientId: str, date: str):
-    patient = getPatientById(patientId)
+    patient = get_patient_by_id(patientId)
     tablesAtDate = {}
     for key in patient:
         if key != "_id" and key != "info":
@@ -39,6 +39,13 @@ def getPatientByDate(patientId: str, date: str):
                 if table["testDate"] == date:
                     tablesAtDate[key] = table
     return tablesAtDate
+
+def get_table_by_date(patient_id: str, table_name: str, date: str):
+    patient = get_patient_by_id(patient_id)
+    for table in patient[table_name]:
+        if table["testDate"] == date:
+            return table
+    return None
 
 def update_patient_info(patientId: str, updatedInfo: dict):
     updatedPatient = patientCollection.find_one_and_update(
@@ -59,14 +66,13 @@ def addNewPatient(newPatientInfo: dict):
     newPatient["_id"] = str(newPatientId)
     return newPatient
 
-def add_new_table(patientId: str, tableName: str, table: dict):
-    old_patient = patientCollection.find_one({"_id": ObjectId(patientId)})
-    old_patient["_id"] = str(old_patient["_id"])
-    old_patient[tableName].append(table)
-    old_patient[tableName].sort(key=lambda x: date.fromisoformat(x["testDate"]))
+def add_new_table(patient_id: str, table_name: str, table: dict):
+    old_patient = get_patient_by_id(patient_id)
+    old_patient[table_name].append(table)
+    old_patient[table_name].sort(key=lambda x: date.fromisoformat(x["testDate"]))
     updated_patient = patientCollection.find_one_and_update(
-        {"_id": ObjectId(patientId)},
-        {"$set": {tableName: old_patient[tableName]}},
+        {"_id": ObjectId(patient_id)},
+        {"$set": {table_name: old_patient[table_name]}},
         return_document=pymongo.ReturnDocument.AFTER,
     )
     updated_patient["_id"] = str(updated_patient["_id"])
@@ -80,8 +86,7 @@ def update_entire_patient(patientId: str, updatedPatient: dict):
     return updatedPatient
 
 def update_patient_by_date(patient_id: str, table_name: str, table: dict, date: str):
-    old_patient = patientCollection.find_one({"_id": ObjectId(patient_id)})
-    old_patient["_id"] = str(old_patient["_id"])
+    old_patient = get_patient_by_id(patient_id)
     for old_table in old_patient[table_name]:
         print(old_table["testDate"], date)
         if old_table["testDate"] == date:
