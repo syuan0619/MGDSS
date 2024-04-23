@@ -9,6 +9,7 @@ const ThymusChart = ({
   setReplaceComponent: (table: string) => void;
   historyData: Thymus[];
 }) => {
+  console.log(historyData);
   const ThymusStatus = historyData[0]["thymusStatus"];
   let thymusResult = "";
 
@@ -21,6 +22,7 @@ const ThymusChart = ({
   } else if (ThymusStatus === 3) {
     thymusResult = "胸腺瘤";
   }
+
   return (
     <div className="thymus-chart-bg">
       <div className="thymus-chart">
@@ -74,7 +76,7 @@ const ThymusSmallChart = ({ historyData }: { historyData: Thymus[] }) => {
 
   return (
     <div className="thymus-chart-smallchart">
-      <div>胸腺掃描結果:</div>
+      <div>胸腺掃描結果:{thymusResult}</div>
     </div>
   );
 };

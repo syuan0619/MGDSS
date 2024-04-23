@@ -52,7 +52,7 @@ const ADLChart = ({
       curve: "linear",
       data: ADLChart_brushTeethOrCombHairData,
       label: "brushTeethOrCombHair",
-      color: "#FAEF5D",
+      color: "#59B4C3",
     },
     {
       curve: "linear",
@@ -67,6 +67,7 @@ const ADLChart = ({
       color: "#0B666A",
     },
   ];
+
   const [a, setA] =
     useState<{ curve: string; data: number[]; label: string; color: string }[]>(
       data
@@ -92,18 +93,47 @@ const ADLChart = ({
       addToSelected(tarData);
     }
   };
-  const ADLCheckbox = data.map((item) => (
-    <label style={{ color: item.color }}>
+
+  //selectAll
+  const handleSelectAll = () => {
+    if (a.length !== data.length) {
+      setA(data);
+    } else {
+      setA([]);
+    }
+  };
+
+  const handleChecked = (label: string) => {
+    if (a.length == data.length) {
+      return true;
+    } else if (a.some((item) => item.label !== label) == false) {
+      return false;
+    }
+  };
+
+  //ADLCheckbox
+  const ADLCheckbox = data.map((item, index) => (
+    <label style={{ color: item.color }} key={index}>
       <input
         type="checkbox"
         name={item.label}
-        defaultChecked={true}
-        onChange={() => selectData(item.label)}
+        onChange={() => {
+          selectData(item.label);
+          handleChecked(item.label);
+        }}
+        checked={a.some((selectedItem) => selectedItem.label === item.label)}
       />
       {item.label}
     </label>
   ));
 
+  const cancelChecked = () => {
+    if (a.length < data.length) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   return (
     <div className="chart-bg">
       <div className="chart">
@@ -140,6 +170,7 @@ const ADLChart = ({
                 <input
                   type="checkbox"
                   onChange={handleSelectAll}
+                  defaultChecked={true}
                   checked={cancelChecked()}
                 />
                 全選
