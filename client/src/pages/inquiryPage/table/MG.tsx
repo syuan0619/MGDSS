@@ -53,6 +53,7 @@ const MG = ({
       console.log(MGscore);
       await api.post(`/inquiry/${routeParams.id}/MG`, MGscore).then((res) => {
         console.log(res.data);
+        setReplaceComponent("right");
       });
     }
   };
