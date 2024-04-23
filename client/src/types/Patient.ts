@@ -24,24 +24,6 @@ type tablePatinet = {
 
 // 基本資料
 type Info = {
-<<<<<<< Updated upstream
-    "ID#": string;
-    name: string;
-    DOB: string;
-    sex: string;
-    height: number;
-    weight: number;
-    status: string;
-    other: string;
-    attackDate: string;
-    beginSymptom: string;
-    otherHospitalRecord: {
-        recentlyDate: string;
-        totalTimes: number;
-    };
-    otherDisease: string[];
-    otherMedicine: string[];
-=======
   "ID#": string;
   name: string;
   DOB: string;
@@ -57,37 +39,10 @@ type Info = {
   };
   otherDisease: string[];
   otherMedicine: string[];
->>>>>>> Stashed changes
 };
 
 // 看診紀錄
 type Visit = {
-<<<<<<< Updated upstream
-    testDate: string;
-    treat: number; // 0 ~ 4
-    SBP: number;
-    DBP: number;
-    selfAssessment: number; // 0 ~ 2
-    note: string;
-    prescription: {
-        // 0 ~ 9
-        pyridostigmine: number;
-        compesolone: number;
-        cellcept: number;
-        imuran: number;
-        prograf: number;
-    };
-    examination: {
-        // 0 or 1 except MGFAclassification
-        ptosis: number;
-        diplopia: number;
-        dysphagia: number;
-        dysarthria: number;
-        dyspnea: number;
-        limpWeakness: number;
-    };
-    MGFAclassification: string; // I, II, IIA, IIB, III, IIIA, IIIB, IV, IVA, IVB, V
-=======
   testDate: string;
   treat: number; // 0 ~ 4
   SBP: number;
@@ -117,7 +72,6 @@ type Visit = {
     isWaiting: boolean; // 是否候診中
     description: string; // 候診狀態描述
   };
->>>>>>> Stashed changes
 };
 
 // 胸腺掃描
@@ -207,22 +161,6 @@ type ADL = {
 };
 
 type EMG = {
-<<<<<<< Updated upstream
-    testDate: string;
-    img: Blob;
-    nasalis: {
-        preActivation: number;
-        postActivation: [];
-    };
-    abd: {
-        preActivation: number;
-        postActivation: [];
-    };
-    trapezius: {
-        preActivation: number;
-        postActivation: [];
-    };
-=======
   testDate: string;
   img: Blob;
   nasalis: {
@@ -254,6 +192,7 @@ type noImageType = {
     postActivation: number[];
   };
 };
+
 export type {
   Patient,
   Info,
@@ -267,5 +206,4 @@ export type {
   EMG,
   noImageType,
   tablePatinet,
->>>>>>> Stashed changes
 };

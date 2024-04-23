@@ -1,29 +1,23 @@
 import "./BloodTest.css";
 import { useState } from "react";
-import { BloodTest as typeBloodTest } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import api from "../../../api";
 import { useParams } from "react-router-dom";
 
-const BloodTest = ({
+const TableBloodTest = ({
   setReplaceComponent,
   selectedDate,
+  BloodTestScore,
+  setBloodTestScore,
 }: {
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
+  BloodTestScore: BloodTest;
+  setBloodTestScore: React.Dispatch<React.SetStateAction<BloodTest>>;
 }) => {
   const routeParams = useParams();
-
-  const [BloodTestScore, setBloodTestScore] = useState<typeBloodTest>({
-    testDate: selectedDate,
-    ACHR: 0,
-    TSH: 0,
-    freeThyroxine: 0,
-    ANA: 0,
-    uricAcid: 0,
-  });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({
     ACHR: "",
@@ -254,4 +248,4 @@ const BloodTest = ({
     </div>
   );
 };
-export default BloodTest;
+export default TableBloodTest;
