@@ -1,5 +1,4 @@
 import json
-import models
 import io
 import datetime
 from fastapi import APIRouter, Response, UploadFile, File, Header
@@ -7,11 +6,11 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import ValidationError
 from mongoDB.connectDB import (
     add_new_table,
-    updateEntirePatient,
     getPatientById,
     getPatientByDate,
 )
 from OCR.functionalRecognize import functionalRecognize
+from models import *
 
 
 router = APIRouter(prefix="/inquiry", tags=["inquiry"])
@@ -44,43 +43,23 @@ async def get_patient_date(patientId: str, date: datetime.date):
 
 
 @router.post(
-    "/{patientId}/patient",
-    summary="Update entire patient info",
-    description="request body: patient",
-)
-async def inquiry_update_entire_patient(patientId: str, table: models.Patient):
-    try:
-        updatedPatient = updateEntirePatient(patientId, table.model_dump(by_alias=True))
-        return {
-            "message": "Success update patient info!",
-            "updatedPatient": updatedPatient,
-        }
-    except ValidationError as e:
-        print("error: ", str(e))
-        return JSONResponse(
-            status_code=400, content={"message": "Invalid patient info"}
-        )
-    except Exception as e:
-        print("error: ", str(e))
-        return JSONResponse(
-            status_code=500, content={"message": "Internal server error"}
-        )
-
-
-@router.post(
-    "/{patientId}/visit",
+    "/{patientId}/visit/{date}",
     description="request body: visit table",
-    summary="Add new visit table",
+    summary="新增visit表格",
 )
-async def inquiry_visit(patientId: str, table: models.Visit):
+async def inquiry_visit(patientId: str, table: Visit, date: str | None = None):
     try:
-        updatedPatient = add_new_table(
-            patientId, "visit", table.model_dump(by_alias=True)
-        )
-        return {
-            "message": "Success add new visit table!",
-            "updatedPatient": updatedPatient,
-        }
+        if date:
+            
+            return
+        elif date is None:
+            updatedPatient = add_new_table(
+                patientId, "visit", table.model_dump(by_alias=True)
+            )
+            return {
+                "message": "Success add new visit table!",
+                "updatedPatient": updatedPatient,
+            }
     except ValidationError as e:
         print("error: ", str(e))
         return JSONResponse(status_code=400, content={"message": "Invalid visit table"})
@@ -92,7 +71,7 @@ async def inquiry_visit(patientId: str, table: models.Visit):
 
 
 @router.post("/{patientId}/thymus")
-async def inquiry_thymus(patientId: str, table: models.Thymus):
+async def inquiry_thymus(patientId: str, table: Thymus):
     try:
         updatedPatient = add_new_table(
             patientId, "thymus", table.model_dump(by_alias=True)
@@ -114,7 +93,7 @@ async def inquiry_thymus(patientId: str, table: models.Thymus):
 
 
 @router.post("/{patientId}/bloodTest")
-async def inquiry_bloodTest(patientId: str, table: models.BloodTest):
+async def inquiry_bloodTest(patientId: str, table: BloodTest):
     try:
         updatedPatient = add_new_table(
             patientId, "bloodTest", table.model_dump(by_alias=True)
@@ -136,7 +115,7 @@ async def inquiry_bloodTest(patientId: str, table: models.BloodTest):
 
 
 @router.post("/{patientId}/QOL")
-async def inquiry_QOL(patientId: str, table: models.QOL):
+async def inquiry_QOL(patientId: str, table: QOL):
     try:
         updatedPatient = add_new_table(
             patientId, "QOL", table.model_dump(by_alias=True)
@@ -156,7 +135,7 @@ async def inquiry_QOL(patientId: str, table: models.QOL):
 
 
 @router.post("/{patientId}/QMG")
-async def inquiry_QMG(patientId: str, table: models.QMG):
+async def inquiry_QMG(patientId: str, table: QMG):
     try:
         updatedPatient = add_new_table(
             patientId, "QMG", table.model_dump(by_alias=True)
@@ -176,7 +155,7 @@ async def inquiry_QMG(patientId: str, table: models.QMG):
 
 
 @router.post("/{patientId}/MG")
-async def inquiry_MG(patientId: str, table: models.MG):
+async def inquiry_MG(patientId: str, table: MG):
     try:
         updatedPatient = add_new_table(patientId, "MG", table.model_dump(by_alias=True))
         return {
@@ -194,7 +173,7 @@ async def inquiry_MG(patientId: str, table: models.MG):
 
 
 @router.post("/{patientId}/ADL")
-async def inquiry_ADL(patientId: str, table: models.ADL):
+async def inquiry_ADL(patientId: str, table: ADL):
     try:
         updatedPatient = add_new_table(
             patientId, "ADL", table.model_dump(by_alias=True)
@@ -259,3 +238,8 @@ async def recognize_text(file: UploadFile = File(...)):
         },
         media_type="image/*",
     )
+
+@router.put("/{patient_id}/{table_name}/{date}")
+async def update_table_on_date(patient_id: str, table_name: str, date: str, updated_table: Visit| Thymus| BloodTest| QOL| QMG| MG| ADL| EMG):
+
+    return

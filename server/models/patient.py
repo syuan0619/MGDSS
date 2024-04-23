@@ -41,8 +41,8 @@ class Examination(BaseModel):
     limpWeakness: int
 
 class Status(BaseModel):
-    isWaiting: bool
-    description: str
+    isWaiting: bool = Field(default=False) 
+    description: str = Field(default="無")
 
 # 看診紀錄
 class Visit(BaseModel):
@@ -51,10 +51,10 @@ class Visit(BaseModel):
     SBP: float
     DBP: float
     selfAssessment: int
+    MGFAclassification: str
     note: str
     prescription: Prescription
     examination: Examination
-    MGFAclassification: str
     status: Status
 
 
