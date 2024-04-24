@@ -1,21 +1,27 @@
 import * as React from "react";
-import { useState } from "react";
 import "./QMG.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
-import api from "../../../api";
-import { QMG as typeQMG } from "../../../types/Patient";
-import { useParams } from "react-router-dom";
+import { QMG } from "../../../types/Patient";
+import typeChange from "../../../types/Change";
 
-const QMG = ({
+const TableQMG = ({
   setReplaceComponent,
   selectedDate,
+  QMGscore,
+  setQMGscore,
+  getAllData,
+  changeOrNot,
+  setChangeOrNot,
 }: {
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
+  QMGscore: QMG;
+  setQMGscore: React.Dispatch<React.SetStateAction<QMG>>;
+  getAllData: () => Promise<void>;
+  changeOrNot: typeChange;
+  setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
 }) => {
-  const routeParams = useParams();
-
-  const [QMGscore, setQMGscore] = useState<typeQMG>({
+  const defaultQMG = {
     doubleVision: 0,
     ptosis: 0,
     facialMuscle: 0,
@@ -31,36 +37,45 @@ const QMG = ({
     leftLegHeight: 0,
     sum: 0,
     testDate: selectedDate,
-  });
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     beforeChangedParam: number
   ) => {
     const { name, value } = e.target;
+    const numericValue = parseInt(value, 10);
 
-    if (name === "testDate") {
-      setQMGscore({ ...QMGscore, testDate: value });
-    } else {
-      const numericValue = parseInt(value, 10);
-
-      setQMGscore({
-        ...QMGscore,
-        [name]: numericValue,
-        sum: QMGscore.sum + numericValue - beforeChangedParam,
-      });
-    }
+    setQMGscore({
+      ...QMGscore,
+      [name]: numericValue,
+      sum: QMGscore.sum + numericValue - beforeChangedParam,
+    });
   };
 
   const handleSubmit = async () => {
-    const confirmResult = confirm("確定送出結果嗎?");
-
-    if (confirmResult) {
-      console.log(QMGscore);
-      await api.post(`/inquiry/${routeParams.id}/QMG`, QMGscore).then((res) => {
-        console.log(res.data);
-        setReplaceComponent("right");
-      });
+    if (
+      QMGscore.doubleVision === defaultQMG.doubleVision &&
+      QMGscore.facialMuscle === defaultQMG.facialMuscle &&
+      QMGscore.headLift === defaultQMG.headLift &&
+      QMGscore.leftArmHeight === defaultQMG.leftArmHeight &&
+      QMGscore.leftHandGrid === defaultQMG.leftHandGrid &&
+      QMGscore.leftLegHeight === defaultQMG.leftLegHeight &&
+      QMGscore.ptosis === defaultQMG.ptosis &&
+      QMGscore.rightArmHeight === defaultQMG.rightArmHeight &&
+      QMGscore.rightHandGrid === defaultQMG.rightHandGrid &&
+      QMGscore.rightLegHeight === defaultQMG.rightLegHeight &&
+      QMGscore.speakFluency === defaultQMG.speakFluency &&
+      QMGscore.swallowing === defaultQMG.swallowing &&
+      QMGscore.vitalCapacity === defaultQMG.vitalCapacity &&
+      QMGscore.sum === defaultQMG.sum
+    ) {
+      alert("請輸入有效欄位!");
+    } else {
+      console.log("QMGscore", QMGscore);
+      setReplaceComponent("right");
+      setChangeOrNot({ ...changeOrNot, changeQMG: true });
+      getAllData();
     }
   };
 
@@ -71,7 +86,7 @@ const QMG = ({
         <div className="inquiry-table-QMG-content-sliderbox" key={index}>
           <p>{key}</p>
           <input
-            defaultValue="0"
+            value={value}
             onChange={(e) => {
               if (typeof value === "number") handleChange(e, value);
             }}
@@ -100,7 +115,7 @@ const QMG = ({
         <div className="inquiry-table-QMG-content-sliderbox" key={index}>
           <p>{key}</p>
           <input
-            defaultValue="0"
+            value={value}
             onChange={(e) => {
               if (typeof value === "number") handleChange(e, value);
             }}
@@ -150,10 +165,16 @@ const QMG = ({
             </div>
           </div>
           <div className="inquiry-table-QMG-content">
-            <div className="inquiry-table-QMG-content-block-left">
+            <div
+              className="inquiry-table-QMG-content-block-left"
+              key={undefined}
+            >
               {blockLeft}
             </div>
-            <div className="inquiry-table-QMG-content-block-right">
+            <div
+              className="inquiry-table-QMG-content-block-right"
+              key={undefined}
+            >
               {blockRight}
             </div>
           </div>
@@ -165,4 +186,4 @@ const QMG = ({
     </>
   );
 };
-export default QMG;
+export default TableQMG;
