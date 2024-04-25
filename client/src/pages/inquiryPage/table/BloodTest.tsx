@@ -1,29 +1,31 @@
 import "./BloodTest.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { BloodTest } from "../../../types/Patient";
 import typeChange from "../../../types/Change";
+import { useParams } from "react-router-dom";
+import api from "../../../api";
 
 const TableBloodTest = ({
   setReplaceComponent,
   selectedDate,
-  BloodTestScore,
-  setBloodTestScore,
+  bloodTestscore,
+  setbloodTestscore,
   getAllData,
   changeOrNot,
   setChangeOrNot,
 }: {
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
-  BloodTestScore: BloodTest;
-  setBloodTestScore: React.Dispatch<React.SetStateAction<BloodTest>>;
+  bloodTestscore: BloodTest;
+  setbloodTestscore: React.Dispatch<React.SetStateAction<BloodTest>>;
   getAllData: () => Promise<void>;
   changeOrNot: typeChange;
   setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
 }) => {
-  const defaultBloodTest = {
+  const defaultBloodTest: BloodTest = {
     testDate: selectedDate,
     ACHR: 0,
     TSH: 0,
@@ -31,6 +33,23 @@ const TableBloodTest = ({
     ANA: 0,
     uricAcid: 0,
   };
+  const [defaultRes, setDefaultRes] = useState<BloodTest>(defaultBloodTest);
+  const routeParams = useParams();
+  const getDefaultData = async () => {
+    try {
+      const response = await api.get(
+        `/inquiry/${routeParams.id}/bloodTest/${selectedDate}`
+      );
+      setDefaultRes(response.data.table);
+      setbloodTestscore(response.data.table);
+    } catch {
+      setDefaultRes(defaultBloodTest);
+      setbloodTestscore(defaultBloodTest);
+    }
+  };
+  useEffect(() => {
+    getDefaultData();
+  }, [selectedDate]);
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({
     ACHR: "",
@@ -70,7 +89,7 @@ const TableBloodTest = ({
         setErrors({ ...errors, [name]: "" });
         setWarnings({ ...warnings, [name]: "" });
       }
-      setBloodTestScore({ ...BloodTestScore, [name]: numericValue });
+      setbloodTestscore({ ...bloodTestscore, [name]: numericValue });
     } else {
       setErrors({ ...errors, [name]: "請輸入有效的數字！" });
     }
@@ -78,15 +97,15 @@ const TableBloodTest = ({
 
   const handleSubmit = async () => {
     if (
-      BloodTestScore.ACHR === defaultBloodTest.ACHR &&
-      BloodTestScore.ANA === defaultBloodTest.ANA &&
-      BloodTestScore.TSH === defaultBloodTest.TSH &&
-      BloodTestScore.freeThyroxine === defaultBloodTest.freeThyroxine &&
-      BloodTestScore.uricAcid === defaultBloodTest.uricAcid
+      bloodTestscore.ACHR === defaultBloodTest.ACHR &&
+      bloodTestscore.ANA === defaultBloodTest.ANA &&
+      bloodTestscore.TSH === defaultBloodTest.TSH &&
+      bloodTestscore.freeThyroxine === defaultBloodTest.freeThyroxine &&
+      bloodTestscore.uricAcid === defaultBloodTest.uricAcid
     ) {
       alert("請輸入有效欄位!");
     } else {
-      console.log("BloodTestScore", BloodTestScore);
+      console.log("bloodTestscore", bloodTestscore);
       setReplaceComponent("right");
       setChangeOrNot({ ...changeOrNot, changeBloodTest: true });
       getAllData();
@@ -118,7 +137,7 @@ const TableBloodTest = ({
               </div>
               <div style={{ position: "relative" }}>
                 <input
-                  value={BloodTestScore.ACHR}
+                  value={bloodTestscore.ACHR}
                   onChange={handleChange}
                   type="text"
                   id="ACHR"
@@ -132,7 +151,7 @@ const TableBloodTest = ({
                     <Alert severity="info">{warnings.ACHR}</Alert>
                   )}
                 </Stack>
-                {!BloodTestScore.ACHR && (
+                {!bloodTestscore.ACHR && (
                   <div className="BloodTest-placeholder">(nmol/mL)</div>
                 )}
               </div>
@@ -143,7 +162,7 @@ const TableBloodTest = ({
               </div>
               <div style={{ position: "relative" }}>
                 <input
-                  value={BloodTestScore.freeThyroxine}
+                  value={bloodTestscore.freeThyroxine}
                   onChange={handleChange}
                   type="text"
                   id="freeThyroxine"
@@ -159,7 +178,7 @@ const TableBloodTest = ({
                     <Alert severity="info">{warnings.freeThyroxine}</Alert>
                   )}
                 </Stack>
-                {!BloodTestScore.freeThyroxine && (
+                {!bloodTestscore.freeThyroxine && (
                   <div className="BloodTest-placeholder"> (ng/dL)</div>
                 )}
               </div>
@@ -172,7 +191,7 @@ const TableBloodTest = ({
               </div>
               <div style={{ position: "relative" }}>
                 <input
-                  value={BloodTestScore.TSH}
+                  value={bloodTestscore.TSH}
                   onChange={handleChange}
                   type="text"
                   id="TSH"
@@ -186,7 +205,7 @@ const TableBloodTest = ({
                     <Alert severity="info">{warnings.TSH}</Alert>
                   )}
                 </Stack>
-                {!BloodTestScore.TSH && (
+                {!bloodTestscore.TSH && (
                   <div className="BloodTest-placeholder"> (uIU/mL)</div>
                 )}
               </div>
@@ -197,7 +216,7 @@ const TableBloodTest = ({
               </div>
               <div style={{ position: "relative" }}>
                 <input
-                  value={BloodTestScore.uricAcid}
+                  value={bloodTestscore.uricAcid}
                   onChange={handleChange}
                   type="text"
                   id="uricAcid"
@@ -211,7 +230,7 @@ const TableBloodTest = ({
                     <Alert severity="info">{warnings.uricAcid}</Alert>
                   )}
                 </Stack>
-                {!BloodTestScore.uricAcid && (
+                {!bloodTestscore.uricAcid && (
                   <div className="BloodTest-placeholder"> (mg/dL)</div>
                 )}
               </div>
@@ -233,7 +252,7 @@ const TableBloodTest = ({
                 </div>
                 <div style={{ position: "relative" }}>
                   <input
-                    value={BloodTestScore.ANA}
+                    value={bloodTestscore.ANA}
                     onChange={handleChange}
                     type="text"
                     id="ANA"

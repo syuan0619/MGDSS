@@ -30,6 +30,7 @@ import {
   QOL,
   Thymus,
   Visit,
+  noImageType,
 } from "../../types/Patient.ts";
 import typeChange from "../../types/Change.ts";
 
@@ -52,9 +53,6 @@ const InquiryPage = () => {
     const response = await api.get(`/inquiry/${routeParams.id}`);
     setPatients(response.data);
   };
-  useEffect(() => {
-    getAllData();
-  }, []);
 
   //select date & 確認有無更動過
   const [selectedDate, setSelectedDate] = useState<string>(
@@ -84,7 +82,7 @@ const InquiryPage = () => {
     eyelid: 0,
     sum: 0,
   });
-  const [BloodTestScore, setBloodTestScore] = useState<BloodTest>({
+  const [bloodTestscore, setbloodTestscore] = useState<BloodTest>({
     testDate: selectedDate,
     ACHR: 0,
     TSH: 0,
@@ -92,7 +90,7 @@ const InquiryPage = () => {
     ANA: 0,
     uricAcid: 0,
   });
-  const [MGscore, setMGScore] = useState<MG>({
+  const [MGscore, setMGscore] = useState<MG>({
     testDate: selectedDate,
     ptosis: 0,
     doubleVision: 0,
@@ -142,12 +140,12 @@ const InquiryPage = () => {
     sum: 0,
     testDate: selectedDate,
   });
-  const [Thymusscore, setThymusScore] = useState<Thymus>({
+  const [thymusscore, setthymusscore] = useState<Thymus>({
     testDate: selectedDate,
     thymusStatus: 0,
     thymusDescription: "",
   });
-  const [VisitScore, setVisitscore] = useState<Visit>({
+  const [visitscore, setvisitscore] = useState<Visit>({
     testDate: selectedDate,
     treat: 0,
     selfAssessment: 0,
@@ -175,17 +173,40 @@ const InquiryPage = () => {
       description: "",
     },
   });
+  //EMG
+  const [previewUrl, setPreviewUrl] = useState<string>();
+  const [recognizedResult, setRecognizedResult] = useState<string>("");
+  const [modifiedResult, setModifiedResult] = useState<string>("");
+  const [resultHeader, setResultHeader] = useState<noImageType>({
+    testDate: selectedDate,
+    nasalis: {
+      preActivation: 0,
+      postActivation: [],
+    },
+    abd: {
+      preActivation: 0,
+      postActivation: [],
+    },
+    trapezius: {
+      preActivation: 0,
+      postActivation: [],
+    },
+  });
+  const [resultBody, setResultBody] = useState<Blob>();
 
+  //確保日期有改到
   useEffect(() => {
+    getAllData();
     setADLscore({ ...ADLscore, testDate: selectedDate });
-    setBloodTestScore({ ...BloodTestScore, testDate: selectedDate });
-    setMGScore({ ...MGscore, testDate: selectedDate });
+    setbloodTestscore({ ...bloodTestscore, testDate: selectedDate });
+    setMGscore({ ...MGscore, testDate: selectedDate });
     setQMGscore({ ...QMGscore, testDate: selectedDate });
     setQOLscore({ ...QOLscore, testDate: selectedDate });
-    setThymusScore({ ...Thymusscore, testDate: selectedDate });
-    setVisitscore({ ...VisitScore, testDate: selectedDate });
+    setthymusscore({ ...thymusscore, testDate: selectedDate });
+    setvisitscore({ ...visitscore, testDate: selectedDate });
   }, [selectedDate]);
 
+  //確認哪些table有改過
   const checkChangeTable = () => {
     const changeTable: string[] = [];
     const notChangeTable: string[] = [];
@@ -193,8 +214,8 @@ const InquiryPage = () => {
       ? changeTable.push("ADL")
       : notChangeTable.push("ADL");
     changeOrNot.changeBloodTest
-      ? changeTable.push("BloodTest")
-      : notChangeTable.push("BloodTest");
+      ? changeTable.push("bloodTest")
+      : notChangeTable.push("bloodTest");
     changeOrNot.changeEMG
       ? changeTable.push("EMG")
       : notChangeTable.push("EMG");
@@ -206,29 +227,59 @@ const InquiryPage = () => {
       ? changeTable.push("QOL")
       : notChangeTable.push("QOL");
     changeOrNot.changeThymus
-      ? changeTable.push("Thymus")
-      : notChangeTable.push("Thymus");
+      ? changeTable.push("thymus")
+      : notChangeTable.push("thymus");
     changeOrNot.changeVisit
-      ? changeTable.push("Visit")
-      : notChangeTable.push("Visit");
+      ? changeTable.push("visit")
+      : notChangeTable.push("visit");
     return [changeTable, notChangeTable];
   };
 
-  //compare with default/selectedDate PATIENT to finish inquiry
+  //finish inquiry
   const finishInquiry = async () => {
-    console.log("finishInquiry");
     const [changeTable, notChangeTable] = checkChangeTable();
     console.log("changeTable", changeTable);
     console.log("notChangeTable", notChangeTable);
     const confirmResult = confirm(
-      `以下表格尚未填寫或儲存： ${notChangeTable}\n確定要送出嗎?`
+      notChangeTable
+        ? `以下表格尚未填寫或儲存：\n\n${notChangeTable}\n\n確定要送出嗎?`
+        : "請確定表格中欄位已填寫完整"
     );
     if (confirmResult) {
-      changeTable.forEach(async (each) => {
-        await api.post(`/inquiry/${routeParams.id}/${each}`).then((res) => {
-          console.log(each, ":\n", res.data);
+      if (notChangeTable.includes("Visit")) {
+        alert("Visit table為必填表格!\n\n如欲完成看診請務必將其填寫完整。");
+      } else {
+        changeTable.forEach(async (each) => {
+          if (each === "EMG") {
+            const formdata = new FormData();
+            formdata.append("file", resultBody!);
+            if (resultHeader && formdata) {
+              await api
+                .post(`/inquiry/${routeParams.id}/EMG`, formdata, {
+                  headers: {
+                    table: JSON.stringify(resultHeader),
+                    "Access-Control-Expose-Headers": "table",
+                  },
+                })
+                .then((res) => {
+                  console.log(each, ":\n", res.data);
+                })
+                .catch((e) => {
+                  console.log(e);
+                });
+            }
+          } else {
+            await api
+              .post(`/inquiry/${routeParams.id}/${each}`, eval(`${each}score`))
+              .then((res) => {
+                console.log(each, ":\n", res.data);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          }
         });
-      });
+      }
     }
   };
 
@@ -264,15 +315,14 @@ const InquiryPage = () => {
                     );
                   }
                   break;
-
                 case "BloodTesttable":
                   {
                     return (
                       <TableBloodTest
                         setReplaceComponent={setReplaceComponent}
                         selectedDate={selectedDate}
-                        BloodTestScore={BloodTestScore}
-                        setBloodTestScore={setBloodTestScore}
+                        bloodTestscore={bloodTestscore}
+                        setbloodTestscore={setbloodTestscore}
                         getAllData={getAllData}
                         changeOrNot={changeOrNot}
                         setChangeOrNot={setChangeOrNot}
@@ -287,11 +337,21 @@ const InquiryPage = () => {
                       <TableEMG
                         setReplaceComponent={setReplaceComponent}
                         selectedDate={selectedDate}
+                        previewUrl={previewUrl}
+                        setPreviewUrl={setPreviewUrl}
+                        recognizedResult={recognizedResult}
+                        setRecognizedResult={setRecognizedResult}
+                        modifiedResult={modifiedResult}
+                        setModifiedResult={setModifiedResult}
+                        setResultHeader={setResultHeader}
+                        setResultBody={setResultBody}
+                        getAllData={getAllData}
+                        changeOrNot={changeOrNot}
+                        setChangeOrNot={setChangeOrNot}
                       />
                     );
                   }
                   break;
-
                 case "MGtable":
                   {
                     return (
@@ -299,7 +359,7 @@ const InquiryPage = () => {
                         setReplaceComponent={setReplaceComponent}
                         selectedDate={selectedDate}
                         MGscore={MGscore}
-                        setMGScore={setMGScore}
+                        setMGscore={setMGscore}
                         getAllData={getAllData}
                         changeOrNot={changeOrNot}
                         setChangeOrNot={setChangeOrNot}
@@ -346,8 +406,8 @@ const InquiryPage = () => {
                       <TableThymus
                         setReplaceComponent={setReplaceComponent}
                         selectedDate={selectedDate}
-                        Thymusscore={Thymusscore}
-                        setThymusScore={setThymusScore}
+                        thymusscore={thymusscore}
+                        setthymusscore={setthymusscore}
                         getAllData={getAllData}
                         changeOrNot={changeOrNot}
                         setChangeOrNot={setChangeOrNot}
@@ -362,8 +422,8 @@ const InquiryPage = () => {
                       <TableVisit
                         setReplaceComponent={setReplaceComponent}
                         selectedDate={selectedDate}
-                        VisitScore={VisitScore}
-                        setVisitscore={setVisitscore}
+                        visitscore={visitscore}
+                        setvisitscore={setvisitscore}
                         getAllData={getAllData}
                         changeOrNot={changeOrNot}
                         setChangeOrNot={setChangeOrNot}

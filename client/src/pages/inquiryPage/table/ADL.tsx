@@ -1,7 +1,10 @@
+import { useParams } from "react-router-dom";
 import typeChange from "../../../types/Change";
 import { ADL } from "../../../types/Patient";
 import "./ADL.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import api from "../../../api";
+import { useEffect, useState } from "react";
 
 const TableADL = ({
   setReplaceComponent,
@@ -20,7 +23,7 @@ const TableADL = ({
   changeOrNot: typeChange;
   setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
 }) => {
-  const defaultADL = {
+  const defaultADL: ADL = {
     testDate: selectedDate,
     talking: 0,
     chewing: 0,
@@ -32,6 +35,24 @@ const TableADL = ({
     eyelid: 0,
     sum: 0,
   };
+  const [defaultRes, setDefaultRes] = useState<ADL>(defaultADL);
+  const routeParams = useParams();
+  const getDefaultData = async () => {
+    try {
+      const response = await api.get(
+        `/inquiry/${routeParams.id}/ADL/${selectedDate}`
+      );
+      setDefaultRes(response.data.table);
+      setADLscore(response.data.table);
+    } catch {
+      setDefaultRes(defaultADL);
+      setADLscore(defaultADL);
+    }
+  };
+  useEffect(() => {
+    getDefaultData();
+  }, [selectedDate]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     beforeChangedParam: number

@@ -1,8 +1,10 @@
-import * as React from "react";
 import "./QOL.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import typeChange from "../../../types/Change";
 import { QOL } from "../../../types/Patient";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import api from "../../../api";
 
 const TableQOL = ({
   setReplaceComponent,
@@ -40,6 +42,23 @@ const TableQOL = ({
     sum: 0,
     testDate: selectedDate,
   };
+  const [defaultRes, setDefaultRes] = useState<QOL>(defaultQOL);
+  const routeParams = useParams();
+  const getDefaultData = async () => {
+    try {
+      const response = await api.get(
+        `/inquiry/${routeParams.id}/QOL/${selectedDate}`
+      );
+      setDefaultRes(response.data.table);
+      setQOLscore(response.data.table);
+    } catch {
+      setDefaultRes(defaultQOL);
+      setQOLscore(defaultQOL);
+    }
+  };
+  useEffect(() => {
+    getDefaultData();
+  }, [selectedDate]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,

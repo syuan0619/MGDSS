@@ -2,12 +2,15 @@ import "./MG.css";
 import { MG } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import typeChange from "../../../types/Change";
+import api from "../../../api";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const TableMG = ({
   setReplaceComponent,
   selectedDate,
   MGscore,
-  setMGScore,
+  setMGscore,
   getAllData,
   changeOrNot,
   setChangeOrNot,
@@ -15,12 +18,12 @@ const TableMG = ({
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
   MGscore: MG;
-  setMGScore: React.Dispatch<React.SetStateAction<MG>>;
+  setMGscore: React.Dispatch<React.SetStateAction<MG>>;
   getAllData: () => Promise<void>;
   changeOrNot: typeChange;
   setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
 }) => {
-  const defaultMG = {
+  const defaultMG: MG = {
     testDate: selectedDate,
     ptosis: 0,
     doubleVision: 0,
@@ -34,6 +37,24 @@ const TableMG = ({
     hipFlexion: 0,
     sum: 0,
   };
+  const [defaultRes, setDefaultRes] = useState<MG>(defaultMG);
+  const routeParams = useParams();
+  const getDefaultData = async () => {
+    try {
+      const response = await api.get(
+        `/inquiry/${routeParams.id}/MG/${selectedDate}`
+      );
+      setDefaultRes(response.data.table);
+      setMGscore(response.data.table);
+    } catch {
+      setDefaultRes(defaultMG);
+      setMGscore(defaultMG);
+    }
+  };
+  useEffect(() => {
+    getDefaultData();
+  }, [selectedDate]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     beforeChangedParam: number
@@ -41,7 +62,7 @@ const TableMG = ({
     const { name, value } = e.target;
     const numericValue = parseInt(value, 10);
 
-    setMGScore({
+    setMGscore({
       ...MGscore,
       [name]: numericValue,
       sum: MGscore.sum + numericValue - beforeChangedParam,

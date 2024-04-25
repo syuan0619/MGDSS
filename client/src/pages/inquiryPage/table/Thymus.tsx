@@ -2,39 +2,65 @@ import "./Thymus.css";
 import { Thymus } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import typeChange from "../../../types/Change";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import api from "../../../api";
 
 const TableThymus = ({
   setReplaceComponent,
   selectedDate,
-  Thymusscore,
-  setThymusScore,
+  thymusscore,
+  setthymusscore,
   getAllData,
   changeOrNot,
   setChangeOrNot,
 }: {
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
-  Thymusscore: Thymus;
-  setThymusScore: React.Dispatch<React.SetStateAction<Thymus>>;
+  thymusscore: Thymus;
+  setthymusscore: React.Dispatch<React.SetStateAction<Thymus>>;
   getAllData: () => Promise<void>;
   changeOrNot: typeChange;
   setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
 }) => {
+  const defaultThymus: Thymus = {
+    testDate: "",
+    thymusStatus: 0,
+    thymusDescription: "",
+  };
+  const [defaultRes, setDefaultRes] = useState<Thymus>(defaultThymus);
+  const routeParams = useParams();
+  const getDefaultData = async () => {
+    try {
+      const response = await api.get(
+        `/inquiry/${routeParams.id}/thymus/${selectedDate}`
+      );
+      setDefaultRes(response.data.table);
+      setthymusscore(response.data.table);
+    } catch {
+      setDefaultRes(defaultThymus);
+      setthymusscore(defaultThymus);
+    }
+  };
+  useEffect(() => {
+    getDefaultData();
+  }, [selectedDate]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "thymusDescription") {
-      setThymusScore({ ...Thymusscore, [name]: value });
+      setthymusscore({ ...thymusscore, [name]: value });
     } else {
       const numericValue = parseInt(value, 10);
-      setThymusScore({
-        ...Thymusscore,
+      setthymusscore({
+        ...thymusscore,
         [name]: isNaN(numericValue) ? value : numericValue,
       });
     }
   };
 
   const handleSubmit = async () => {
-    console.log("Thymusscore", Thymusscore);
+    console.log("thymusscore", thymusscore);
     setReplaceComponent("right");
     setChangeOrNot({ ...changeOrNot, changeThymus: true });
     getAllData();
@@ -62,7 +88,7 @@ const TableThymus = ({
             <div className="inquiry-table-Thymus-content-row-thymusDescription">
               <label htmlFor="thymusDescription">Description:</label>
               <input
-                value={Thymusscore.thymusDescription}
+                value={thymusscore.thymusDescription}
                 onChange={handleChange}
                 type="text"
                 id="thymusDescription"

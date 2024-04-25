@@ -2,22 +2,24 @@ import "./Visit.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { Alert, Stack } from "@mui/material";
 import typeChange from "../../../types/Change";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Visit } from "../../../types/Patient";
+import { useParams } from "react-router-dom";
+import api from "../../../api";
 
 const TableVisit = ({
   setReplaceComponent,
   selectedDate,
-  VisitScore,
-  setVisitscore,
+  visitscore,
+  setvisitscore,
   getAllData,
   changeOrNot,
   setChangeOrNot,
 }: {
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
-  VisitScore: Visit;
-  setVisitscore: React.Dispatch<React.SetStateAction<Visit>>;
+  visitscore: Visit;
+  setvisitscore: React.Dispatch<React.SetStateAction<Visit>>;
   getAllData: () => Promise<void>;
   changeOrNot: typeChange;
   setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
@@ -50,6 +52,23 @@ const TableVisit = ({
       description: "",
     },
   };
+  const [defaultRes, setDefaultRes] = useState<Visit>(defaultVisit);
+  const routeParams = useParams();
+  const getDefaultData = async () => {
+    try {
+      const response = await api.get(
+        `/inquiry/${routeParams.id}/visit/${selectedDate}`
+      );
+      setDefaultRes(response.data.table);
+      setvisitscore(response.data.table);
+    } catch {
+      setDefaultRes(defaultVisit);
+      setvisitscore(defaultVisit);
+    }
+  };
+  useEffect(() => {
+    getDefaultData();
+  }, [selectedDate]);
 
   const maxValues: { [key: string]: number } = {
     SBP: 120,
@@ -87,27 +106,27 @@ const TableVisit = ({
       }
 
       if (name === "note" || name === "MGFAclassification") {
-        setVisitscore({ ...VisitScore, [name]: value });
-      } else if (name in VisitScore.prescription) {
+        setvisitscore({ ...visitscore, [name]: value });
+      } else if (name in visitscore.prescription) {
         const updatedPrescription = {
-          ...VisitScore.prescription,
+          ...visitscore.prescription,
           [name]: numericValue,
         };
-        setVisitscore({ ...VisitScore, prescription: updatedPrescription });
-      } else if (name in VisitScore.examination) {
+        setvisitscore({ ...visitscore, prescription: updatedPrescription });
+      } else if (name in visitscore.examination) {
         const updatedExamination = {
-          ...VisitScore.examination,
+          ...visitscore.examination,
           [name]: numericValue,
         };
-        setVisitscore({ ...VisitScore, examination: updatedExamination });
-      } else if (name in VisitScore.status) {
+        setvisitscore({ ...visitscore, examination: updatedExamination });
+      } else if (name in visitscore.status) {
         const updatedStatus = {
-          ...VisitScore.status,
+          ...visitscore.status,
           [name]: value,
         };
-        setVisitscore({ ...VisitScore, status: updatedStatus });
+        setvisitscore({ ...visitscore, status: updatedStatus });
       } else {
-        setVisitscore({ ...VisitScore, [name]: numericValue });
+        setvisitscore({ ...visitscore, [name]: numericValue });
       }
     } else {
       setErrors({ ...errors, [name]: "請輸入有效的數字！" });
@@ -117,23 +136,23 @@ const TableVisit = ({
 
   const handleSubmit = async () => {
     if (
-      VisitScore.DBP === defaultVisit.DBP &&
-      VisitScore.MGFAclassification === defaultVisit.MGFAclassification &&
-      VisitScore.SBP === defaultVisit.SBP &&
-      VisitScore.note === defaultVisit.note &&
-      VisitScore.selfAssessment === defaultVisit.selfAssessment &&
-      VisitScore.treat === defaultVisit.treat &&
-      VisitScore.prescription.cellcept === defaultVisit.prescription.cellcept &&
-      VisitScore.prescription.compesolone ===
+      visitscore.DBP === defaultVisit.DBP &&
+      visitscore.MGFAclassification === defaultVisit.MGFAclassification &&
+      visitscore.SBP === defaultVisit.SBP &&
+      visitscore.note === defaultVisit.note &&
+      visitscore.selfAssessment === defaultVisit.selfAssessment &&
+      visitscore.treat === defaultVisit.treat &&
+      visitscore.prescription.cellcept === defaultVisit.prescription.cellcept &&
+      visitscore.prescription.compesolone ===
         defaultVisit.prescription.compesolone &&
-      VisitScore.prescription.imuran === defaultVisit.prescription.imuran &&
-      VisitScore.prescription.prograf === defaultVisit.prescription.prograf &&
-      VisitScore.prescription.pyridostigmine ===
+      visitscore.prescription.imuran === defaultVisit.prescription.imuran &&
+      visitscore.prescription.prograf === defaultVisit.prescription.prograf &&
+      visitscore.prescription.pyridostigmine ===
         defaultVisit.prescription.pyridostigmine
     ) {
       alert("請輸入有效欄位!");
     } else {
-      console.log("VisitScore", VisitScore);
+      console.log("visitscore", visitscore);
       setReplaceComponent("right");
       setChangeOrNot({ ...changeOrNot, changeVisit: true });
       getAllData();
@@ -163,7 +182,7 @@ const TableVisit = ({
               <label htmlFor="SBP">SBP</label>
               <div style={{ position: "relative" }}>
                 <input
-                  value={VisitScore.SBP}
+                  value={visitscore.SBP}
                   onChange={handleChange}
                   type="text"
                   id="SBP"
@@ -177,7 +196,7 @@ const TableVisit = ({
                     <Alert severity="info">{warnings.SBP}</Alert>
                   )}
                 </Stack>
-                {!VisitScore.SBP && (
+                {!visitscore.SBP && (
                   <div className="Visit-placeholder"> (mm/Hg)</div>
                 )}
               </div>
@@ -186,7 +205,7 @@ const TableVisit = ({
               <label htmlFor="DBP">DBP</label>
               <div style={{ position: "relative" }}>
                 <input
-                  value={VisitScore.DBP}
+                  value={visitscore.DBP}
                   onChange={handleChange}
                   type="text"
                   id="DBP"
@@ -200,7 +219,7 @@ const TableVisit = ({
                     <Alert severity="info">{warnings.DBP}</Alert>
                   )}
                 </Stack>
-                {!VisitScore.DBP && (
+                {!visitscore.DBP && (
                   <div className="Visit-placeholder"> (mm/Hg)</div>
                 )}
               </div>
@@ -210,7 +229,7 @@ const TableVisit = ({
             <div className="inquiry-table-Visit-content-row-note">
               <label htmlFor="note">note</label>
               <input
-                value={VisitScore.note}
+                value={visitscore.note}
                 onChange={handleChange}
                 type="text"
                 id="note"
@@ -225,7 +244,7 @@ const TableVisit = ({
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                   handleChange(e)
                 }
-                value={VisitScore.MGFAclassification}
+                value={visitscore.MGFAclassification}
                 required
               >
                 <option value="">Please choose</option>
@@ -248,7 +267,7 @@ const TableVisit = ({
             <div className="inquiry-table-Visit-content-row-left">
               <label htmlFor="doubleVision">treat</label>
               <input
-                value={VisitScore.treat}
+                value={visitscore.treat}
                 onChange={handleChange}
                 type="range"
                 id="treat"
@@ -270,7 +289,7 @@ const TableVisit = ({
             <div className="inquiry-table-Visit-content-row-right">
               <label htmlFor="ptosis">selfAssessment</label>
               <input
-                value={VisitScore.selfAssessment}
+                value={visitscore.selfAssessment}
                 onChange={handleChange}
                 type="range"
                 id="selfAssessment"
@@ -295,7 +314,7 @@ const TableVisit = ({
             <div className="inquiry-table-Visit-content-row-pyridostigmine">
               <label htmlFor="pyridostigmine">pyridostigmine</label>
               <input
-                value={VisitScore.prescription.pyridostigmine}
+                value={visitscore.prescription.pyridostigmine}
                 onChange={handleChange}
                 type="range"
                 id="pyridostigmine"
@@ -323,7 +342,7 @@ const TableVisit = ({
             <div className="inquiry-table-Visit-content-row-compesolone">
               <label htmlFor="compesolone">compesolone</label>
               <input
-                value={VisitScore.prescription.compesolone}
+                value={visitscore.prescription.compesolone}
                 onChange={handleChange}
                 type="range"
                 id="compesolone"
@@ -352,7 +371,7 @@ const TableVisit = ({
             <div className="inquiry-table-Visit-content-row-cellcept">
               <label htmlFor="cellcept">cellcept</label>
               <input
-                value={VisitScore.prescription.cellcept}
+                value={visitscore.prescription.cellcept}
                 onChange={handleChange}
                 type="range"
                 id="cellcept"
@@ -381,7 +400,7 @@ const TableVisit = ({
             <div className="inquiry-table-Visit-content-row-imuran">
               <label htmlFor="imuran">imuran</label>
               <input
-                value={VisitScore.prescription.imuran}
+                value={visitscore.prescription.imuran}
                 onChange={handleChange}
                 type="range"
                 id="imuran"
@@ -409,7 +428,7 @@ const TableVisit = ({
             <div className="inquiry-table-Visit-content-row-prograf">
               <label htmlFor="prograf">prograf</label>
               <input
-                value={VisitScore.prescription.prograf}
+                value={visitscore.prescription.prograf}
                 onChange={handleChange}
                 type="range"
                 id="prograf"

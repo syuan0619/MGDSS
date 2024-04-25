@@ -1,8 +1,10 @@
-import * as React from "react";
 import "./QMG.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { QMG } from "../../../types/Patient";
 import typeChange from "../../../types/Change";
+import { useParams } from "react-router-dom";
+import api from "../../../api";
+import { useEffect, useState } from "react";
 
 const TableQMG = ({
   setReplaceComponent,
@@ -38,6 +40,23 @@ const TableQMG = ({
     sum: 0,
     testDate: selectedDate,
   };
+  const [defaultRes, setDefaultRes] = useState<QMG>(defaultQMG);
+  const routeParams = useParams();
+  const getDefaultData = async () => {
+    try {
+      const response = await api.get(
+        `/inquiry/${routeParams.id}/QMG/${selectedDate}`
+      );
+      setDefaultRes(response.data.table);
+      setQMGscore(response.data.table);
+    } catch {
+      setDefaultRes(defaultQMG);
+      setQMGscore(defaultQMG);
+    }
+  };
+  useEffect(() => {
+    getDefaultData();
+  }, [selectedDate]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,

@@ -4,7 +4,6 @@ import RegisterPage from "./pages/registerPage/RegisterPage";
 import Inquiry from "./pages/inquiryPage/InquiryPage";
 import PatientList from "./pages/patientListPage/PatientList";
 import Backstage from "./pages/backstagePage/Backstage";
-import UploadOCR from "./pages/inquiryPage/needToDelete/UploadOCR";
 import LoginPage from "./pages/loginPage/LoginPage";
 import "./App.css";
 
@@ -16,7 +15,6 @@ function App() {
         <Route path="/register" element={<RegisterPage />}></Route>
         <Route path="/patient" element={<PatientList />}></Route>
         <Route path="/backstage" element={<Backstage />}></Route>
-        <Route path="/upload" element={<UploadOCR />}></Route>
         <Route path="/inquiry/:id/:selectedDate" element={<Inquiry />}></Route>
       </Routes>
     </BrowserRouter>
