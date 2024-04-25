@@ -68,6 +68,21 @@ def addNewPatient(newPatientInfo: dict):
 
 def add_new_table(patient_id: str, table_name: str, table: dict):
     old_patient = get_patient_by_id(patient_id)
+
+    # if date already exists, update the table
+    for old_table in old_patient[table_name]:
+        if old_table["testDate"] == table["testDate"]:
+            old_table.update(table)
+            updated_patient = patientCollection.find_one_and_update(
+                {"_id": ObjectId(patient_id)},
+                {"$set": {table_name: old_patient[table_name]}},
+                return_document=pymongo.ReturnDocument.AFTER)
+            updated_patient["_id"] = str(updated_patient["_id"])
+            return updated_patient
+        else:
+            continue
+
+    # if no table with the same date, append the new table
     old_patient[table_name].append(table)
     old_patient[table_name].sort(key=lambda x: date.fromisoformat(x["testDate"]))
     updated_patient = patientCollection.find_one_and_update(

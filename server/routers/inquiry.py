@@ -9,7 +9,8 @@ from mongoDB.connectDB import (
     get_patient_by_id,
     getPatientByDate,
     get_table_by_date,
-    update_patient_by_date
+    update_patient_by_date,
+    update_patient_info
 )
 from OCR.functionalRecognize import functionalRecognize
 from models import *
@@ -17,7 +18,7 @@ from models import *
 
 router = APIRouter(prefix="/inquiry", tags=["inquiry"])
 
-
+# GET /inquiry/{patient_id} -> get patient by id
 @router.get("/{patient_id}", summary="Get patient by id")
 async def get_patient_with_patient_id(patient_id: str):
     try:
@@ -29,7 +30,21 @@ async def get_patient_with_patient_id(patient_id: str):
             status_code=500, content={"message": "Internal server error"}
         )
 
+# GET /inquiry/{patientId}/{date} -> get all table on date
+@router.get(
+    "/{patientId}/{date}",
+    description="path parameter: patientId(病患的_id), date(日期'yyyy-mm-dd')",
+    summary="回傳病患在特定日期有填的表格",
+)
+async def get_patient_date(patientId: str, date: datetime.date):
+    try:
+        tables = getPatientByDate(patientId, str(date))
+        return {"message": f"Success get tables in {date}", "tables": tables}
+    except Exception as e:
+        print("error: ", str(e))
+        return JSONResponse(status_code=500, content={"message": str(e)})
 
+# GET /inquiry/{patient_id}/{table_name}/{date} -> get specific table on date
 @router.get("/{patient_id}/{table_name}/{date}", summary="取得指定日期之單一table")
 async def get_table_with_date(patient_id: str, table_name: str, date: str):
     if table_name not in ["visit", "thymus", "bloodTest", "QOL", "QMG", "MG", "ADL", "EMG"]:
@@ -45,19 +60,15 @@ async def get_table_with_date(patient_id: str, table_name: str, date: str):
             print("Exception: ", str(e))
             return JSONResponse(status_code=500, content={"message": str(e)})
 
-@router.get(
-    "/{patientId}/{date}",
-    description="path parameter: patientId(病患的_id), date(日期'yyyy-mm-dd')",
-    summary="回傳病患在特定日期有填的表格",
-)
-async def get_patient_date(patientId: str, date: datetime.date):
+# POST /inquiry/{patient_id}/info -> update patient info
+@router.post("/{patient_id}/info", summary="更新（覆蓋）info", description="request body: 病患資料")
+async def inquiry_update_patient_info(patient_id: str, new_info = Info):
     try:
-        tables = getPatientByDate(patientId, str(date))
-        return {"message": f"Success get tables in {date}", "tables": tables}
+        updated_patient = update_patient_info(patient_id, new_info.model_dump(by_alias=True))
+        return {"message": "Success update patient info!", "updatedPatient": updated_patient}
     except Exception as e:
-        print("error: ", str(e))
-        return JSONResponse(status_code=500, content={"message": str(e)})
-
+        print("Exception: ", str(e))
+        return JSONResponse(status_code=500, content={"message": "Internal server error"})
 
 @router.post(
     "/{patientId}/visit",
