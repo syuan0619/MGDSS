@@ -3,24 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import "./EMG.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { useParams } from "react-router-dom";
+import { noImageType } from "../../../types/Patient";
 
-type noImageType = {
-  testDate: string;
-  nasalis: {
-    preActivation: number;
-    postActivation: number[];
-  };
-  abd: {
-    preActivation: number;
-    postActivation: number[];
-  };
-  trapezius: {
-    preActivation: number;
-    postActivation: number[];
-  };
-};
-
-const EMG = ({
+const TableEMG = ({
   setReplaceComponent,
   selectedDate,
 }: {
@@ -33,7 +18,21 @@ const EMG = ({
   const [uploadedFile, setUploadedFile] = useState<File>();
   const [recognizedResult, setRecognizedResult] = useState<string>("");
   const [modifiedResult, setModifiedResult] = useState<string>("");
-  const [resultHeader, setResultHeader] = useState<noImageType>();
+  const [resultHeader, setResultHeader] = useState<noImageType>({
+    testDate: selectedDate,
+    nasalis: {
+      preActivation: 0,
+      postActivation: [],
+    },
+    abd: {
+      preActivation: 0,
+      postActivation: [],
+    },
+    trapezius: {
+      preActivation: 0,
+      postActivation: [],
+    },
+  });
   const [resultBody, setResultBody] = useState<Blob>();
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -328,7 +327,7 @@ const EMG = ({
   );
 };
 
-export default EMG;
+export default TableEMG;
 
 // 圖片上傳後預覽
 // const reader = new FileReader();

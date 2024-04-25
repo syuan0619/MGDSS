@@ -529,7 +529,7 @@ function PatientList() {
         sx={{
           "& .MuiPaper-root": {
             borderRadius: "1rem",
-            width: "31vh",
+            width: "40vh",
             height: "70vh",
             paddingTop: "2vh",
             paddingBottom: "1vh",
@@ -691,20 +691,59 @@ function PatientList() {
           />
           <p />
           <TextField
-            label="其他醫院就診紀錄"
+            type="date"
+            label="其他醫院就診紀錄-最近就診日期"
             variant="outlined"
-            name="otherHospitalRecord"
-            value={addPatient!.otherHospitalRecord || ""}
-            onChange={changeAddPatient}
-            required
+            name="otherHospitalRecord.recentlyDate"
+            value={addPatient!.otherHospitalRecord.recentlyDate || ""}
+            InputLabelProps={{
+              shrink: true,
+            }}
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
               },
+              width: "100%",
+            }}
+            required
+            onChange={(e) => {
+              setAddPatient({
+                ...addPatient,
+                otherHospitalRecord: {
+                  ...addPatient.otherHospitalRecord,
+                  recentlyDate: e.target.value,
+                },
+              });
             }}
           />
 
           <p />
+          <TextField
+            label="其他醫院就診紀錄-總就院次數"
+            variant="outlined"
+            name="otherHospitalRecord.totalTimes"
+            value={addPatient!.otherHospitalRecord.totalTimes || ""}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+            required
+            onChange={(e) => {
+              const value = parseInt(e.target.value);
+              setAddPatient({
+                ...addPatient,
+                otherHospitalRecord: {
+                  ...addPatient.otherHospitalRecord,
+                  totalTimes: value,
+                },
+              });
+            }}
+          />
+
+          <p />
+
           <TextField
             label="其他疾病"
             variant="outlined"

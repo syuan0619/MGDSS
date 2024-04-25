@@ -1,21 +1,28 @@
 import "./Visit.css";
-import { useState } from "react";
-import { Visit as typeVisit } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { Alert, Stack } from "@mui/material";
-import api from "../../../api";
-import { useParams } from "react-router-dom";
+import typeChange from "../../../types/Change";
+import { useState } from "react";
+import { Visit } from "../../../types/Patient";
 
-const Visit = ({
+const TableVisit = ({
   setReplaceComponent,
   selectedDate,
+  VisitScore,
+  setVisitscore,
+  getAllData,
+  changeOrNot,
+  setChangeOrNot,
 }: {
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
+  VisitScore: Visit;
+  setVisitscore: React.Dispatch<React.SetStateAction<Visit>>;
+  getAllData: () => Promise<void>;
+  changeOrNot: typeChange;
+  setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
 }) => {
-  const routeParams = useParams();
-
-  const [VisitScore, setVisitscore] = useState<typeVisit>({
+  const defaultVisit = {
     testDate: selectedDate,
     treat: 0,
     selfAssessment: 0,
@@ -38,7 +45,11 @@ const Visit = ({
       limpWeakness: 0,
     },
     MGFAclassification: "",
-  });
+    status: {
+      isWaiting: false,
+      description: "",
+    },
+  };
 
   const maxValues: { [key: string]: number } = {
     SBP: 120,
@@ -75,12 +86,7 @@ const Visit = ({
         setWarnings({ ...warnings, [name]: "" });
       }
 
-      if (
-        name === "testDate" ||
-        name === "note" ||
-        name === "MGFAclassification"
-      ) {
-        console.log(value);
+      if (name === "note" || name === "MGFAclassification") {
         setVisitscore({ ...VisitScore, [name]: value });
       } else if (name in VisitScore.prescription) {
         const updatedPrescription = {
@@ -94,6 +100,12 @@ const Visit = ({
           [name]: numericValue,
         };
         setVisitscore({ ...VisitScore, examination: updatedExamination });
+      } else if (name in VisitScore.status) {
+        const updatedStatus = {
+          ...VisitScore.status,
+          [name]: value,
+        };
+        setVisitscore({ ...VisitScore, status: updatedStatus });
       } else {
         setVisitscore({ ...VisitScore, [name]: numericValue });
       }
@@ -104,16 +116,27 @@ const Visit = ({
   };
 
   const handleSubmit = async () => {
-    const confirmResult = confirm("確定送出結果嗎?");
-
-    if (confirmResult) {
-      console.log(VisitScore);
-      await api
-        .post(`/inquiry/${routeParams.id}/visit`, VisitScore)
-        .then((res) => {
-          console.log(res.data);
-          setReplaceComponent("right");
-        });
+    if (
+      VisitScore.DBP === defaultVisit.DBP &&
+      VisitScore.MGFAclassification === defaultVisit.MGFAclassification &&
+      VisitScore.SBP === defaultVisit.SBP &&
+      VisitScore.note === defaultVisit.note &&
+      VisitScore.selfAssessment === defaultVisit.selfAssessment &&
+      VisitScore.treat === defaultVisit.treat &&
+      VisitScore.prescription.cellcept === defaultVisit.prescription.cellcept &&
+      VisitScore.prescription.compesolone ===
+        defaultVisit.prescription.compesolone &&
+      VisitScore.prescription.imuran === defaultVisit.prescription.imuran &&
+      VisitScore.prescription.prograf === defaultVisit.prescription.prograf &&
+      VisitScore.prescription.pyridostigmine ===
+        defaultVisit.prescription.pyridostigmine
+    ) {
+      alert("請輸入有效欄位!");
+    } else {
+      console.log("VisitScore", VisitScore);
+      setReplaceComponent("right");
+      setChangeOrNot({ ...changeOrNot, changeVisit: true });
+      getAllData();
     }
   };
 
@@ -140,7 +163,7 @@ const Visit = ({
               <label htmlFor="SBP">SBP</label>
               <div style={{ position: "relative" }}>
                 <input
-                  defaultValue="0"
+                  value={VisitScore.SBP}
                   onChange={handleChange}
                   type="text"
                   id="SBP"
@@ -163,7 +186,7 @@ const Visit = ({
               <label htmlFor="DBP">DBP</label>
               <div style={{ position: "relative" }}>
                 <input
-                  defaultValue="0"
+                  value={VisitScore.DBP}
                   onChange={handleChange}
                   type="text"
                   id="DBP"
@@ -187,7 +210,7 @@ const Visit = ({
             <div className="inquiry-table-Visit-content-row-note">
               <label htmlFor="note">note</label>
               <input
-                defaultValue=""
+                value={VisitScore.note}
                 onChange={handleChange}
                 type="text"
                 id="note"
@@ -202,6 +225,7 @@ const Visit = ({
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                   handleChange(e)
                 }
+                value={VisitScore.MGFAclassification}
                 required
               >
                 <option value="">Please choose</option>
@@ -224,7 +248,7 @@ const Visit = ({
             <div className="inquiry-table-Visit-content-row-left">
               <label htmlFor="doubleVision">treat</label>
               <input
-                defaultValue="0"
+                value={VisitScore.treat}
                 onChange={handleChange}
                 type="range"
                 id="treat"
@@ -246,7 +270,7 @@ const Visit = ({
             <div className="inquiry-table-Visit-content-row-right">
               <label htmlFor="ptosis">selfAssessment</label>
               <input
-                defaultValue="0"
+                value={VisitScore.selfAssessment}
                 onChange={handleChange}
                 type="range"
                 id="selfAssessment"
@@ -271,7 +295,7 @@ const Visit = ({
             <div className="inquiry-table-Visit-content-row-pyridostigmine">
               <label htmlFor="pyridostigmine">pyridostigmine</label>
               <input
-                defaultValue="0"
+                value={VisitScore.prescription.pyridostigmine}
                 onChange={handleChange}
                 type="range"
                 id="pyridostigmine"
@@ -299,7 +323,7 @@ const Visit = ({
             <div className="inquiry-table-Visit-content-row-compesolone">
               <label htmlFor="compesolone">compesolone</label>
               <input
-                defaultValue="0"
+                value={VisitScore.prescription.compesolone}
                 onChange={handleChange}
                 type="range"
                 id="compesolone"
@@ -328,7 +352,7 @@ const Visit = ({
             <div className="inquiry-table-Visit-content-row-cellcept">
               <label htmlFor="cellcept">cellcept</label>
               <input
-                defaultValue="0"
+                value={VisitScore.prescription.cellcept}
                 onChange={handleChange}
                 type="range"
                 id="cellcept"
@@ -357,7 +381,7 @@ const Visit = ({
             <div className="inquiry-table-Visit-content-row-imuran">
               <label htmlFor="imuran">imuran</label>
               <input
-                defaultValue="0"
+                value={VisitScore.prescription.imuran}
                 onChange={handleChange}
                 type="range"
                 id="imuran"
@@ -385,7 +409,7 @@ const Visit = ({
             <div className="inquiry-table-Visit-content-row-prograf">
               <label htmlFor="prograf">prograf</label>
               <input
-                defaultValue="0"
+                value={VisitScore.prescription.prograf}
                 onChange={handleChange}
                 type="range"
                 id="prograf"
@@ -604,4 +628,4 @@ const Visit = ({
     </div>
   );
 };
-export default Visit;
+export default TableVisit;

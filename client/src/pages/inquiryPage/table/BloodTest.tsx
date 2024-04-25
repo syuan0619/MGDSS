@@ -3,21 +3,34 @@ import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import api from "../../../api";
-import { useParams } from "react-router-dom";
+import { BloodTest } from "../../../types/Patient";
+import typeChange from "../../../types/Change";
 
 const TableBloodTest = ({
   setReplaceComponent,
   selectedDate,
   BloodTestScore,
   setBloodTestScore,
+  getAllData,
+  changeOrNot,
+  setChangeOrNot,
 }: {
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
   BloodTestScore: BloodTest;
   setBloodTestScore: React.Dispatch<React.SetStateAction<BloodTest>>;
+  getAllData: () => Promise<void>;
+  changeOrNot: typeChange;
+  setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
 }) => {
-  const routeParams = useParams();
+  const defaultBloodTest = {
+    testDate: selectedDate,
+    ACHR: 0,
+    TSH: 0,
+    freeThyroxine: 0,
+    ANA: 0,
+    uricAcid: 0,
+  };
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({
     ACHR: "",
@@ -46,12 +59,6 @@ const TableBloodTest = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    if (name === "testDate") {
-      console.log(value);
-      setBloodTestScore({ ...BloodTestScore, [name]: value });
-      return;
-    }
-
     const numericValue = value.trim() !== "" ? parseFloat(value) : 0;
     if (!isNaN(numericValue) || value === "") {
       if (numericValue > maxValues[name]) {
@@ -70,15 +77,19 @@ const TableBloodTest = ({
   };
 
   const handleSubmit = async () => {
-    const confirmResult = confirm("確定送出結果嗎?");
-    if (confirmResult) {
-      console.log(BloodTestScore);
-      await api
-        .post(`/inquiry/${routeParams.id}/bloodTest`, BloodTestScore)
-        .then((res) => {
-          console.log(res.data);
-          setReplaceComponent("right");
-        });
+    if (
+      BloodTestScore.ACHR === defaultBloodTest.ACHR &&
+      BloodTestScore.ANA === defaultBloodTest.ANA &&
+      BloodTestScore.TSH === defaultBloodTest.TSH &&
+      BloodTestScore.freeThyroxine === defaultBloodTest.freeThyroxine &&
+      BloodTestScore.uricAcid === defaultBloodTest.uricAcid
+    ) {
+      alert("請輸入有效欄位!");
+    } else {
+      console.log("BloodTestScore", BloodTestScore);
+      setReplaceComponent("right");
+      setChangeOrNot({ ...changeOrNot, changeBloodTest: true });
+      getAllData();
     }
   };
 
@@ -107,7 +118,7 @@ const TableBloodTest = ({
               </div>
               <div style={{ position: "relative" }}>
                 <input
-                  defaultValue="0"
+                  value={BloodTestScore.ACHR}
                   onChange={handleChange}
                   type="text"
                   id="ACHR"
@@ -132,7 +143,7 @@ const TableBloodTest = ({
               </div>
               <div style={{ position: "relative" }}>
                 <input
-                  defaultValue="0"
+                  value={BloodTestScore.freeThyroxine}
                   onChange={handleChange}
                   type="text"
                   id="freeThyroxine"
@@ -161,7 +172,7 @@ const TableBloodTest = ({
               </div>
               <div style={{ position: "relative" }}>
                 <input
-                  defaultValue="0"
+                  value={BloodTestScore.TSH}
                   onChange={handleChange}
                   type="text"
                   id="TSH"
@@ -186,7 +197,7 @@ const TableBloodTest = ({
               </div>
               <div style={{ position: "relative" }}>
                 <input
-                  defaultValue="0"
+                  value={BloodTestScore.uricAcid}
                   onChange={handleChange}
                   type="text"
                   id="uricAcid"
@@ -222,7 +233,7 @@ const TableBloodTest = ({
                 </div>
                 <div style={{ position: "relative" }}>
                   <input
-                    defaultValue="0"
+                    value={BloodTestScore.ANA}
                     onChange={handleChange}
                     type="text"
                     id="ANA"
