@@ -47,8 +47,7 @@ const TableMG = ({
       setDefaultRes(response.data.table);
       setMGscore(response.data.table);
     } catch {
-      setDefaultRes(defaultMG);
-      setMGscore(defaultMG);
+      return;
     }
   };
   useEffect(() => {

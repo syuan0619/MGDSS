@@ -50,8 +50,7 @@ const TableQMG = ({
       setDefaultRes(response.data.table);
       setQMGscore(response.data.table);
     } catch {
-      setDefaultRes(defaultQMG);
-      setQMGscore(defaultQMG);
+      return;
     }
   };
   useEffect(() => {

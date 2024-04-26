@@ -45,8 +45,7 @@ const TableADL = ({
       setDefaultRes(response.data.table);
       setADLscore(response.data.table);
     } catch {
-      setDefaultRes(defaultADL);
-      setADLscore(defaultADL);
+      return;
     }
   };
   useEffect(() => {

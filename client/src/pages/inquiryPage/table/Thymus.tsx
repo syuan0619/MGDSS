@@ -38,8 +38,7 @@ const TableThymus = ({
       setDefaultRes(response.data.table);
       setthymusscore(response.data.table);
     } catch {
-      setDefaultRes(defaultThymus);
-      setthymusscore(defaultThymus);
+      return;
     }
   };
   useEffect(() => {
