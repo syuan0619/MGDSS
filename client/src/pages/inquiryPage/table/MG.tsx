@@ -1,19 +1,29 @@
 import "./MG.css";
-import { useState } from "react";
-import { MG as typeMG } from "../../../types/Patient";
+import { MG } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import typeChange from "../../../types/Change";
 import api from "../../../api";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const MG = ({
+const TableMG = ({
   setReplaceComponent,
   selectedDate,
+  MGscore,
+  setMGscore,
+  getAllData,
+  changeOrNot,
+  setChangeOrNot,
 }: {
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
+  MGscore: MG;
+  setMGscore: React.Dispatch<React.SetStateAction<MG>>;
+  getAllData: () => Promise<void>;
+  changeOrNot: typeChange;
+  setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
 }) => {
-  const routeParams = useParams();
-  const [MGscore, setMGScore] = useState<typeMG>({
+  const defaultMG: MG = {
     testDate: selectedDate,
     ptosis: 0,
     doubleVision: 0,
@@ -26,34 +36,59 @@ const MG = ({
     shoulderAbduction: 0,
     hipFlexion: 0,
     sum: 0,
-  });
+  };
+  const [defaultRes, setDefaultRes] = useState<MG>(defaultMG);
+  const routeParams = useParams();
+  const getDefaultData = async () => {
+    try {
+      const response = await api.get(
+        `/inquiry/${routeParams.id}/MG/${selectedDate}`
+      );
+      setDefaultRes(response.data.table);
+      setMGscore(response.data.table);
+    } catch {
+      setDefaultRes(defaultMG);
+      setMGscore(defaultMG);
+    }
+  };
+  useEffect(() => {
+    getDefaultData();
+  }, [selectedDate]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     beforeChangedParam: number
   ) => {
     const { name, value } = e.target;
+    const numericValue = parseInt(value, 10);
 
-    if (name === "testDate") {
-      setMGScore({ ...MGscore, testDate: value });
-    } else {
-      const numericValue = parseInt(value, 10);
-
-      setMGScore({
-        ...MGscore,
-        [name]: numericValue,
-        sum: MGscore.sum + numericValue - beforeChangedParam,
-      });
-    }
+    setMGscore({
+      ...MGscore,
+      [name]: numericValue,
+      sum: MGscore.sum + numericValue - beforeChangedParam,
+    });
   };
 
   const handleSubmit = async () => {
-    const confirmResult = confirm("確定送出結果嗎?");
-    if (confirmResult) {
-      console.log(MGscore);
-      await api.post(`/inquiry/${routeParams.id}/MG`, MGscore).then((res) => {
-        console.log(res.data);
-      });
+    if (
+      MGscore.breathing === defaultMG.breathing &&
+      MGscore.chewing === defaultMG.chewing &&
+      MGscore.doubleVision === defaultMG.doubleVision &&
+      MGscore.eyeClosure === defaultMG.eyeClosure &&
+      MGscore.hipFlexion === defaultMG.hipFlexion &&
+      MGscore.neckFlexion === defaultMG.neckFlexion &&
+      MGscore.ptosis === defaultMG.ptosis &&
+      MGscore.shoulderAbduction === defaultMG.shoulderAbduction &&
+      MGscore.swallowing === defaultMG.swallowing &&
+      MGscore.talking === defaultMG.talking &&
+      MGscore.sum === defaultMG.sum
+    ) {
+      alert("請輸入有效欄位!");
+    } else {
+      console.log("MGscore", MGscore);
+      setReplaceComponent("right");
+      setChangeOrNot({ ...changeOrNot, changeMG: true });
+      getAllData();
     }
   };
 
@@ -88,7 +123,7 @@ const MG = ({
             <div className="inquiry-table-MG-content-row-doubleVision">
               <label htmlFor="doubleVision">doubleVision</label>
               <input
-                defaultValue="0"
+                value={MGscore.doubleVision}
                 onChange={(e) => handleChange(e, MGscore.doubleVision)}
                 type="range"
                 id="doubleVision"
@@ -109,7 +144,7 @@ const MG = ({
             <div className="inquiry-table-MG-content-row-eyeClosure">
               <label htmlFor="eyeClosure">eyeClosure</label>
               <input
-                defaultValue="0"
+                value={MGscore.eyeClosure}
                 onChange={(e) => handleChange(e, MGscore.eyeClosure)}
                 type="range"
                 id="eyeClosure"
@@ -132,7 +167,7 @@ const MG = ({
             <div className="inquiry-table-MG-content-row-talking">
               <label htmlFor="talking">talking</label>
               <input
-                defaultValue="0"
+                value={MGscore.talking}
                 onChange={(e) => handleChange(e, MGscore.talking)}
                 type="range"
                 id="talking"
@@ -153,7 +188,7 @@ const MG = ({
             <div className="inquiry-table-MG-content-row-chewing">
               <label htmlFor="chewing">chewing</label>
               <input
-                defaultValue="0"
+                value={MGscore.chewing}
                 onChange={(e) => handleChange(e, MGscore.chewing)}
                 type="range"
                 id="chewing"
@@ -176,7 +211,7 @@ const MG = ({
             <div className="inquiry-table-MG-content-row-swallowing">
               <label htmlFor="swallowing">swallowing</label>
               <input
-                defaultValue="0"
+                value={MGscore.swallowing}
                 onChange={(e) => handleChange(e, MGscore.swallowing)}
                 type="range"
                 id="swallowing"
@@ -197,7 +232,7 @@ const MG = ({
             <div className="inquiry-table-MG-content-row-breathing">
               <label htmlFor="breathing">breathing</label>
               <input
-                defaultValue="0"
+                value={MGscore.breathing}
                 onChange={(e) => handleChange(e, MGscore.breathing)}
                 type="range"
                 id="breathing"
@@ -220,7 +255,7 @@ const MG = ({
             <div className="inquiry-table-MG-content-row-neckFlexion">
               <label htmlFor="neckFlexion">neckFlexion</label>
               <input
-                defaultValue="0"
+                value={MGscore.neckFlexion}
                 onChange={(e) => handleChange(e, MGscore.neckFlexion)}
                 type="range"
                 id="neckFlexion"
@@ -241,7 +276,7 @@ const MG = ({
             <div className="inquiry-table-MG-content-row-shoulderAbduction">
               <label htmlFor="shoulderAbduction">shoulderAbduction</label>
               <input
-                defaultValue="0"
+                value={MGscore.shoulderAbduction}
                 onChange={(e) => handleChange(e, MGscore.shoulderAbduction)}
                 type="range"
                 id="shoulderAbduction"
@@ -264,7 +299,7 @@ const MG = ({
             <div className="inquiry-table-MG-content-row-hipFlexion">
               <label htmlFor="hipFlexion">hipFlexion</label>
               <input
-                defaultValue="0"
+                value={MGscore.hipFlexion}
                 onChange={(e) => handleChange(e, MGscore.hipFlexion)}
                 type="range"
                 id="hipFlexion"
@@ -285,7 +320,7 @@ const MG = ({
             <div className="inquiry-table-MG-content-row-ptosis">
               <label htmlFor="ptosis">ptosis</label>
               <input
-                defaultValue="0"
+                value={MGscore.ptosis}
                 onChange={(e) => handleChange(e, MGscore.ptosis)}
                 type="range"
                 id="ptosis"
@@ -312,4 +347,4 @@ const MG = ({
     </div>
   );
 };
-export default MG;
+export default TableMG;

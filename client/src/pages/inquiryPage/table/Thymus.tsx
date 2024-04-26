@@ -1,49 +1,69 @@
 import "./Thymus.css";
-import { useState } from "react";
-import { Thymus as typeThymus } from "../../../types/Patient";
+import { Thymus } from "../../../types/Patient";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
-import api from "../../../api";
+import typeChange from "../../../types/Change";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import api from "../../../api";
 
-const Thymus = ({
+const TableThymus = ({
   setReplaceComponent,
   selectedDate,
+  thymusscore,
+  setthymusscore,
+  getAllData,
+  changeOrNot,
+  setChangeOrNot,
 }: {
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
+  thymusscore: Thymus;
+  setthymusscore: React.Dispatch<React.SetStateAction<Thymus>>;
+  getAllData: () => Promise<void>;
+  changeOrNot: typeChange;
+  setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
 }) => {
-  const routeParams = useParams();
-
-  const [Thymusscore, setThymusScore] = useState<typeThymus>({
-    testDate: selectedDate,
+  const defaultThymus: Thymus = {
+    testDate: "",
     thymusStatus: 0,
     thymusDescription: "",
-  });
+  };
+  const [defaultRes, setDefaultRes] = useState<Thymus>(defaultThymus);
+  const routeParams = useParams();
+  const getDefaultData = async () => {
+    try {
+      const response = await api.get(
+        `/inquiry/${routeParams.id}/thymus/${selectedDate}`
+      );
+      setDefaultRes(response.data.table);
+      setthymusscore(response.data.table);
+    } catch {
+      setDefaultRes(defaultThymus);
+      setthymusscore(defaultThymus);
+    }
+  };
+  useEffect(() => {
+    getDefaultData();
+  }, [selectedDate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "testDate" || name === "thymusDescription") {
-      setThymusScore({ ...Thymusscore, [name]: value });
+    if (name === "thymusDescription") {
+      setthymusscore({ ...thymusscore, [name]: value });
     } else {
       const numericValue = parseInt(value, 10);
-      setThymusScore({
-        ...Thymusscore,
+      setthymusscore({
+        ...thymusscore,
         [name]: isNaN(numericValue) ? value : numericValue,
       });
     }
   };
 
   const handleSubmit = async () => {
-    const confirmResult = confirm("確定送出結果嗎?");
-
-    if (confirmResult) {
-      console.log(Thymusscore);
-      await api
-        .post(`/inquiry/${routeParams.id}/thymus`, Thymusscore)
-        .then((res) => {
-          console.log(res.data);
-        });
-    }
+    console.log("thymusscore", thymusscore);
+    setReplaceComponent("right");
+    setChangeOrNot({ ...changeOrNot, changeThymus: true });
+    getAllData();
   };
 
   return (
@@ -68,7 +88,7 @@ const Thymus = ({
             <div className="inquiry-table-Thymus-content-row-thymusDescription">
               <label htmlFor="thymusDescription">Description:</label>
               <input
-                defaultValue=""
+                value={thymusscore.thymusDescription}
                 onChange={handleChange}
                 type="text"
                 id="thymusDescription"
@@ -85,7 +105,7 @@ const Thymus = ({
                   type="radio"
                   id="thymusStatus"
                   name="thymusStatus"
-                  value="0"
+                  value={0}
                 />
                 <label>胸腺正常</label>
               </div>
@@ -95,7 +115,7 @@ const Thymus = ({
                   type="radio"
                   id="thymusStatus"
                   name="thymusStatus"
-                  value="1"
+                  value={1}
                 />
                 <label>胸腺委縮</label>
               </div>
@@ -105,7 +125,7 @@ const Thymus = ({
                   type="radio"
                   id="thymusStatus"
                   name="thymusStatus"
-                  value="2"
+                  value={2}
                 />
                 <label>胸腺增生</label>
               </div>
@@ -115,7 +135,7 @@ const Thymus = ({
                   type="radio"
                   id="thymusStatus"
                   name="thymusStatus"
-                  value="3"
+                  value={3}
                 />
                 <label>胸腺瘤</label>
               </div>
@@ -130,4 +150,4 @@ const Thymus = ({
     </div>
   );
 };
-export default Thymus;
+export default TableThymus;

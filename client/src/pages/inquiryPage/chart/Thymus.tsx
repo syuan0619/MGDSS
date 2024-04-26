@@ -10,18 +10,22 @@ const ThymusChart = ({
   historyData: Thymus[];
 }) => {
   console.log(historyData);
-  const ThymusStatus = historyData[0]["thymusStatus"];
+  const ThymusData = historyData?.slice(-1)[0]?.["thymusStatus"];
   let thymusResult = "";
-
-  if (ThymusStatus === 0) {
+  if (ThymusData === undefined) {
+    thymusResult = "無資料";
+  } else if (ThymusData === 0) {
     thymusResult = "正常";
-  } else if (ThymusStatus === 1) {
+  } else if (ThymusData === 1) {
     thymusResult = "胸腺萎縮";
-  } else if (ThymusStatus === 2) {
+  } else if (ThymusData === 2) {
     thymusResult = "胸腺增生";
-  } else if (ThymusStatus === 3) {
+  } else if (ThymusData === 3) {
     thymusResult = "胸腺瘤";
+  } else {
+    thymusResult = "";
   }
+  console.log(ThymusData);
 
   return (
     <div className="thymus-chart-bg">
@@ -61,10 +65,11 @@ const ThymusChart = ({
 };
 
 const ThymusSmallChart = ({ historyData }: { historyData: Thymus[] }) => {
-  const ThymusData = historyData[0]["thymusStatus"];
+  const ThymusData = historyData?.slice(-1)[0]?.["thymusStatus"];
   let thymusResult = "";
-
-  if (ThymusData === 0) {
+  if (ThymusData === undefined) {
+    thymusResult = "無資料";
+  } else if (ThymusData === 0) {
     thymusResult = "正常";
   } else if (ThymusData === 1) {
     thymusResult = "胸腺萎縮";
@@ -72,6 +77,8 @@ const ThymusSmallChart = ({ historyData }: { historyData: Thymus[] }) => {
     thymusResult = "胸腺增生";
   } else if (ThymusData === 3) {
     thymusResult = "胸腺瘤";
+  } else {
+    thymusResult = "";
   }
 
   return (

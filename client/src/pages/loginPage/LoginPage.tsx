@@ -216,8 +216,6 @@ const LoginPage = () => {
           </ColorButton>
 
           <div className="loginboxbottom">
-            <p className="text">忘記密碼</p>
-
             <Link to="/register" style={{ textDecoration: "none" }}>
               <p className="text">註冊</p>
             </Link>

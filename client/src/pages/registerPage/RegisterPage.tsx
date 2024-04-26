@@ -16,7 +16,6 @@ import {
   Tab,
   Typography,
 } from "@mui/material";
-import PropTypes from "prop-types";
 
 import InventoryRoundedIcon from "@mui/icons-material/InventoryRounded";
 import LocalHospitalRoundedIcon from "@mui/icons-material/LocalHospitalRounded";
@@ -27,11 +26,16 @@ import * as React from "react";
 import "./RegisterPage.css";
 import fjuicon from "../../assets/fju.png";
 import { useState } from "react";
-import { Margin } from "@mui/icons-material";
+
+interface StyledTabsProps {
+  children?: React.ReactNode;
+  value: number;
+  onChange: (event: React.SyntheticEvent, newValue: number) => void;
+}
 
 const StyledTabs = styled(
   (
-    props //TabDashCSS
+    props: StyledTabsProps //TabDashCSS
   ) => (
     <Tabs
       {...props}
@@ -53,7 +57,13 @@ const StyledTabs = styled(
   },
 });
 
-const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
+interface StyledTabProps {
+  label: string;
+}
+
+const StyledTab = styled((props: StyledTabProps) => (
+  <Tab disableRipple {...props} />
+))(
   //TabCSS
   ({ theme }) => ({
     textTransform: "none",
@@ -135,13 +145,6 @@ function CustomTabPanel(props: {
   );
 }
 
-CustomTabPanel.propTypes = {
-  //TAB
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
 const fromControltheme = createTheme({
   //fromControl的CSS
   components: {
@@ -175,7 +178,7 @@ const fromControltheme = createTheme({
 const RegisterPage = () => {
   const [value, setValue] = React.useState(0); //Tab
 
-  const handleChange = (event: any, newValue: React.SetStateAction<number>) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -185,19 +188,31 @@ const RegisterPage = () => {
     event.preventDefault();
   };
 
-  const [form, setForm] = useState({
+  const [doctorForm, setDoctorForm] = useState({
+    role: "doctor",
     account: "",
     password: "",
   });
 
-  const loginInput = (event: { target: { name: any; value: any } }) => {
+  const doctorLoginInput = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target;
-    setForm({ ...form, [name]: value });
+    setDoctorForm({ ...doctorForm, [name]: value });
   };
 
   function onSubmit() {
-    console.log([form, setForm]);
+    console.log(doctorForm, nurseForm);
   }
+
+  const [nurseForm, setNurseForm] = useState({
+    role: "nurse",
+    account: "",
+    password: "",
+  });
+
+  const nurseLoginInput = (event: { target: { name: any; value: any } }) => {
+    const { name, value } = event.target;
+    setNurseForm({ ...nurseForm, [name]: value });
+  };
 
   return (
     <>
@@ -208,7 +223,7 @@ const RegisterPage = () => {
           </div>
           <p className="registertext">註冊</p>
           <div>
-            <StyledTabs value={value} onChange={handleChange} centered>
+            <StyledTabs value={value} onChange={handleChange}>
               <StyledTab
                 icon={<InventoryRoundedIcon />}
                 iconPosition="start"
@@ -222,8 +237,22 @@ const RegisterPage = () => {
             </StyledTabs>
           </div>
 
-          <CustomTabPanel value={value} index={0} sx={{}}>
+          <CustomTabPanel value={value} index={0}>
             {" "}
+            <CssTextField
+              inputProps={{
+                sx: { ...inputTextColor },
+              }}
+              InputLabelProps={{
+                sx: { ...inputLabelcolor },
+              }}
+              fullWidth
+              label="姓名"
+              variant="outlined"
+              id="account"
+              size="small"
+              sx={{ marginBottom: "1rem" }}
+            />
             <CssTextField
               inputProps={{
                 sx: { ...inputTextColor },
@@ -236,8 +265,8 @@ const RegisterPage = () => {
               variant="outlined"
               size="small"
               name="account"
-              value={form.account}
-              onChange={loginInput}
+              value={doctorForm.account}
+              onChange={doctorLoginInput}
               sx={{ marginBottom: "1rem" }} //這個CustomTabPanel的間距很難改所以用sx硬寫比較快
             />
             <ThemeProvider theme={fromControltheme}>
@@ -255,8 +284,8 @@ const RegisterPage = () => {
                 </InputLabel>
                 <OutlinedInput
                   name="password"
-                  value={form.password}
-                  onChange={loginInput}
+                  value={doctorForm.password}
+                  onChange={doctorLoginInput}
                   inputProps={{
                     sx: { ...inputTextColor },
                   }}
@@ -280,20 +309,6 @@ const RegisterPage = () => {
                 />
               </FormControl>
             </ThemeProvider>
-            <CssTextField
-              inputProps={{
-                sx: { ...inputTextColor },
-              }}
-              InputLabelProps={{
-                sx: { ...inputLabelcolor },
-              }}
-              fullWidth
-              label="姓名"
-              variant="outlined"
-              id="account"
-              size="small"
-              sx={{ marginBottom: "1rem" }}
-            />
             <CssTextField
               inputProps={{
                 sx: { ...inputTextColor },
@@ -314,7 +329,22 @@ const RegisterPage = () => {
               </ColorButton>
             </Link>
           </CustomTabPanel>
+
           <CustomTabPanel value={value} index={1}>
+            <CssTextField
+              inputProps={{
+                sx: { ...inputTextColor },
+              }}
+              InputLabelProps={{
+                sx: { ...inputLabelcolor },
+              }}
+              fullWidth
+              label="姓名"
+              variant="outlined"
+              id="account"
+              size="small"
+              sx={{ marginBottom: "1rem" }}
+            />
             <CssTextField
               inputProps={{
                 sx: { ...inputTextColor },
@@ -327,8 +357,8 @@ const RegisterPage = () => {
               variant="outlined"
               size="small"
               name="account"
-              value={form.account}
-              onChange={loginInput}
+              value={nurseForm.account}
+              onChange={nurseLoginInput}
               sx={{ marginBottom: "1rem" }}
             />
 
@@ -347,8 +377,8 @@ const RegisterPage = () => {
                 </InputLabel>
                 <OutlinedInput
                   name="password"
-                  value={form.password}
-                  onChange={loginInput}
+                  value={nurseForm.password}
+                  onChange={nurseLoginInput}
                   inputProps={{
                     sx: { ...inputTextColor },
                   }}
@@ -359,7 +389,6 @@ const RegisterPage = () => {
                         sx={{
                           ...inputLabelcolor,
                         }}
-                        aria-label="toggle password visibility"
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
@@ -372,21 +401,6 @@ const RegisterPage = () => {
                 />
               </FormControl>
             </ThemeProvider>
-
-            <CssTextField
-              inputProps={{
-                sx: { ...inputTextColor },
-              }}
-              InputLabelProps={{
-                sx: { ...inputLabelcolor },
-              }}
-              fullWidth
-              label="姓名"
-              variant="outlined"
-              id="account"
-              size="small"
-              sx={{ marginBottom: "1rem" }}
-            />
 
             <CssTextField
               inputProps={{

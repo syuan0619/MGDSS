@@ -162,6 +162,11 @@
 }
 
 .fileInput > img {
-  width: 40vw;
+  max-width: 40vw;
   height: auto;
+  transition: all ease 0.5s;
+}
+
+.fileInput > img:hover {
+  cursor: copy;
 }

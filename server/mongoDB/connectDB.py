@@ -22,18 +22,16 @@ def getAllPatients():
         response.append({"_id": str(patient["_id"]), "info": patient["info"], "visit": patient["visit"]})
     return response
 
-
-def getPatientById(patientId):
+def get_patient_by_id(patientId):
     patient = patientCollection.find_one({"_id": ObjectId(patientId)})
     patient["_id"] = str(patient["_id"])
-    for emg in patient["EMG"]:
-        if "image" in emg:
-            emg.pop("image")
+    # for emg in patient["EMG"]:
+    #     if "image" in emg:
+    #         emg.pop("image")
     return patient
 
-
 def getPatientByDate(patientId: str, date: str):
-    patient = getPatientById(patientId)
+    patient = get_patient_by_id(patientId)
     tablesAtDate = {}
     for key in patient:
         if key != "_id" and key != "info":
@@ -42,6 +40,12 @@ def getPatientByDate(patientId: str, date: str):
                     tablesAtDate[key] = table
     return tablesAtDate
 
+def get_table_by_date(patient_id: str, table_name: str, date: str):
+    patient = get_patient_by_id(patient_id)
+    for table in patient[table_name]:
+        if table["testDate"] == date:
+            return table
+    return None
 
 def update_patient_info(patientId: str, updatedInfo: dict):
     updatedPatient = patientCollection.find_one_and_update(
@@ -62,37 +66,57 @@ def addNewPatient(newPatientInfo: dict):
     newPatient["_id"] = str(newPatientId)
     return newPatient
 
+def add_new_table(patient_id: str, table_name: str, table: dict):
+    old_patient = get_patient_by_id(patient_id)
 
-def add_new_table(patientId: str, tableName: str, table: dict):
-    # updatedPatient = patientCollection.find_one_and_update(
-    #     {"_id": ObjectId(patientId)},
-    #     {"$push": {tableName: table}},
-    #     return_document=pymongo.ReturnDocument.AFTER,
-    # )
-    old_patient = patientCollection.find_one({"_id": ObjectId(patientId)})
-    old_patient["_id"] = str(old_patient["_id"])
-    old_patient[tableName].append(table)
-    old_patient[tableName].sort(key=lambda x: date.fromisoformat(x["testDate"]))
+    # if date already exists, update the table
+    for old_table in old_patient[table_name]:
+        if old_table["testDate"] == table["testDate"]:
+            old_table.update(table)
+            updated_patient = patientCollection.find_one_and_update(
+                {"_id": ObjectId(patient_id)},
+                {"$set": {table_name: old_patient[table_name]}},
+                return_document=pymongo.ReturnDocument.AFTER)
+            updated_patient["_id"] = str(updated_patient["_id"])
+            return updated_patient
+        else:
+            continue
+
+    # if no table with the same date, append the new table
+    old_patient[table_name].append(table)
+    old_patient[table_name].sort(key=lambda x: date.fromisoformat(x["testDate"]))
     updated_patient = patientCollection.find_one_and_update(
-        {"_id": ObjectId(patientId)},
-        {"$set": {tableName: old_patient[tableName]}},
+        {"_id": ObjectId(patient_id)},
+        {"$set": {table_name: old_patient[table_name]}},
         return_document=pymongo.ReturnDocument.AFTER,
     )
     updated_patient["_id"] = str(updated_patient["_id"])
     return updated_patient
 
-
-def uploadImage(patientId: str, image: Binary):
-    pateient = getPatientById(patientId)
-    return "Success upload image!"
-
-
-def updateEntirePatient(patientId: str, updatedPatient: dict):
+def update_entire_patient(patientId: str, updatedPatient: dict):
     patientCollection.find_one_and_update(
         {"_id": ObjectId(patientId)}, {"$set": updatedPatient}
     )
     updatedPatient["_id"] = str(updatedPatient["_id"])
     return updatedPatient
+
+def update_patient_by_date(patient_id: str, table_name: str, table: dict, date: str):
+    old_patient = get_patient_by_id(patient_id)
+    for old_table in old_patient[table_name]:
+        print(old_table["testDate"], date)
+        if old_table["testDate"] == date:
+            old_table.update(table)
+            old_table["testDate"] = date
+            updated_patient = patientCollection.find_one_and_update(
+                {"_id": ObjectId(patient_id)},
+                {"$set": {table_name: old_patient[table_name]}},
+                return_document=pymongo.ReturnDocument.AFTER,
+            )
+            updated_patient["_id"] = str(updated_patient["_id"])
+            return updated_patient
+        else:
+            continue
+    return None
 
 
 ### Account ###
@@ -154,7 +178,6 @@ def all_patients_to_csv() -> pd.DataFrame:
             "性別": patient["info"]["sex"],
             "身高": patient["info"]["height"],
             "體重": patient["info"]["weight"],
-            "狀態": patient["info"]["status"],
             "特殊註記": patient["info"]["other"],
             "發病日期": patient["info"]["attackDate"],
             "初始症狀": patient["info"]["beginSymptom"],

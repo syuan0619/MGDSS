@@ -1,62 +1,46 @@
 import api from "../../../api";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import "./EMG.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
-import { useParams } from "react-router-dom";
+import { noImageType } from "../../../types/Patient";
+import typeChange from "../../../types/Change";
 
-type noImageType = {
-  testDate: string;
-  nasalis: {
-    preActivation: number;
-    postActivation: number[];
-  };
-  abd: {
-    preActivation: number;
-    postActivation: number[];
-  };
-  trapezius: {
-    preActivation: number;
-    postActivation: number[];
-  };
-};
-
-const EMG = ({
+const TableEMG = ({
   setReplaceComponent,
   selectedDate,
+  previewUrl,
+  setPreviewUrl,
+  recognizedResult,
+  setRecognizedResult,
+  modifiedResult,
+  setModifiedResult,
+  setResultHeader,
+  setResultBody,
+  getAllData,
+  changeOrNot,
+  setChangeOrNot,
 }: {
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
+  previewUrl: string | undefined;
+  setPreviewUrl: React.Dispatch<React.SetStateAction<string | undefined>>;
+  recognizedResult: string;
+  setRecognizedResult: React.Dispatch<React.SetStateAction<string>>;
+  modifiedResult: string;
+  setModifiedResult: React.Dispatch<React.SetStateAction<string>>;
+  setResultHeader: React.Dispatch<React.SetStateAction<noImageType>>;
+  setResultBody: React.Dispatch<React.SetStateAction<Blob | undefined>>;
+  getAllData: () => Promise<void>;
+  changeOrNot: typeChange;
+  setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
 }) => {
-  const routeParams = useParams();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>();
-  const [uploadedFile, setUploadedFile] = useState<File>();
-  const [recognizedResult, setRecognizedResult] = useState<string>("");
-  const [modifiedResult, setModifiedResult] = useState<string>("");
-  const [resultHeader, setResultHeader] = useState<noImageType>();
-  const [resultBody, setResultBody] = useState<Blob>();
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
-      setUploadedFile(file);
-    }
-  };
-
-  const uploadHandler = () => {
-    inputRef.current?.click();
-  };
-
-  const getRecognized = async (formData: FormData) => {
-    return await api.post("/inquiry/recognize", formData, {
-      responseType: "blob",
-    });
-  };
-
-  useEffect(() => {
-    if (uploadedFile) {
       const formData = new FormData();
-      const image = uploadedFile;
+      const image = file;
       formData.append("file", image);
       getRecognized(formData).then((res) => {
         setResultBody(res.data);
@@ -92,7 +76,17 @@ const EMG = ({
         setModifiedResult(recognizedString);
       });
     }
-  }, [uploadedFile]);
+  };
+
+  const uploadHandler = () => {
+    inputRef.current?.click();
+  };
+
+  const getRecognized = async (formData: FormData) => {
+    return await api.post("/inquiry/recognize", formData, {
+      responseType: "blob",
+    });
+  };
 
   const noSpaceNewLineResult: string[] = [];
   const handleModifiedResult = () => {
@@ -126,9 +120,11 @@ const EMG = ({
     };
 
     noSpaceNewLineResult.map((eachWord, index) => {
+      typeof eachWord === "string" ? toPureString(eachWord) : null;
       if (eachWord.toLowerCase() === "nasalis") {
         if (
-          noSpaceNewLineResult[index + 1]
+          typeof noSpaceNewLineResult[index + 1] === "string" &&
+          toPureString(noSpaceNewLineResult[index + 1])
             .toLowerCase()
             .includes("preactivation")
         ) {
@@ -137,11 +133,11 @@ const EMG = ({
           );
         }
         if (
-          noSpaceNewLineResult[index + 5]
+          typeof noSpaceNewLineResult[index + 5] === "string" &&
+          toPureString(noSpaceNewLineResult[index + 5])
             .toLowerCase()
             .includes("postactivation")
         ) {
-          console.log("nasalis postactivation");
           sendResult.nasalis.postActivation.push(
             toPureNumber(noSpaceNewLineResult[index + 8])
           );
@@ -158,7 +154,8 @@ const EMG = ({
       }
       if (eachWord.toLowerCase() === "abd") {
         if (
-          noSpaceNewLineResult[index + 1]
+          typeof noSpaceNewLineResult[index + 1] === "string" &&
+          toPureString(noSpaceNewLineResult[index + 1])
             .toLowerCase()
             .includes("preactivation")
         ) {
@@ -167,11 +164,11 @@ const EMG = ({
           );
         }
         if (
-          noSpaceNewLineResult[index + 5]
+          typeof noSpaceNewLineResult[index + 5] === "string" &&
+          toPureString(noSpaceNewLineResult[index + 5])
             .toLowerCase()
             .includes("postactivation")
         ) {
-          console.log("abd postactivation");
           sendResult.abd.postActivation.push(
             toPureNumber(noSpaceNewLineResult[index + 8])
           );
@@ -188,7 +185,8 @@ const EMG = ({
       }
       if (eachWord.toLowerCase() === "trapezius") {
         if (
-          noSpaceNewLineResult[index + 1]
+          typeof noSpaceNewLineResult[index + 1] === "string" &&
+          toPureString(noSpaceNewLineResult[index + 1])
             .toLowerCase()
             .includes("preactivation")
         ) {
@@ -197,7 +195,8 @@ const EMG = ({
           );
         }
         if (
-          noSpaceNewLineResult[index + 5]
+          typeof noSpaceNewLineResult[index + 5] === "string" &&
+          toPureString(noSpaceNewLineResult[index + 5])
             .toLowerCase()
             .includes("postactivation")
         ) {
@@ -219,41 +218,43 @@ const EMG = ({
     setResultHeader(sendResult);
   };
 
-  const toPureNumber = (str: string) => {
-    let newStr = "";
-    for (let i = 0; i < str.length; i++) {
-      if (!(str[i] === "%" || str[i] === "-")) {
-        newStr += str[i];
+  const toPureNumber = (str: string | undefined): number => {
+    if (str !== undefined) {
+      let newStr = "";
+      for (let i = 0; i < str.length; i++) {
+        if (!(str[i] === "%")) {
+          newStr += str[i];
+        }
       }
+      return Number(newStr);
     }
-    return Number(newStr);
+    return 0;
+  };
+
+  const toPureString = (str: string | undefined): string => {
+    if (str !== undefined) {
+      let newStr = "";
+      for (let i = 0; i < str.length; i++) {
+        if (!(str[i] === "%" || str[i] === ":")) {
+          newStr += str[i];
+        }
+      }
+      return newStr;
+    }
+    return "";
   };
 
   const sendResult = async () => {
-    console.log(resultHeader);
-    const formdata = new FormData();
-    formdata.append("file", resultBody!);
-    const confirmResult = confirm("確定送出結果嗎?");
-    if (confirmResult && resultHeader && formdata) {
-      console.log(JSON.stringify(resultHeader));
-      await api
-        .post(`/inquiry/${routeParams.id}/EMG`, formdata, {
-          headers: {
-            table: JSON.stringify(resultHeader),
-            "Access-Control-Expose-Headers": "table",
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-        });
+    if (modifiedResult) {
+      handleModifiedResult();
+      modifiedResultToEMG();
+      setReplaceComponent("right");
+      setChangeOrNot({ ...changeOrNot, changeEMG: true });
+      getAllData();
+    } else {
+      alert("請先上傳圖片");
     }
   };
-
-  useEffect(() => {
-    if (resultHeader) {
-      sendResult();
-    }
-  }, [resultHeader]);
 
   return (
     <div className="inquiry-table-EMG-all">
@@ -262,7 +263,16 @@ const EMG = ({
           <div className="inquiry-table-EMG-return">
             <button
               className="EMG-backToRight"
-              onClick={() => setReplaceComponent("right")}
+              onClick={() => {
+                if (changeOrNot.changeEMG) {
+                  setReplaceComponent("right");
+                } else {
+                  setPreviewUrl("");
+                  setRecognizedResult("");
+                  setModifiedResult("");
+                  setReplaceComponent("right");
+                }
+              }}
             >
               <IoIosArrowDropleftCircle />
             </button>
@@ -283,7 +293,7 @@ const EMG = ({
                 ref={inputRef}
               />
               {previewUrl ? (
-                <img src={previewUrl} alt="Preview" />
+                <img src={previewUrl} alt="Preview" onClick={uploadHandler} />
               ) : (
                 <button onClick={uploadHandler}>檔案上傳/預覽</button>
               )}
@@ -294,7 +304,7 @@ const EMG = ({
               <h3 className="h3">辨識結果 : </h3>
               <textarea
                 id="result"
-                defaultValue={recognizedResult ? recognizedResult : ""}
+                value={recognizedResult ? recognizedResult : ""}
                 readOnly
               />
             </div>
@@ -302,7 +312,7 @@ const EMG = ({
               <h3 className="h3">手動修正 :</h3>
               <textarea
                 id="modifyCon"
-                defaultValue={modifiedResult ? modifiedResult : ""}
+                value={modifiedResult ? modifiedResult : ""}
                 onChange={(e) => {
                   setModifiedResult(e.target.value);
                 }}
@@ -312,9 +322,7 @@ const EMG = ({
               <button
                 id="submitButton"
                 onClick={() => {
-                  handleModifiedResult();
-                  modifiedResultToEMG();
-                  // setReplaceComponent("right");
+                  sendResult();
                 }}
               >
                 將結果加入病歷
@@ -327,7 +335,7 @@ const EMG = ({
   );
 };
 
-export default EMG;
+export default TableEMG;
 
 // 圖片上傳後預覽
 // const reader = new FileReader();

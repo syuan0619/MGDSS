@@ -8,9 +8,11 @@ import { ChangeEvent, useState } from "react";
 const Menu = ({
   selectedDate,
   setSelectedDate,
+  finishInquiry,
 }: {
   selectedDate: string;
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
+  finishInquiry: () => void;
 }) => {
   //handle date
   const handleSelectedDate = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +60,9 @@ const Menu = ({
           handleClose={predictDialogHide}
           selectedDate={selectedDate}
         />
-        <button className="inquiry-menu-button">結束看診</button>
+        <button className="inquiry-menu-button" onClick={finishInquiry}>
+          結束看診
+        </button>
       </div>
     </div>
   );

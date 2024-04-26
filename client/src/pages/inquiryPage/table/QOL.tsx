@@ -1,21 +1,29 @@
-import * as React from "react";
-import { useState } from "react";
 import "./QOL.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
-import { QOL as typeQOL } from "../../../types/Patient";
-import api from "../../../api";
+import typeChange from "../../../types/Change";
+import { QOL } from "../../../types/Patient";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import api from "../../../api";
 
-const QOL = ({
+const TableQOL = ({
   setReplaceComponent,
   selectedDate,
+  QOLscore,
+  setQOLscore,
+  getAllData,
+  changeOrNot,
+  setChangeOrNot,
 }: {
   setReplaceComponent: (table: string) => void;
   selectedDate: string;
+  QOLscore: QOL;
+  setQOLscore: React.Dispatch<React.SetStateAction<QOL>>;
+  getAllData: () => Promise<void>;
+  changeOrNot: typeChange;
+  setChangeOrNot: React.Dispatch<React.SetStateAction<typeChange>>;
 }) => {
-  const routeParams = useParams();
-
-  const [QOLscore, setQOLscore] = useState<typeQOL>({
+  const defaultQOL = {
     frustration: 0,
     eyeUsing: 0,
     eating: 0,
@@ -33,35 +41,47 @@ const QOL = ({
     freshenUp: 0,
     sum: 0,
     testDate: selectedDate,
-  });
+  };
+  const [defaultRes, setDefaultRes] = useState<QOL>(defaultQOL);
+  const routeParams = useParams();
+  const getDefaultData = async () => {
+    try {
+      const response = await api.get(
+        `/inquiry/${routeParams.id}/QOL/${selectedDate}`
+      );
+      setDefaultRes(response.data.table);
+      setQOLscore(response.data.table);
+    } catch {
+      setDefaultRes(defaultQOL);
+      setQOLscore(defaultQOL);
+    }
+  };
+  useEffect(() => {
+    getDefaultData();
+  }, [selectedDate]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     beforeChangedParam: number
   ) => {
     const { name, value } = e.target;
+    const numericValue = parseInt(value, 10);
 
-    if (name === "testDate") {
-      setQOLscore({ ...QOLscore, testDate: value });
-    } else {
-      const numericValue = parseInt(value, 10);
-
-      setQOLscore({
-        ...QOLscore,
-        [name]: numericValue,
-        sum: QOLscore.sum + numericValue - beforeChangedParam,
-      });
-    }
+    setQOLscore({
+      ...QOLscore,
+      [name]: numericValue,
+      sum: QOLscore.sum + numericValue - beforeChangedParam,
+    });
   };
 
   const handleSubmit = async () => {
-    const confirmResult = confirm("確定送出結果嗎?");
-
-    if (confirmResult) {
-      console.log(QOLscore);
-      await api.post(`/inquiry/${routeParams.id}/QOL`, QOLscore).then((res) => {
-        console.log(res.data);
-      });
+    if (QOLscore.sum === defaultQOL.sum) {
+      alert("請輸入有效欄位!");
+    } else {
+      console.log("QOLscore", QOLscore);
+      setReplaceComponent("right");
+      setChangeOrNot({ ...changeOrNot, changeQOL: true });
+      getAllData();
     }
   };
 
@@ -72,7 +92,7 @@ const QOL = ({
         <div className="inquiry-table-QOL-content-sliderbox" key={index}>
           <p>{key}</p>
           <input
-            defaultValue="0"
+            value={value}
             onChange={(e) => {
               if (typeof value === "number") handleChange(e, value);
             }}
@@ -100,7 +120,7 @@ const QOL = ({
         <div className="inquiry-table-QOL-content-sliderbox" key={index}>
           <p>{key}</p>
           <input
-            defaultValue="0"
+            value={value}
             onChange={(e) => {
               if (typeof value === "number") handleChange(e, value);
             }}
@@ -148,10 +168,16 @@ const QOL = ({
             </div>
           </div>
           <div className="inquiry-table-QOL-content">
-            <div className="inquiry-table-QOL-content-block-left">
+            <div
+              className="inquiry-table-QOL-content-block-left"
+              key={undefined}
+            >
               {blockLeft}
             </div>
-            <div className="inquiry-table-QOL-content-block-right">
+            <div
+              className="inquiry-table-QOL-content-block-right"
+              key={undefined}
+            >
               {blockRight}
             </div>
           </div>
@@ -163,4 +189,4 @@ const QOL = ({
     </>
   );
 };
-export default QOL;
+export default TableQOL;
