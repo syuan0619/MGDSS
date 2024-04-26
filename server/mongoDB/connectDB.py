@@ -178,7 +178,6 @@ def all_patients_to_csv() -> pd.DataFrame:
             "性別": patient["info"]["sex"],
             "身高": patient["info"]["height"],
             "體重": patient["info"]["weight"],
-            "狀態": patient["info"]["status"],
             "特殊註記": patient["info"]["other"],
             "發病日期": patient["info"]["attackDate"],
             "初始症狀": patient["info"]["beginSymptom"],
