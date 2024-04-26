@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaPencil } from "react-icons/fa6";
 import { Info } from "../../../types/Patient";
 import "./Left.css";
-
+import DoneIcon from "@mui/icons-material/Done";
 const Left = ({ info }: { info: Info }) => {
   const [change, setChange] = useState<Info>(info);
 
@@ -38,7 +38,7 @@ const Left = ({ info }: { info: Info }) => {
                 onSubmitChange();
               }}
             >
-              {readOnly ? <FaPencil className="tableIcon" /> : "完成"}
+              {readOnly ? <FaPencil className="tableIcon" /> : <DoneIcon />}
             </button>
           </div>
         </div>
@@ -52,7 +52,7 @@ const Left = ({ info }: { info: Info }) => {
                 name="patientName"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.name}
+                defaultValue={info.name}
               ></input>
             </div>
             <div>
@@ -63,7 +63,7 @@ const Left = ({ info }: { info: Info }) => {
                 name="birth"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.DOB}
+                defaultValue={info.DOB}
               ></input>
             </div>
             <div>
@@ -74,7 +74,7 @@ const Left = ({ info }: { info: Info }) => {
                 name="sex"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.sex}
+                defaultValue={info.sex}
               ></input>
             </div>
             <div>
@@ -85,7 +85,7 @@ const Left = ({ info }: { info: Info }) => {
                 name="age"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={currentAge}
+                defaultValue={currentAge}
               ></input>
             </div>
             <div>
@@ -96,7 +96,7 @@ const Left = ({ info }: { info: Info }) => {
                 name="height"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.height}
+                defaultValue={info.height}
               ></input>
             </div>
             <div>
@@ -107,7 +107,7 @@ const Left = ({ info }: { info: Info }) => {
                 name="weight"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.weight}
+                defaultValue={info.weight}
               ></input>
             </div>
             <div>
@@ -118,7 +118,7 @@ const Left = ({ info }: { info: Info }) => {
                 name="other"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.other}
+                defaultValue={info.other}
               ></input>
             </div>
             <div>
@@ -129,7 +129,7 @@ const Left = ({ info }: { info: Info }) => {
                 name="state"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.otherDisease}
+                defaultValue={info.otherDisease}
               ></input>
             </div>
             <div>
@@ -140,7 +140,7 @@ const Left = ({ info }: { info: Info }) => {
                 name="onset"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.attackDate}
+                defaultValue={info.attackDate}
               ></input>
             </div>
             <div>
@@ -151,7 +151,7 @@ const Left = ({ info }: { info: Info }) => {
                 name="symptom"
                 onChange={changeInput}
                 readOnly={readOnly}
-                value={info.beginSymptom}
+                defaultValue={info.beginSymptom}
               ></input>
             </div>
           </div>
