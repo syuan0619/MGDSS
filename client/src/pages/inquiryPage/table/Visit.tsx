@@ -62,8 +62,7 @@ const TableVisit = ({
       setDefaultRes(response.data.table);
       setvisitscore(response.data.table);
     } catch {
-      setDefaultRes(defaultVisit);
-      setvisitscore(defaultVisit);
+      return;
     }
   };
   useEffect(() => {

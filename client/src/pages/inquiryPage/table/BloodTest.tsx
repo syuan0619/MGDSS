@@ -43,8 +43,7 @@ const TableBloodTest = ({
       setDefaultRes(response.data.table);
       setbloodTestscore(response.data.table);
     } catch {
-      setDefaultRes(defaultBloodTest);
-      setbloodTestscore(defaultBloodTest);
+      return;
     }
   };
   useEffect(() => {
