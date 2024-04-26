@@ -38,11 +38,7 @@ const Left = ({ info }: { info: Info }) => {
                 onSubmitChange();
               }}
             >
-              {readOnly ? (
-                <FaPencil className="tableIcon" />
-              ) : (
-                <FaPencil className="tableIcon" />
-              )}
+              {readOnly ? <FaPencil className="tableIcon" /> : "完成"}
             </button>
           </div>
         </div>
