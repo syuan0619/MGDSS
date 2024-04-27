@@ -56,8 +56,8 @@ def update_patient_info(patientId: str, updatedInfo: dict):
     updatedPatient["_id"] = str(updatedPatient["_id"])
     return {"_id": updatedPatient["_id"], "info": updatedPatient["info"]}
 
-def delete_patient(patient_id: str):
-    return patientCollection.delete_one({"_id": ObjectId(patient_id)})
+async def delete_patient(patient_id: str):
+    return patientCollection.find_one_and_delete({"_id": ObjectId(patient_id)}) 
 
 # return dict with _id
 def addNewPatient(newPatientInfo: dict):

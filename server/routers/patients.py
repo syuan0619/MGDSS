@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse, Response
 from pydantic import ValidationError
-from mongoDB import getAllPatients, addNewPatient, update_entire_patient, update_patient_info, delete_patient, all_patients_to_csv
+from mongoDB import getAllPatients, addNewPatient, update_entire_patient, update_patient_info, delete_patient, all_patients_to_csv,get_patient_by_id
 import models
 import io
 
@@ -18,9 +18,9 @@ async def add_new_patient(newPatientInfo: models.Info):
     try:
         newPatient = addNewPatient(newPatientInfo.model_dump(by_alias=True))
         return {"message": "Success add new patient", "newPatient": newPatient}
-    except ValidationError as e:
+    except Exception as e:
         print("error: ", str(e))
-        return JSONResponse(status_code=400, content={"message": "Invalid patient info"})
+        return Response(status_code=500, content={"message": str(e)})
     
 # PUT /patients/{patient_id} -> set patient
 @router.put("/{patient_id}", tags=["patients"], summary="更新病患資料（覆蓋）")
@@ -57,14 +57,16 @@ async def update_info(patientId: str, updatedPatientInfo: models.Info):
 
 # DELETE /patients/{patient_id} -> delete patient by id
 @router.delete("/{patient_id}", tags=["patients"], summary="刪除病患")
-async def delete_patient(patient_id: str):
+async def delete_patient_by_id(patient_id: str):
     try:
-        delete_patient(patient_id)
+        await delete_patient(patient_id)
+        return {"message": f"Success delete patient {patient_id}"}
     except Exception as e:
-        print("error: ", str(e))
-        return Response(status_code=500, content={"message": str(e)})
-    return {"message": "Success delete patient!"}
-    
+        if str(e) == "Patient not found":
+            return Response(status_code=404, content={ "message": "Patient not found"})
+        else:
+            return Response(status_code=500, content={"message": str(e)})
+
 
 # GET /patients/csv -> download all patients as csv
 @router.get("/csv", tags=["patients"], summary="匯出全部病患資料", description="下載之後還要右鍵->編輯->另存新檔->編碼選帶有BOM的UTF-8 再用excel開啟才不會亂碼")
