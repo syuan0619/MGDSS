@@ -52,8 +52,7 @@ const TableQOL = ({
       setDefaultRes(response.data.table);
       setQOLscore(response.data.table);
     } catch {
-      setDefaultRes(defaultQOL);
-      setQOLscore(defaultQOL);
+      return;
     }
   };
   useEffect(() => {

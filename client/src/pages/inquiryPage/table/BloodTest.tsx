@@ -43,8 +43,7 @@ const TableBloodTest = ({
       setDefaultRes(response.data.table);
       setbloodTestscore(response.data.table);
     } catch {
-      setDefaultRes(defaultBloodTest);
-      setbloodTestscore(defaultBloodTest);
+      return;
     }
   };
   useEffect(() => {
@@ -79,8 +78,11 @@ const TableBloodTest = ({
     const { name, value } = e.target;
 
     const numericValue = value.trim() !== "" ? parseFloat(value) : 0;
-    if (!isNaN(numericValue) || value === "") {
+    console.log(numericValue);
+    console.log(typeof numericValue);
+    if (numericValue !== 0 || value === ".") {
       if (numericValue > maxValues[name]) {
+        setErrors({ ...errors, [name]: "" });
         setWarnings({
           ...warnings,
           [name]: `正常範圍到 ${maxValues[name]},請確認！`,
@@ -88,10 +90,12 @@ const TableBloodTest = ({
       } else {
         setErrors({ ...errors, [name]: "" });
         setWarnings({ ...warnings, [name]: "" });
+        setbloodTestscore({ ...bloodTestscore, [name]: numericValue });
       }
-      setbloodTestscore({ ...bloodTestscore, [name]: numericValue });
     } else {
+      setWarnings({ ...warnings, [name]: "" });
       setErrors({ ...errors, [name]: "請輸入有效的數字！" });
+      setbloodTestscore({ ...bloodTestscore, [name]: numericValue });
     }
   };
 
