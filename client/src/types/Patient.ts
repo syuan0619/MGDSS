@@ -70,7 +70,7 @@ type Visit = {
   status: {
     // 候診狀態
     isWaiting: boolean; // 是否候診中
-    description: string; // 候診狀態描述
+    description: number; // 候診狀態描述
   };
 };
 
@@ -90,6 +90,7 @@ type BloodTest = {
   ANA: number;
   uricAcid: number;
 };
+
 // 0 ~ 2 except testDate, sum
 type QOL = {
   testDate: string;

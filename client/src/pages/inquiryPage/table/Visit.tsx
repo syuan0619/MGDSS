@@ -90,22 +90,25 @@ const TableVisit = ({
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-
     const numericValue = value.trim() !== "" ? parseFloat(value) : 0;
 
-    if (!isNaN(numericValue) || value === "") {
-      if (name in maxValues && numericValue > maxValues[name]) {
-        setWarnings({
-          ...warnings,
-          [name]: `正常範圍到 ${maxValues[name]}, 請確認！`,
-        });
-      } else {
-        setErrors({ ...errors, [name]: "" });
-        setWarnings({ ...warnings, [name]: "" });
-      }
+    if (name in maxValues && numericValue > maxValues[name]) {
+      setWarnings({
+        ...warnings,
+        [name]: `正常範圍到 ${maxValues[name]}, 請確認！`,
+      });
+    } else if (name in maxValues && typeof numericValue !== "number") {
+      setErrors({ ...errors, [name]: "" });
+      setWarnings({ ...warnings, [name]: "" });
+    } else if (name in maxValues) {
+      setvisitscore({ ...visitscore, [name]: numericValue });
+    }
 
+    if (!(name in maxValues)) {
       if (name === "note" || name === "MGFAclassification") {
         setvisitscore({ ...visitscore, [name]: value });
+      } else if (name === "treat" || name === "selfAssessment") {
+        setvisitscore({ ...visitscore, [name]: numericValue });
       } else if (name in visitscore.prescription) {
         const updatedPrescription = {
           ...visitscore.prescription,
@@ -118,18 +121,7 @@ const TableVisit = ({
           [name]: numericValue,
         };
         setvisitscore({ ...visitscore, examination: updatedExamination });
-      } else if (name in visitscore.status) {
-        const updatedStatus = {
-          ...visitscore.status,
-          [name]: value,
-        };
-        setvisitscore({ ...visitscore, status: updatedStatus });
-      } else {
-        setvisitscore({ ...visitscore, [name]: numericValue });
       }
-    } else {
-      setErrors({ ...errors, [name]: "請輸入有效的數字！" });
-      setWarnings({ ...warnings, [name]: "" });
     }
   };
 
@@ -240,9 +232,7 @@ const TableVisit = ({
               <select
                 name="MGFAclassification"
                 id="MGFAclassification"
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  handleChange(e)
-                }
+                onChange={handleChange}
                 value={visitscore.MGFAclassification}
                 required
               >
@@ -464,7 +454,7 @@ const TableVisit = ({
                     type="radio"
                     id="ptosis"
                     name="ptosis"
-                    value="是"
+                    value={1}
                     onChange={handleChange}
                   />
                   <label className="visit-radio-label" htmlFor="ptosis">
@@ -476,7 +466,7 @@ const TableVisit = ({
                     type="radio"
                     id="ptosis"
                     name="ptosis"
-                    value="否"
+                    value={0}
                     onChange={handleChange}
                     checked
                   />
@@ -494,7 +484,7 @@ const TableVisit = ({
                     type="radio"
                     id="diplopia"
                     name="diplopia"
-                    value="是"
+                    value={1}
                     onChange={handleChange}
                   />
                   <label className="visit-radio-label" htmlFor="diplopia">
@@ -506,7 +496,7 @@ const TableVisit = ({
                     type="radio"
                     id="diplopia"
                     name="diplopia"
-                    value="否"
+                    value={0}
                     onChange={handleChange}
                     checked
                   />
@@ -525,7 +515,7 @@ const TableVisit = ({
                     type="radio"
                     id="dysphagia"
                     name="dysphagia"
-                    value="是"
+                    value={1}
                     onChange={handleChange}
                   />
                   <label className="visit-radio-label" htmlFor="dysphagia">
@@ -537,7 +527,7 @@ const TableVisit = ({
                     type="radio"
                     id="dysphagia"
                     name="dysphagia"
-                    value="否"
+                    value={0}
                     onChange={handleChange}
                     checked
                   />
@@ -555,7 +545,7 @@ const TableVisit = ({
                     type="radio"
                     id="dysarthria"
                     name="dysarthria"
-                    value="是"
+                    value={1}
                     onChange={handleChange}
                   />
                   <label className="visit-radio-label" htmlFor="dysarthria">
@@ -567,7 +557,7 @@ const TableVisit = ({
                     type="radio"
                     id="dysarthria"
                     name="dysarthria"
-                    value="否"
+                    value={0}
                     onChange={handleChange}
                     checked
                   />
@@ -585,7 +575,7 @@ const TableVisit = ({
                     type="radio"
                     id="dyspnea"
                     name="dyspnea"
-                    value="是"
+                    value={1}
                     onChange={handleChange}
                   />
                   <label className="visit-radio-label" htmlFor="dyspnea">
@@ -597,7 +587,7 @@ const TableVisit = ({
                     type="radio"
                     id="dyspnea"
                     name="dyspnea"
-                    value="否"
+                    value={0}
                     onChange={handleChange}
                     checked
                   />
@@ -615,7 +605,7 @@ const TableVisit = ({
                     type="radio"
                     id="limpWeakness"
                     name="limpWeakness"
-                    value="是"
+                    value={1}
                     onChange={handleChange}
                   />
                   <label className="visit-radio-label" htmlFor="limpWeakness">
@@ -627,7 +617,7 @@ const TableVisit = ({
                     type="radio"
                     id="limpWeakness"
                     name="limpWeakness"
-                    value="否"
+                    value={0}
                     onChange={handleChange}
                     checked
                   />

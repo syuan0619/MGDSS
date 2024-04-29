@@ -3,11 +3,15 @@ import skops.io as sio
 import os
 from datetime import datetime
 from sklearn.preprocessing import MinMaxScaler
-SVR_model = sio.load(f'{os.path.dirname(__file__)}/MGC/MGCscore_prediction_SVR.skops', trusted=True)
-DT_model = sio.load(f'{os.path.dirname(__file__)}/MGC/MGCscore_prediction_DT.skops', trusted=True)
-LR_model = sio.load(f'{os.path.dirname(__file__)}/MGC/MGCscore_prediction_LR.skops', trusted=True)
-KNN_model = sio.load(f'{os.path.dirname(__file__)}/MGC/MGCscore_prediction_KNN.skops', trusted=True)
+MG_SVR_model = sio.load(f'{os.path.dirname(__file__)}/MG/MG_sum_prediction_SVR.skops', trusted=True)
+MG_RF_model = sio.load(f'{os.path.dirname(__file__)}/MG/MG_sum_prediction_RF.skops', trusted=True)
+MG_LR_model = sio.load(f'{os.path.dirname(__file__)}/MG/MG_sum_prediction_LR.skops', trusted=True)
+MG_KNN_model = sio.load(f'{os.path.dirname(__file__)}/MG/MG_sum_prediction_KNN.skops', trusted=True)
 
+ADL_SVR_model = sio.load(f'{os.path.dirname(__file__)}/ADL/ADL_sum_prediction_SVR.skops', trusted=True)
+ADL_RF_model = sio.load(f'{os.path.dirname(__file__)}/ADL/ADL_sum_prediction_RF.skops', trusted=True)
+ADL_LR_model = sio.load(f'{os.path.dirname(__file__)}/ADL/ADL_sum_prediction_LR.skops', trusted=True)
+ADL_KNN_model = sio.load(f'{os.path.dirname(__file__)}/ADL/ADL_sum_prediction_KNN.skops', trusted=True)
 
 def patient_to_dataframe(patient: dict) -> pd.DataFrame:
     data = {}
@@ -62,14 +66,26 @@ def patient_to_dataframe(patient: dict) -> pd.DataFrame:
     df = pd.DataFrame(data= data)
     return df
 
-def predict_MGCscore(x: pd.DataFrame) -> dict:
+def predict_MG_sum(x: pd.DataFrame) -> dict:
     MMscaler=MinMaxScaler(feature_range=(0, 1))
     normalize_df=MMscaler.fit_transform(x)
     scaled_x=pd.DataFrame(data=normalize_df)
     scaled_x.columns=x.columns
-    SVR_result = SVR_model.predict(scaled_x)[0] if SVR_model.predict(scaled_x)[0] > 0 else 0
-    DT_result = DT_model.predict(scaled_x)[0] if DT_model.predict(scaled_x)[0] > 0 else 0
-    LR_result = LR_model.predict(scaled_x)[0] if LR_model.predict(scaled_x)[0] > 0 else 0
-    KNN_result = KNN_model.predict(scaled_x)[0] if KNN_model.predict(scaled_x)[0] > 0 else 0
-    return {"MGCscore_SVR": round(SVR_result), "MGCscore_DT": round(DT_result), 
-            "MGCscore_LR": round(LR_result), "MGCscore_KNN": round(KNN_result)}
+    MG_SVR_result = MG_SVR_model.predict(scaled_x)[0] if MG_SVR_model.predict(scaled_x)[0] > 0 else 0
+    MG_RF_result = MG_RF_model.predict(scaled_x)[0] if MG_RF_model.predict(scaled_x)[0] > 0 else 0
+    MG_LR_result = MG_LR_model.predict(scaled_x)[0] if MG_LR_model.predict(scaled_x)[0] > 0 else 0
+    MG_KNN_result = MG_KNN_model.predict(scaled_x)[0] if MG_KNN_model.predict(scaled_x)[0] > 0 else 0
+    return {"MG_sum_SVR": round(MG_SVR_result), "MG_sum_RF": round(MG_RF_result), 
+            "MG_sum_LR": round(MG_LR_result), "MG_sum_KNN": round(MG_KNN_result)}
+
+def predict_ADL_sum(x: pd.DataFrame) -> dict:
+    MMscaler=MinMaxScaler(feature_range=(0, 1))
+    normalize_df=MMscaler.fit_transform(x)
+    scaled_x=pd.DataFrame(data=normalize_df)
+    scaled_x.columns=x.columns
+    ADL_SVR_result = ADL_SVR_model.predict(scaled_x)[0] if ADL_SVR_model.predict(scaled_x)[0] > 0 else 0
+    ADL_RF_result = ADL_RF_model.predict(scaled_x)[0] if ADL_RF_model.predict(scaled_x)[0] > 0 else 0
+    ADL_LR_result = ADL_LR_model.predict(scaled_x)[0] if ADL_LR_model.predict(scaled_x)[0] > 0 else 0
+    ADL_KNN_result = ADL_KNN_model.predict(scaled_x)[0] if ADL_KNN_model.predict(scaled_x)[0] > 0 else 0
+    return {"ADL_sum_SVR": round(ADL_SVR_result), "ADL_sum_RF": round(ADL_RF_result), 
+            "ADL_sum_LR": round(ADL_LR_result), "ADL_sum_KNN": round(ADL_KNN_result)}

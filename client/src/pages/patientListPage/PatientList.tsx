@@ -325,21 +325,24 @@ function PatientList() {
                 >
                   新增病患
                 </Button>
-                <Button
-                  sx={{
-                    width: "6rem",
-                    marginTop: "1rem",
-                    marginLeft: "2rem",
-                    backgroundColor: "#00b4c9",
-                    color: "white",
-                    borderRadius: "0.7rem",
-                    "&:hover": {
-                      color: "#00b4c9",
-                    },
-                  }}
-                >
-                  匯出
-                </Button>
+                {role === "doctor" ? (
+                  <Button
+                    sx={{
+                      width: "6rem",
+                      marginTop: "1rem",
+                      marginLeft: "2rem",
+                      backgroundColor: "#00b4c9",
+                      color: "white",
+                      borderRadius: "0.7rem",
+                      "&:hover": {
+                        color: "#00b4c9",
+                      },
+                    }}
+                  >
+                    匯出
+                  </Button>
+                ) : null}
+
                 <Box
                   sx={{
                     display: "flex",

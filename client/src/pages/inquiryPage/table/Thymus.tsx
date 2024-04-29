@@ -102,8 +102,8 @@ const TableThymus = ({
                 <input
                   onChange={handleChange}
                   type="radio"
-                  id="thymusStatus"
-                  name="thymusStatus"
+                  id="thymusStatus0"
+                  name="thymusStatus0"
                   value={0}
                 />
                 <label>胸腺正常</label>
@@ -112,8 +112,8 @@ const TableThymus = ({
                 <input
                   onChange={handleChange}
                   type="radio"
-                  id="thymusStatus"
-                  name="thymusStatus"
+                  id="thymusStatus1"
+                  name="thymusStatus1"
                   value={1}
                 />
                 <label>胸腺委縮</label>
@@ -122,8 +122,8 @@ const TableThymus = ({
                 <input
                   onChange={handleChange}
                   type="radio"
-                  id="thymusStatus"
-                  name="thymusStatus"
+                  id="thymusStatus2"
+                  name="thymusStatus2"
                   value={2}
                 />
                 <label>胸腺增生</label>
@@ -132,8 +132,8 @@ const TableThymus = ({
                 <input
                   onChange={handleChange}
                   type="radio"
-                  id="thymusStatus"
-                  name="thymusStatus"
+                  id="thymusStatus3"
+                  name="thymusStatus3"
                   value={3}
                 />
                 <label>胸腺瘤</label>
