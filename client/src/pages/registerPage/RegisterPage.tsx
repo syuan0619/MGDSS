@@ -25,7 +25,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import * as React from "react";
 import "./RegisterPage.css";
 import fjuicon from "../../assets/fju.png";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -194,14 +194,12 @@ const RegisterPage = () => {
     password: "",
   });
 
-  const doctorLoginInput = (event: { target: { name: any; value: any } }) => {
+  const doctorLoginInput = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
     setDoctorForm({ ...doctorForm, [name]: value });
   };
-
-  function onSubmit() {
-    console.log(doctorForm, nurseForm);
-  }
 
   const [nurseForm, setNurseForm] = useState({
     role: "nurse",
@@ -209,10 +207,16 @@ const RegisterPage = () => {
     password: "",
   });
 
-  const nurseLoginInput = (event: { target: { name: any; value: any } }) => {
+  const nurseLoginInput = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
     setNurseForm({ ...nurseForm, [name]: value });
   };
+
+  function onSubmit() {
+    console.log(doctorForm, nurseForm);
+  }
 
   return (
     <>

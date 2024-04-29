@@ -10,13 +10,30 @@ import "./AI.css";
 import AICART from "./AICART";
 import AISVM from "./AISVM";
 import AIKNN from "./AIKNN";
+import { useEffect } from "react";
+import { tablePatient } from "../../../types/Patient";
+import api from "../../../api";
 
-interface AIDialogProps {
+const AIDialog = ({
+  open,
+  handleClose,
+  patients,
+}: {
   open: boolean;
   handleClose: () => void;
-}
+  patients: tablePatient | undefined;
+}) => {
+  const getPredictData = async () => {
+    if (patients) {
+      console.log(patients);
+      const res = await api.post("/prediction/predict", patients);
+      console.log(res.data);
+    }
+  };
+  useEffect(() => {
+    getPredictData();
+  }, []);
 
-const AIDialog: React.FC<AIDialogProps> = ({ open, handleClose }) => {
   return (
     <Dialog className="AIDialog" open={open} onClose={handleClose}>
       <DialogTitle sx={{ fontSize: "1.5rem" }}>AI病情預測</DialogTitle>

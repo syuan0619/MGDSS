@@ -10,15 +10,16 @@ import {
 import ConfirmPanel from "./ConfirmPanel";
 import { useState } from "react";
 import AIDialog from "./AIDialog";
+import { tablePatient } from "../../../types/Patient";
 
 const PredictDialog = ({
-  open,
-  handleClose,
-  selectedDate,
+  predictStatus,
+  predictDialogHide,
+  patients,
 }: {
-  open: boolean;
-  handleClose: () => void;
-  selectedDate: string | undefined;
+  predictStatus: boolean;
+  predictDialogHide: () => void;
+  patients: tablePatient | undefined;
 }) => {
   const [AIStatus, setAIStatus] = useState(false);
   const AIDialogOpen = () => {
@@ -28,36 +29,47 @@ const PredictDialog = ({
     setAIStatus(false);
   };
   const handleCloseAll = () => {
-    handleClose(); // Close PredictDialog
+    predictDialogHide(); // Close PredictDialog
     AIDialogHide(); // Close AIDialog
   };
+
   return (
-    <Dialog className="predictDialog" open={open} onClose={handleClose}>
-      <DialogTitle sx={{ fontSize: "1.5rem" }}>確認病患資訊</DialogTitle>
-      <DialogContent className="predictDialog-content">
-        <ConfirmPanel selectedDate={selectedDate ? selectedDate : ""} />
-      </DialogContent>
-      <DialogActions>
-        <IconButton
-          className="deleteIcon-predict"
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-            position: "absolute",
-            right: "1.3rem",
-            top: "1.3rem",
-            width: "3.5rem",
-            height: "3.5rem",
-          }}
-        >
-          <CloseIcon sx={{ fontSize: "1.4rem" }} />
-        </IconButton>
-        <Button variant="contained" color="primary" onClick={AIDialogOpen}>
-          進入AI病情預測
-        </Button>
-        <AIDialog open={AIStatus} handleClose={handleCloseAll} />
-      </DialogActions>
-    </Dialog>
+    patients && (
+      <Dialog
+        className="predictDialog"
+        open={predictStatus}
+        onClose={predictDialogHide}
+      >
+        <DialogTitle sx={{ fontSize: "1.5rem" }}>確認病患資訊</DialogTitle>
+        <DialogContent className="predictDialog-content">
+          <ConfirmPanel patients={patients} />
+        </DialogContent>
+        <DialogActions>
+          <IconButton
+            className="deleteIcon-predict"
+            aria-label="close"
+            onClick={predictDialogHide}
+            sx={{
+              position: "absolute",
+              right: "1.3rem",
+              top: "1.3rem",
+              width: "3.5rem",
+              height: "3.5rem",
+            }}
+          >
+            <CloseIcon sx={{ fontSize: "1.4rem" }} />
+          </IconButton>
+          <Button variant="contained" color="primary" onClick={AIDialogOpen}>
+            進入AI病情預測
+          </Button>
+          <AIDialog
+            open={AIStatus}
+            handleClose={handleCloseAll}
+            patients={patients}
+          />
+        </DialogActions>
+      </Dialog>
+    )
   );
 };
 

@@ -170,7 +170,7 @@ const InquiryPage = () => {
     MGFAclassification: "",
     status: {
       isWaiting: false,
-      description: "",
+      description: 0,
     },
   });
   //EMG
@@ -236,6 +236,7 @@ const InquiryPage = () => {
   };
 
   //finish inquiry
+  const [finishOrNot, setFinishOrNot] = useState<boolean>(false);
   const finishInquiry = async () => {
     const [changeTable, notChangeTable] = checkChangeTable();
     console.log("changeTable", changeTable);
@@ -280,6 +281,7 @@ const InquiryPage = () => {
           }
         });
       }
+      setFinishOrNot(true);
     }
   };
 
@@ -291,6 +293,7 @@ const InquiryPage = () => {
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
             finishInquiry={finishInquiry}
+            finishOrNot={finishOrNot}
           />
         </div>
         <div className="inquiry-left-right-flex">

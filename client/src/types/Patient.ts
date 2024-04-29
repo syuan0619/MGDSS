@@ -10,7 +10,7 @@ type Patient = {
   EMG: EMG[];
 };
 
-type tablePatinet = {
+type tablePatient = {
   info: Info;
   visit: Visit;
   thymus: Thymus;
@@ -206,5 +206,5 @@ export type {
   ADL,
   EMG,
   noImageType,
-  tablePatinet,
+  tablePatient,
 };
