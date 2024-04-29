@@ -10,8 +10,8 @@ async def predict(patient: models.PatientForPredict):
 	try:
 		df = patient_to_dataframe(patient.model_dump())
 		result = {}
-		print(predict_MG_sum(df))
-		print(predict_ADL_sum(df))
+		result.update(predict_MG_sum(df))
+		result.update(predict_ADL_sum(df))
 		return result
 	except Exception as e:
 		print(e)
