@@ -40,9 +40,11 @@ class Examination(BaseModel):
     dyspnea: int
     limpWeakness: int
 
+
 class Status(BaseModel):
-    isWaiting: bool = Field(default=False) 
-    description: str = Field(default="無")
+    isWaiting: bool = Field(default=False)
+    description: int = Field(default=0)
+
 
 # 看診紀錄
 class Visit(BaseModel):
@@ -149,9 +151,11 @@ class Nasalis(BaseModel):
     preactivation: float
     postactivation: list[float]
 
+
 class Abd(BaseModel):
     preactivation: float
     postactivation: list[float]
+
 
 class Trapezius(BaseModel):
     preactivation: float
@@ -179,10 +183,11 @@ class Patient(BaseModel):
     adl: list[ADL] = Field(default=[], alias="ADL")
     emg: list[EMG] = Field(default=[], alias="EMG")
 
+
 class PatientForPredict(BaseModel):
     info: Info
     visit: Visit
-    thymus:Thymus
+    thymus: Thymus
     bloodTest: BloodTest
     qol: QOL = Field(alias="QOL")
     qmg: QMG = Field(alias="QMG")
