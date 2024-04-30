@@ -11,6 +11,7 @@ client = pymongo.MongoClient(
 db = client["SchoolProject"]
 patientCollection = db["Patient"]
 accountCollection = db["Account"]
+waiting_list_collection = db["WaitingList"]
 
 ### Patient ###
 

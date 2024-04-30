@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse, Response
 from pydantic import ValidationError
-from mongoDB import getAllPatients, addNewPatient, update_entire_patient, update_patient_info, delete_patient, all_patients_to_csv,get_patient_by_id
+from mongoDB import (getAllPatients, addNewPatient, update_entire_patient, update_patient_info, 
+                    delete_patient, all_patients_to_csv, get_waiting_list, add_to_waiting_list)
 import models
 import io
 
@@ -67,6 +68,24 @@ async def delete_patient_by_id(patient_id: str):
         else:
             return Response(status_code=500, content={"message": str(e)})
 
+@router.get("/waitinglist/{date}", tags=["patients"], summary="取得指定日期的候診名單")
+async def get_waiting_list_by_date(date: str):
+    try:
+        return get_waiting_list(date)
+    except Exception as e:
+        print("Exception: ", str(e))
+        return Response(status_code=500, content={"Exception": str(e)})
+    
+@router.put("/waitinglist/{date}/{patient_id}", tags=["patients"], summary="新增病患到候診名單")
+async def put_patient_to_waiting_list(date: str, patient_id: str):
+    try:
+        add_to_waiting_list(date, patient_id)
+        return {"message": f"Success add {patient_id} to {date} waiting list"}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        print("Exception: ", str(e))
+        return JSONResponse(status_code=500, content={"Exception": str(e)})
 
 # GET /patients/csv -> download all patients as csv
 @router.get("/csv", tags=["patients"], summary="匯出全部病患資料", description="下載之後還要右鍵->編輯->另存新檔->編碼選帶有BOM的UTF-8 再用excel開啟才不會亂碼")
