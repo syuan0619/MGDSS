@@ -13,7 +13,7 @@ const Confirm = ({
   initialData,
 }: {
   title: string;
-  initialData: Thymus[] | BloodTest[] | QOL[] | QMG[] | MG[] | ADL[];
+  initialData: Thymus | BloodTest | QOL | QMG | MG | ADL;
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const handleChange = () => {

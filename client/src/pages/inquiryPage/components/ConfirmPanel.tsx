@@ -1,35 +1,10 @@
 import Confirm from "./Confirm";
-// import { ADL as typeADL } from "../../../types/Patient";
-// import { BloodTest as typeBloodTest } from "../../../types/Patient";
-// import { MG as typeMG } from "../../../types/Patient";
-// import { QMG as typeQMG } from "../../../types/Patient";
-// import { QOL as typeQOL } from "../../../types/Patient";
-// import { Thymus as typeThymus } from "../../../types/Patient";
 import "./Confirm.css";
-import { useState, useEffect } from "react";
-import api from "../../../api";
-import { Patient } from "../../../types/Patient";
+import { tablePatient } from "../../../types/Patient";
 import ConfirmEMG from "./ConfirmEMG";
 import ConfirmVisit from "./ConfirmVisit";
-import { useParams } from "react-router-dom";
 
-const ConfirmPanel = ({ selectedDate }: { selectedDate: string }) => {
-  const routeParams = useParams();
-
-  //get patient data by date
-  const [patients, setPatients] = useState<Patient>();
-
-  const data = async () => {
-    const response = await api.get(
-      `/inquiry/${routeParams.id}/${selectedDate}`
-    );
-    setPatients(response.data.tables);
-  };
-
-  useEffect(() => {
-    data();
-  }, []);
-
+const ConfirmPanel = ({ patients }: { patients: tablePatient | undefined }) => {
   return (
     patients && (
       <div className="confirm-panel">

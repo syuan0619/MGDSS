@@ -33,7 +33,7 @@ const ConfirmVisit = ({
   initialData,
 }: {
   title: string;
-  initialData: Visit[];
+  initialData: Visit;
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const handleChange = () => {
@@ -64,11 +64,9 @@ const ConfirmVisit = ({
     for (const [key, value] of Object.entries(initialData)) {
       if (typeof value === "object") {
         for (const [k, v] of Object.entries(value)) {
-          console.log(`${k}: ${v}`);
           flattenObject[k] = v;
         }
       } else {
-        console.log(`${key}: ${value}`);
         flattenObject[key] = value;
       }
     }
