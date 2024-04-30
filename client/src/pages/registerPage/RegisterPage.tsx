@@ -164,10 +164,10 @@ const RegisterPage = () => {
 
   const [form, setForm] = useState({
     role: "doctor",
+    name: "",
     email: "",
     password: "",
     authCode: "",
-    name: "",
   });
 
   const loginInput = (event: { target: { name: any; value: any } }) => {
@@ -210,7 +210,6 @@ const RegisterPage = () => {
           </div>
 
           <CustomTabPanel value={value} index={0}>
-            {" "}
             <CssTextField
               inputProps={{
                 sx: { color: "white" },
