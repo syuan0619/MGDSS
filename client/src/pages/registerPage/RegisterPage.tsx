@@ -244,43 +244,47 @@ const RegisterPage = () => {
               sx={{ marginBottom: "1rem" }} //這個CustomTabPanel的間距很難改所以用sx硬寫比較快
             />
             <ThemeProvider theme={fromControltheme}>
-              <FormControl
-                fullWidth
-                variant="outlined"
-                size="small"
-                sx={{ marginBottom: "1rem" }}
-              >
-                <InputLabel
-                  htmlFor="outlined-adornment-password"
-                  sx={{ color: "white" }}
+              <form>
+                <FormControl
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  sx={{ marginBottom: "1rem" }}
                 >
-                  密碼
-                </InputLabel>
-                <OutlinedInput
-                  name="password"
-                  value={form.password}
-                  onChange={loginInput}
-                  inputProps={{
-                    sx: { color: "white" },
-                  }}
-                  type={showPassword ? "text" : "password"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        sx={{
-                          color: "white",
-                        }}
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password"
-                />
-              </FormControl>
+                  <InputLabel
+                    htmlFor="outlined-adornment-password"
+                    sx={{ color: "white" }}
+                  >
+                    密碼
+                  </InputLabel>
+                  <OutlinedInput
+                    name="password"
+                    value={form.password}
+                    onChange={loginInput}
+                    autoComplete="new-password"
+                    aria-hidden="true"
+                    inputProps={{
+                      sx: { color: "white" },
+                    }}
+                    type={showPassword ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          sx={{
+                            color: "white",
+                          }}
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+              </form>
             </ThemeProvider>
             <CssTextField
               inputProps={{
@@ -327,7 +331,6 @@ const RegisterPage = () => {
               fullWidth
               label="姓名"
               variant="outlined"
-              id="name"
               size="small"
               name="name"
               value={form.name}
@@ -352,43 +355,47 @@ const RegisterPage = () => {
             />
 
             <ThemeProvider theme={fromControltheme}>
-              <FormControl
-                fullWidth
-                variant="outlined"
-                size="small"
-                sx={{ marginBottom: "1rem" }}
-              >
-                <InputLabel
-                  htmlFor="outlined-adornment-password"
-                  sx={{ color: "white" }}
+              <form>
+                <FormControl
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  sx={{ marginBottom: "1rem" }}
                 >
-                  密碼
-                </InputLabel>
-                <OutlinedInput
-                  name="password"
-                  value={form.password}
-                  onChange={loginInput}
-                  inputProps={{
-                    sx: { color: "white" },
-                  }}
-                  type={showPassword ? "text" : "password"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        sx={{
-                          color: "white",
-                        }}
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password"
-                />
-              </FormControl>
+                  <InputLabel
+                    htmlFor="outlined-adornment-password"
+                    sx={{ color: "white" }}
+                  >
+                    密碼
+                  </InputLabel>
+                  <OutlinedInput
+                    name="password"
+                    value={form.password}
+                    onChange={loginInput}
+                    autoComplete="new-password"
+                    aria-hidden="true"
+                    inputProps={{
+                      sx: { color: "white" },
+                    }}
+                    type={showPassword ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          sx={{
+                            color: "white",
+                          }}
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+              </form>
             </ThemeProvider>
 
             <CssTextField
