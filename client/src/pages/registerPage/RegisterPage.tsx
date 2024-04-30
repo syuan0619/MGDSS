@@ -164,8 +164,10 @@ const RegisterPage = () => {
 
   const [form, setForm] = useState({
     role: "doctor",
-    account: "",
+    email: "",
     password: "",
+    authCode: "",
+    name: "",
   });
 
   const loginInput = (event: { target: { name: any; value: any } }) => {
@@ -219,8 +221,10 @@ const RegisterPage = () => {
               fullWidth
               label="姓名"
               variant="outlined"
-              id="account"
+              name="name"
               size="small"
+              value={form.name}
+              onChange={loginInput}
               sx={{ marginBottom: "1rem" }}
             />
             <CssTextField
@@ -234,8 +238,8 @@ const RegisterPage = () => {
               label="帳號"
               variant="outlined"
               size="small"
-              name="account"
-              value={form.account}
+              name="email"
+              value={form.email}
               onChange={loginInput}
               sx={{ marginBottom: "1rem" }} //這個CustomTabPanel的間距很難改所以用sx硬寫比較快
             />
@@ -288,8 +292,10 @@ const RegisterPage = () => {
               fullWidth
               label="醫師授權碼"
               variant="outlined"
-              id="account"
+              name="authCode"
               size="small"
+              value={form.authCode}
+              onChange={loginInput}
               sx={{ marginBottom: "2rem" }}
             />
             <Link to="/">
@@ -321,8 +327,11 @@ const RegisterPage = () => {
               fullWidth
               label="姓名"
               variant="outlined"
-              id="account"
+              id="name"
               size="small"
+              name="name"
+              value={form.name}
+              onChange={loginInput}
               sx={{ marginBottom: "1rem" }}
             />
             <CssTextField
@@ -336,8 +345,8 @@ const RegisterPage = () => {
               label="帳號"
               variant="outlined"
               size="small"
-              name="account"
-              value={form.account}
+              name="email"
+              value={form.email}
               onChange={loginInput}
               sx={{ marginBottom: "1rem" }}
             />
@@ -392,8 +401,10 @@ const RegisterPage = () => {
               fullWidth
               label="護士授權碼"
               variant="outlined"
-              id="account"
+              name="authCode"
               size="small"
+              value={form.authCode}
+              onChange={loginInput}
               sx={{ marginBottom: "2rem" }}
             />
 

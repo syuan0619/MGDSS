@@ -11,14 +11,13 @@
 }
 
 .registerbox {
-  width: 25vw;
+  width: 30vw;
   height: 72vh;
   max-width: 500px;
   max-height: 700px;
   min-width: 350px;
   min-height: 500px;
-  margin-right: -40vw;
-  margin-right: -40vw;
+  margin-right: -45vw;
   display: flex;
   justify-content: center;
   align-items: center;
