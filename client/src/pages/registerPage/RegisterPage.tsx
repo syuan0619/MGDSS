@@ -26,6 +26,7 @@ import * as React from "react";
 import "./RegisterPage.css";
 import fjuicon from "../../assets/fju.png";
 import { ChangeEvent, useState } from "react";
+import api from "../../api";
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -137,7 +138,7 @@ function CustomTabPanel(props: {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ padding: 3 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -214,9 +215,19 @@ const RegisterPage = () => {
     setNurseForm({ ...nurseForm, [name]: value });
   };
 
-  function onSubmit() {
-    console.log(doctorForm, nurseForm);
-  }
+  const onSubmit = async () => {
+    if (doctorForm) {
+      console.log(doctorForm);
+      // await api.post("/account/register", doctorForm).then((res) => {
+      //   console.log(res.data);
+      // });
+    } else if (nurseForm) {
+      console.log(nurseForm);
+      // await api.post("/account/register", nurseForm).then((res) => {
+      //   console.log(res.data);
+      // });
+    }
+  };
 
   return (
     <>
@@ -225,7 +236,7 @@ const RegisterPage = () => {
           <div>
             <img src={fjuicon} width={"60rem"}></img>
           </div>
-          <p className="registertext">註冊</p>
+          <h3 className="registertext">註冊</h3>
           <div>
             <StyledTabs value={value} onChange={handleChange}>
               <StyledTab
@@ -242,7 +253,6 @@ const RegisterPage = () => {
           </div>
 
           <CustomTabPanel value={value} index={0}>
-            {" "}
             <CssTextField
               inputProps={{
                 sx: { ...inputTextColor },
@@ -428,7 +438,7 @@ const RegisterPage = () => {
             </Link>
           </CustomTabPanel>
           <Link to="/" style={{ textDecoration: "none" }}>
-            <p className="registerboxbottom">返回登入</p>
+            <h3 className="registerboxbottom">返回登入</h3>
           </Link>
         </div>
       </div>

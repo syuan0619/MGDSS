@@ -116,7 +116,6 @@ const LoginPage = () => {
 
   const onSubmit = async () => {
     try {
-      const newDate = new Date().toISOString().slice(0, 10);
       const response = await api.post("/account/login", null, {
         params: {
           email: form.account,
@@ -217,7 +216,7 @@ const LoginPage = () => {
 
           <div className="loginboxbottom">
             <Link to="/register" style={{ textDecoration: "none" }}>
-              <p className="text">註冊</p>
+              <h3 className="text">註冊</h3>
             </Link>
           </div>
         </div>
