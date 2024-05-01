@@ -48,13 +48,14 @@ for i, (w, h, x, y) in enumerate(crop_dimensions, start=1):
             int(img.shape[0] * new_dpi[1] / img.shape[1]),
         ),
     )
+    cv2.imshow("img", img)
+    cv2.waitKey(0)
 
     code = pytesseract.image_to_string(img)
     nonspe_code = code.strip()
     str_code = re.split("[\n:]+", nonspe_code)
 
     json_string = json.dumps(str_code, ensure_ascii=False)
-    cv2.waitKey(0)
 
     # print(json_string)
     # print(code)

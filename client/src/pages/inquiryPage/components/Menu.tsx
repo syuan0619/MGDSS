@@ -91,8 +91,15 @@ const Menu = ({
           predictDialogHide={predictDialogHide}
           patients={patients}
         />
-        <button className="inquiry-menu-button" onClick={finishInquiry}>
-          結束看診
+        <button
+          style={{
+            backgroundColor:
+              !finishOrNot && selectedDate === today ? "#e74646" : "#grey",
+          }}
+          className="inquiry-menu-button"
+          onClick={finishInquiry}
+        >
+          {selectedDate === today ? "結束看診" : "修改資料"}
         </button>
       </div>
     </div>

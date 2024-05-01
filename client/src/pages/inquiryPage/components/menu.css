@@ -61,7 +61,7 @@
 .inquiry-menu-button:nth-child(3) {
   width: 7rem;
   height: 2.6rem;
-  background-color: #e74646;
+  background-color: grey;
   border-radius: 0.9rem;
   font-weight: bold;
   border: none;
