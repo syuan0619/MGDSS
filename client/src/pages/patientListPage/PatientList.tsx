@@ -100,6 +100,18 @@ function PatientList() {
     setSelectedDate;
   }, []);
 
+  //download
+  const [downloadLink, setDownloadLink] = useState<string>();
+  const downloadRef = React.useRef<HTMLAnchorElement>(null);
+  const download = async () => {
+    const res = await api.get("/patients/csv", { responseType: "blob" });
+    const newLink = URL.createObjectURL(res.data);
+    setDownloadLink(newLink);
+  };
+  useEffect(() => {
+    downloadRef.current?.click();
+  }, [downloadLink]);
+
   //nav to patient's inquiry page.
   const nav = useNavigate();
   const navToInquiryPage = (id: string) => {
@@ -338,10 +350,16 @@ function PatientList() {
                         color: "#00b4c9",
                       },
                     }}
+                    onClick={download}
                   >
                     匯出
                   </Button>
                 ) : null}
+                <a
+                  href={downloadLink}
+                  ref={downloadRef}
+                  style={{ display: "none" }}
+                ></a>
 
                 <Box
                   sx={{
