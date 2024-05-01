@@ -48,8 +48,10 @@ def delete_account(accountId: str):
 def create_account(newAccount: models.Account):
     try:
         accountId = createAccount(newAccount.model_dump(by_alias=True))
+        accountId = str(accountId)
         return {"message": "Success create account!", "accountId": accountId}
     except Exception as e:
+        print("Exception:", str(e))
         return JSONResponse(status_code=400, content={"message": str(e)})
 
 
