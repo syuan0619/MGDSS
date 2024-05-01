@@ -175,41 +175,42 @@ const LoginPage = () => {
             value={form.account}
             onChange={loginInput}
           />
-
-          <ThemeProvider theme={fromControltheme}>
-            <FormControl fullWidth variant="outlined" size="small">
-              <InputLabel
-                htmlFor="outlined-adornment-password"
-                sx={{ ...inputLabelcolor }}
-              >
-                密碼
-              </InputLabel>
-              <OutlinedInput
-                name="password"
-                value={form.password}
-                onChange={loginInput}
-                inputProps={{
-                  sx: { ...inputTextColor },
-                }}
-                type={showPassword ? "text" : "password"}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      sx={{ ...inputLabelcolor }}
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-              />
-            </FormControl>
-          </ThemeProvider>
-
+          <form>
+            <ThemeProvider theme={fromControltheme}>
+              <FormControl fullWidth variant="outlined" size="small">
+                <InputLabel
+                  htmlFor="outlined-adornment-password"
+                  sx={{ ...inputLabelcolor }}
+                >
+                  密碼
+                </InputLabel>
+                <OutlinedInput
+                  name="password"
+                  autoComplete="new-password"
+                  value={form.password}
+                  onChange={loginInput}
+                  inputProps={{
+                    sx: { ...inputTextColor },
+                  }}
+                  type={showPassword ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        sx={{ ...inputLabelcolor }}
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
+            </ThemeProvider>
+          </form>
           <ColorButton onClick={onSubmit} fullWidth variant="contained">
             登入
           </ColorButton>
