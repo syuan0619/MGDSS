@@ -234,7 +234,8 @@ const RegisterPage = () => {
                 sx: { color: "white" },
               }}
               fullWidth
-              label="帳號"
+              type="email"
+              label="電子郵件"
               variant="outlined"
               size="small"
               name="email"
@@ -344,7 +345,8 @@ const RegisterPage = () => {
                 sx: { color: "white" },
               }}
               fullWidth
-              label="帳號"
+              label="電子郵件"
+              type="email"
               variant="outlined"
               size="small"
               name="email"

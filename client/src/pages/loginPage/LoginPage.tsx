@@ -169,7 +169,8 @@ const LoginPage = () => {
               sx: { ...inputLabelcolor },
             }}
             fullWidth
-            label="帳號"
+            label="電子郵件"
+            type="email"
             variant="outlined"
             size="small"
             name="account"
