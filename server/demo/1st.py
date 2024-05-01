@@ -48,8 +48,8 @@ for i, (w, h, x, y) in enumerate(crop_dimensions, start=1):
             int(img.shape[0] * new_dpi[1] / img.shape[1]),
         ),
     )
-    cv2.imshow("img", img)
-    cv2.waitKey(0)
+    # cv2.imshow("img", img)
+    # cv2.waitKey(0)
 
     code = pytesseract.image_to_string(img)
     nonspe_code = code.strip()
@@ -62,6 +62,5 @@ for i, (w, h, x, y) in enumerate(crop_dimensions, start=1):
     # cv2.imshow('input_img', img)
     # cv2.waitKey(0)
 
-    print("-------------------------------------------")
 cv2.imshow("input", resized_img)
 cv2.waitKey(0)

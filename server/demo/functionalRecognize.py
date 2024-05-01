@@ -64,6 +64,8 @@ def functionalRecognize(uploadImage):
 def full_image_to_white_part(uploadImage):
     origin_image = Image.open(uploadImage)
     image_array = np.array(origin_image)
+    cv2.imshow("img", image_array)
+    cv2.waitKey(0)
     screen_size_height, screen_size_width, screen_size_color = image_array.shape
     weight = round(screen_size_width / 1920, 4)
     cropped_image = cv2.resize(
