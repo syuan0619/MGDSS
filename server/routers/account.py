@@ -69,4 +69,5 @@ def login(email: str, password: str):
                 status_code=400, content={"message": "Invalid email or password"}
             )
     except Exception as e:
+        print("Exception", str(e))
         return JSONResponse(status_code=500, content={"message": str(e)})

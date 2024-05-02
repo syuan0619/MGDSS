@@ -19,8 +19,15 @@ def getAllPatients():
     patients = patientCollection.find()
     response = []
     for patient in patients:
-        response.append({"_id": str(patient["_id"]), "info": patient["info"], "visit": patient["visit"]})
+        response.append(
+            {
+                "_id": str(patient["_id"]),
+                "info": patient["info"],
+                "visit": patient["visit"],
+            }
+        )
     return response
+
 
 def get_patient_by_id(patientId):
     patient = patientCollection.find_one({"_id": ObjectId(patientId)})
@@ -29,6 +36,7 @@ def get_patient_by_id(patientId):
     #     if "image" in emg:
     #         emg.pop("image")
     return patient
+
 
 def getPatientByDate(patientId: str, date: str):
     patient = get_patient_by_id(patientId)
@@ -42,12 +50,14 @@ def getPatientByDate(patientId: str, date: str):
                     tablesAtDate[key] = table
     return tablesAtDate
 
+
 def get_table_by_date(patient_id: str, table_name: str, date: str):
     patient = get_patient_by_id(patient_id)
     for table in patient[table_name]:
         if table["testDate"] == date:
             return table
     return None
+
 
 def update_patient_info(patientId: str, updatedInfo: dict):
     updatedPatient = patientCollection.find_one_and_update(
@@ -58,8 +68,10 @@ def update_patient_info(patientId: str, updatedInfo: dict):
     updatedPatient["_id"] = str(updatedPatient["_id"])
     return {"_id": updatedPatient["_id"], "info": updatedPatient["info"]}
 
+
 async def delete_patient(patient_id: str):
-    return patientCollection.find_one_and_delete({"_id": ObjectId(patient_id)}) 
+    return patientCollection.find_one_and_delete({"_id": ObjectId(patient_id)})
+
 
 # return dict with _id
 def addNewPatient(newPatientInfo: dict):
@@ -67,6 +79,7 @@ def addNewPatient(newPatientInfo: dict):
     newPatientId = patientCollection.insert_one(newPatient).inserted_id
     newPatient["_id"] = str(newPatientId)
     return newPatient
+
 
 def add_new_table(patient_id: str, table_name: str, table: dict):
     old_patient = get_patient_by_id(patient_id)
@@ -78,7 +91,8 @@ def add_new_table(patient_id: str, table_name: str, table: dict):
             updated_patient = patientCollection.find_one_and_update(
                 {"_id": ObjectId(patient_id)},
                 {"$set": {table_name: old_patient[table_name]}},
-                return_document=pymongo.ReturnDocument.AFTER)
+                return_document=pymongo.ReturnDocument.AFTER,
+            )
             updated_patient["_id"] = str(updated_patient["_id"])
             return updated_patient
         else:
@@ -95,12 +109,14 @@ def add_new_table(patient_id: str, table_name: str, table: dict):
     updated_patient["_id"] = str(updated_patient["_id"])
     return updated_patient
 
+
 def update_entire_patient(patientId: str, updatedPatient: dict):
     patientCollection.find_one_and_update(
         {"_id": ObjectId(patientId)}, {"$set": updatedPatient}
     )
     updatedPatient["_id"] = str(updatedPatient["_id"])
     return updatedPatient
+
 
 def update_patient_by_date(patient_id: str, table_name: str, table: dict, date: str):
     old_patient = get_patient_by_id(patient_id)
@@ -158,6 +174,8 @@ def loginWithEmailandPassword(email: str, password: str):
     if account:
         account["_id"] = str(account["_id"])
         return account
+    elif not account["isVerified"]:
+        raise Exception("Account not verified")
     else:
         return None
 
@@ -167,6 +185,7 @@ def deleteAccount(accountId: str):
 
 
 ### Analyze ###
+
 
 def all_patients_to_csv() -> pd.DataFrame:
     # patients = list(patientCollection.find({"_id": ObjectId("65e43cbafe46cf205a0e4886")})) # 測試用
@@ -190,34 +209,39 @@ def all_patients_to_csv() -> pd.DataFrame:
         }
         for visit in patient["visit"]:
             record = patient_info.copy()
-            record.update({
-                "看診日期": visit["testDate"],
-                "治療": visit["treat"],
-                "SBP": visit["SBP"],
-                "DBP": visit["DBP"],
-                "自覺嚴重程度": visit["selfAssessment"],
-                "註記": visit["note"],
-                "用藥_pyridostigmine": visit["prescription"]["pyridostigmine"],
-                "用藥_compesolone": visit["prescription"]["compesolone"],
-                "用藥_cellcept": visit["prescription"]["cellcept"],
-                "用藥_imuran": visit["prescription"]["imuran"],
-                "用藥_prograf": visit["prescription"]["prograf"],
-                "症狀_ptosis": visit["examination"]["ptosis"],
-                "症狀_diplopia": visit["examination"]["diplopia"],
-                "症狀_dysphagia": visit["examination"]["dysphagia"],
-                "症狀_dysarthria": visit["examination"]["dysarthria"],
-                "症狀_dyspnea": visit["examination"]["dyspnea"],
-                "症狀_limpWeakness": visit["examination"]["limpWeakness"],
-                "MGFA分級": visit["MGFAclassification"],
-            })
+            record.update(
+                {
+                    "看診日期": visit["testDate"],
+                    "治療": visit["treat"],
+                    "SBP": visit["SBP"],
+                    "DBP": visit["DBP"],
+                    "自覺嚴重程度": visit["selfAssessment"],
+                    "註記": visit["note"],
+                    "用藥_pyridostigmine": visit["prescription"]["pyridostigmine"],
+                    "用藥_compesolone": visit["prescription"]["compesolone"],
+                    "用藥_cellcept": visit["prescription"]["cellcept"],
+                    "用藥_imuran": visit["prescription"]["imuran"],
+                    "用藥_prograf": visit["prescription"]["prograf"],
+                    "症狀_ptosis": visit["examination"]["ptosis"],
+                    "症狀_diplopia": visit["examination"]["diplopia"],
+                    "症狀_dysphagia": visit["examination"]["dysphagia"],
+                    "症狀_dysarthria": visit["examination"]["dysarthria"],
+                    "症狀_dyspnea": visit["examination"]["dyspnea"],
+                    "症狀_limpWeakness": visit["examination"]["limpWeakness"],
+                    "MGFA分級": visit["MGFAclassification"],
+                }
+            )
             records_list.append(record)
         for table in ["thymus", "bloodTest", "QOL", "QMG", "MG", "ADL"]:
             for record in patient[table]:
-                matching_record = next((r for r in records_list if r["看診日期"] == record["testDate"]), None)
+                matching_record = next(
+                    (r for r in records_list if r["看診日期"] == record["testDate"]),
+                    None,
+                )
                 if matching_record:
                     for key, value in record.items():
                         if key != "testDate":
                             matching_record[f"{table}_{key}"] = value
-            
+
     records_df = pd.DataFrame(records_list)
     return records_df
