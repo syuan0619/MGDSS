@@ -689,14 +689,21 @@ function PatientList() {
             label="初始症狀"
             variant="outlined"
             name="beginSymptom"
-            value={addPatient!.beginSymptom || ""}
+            defaultValue={addPatient?.beginSymptom}
+            required
+            select
             onChange={changeAddPatient}
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
               },
+              width: "100%",
             }}
-          />
+          >
+            <MenuItem value="眼肌型">眼肌型</MenuItem>
+            <MenuItem value="口咽型">口咽型</MenuItem>
+            <MenuItem value="四肢型"> 四肢型</MenuItem>
+          </TextField>
           <p />
           <TextField
             label="其他註記"
