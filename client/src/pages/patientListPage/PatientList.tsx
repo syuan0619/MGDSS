@@ -100,6 +100,18 @@ function PatientList() {
     setSelectedDate;
   }, []);
 
+  //download
+  const [downloadLink, setDownloadLink] = useState<string>();
+  const downloadRef = React.useRef<HTMLAnchorElement>(null);
+  const download = async () => {
+    const res = await api.get("/patients/csv", { responseType: "blob" });
+    const newLink = URL.createObjectURL(res.data);
+    setDownloadLink(newLink);
+  };
+  useEffect(() => {
+    downloadRef.current?.click();
+  }, [downloadLink]);
+
   //nav to patient's inquiry page.
   const nav = useNavigate();
   const navToInquiryPage = (id: string) => {
@@ -338,10 +350,16 @@ function PatientList() {
                         color: "#00b4c9",
                       },
                     }}
+                    onClick={download}
                   >
                     匯出
                   </Button>
                 ) : null}
+                <a
+                  href={downloadLink}
+                  ref={downloadRef}
+                  style={{ display: "none" }}
+                ></a>
 
                 <Box
                   sx={{
@@ -671,14 +689,21 @@ function PatientList() {
             label="初始症狀"
             variant="outlined"
             name="beginSymptom"
-            value={addPatient!.beginSymptom || ""}
+            defaultValue={addPatient?.beginSymptom}
+            required
+            select
             onChange={changeAddPatient}
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
               },
+              width: "100%",
             }}
-          />
+          >
+            <MenuItem value="眼肌型">眼肌型</MenuItem>
+            <MenuItem value="口咽型">口咽型</MenuItem>
+            <MenuItem value="四肢型"> 四肢型</MenuItem>
+          </TextField>
           <p />
           <TextField
             label="其他註記"

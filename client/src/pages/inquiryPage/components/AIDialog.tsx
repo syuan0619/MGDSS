@@ -7,26 +7,56 @@ import {
 } from "@mui/material";
 //import { IoReturnUpBack } from "react-icons/io5";
 import "./AI.css";
-import AICART from "./AICART";
-import AISVM from "./AISVM";
-import AIKNN from "./AIKNN";
+import ADLsum from "./ADLsum";
+import MGsum from "./MGsum";
+import { useEffect, useState } from "react";
+import { tablePatient } from "../../../types/Patient";
+import api from "../../../api";
+import Predict from "../../../types/Predict";
 
-interface AIDialogProps {
+const AIDialog = ({
+  open,
+  handleClose,
+  patients,
+}: {
   open: boolean;
   handleClose: () => void;
-}
+  patients: tablePatient | undefined;
+}) => {
+  const [predictResult, setPredictResult] = useState<Predict>();
+  const getPredictData = async () => {
+    if (patients) {
+      const res = await api.post("/prediction/predict", patients);
+      console.log(res.data);
+      setPredictResult(res.data);
+    }
+  };
+  useEffect(() => {
+    getPredictData();
+  }, []);
 
-const AIDialog: React.FC<AIDialogProps> = ({ open, handleClose }) => {
   return (
-    <Dialog className="AIDialog" open={open} onClose={handleClose}>
-      <DialogTitle sx={{ fontSize: "1.5rem" }}>AI病情預測</DialogTitle>
-      <DialogContent className="AIDialog-content">
-        <AICART />
-        <AISVM />
-        <AIKNN />
-      </DialogContent>
-      <DialogActions>
-        {/* <IconButton
+    predictResult && (
+      <Dialog className="AIDialog" open={open} onClose={handleClose}>
+        <DialogTitle sx={{ fontSize: "1.5rem" }}>AI病情預測</DialogTitle>
+        <DialogContent className="AIDialog-content">
+          <ADLsum predictResult={predictResult} />
+          <MGsum predictResult={predictResult} />
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" color="primary" onClick={handleClose}>
+            關閉
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  );
+};
+
+export default AIDialog;
+
+{
+  /* <IconButton
           name="return"
           aria-label="close"
           onClick={handleClose}
@@ -39,13 +69,5 @@ const AIDialog: React.FC<AIDialogProps> = ({ open, handleClose }) => {
           }}
         >
           <IoReturnUpBack />
-        </IconButton> */}
-        <Button variant="contained" color="primary" onClick={handleClose}>
-          關閉
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
-
-export default AIDialog;
+        </IconButton> */
+}

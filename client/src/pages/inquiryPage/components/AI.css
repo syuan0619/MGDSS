@@ -72,23 +72,6 @@
   }
   .MuiCollapse-wrapperInner {
     overflow: auto;
-    height: 50vh;
+    height: 30vh;
   }
-}
-
-.AI-panel-img-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.AI-panel-img {
-  width: 30vw;
-  height: 35vh;
-  background-color: #eeeeee;
-  border-radius: 0.8rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2rem;
 }
