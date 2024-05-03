@@ -41,13 +41,16 @@ def get_patient_by_id(patientId):
 def getPatientByDate(patientId: str, date: str):
     patient = get_patient_by_id(patientId)
     tablesAtDate = {}
-    tablesAtDate["_id"] = patient["_id"]
+    # tablesAtDate["_id"] = patient["_id"]
     tablesAtDate["info"] = patient["info"]
+    tablesAtDate["thymus"] = patient["thymus"][-1]
     for key in patient:
         if key != "_id" and key != "info":
             for table in patient[key]:
                 if table["testDate"] == date:
                     tablesAtDate[key] = table
+                    break
+            tablesAtDate[key] = patient[key][-1]
     return tablesAtDate
 
 

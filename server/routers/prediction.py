@@ -14,5 +14,5 @@ async def predict(patient: models.PatientForPredict):
 		result.update(predict_ADL_sum(df))
 		return result
 	except Exception as e:
-		print(e)
+		print(str(e))
 		return {"message": e}
