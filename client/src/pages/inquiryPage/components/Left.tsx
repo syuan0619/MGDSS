@@ -79,14 +79,16 @@ const Left = ({ info }: { info: Info }) => {
                 性別:
               </div>
               <div className="inquiry-components-left-footer-basicdata-context-right">
-                <input
-                  type="text"
+                <select
                   className="textfield"
                   name="sex"
-                  onChange={changeInput}
-                  readOnly={readOnly}
+                  disabled={readOnly}
                   defaultValue={info.sex}
-                ></input>
+                  onChange={changeInput}
+                >
+                  <option value="male">男</option>
+                  <option value="female">女</option>
+                </select>
               </div>
             </div>
             <div className="inquiry-components-left-footer-basicdata-context">
@@ -157,7 +159,7 @@ const Left = ({ info }: { info: Info }) => {
                 className="inquiry-components-left-footer-basicdata-context-left"
                 style={{ letterSpacing: " 0.25vw", paddingRight: "0.25vw" }}
               >
-                其他就醫時數:
+                其他就醫次數:
               </div>
               <div className="inquiry-components-left-footer-basicdata-context-right">
                 <input
