@@ -684,15 +684,21 @@ function PatientList() {
             label="初始症狀"
             variant="outlined"
             name="beginSymptom"
-            defaultValue="眼肌型"
+            defaultValue={updatePatient?.beginSymptom}
+            required
             select
             onChange={changeAddPatient}
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
               },
+              width: "100%",
             }}
-          />
+          >
+            <MenuItem value="眼肌型">眼肌型</MenuItem>
+            <MenuItem value="口咽型">口咽型</MenuItem>
+            <MenuItem value="四肢型"> 四肢型</MenuItem>
+          </TextField>
           <p />
           <TextField
             label="其他註記"
@@ -901,8 +907,8 @@ function PatientList() {
               width: "100%",
             }}
           >
-            <MenuItem value="男">男</MenuItem>
-            <MenuItem value="女">女</MenuItem>
+            <MenuItem value="male">男</MenuItem>
+            <MenuItem value="female">女</MenuItem>
           </TextField>
           <p />
           <TextField
@@ -953,7 +959,7 @@ function PatientList() {
             defaultValue={updatePatient?.beginSymptom}
             required
             select
-            onChange={changeAddPatient}
+            onChange={changeUpdatePatient}
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
@@ -1024,8 +1030,8 @@ function PatientList() {
             label="其他疾病"
             variant="outlined"
             name="otherDisease"
-            value={addPatient!.otherDisease}
-            onChange={changeAddPatient}
+            defaultValue={updatePatient?.otherDisease}
+            onChange={changeUpdatePatient}
             required
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -1065,7 +1071,7 @@ function PatientList() {
               width: "100%",
             }}
             required
-            onChange={changeAddPatient}
+            onChange={changeUpdatePatient}
           />
 
 
