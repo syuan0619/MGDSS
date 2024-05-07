@@ -634,8 +634,8 @@ function PatientList() {
               width: "100%",
             }}
           >
-            <MenuItem value="男">男</MenuItem>
-            <MenuItem value="女">女</MenuItem>
+            <MenuItem value="male">男</MenuItem>
+            <MenuItem value="female">女</MenuItem>
           </TextField>
           <p />
           <TextField
@@ -912,8 +912,8 @@ function PatientList() {
               width: "100%",
             }}
           >
-            <MenuItem value="男">男</MenuItem>
-            <MenuItem value="女">女</MenuItem>
+            <MenuItem value="male">男</MenuItem>
+            <MenuItem value="female">女</MenuItem>
           </TextField>
           <p />
           <TextField
