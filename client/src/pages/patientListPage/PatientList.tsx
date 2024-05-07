@@ -171,7 +171,23 @@ function PatientList() {
 
   //修改病患dialog
   const [updatePatientId, setUpdatePatientId] = useState<string>();
-  const [updatePatient, setUpdatePatient] = useState<Info>();
+  const [updatePatient, setUpdatePatient] =useState<Info>({
+    "ID#": "",
+    name: "",
+    DOB: "",
+    sex: "",
+    height: 0,
+    weight: 0,
+    other: "",
+    attackDate: "",
+    beginSymptom: "",
+    otherHospitalRecord: {
+      recentlyDate: "",
+      totalTimes: 0,
+    },
+    otherDisease: [],
+    otherMedicine: [],
+  });
   const [updatePatientStatus, setUpdatePatientStatus] = useState(false);
   const updatePatientDialogOpen = () => {
     setUpdatePatientStatus(true);
@@ -668,7 +684,8 @@ function PatientList() {
             label="初始症狀"
             variant="outlined"
             name="beginSymptom"
-            value={addPatient!.beginSymptom || ""}
+            defaultValue="眼肌型"
+            select
             onChange={changeAddPatient}
             sx={{
               "& .MuiOutlinedInput-input": {
@@ -928,6 +945,130 @@ function PatientList() {
               },
             }}
           />
+          <p />
+          <TextField
+            label="初始症狀"
+            variant="outlined"
+            name="beginSymptom"
+            defaultValue={updatePatient?.beginSymptom}
+            required
+            select
+            onChange={changeAddPatient}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+          >
+            <MenuItem value="眼肌型">眼肌型</MenuItem>
+            <MenuItem value="口咽型">口咽型</MenuItem>
+            <MenuItem value="四肢型"> 四肢型</MenuItem>
+          </TextField>
+          <p />
+          <TextField
+            type="date"
+            label="其他醫院就診紀錄-最近就診日期"
+            variant="outlined"
+            name="otherHospitalRecord.recentlyDate"
+            defaultValue={updatePatient?.otherHospitalRecord.recentlyDate}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+            required
+            onChange={(e) => {
+              setAddPatient({
+                ...updatePatient,
+                otherHospitalRecord: {
+                  ...updatePatient.otherHospitalRecord,
+                  recentlyDate: e.target.value,
+                },
+              });
+            }}
+          />
+
+          <p />
+          <TextField
+            label="其他醫院就診紀錄-總就院次數"
+            variant="outlined"
+            name="otherHospitalRecord.totalTimes"
+            defaultValue={updatePatient?.otherHospitalRecord.totalTimes}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+            required
+            onChange={(e) => {
+              const value = parseInt(e.target.value);
+              setUpdatePatient({
+                ...updatePatient,
+                otherHospitalRecord: {
+                  ...updatePatient.otherHospitalRecord,
+                  totalTimes: value,
+                },
+              });
+            }}
+          />
+
+          <p />
+
+          <TextField
+            label="其他疾病"
+            variant="outlined"
+            name="otherDisease"
+            value={addPatient!.otherDisease}
+            onChange={changeAddPatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+
+          <p />
+          <TextField
+            label="其他用藥紀錄"
+            variant="outlined"
+            name="otherMedicine"
+            defaultValue={updatePatient?.otherMedicine}
+            onChange={changeUpdatePatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+          <p />
+          <TextField
+            type="date"
+            label="發病日"
+            variant="outlined"
+            name="attackDate"
+            defaultValue={updatePatient?.attackDate}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+            required
+            onChange={changeAddPatient}
+          />
+
+
         </DialogContent>
         <DialogActions>
           <Button
