@@ -163,6 +163,9 @@ const VisitChart = ({
               height={500}
               series={a}
               xAxis={[{ scaleType: "point", data: VisitChart_xLabels }]}
+              yAxis={[
+                { scaleType: "point", data: [9, 8, 7, 6, 5, 4, 3, 2, 1, 0] },
+              ]}
             />
           </div>
           <div className="chart-footer-checkbox">

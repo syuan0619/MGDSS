@@ -44,6 +44,7 @@ const TableThymus = ({
   useEffect(() => {
     getDefaultData();
   }, [selectedDate]);
+  console.log(defaultRes);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -101,6 +102,7 @@ const TableThymus = ({
               <div className="thymus-radio">
                 <input
                   onChange={handleChange}
+                  checked={defaultRes.thymusStatus === 0}
                   type="radio"
                   id="thymusStatus0"
                   name="thymusStatus0"
@@ -110,6 +112,7 @@ const TableThymus = ({
               </div>
               <div className="thymus-radio">
                 <input
+                  checked={defaultRes.thymusStatus === 1}
                   onChange={handleChange}
                   type="radio"
                   id="thymusStatus1"
@@ -120,6 +123,7 @@ const TableThymus = ({
               </div>
               <div className="thymus-radio">
                 <input
+                  checked={defaultRes.thymusStatus === 2}
                   onChange={handleChange}
                   type="radio"
                   id="thymusStatus2"
@@ -130,6 +134,7 @@ const TableThymus = ({
               </div>
               <div className="thymus-radio">
                 <input
+                  checked={defaultRes.thymusStatus === 3}
                   onChange={handleChange}
                   type="radio"
                   id="thymusStatus3"

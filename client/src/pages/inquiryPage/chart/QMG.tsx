@@ -222,6 +222,7 @@ const QMGChart = ({
               height={500}
               series={a}
               xAxis={[{ scaleType: "point", data: QMGChart_xLabels }]}
+              yAxis={[{ scaleType: "point", data: [3, 2, 1, 0] }]}
             />
           </div>
           <div className="chart-footer-checkbox">
