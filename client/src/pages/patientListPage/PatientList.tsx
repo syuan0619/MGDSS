@@ -169,8 +169,19 @@ function PatientList() {
   const addPatientDialogHide = () => {
     setAddPatientStatus(false);
   };
-  const changeAddPatient = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddPatient({ ...addPatient!, [e.target.name]: e.target.value });
+  const changeAddPatient = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (name === "otherDisease") {
+      setAddPatient((prevState) => ({
+        ...prevState,
+        [name]: [...prevState[name], value],
+      }));
+    } else {
+      setAddPatient((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
   const submitAddPatient = async () => {
     console.log("submitAddPatient", addPatient);
@@ -183,7 +194,23 @@ function PatientList() {
 
   //修改病患dialog
   const [updatePatientId, setUpdatePatientId] = useState<string>();
-  const [updatePatient, setUpdatePatient] = useState<Info>();
+  const [updatePatient, setUpdatePatient] = useState<Info>({
+    "ID#": "",
+    name: "",
+    DOB: "",
+    sex: "",
+    height: 0,
+    weight: 0,
+    other: "",
+    attackDate: "",
+    beginSymptom: "",
+    otherHospitalRecord: {
+      recentlyDate: "",
+      totalTimes: 0,
+    },
+    otherDisease: [],
+    otherMedicine: [],
+  });
   const [updatePatientStatus, setUpdatePatientStatus] = useState(false);
   const updatePatientDialogOpen = () => {
     setUpdatePatientStatus(true);
@@ -191,15 +218,23 @@ function PatientList() {
   const updatePatientDialogHide = () => {
     setUpdatePatientStatus(false);
   };
-  const changeUpdatePatient = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdatePatient({
-      ...updatePatient!,
-      [e.target.name]: e.target.value,
-    });
+  const changeUpdatePatient = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (name === "otherDisease" || name === "otherMedicine") {
+      setUpdatePatient((prevState) => ({
+        ...prevState,
+        [name]: [...prevState[name], value],
+      }));
+    } else {
+      setUpdatePatient((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
   const submitUpdatePatient = async () => {
     await api
-      .post(`/patients/${updatePatientId}/info`, updatePatient)
+      .put(`/patients/${updatePatientId}/info`, updatePatient)
       .then((res) => {
         console.log(res.data);
         data();
@@ -337,7 +372,7 @@ function PatientList() {
                 >
                   新增病患
                 </Button>
-                {role === "doctor" ? (
+                {role !== "nurse" ? (
                   <Button
                     sx={{
                       width: "6rem",
@@ -350,16 +385,10 @@ function PatientList() {
                         color: "#00b4c9",
                       },
                     }}
-                    onClick={download}
                   >
                     匯出
                   </Button>
                 ) : null}
-                <a
-                  href={downloadLink}
-                  ref={downloadRef}
-                  style={{ display: "none" }}
-                ></a>
 
                 <Box
                   sx={{
@@ -689,7 +718,7 @@ function PatientList() {
             label="初始症狀"
             variant="outlined"
             name="beginSymptom"
-            defaultValue={addPatient?.beginSymptom}
+            defaultValue={updatePatient?.beginSymptom}
             required
             select
             onChange={changeAddPatient}
@@ -912,8 +941,8 @@ function PatientList() {
               width: "100%",
             }}
           >
-            <MenuItem value="男">男</MenuItem>
-            <MenuItem value="女">女</MenuItem>
+            <MenuItem value="male">男</MenuItem>
+            <MenuItem value="female">女</MenuItem>
           </TextField>
           <p />
           <TextField
@@ -955,6 +984,128 @@ function PatientList() {
                 background: "#E0F4FF",
               },
             }}
+          />
+          <p />
+          <TextField
+            label="初始症狀"
+            variant="outlined"
+            name="beginSymptom"
+            defaultValue={updatePatient?.beginSymptom}
+            required
+            select
+            onChange={changeUpdatePatient}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+          >
+            <MenuItem value="眼肌型">眼肌型</MenuItem>
+            <MenuItem value="口咽型">口咽型</MenuItem>
+            <MenuItem value="四肢型"> 四肢型</MenuItem>
+          </TextField>
+          <p />
+          <TextField
+            type="date"
+            label="其他醫院就診紀錄-最近就診日期"
+            variant="outlined"
+            name="otherHospitalRecord.recentlyDate"
+            defaultValue={updatePatient?.otherHospitalRecord.recentlyDate}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+            required
+            onChange={(e) => {
+              setAddPatient({
+                ...updatePatient,
+                otherHospitalRecord: {
+                  ...updatePatient.otherHospitalRecord,
+                  recentlyDate: e.target.value,
+                },
+              });
+            }}
+          />
+
+          <p />
+          <TextField
+            label="其他醫院就診紀錄-總就院次數"
+            variant="outlined"
+            name="otherHospitalRecord.totalTimes"
+            defaultValue={updatePatient?.otherHospitalRecord.totalTimes}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+            required
+            onChange={(e) => {
+              const value = parseInt(e.target.value);
+              setUpdatePatient({
+                ...updatePatient,
+                otherHospitalRecord: {
+                  ...updatePatient.otherHospitalRecord,
+                  totalTimes: value,
+                },
+              });
+            }}
+          />
+
+          <p />
+
+          <TextField
+            label="其他疾病"
+            variant="outlined"
+            name="otherDisease"
+            defaultValue={updatePatient?.otherDisease}
+            onChange={changeUpdatePatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+
+          <p />
+          <TextField
+            label="其他用藥紀錄"
+            variant="outlined"
+            name="otherMedicine"
+            defaultValue={updatePatient?.otherMedicine}
+            onChange={changeUpdatePatient}
+            required
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+            }}
+          />
+          <p />
+          <TextField
+            type="date"
+            label="發病日"
+            variant="outlined"
+            name="attackDate"
+            defaultValue={updatePatient?.attackDate}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                background: "#E0F4FF",
+              },
+              width: "100%",
+            }}
+            required
+            onChange={changeUpdatePatient}
           />
         </DialogContent>
         <DialogActions>
