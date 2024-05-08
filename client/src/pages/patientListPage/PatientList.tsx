@@ -171,7 +171,7 @@ function PatientList() {
 
   //修改病患dialog
   const [updatePatientId, setUpdatePatientId] = useState<string>();
-  const [updatePatient, setUpdatePatient] =useState<Info>({
+  const [updatePatient, setUpdatePatient] = useState<Info>({
     "ID#": "",
     name: "",
     DOB: "",
@@ -203,7 +203,7 @@ function PatientList() {
   };
   const submitUpdatePatient = async () => {
     await api
-      .post(`/patients/${updatePatientId}/info`, updatePatient)
+      .put(`/patients/${updatePatientId}/info`, updatePatient)
       .then((res) => {
         console.log(res.data);
         data();
@@ -341,21 +341,24 @@ function PatientList() {
                 >
                   新增病患
                 </Button>
-                <Button
-                  sx={{
-                    width: "6rem",
-                    marginTop: "1rem",
-                    marginLeft: "2rem",
-                    backgroundColor: "#00b4c9",
-                    color: "white",
-                    borderRadius: "0.7rem",
-                    "&:hover": {
-                      color: "#00b4c9",
-                    },
-                  }}
-                >
-                  匯出
-                </Button>
+                {role !== "nurse" ? (
+                  <Button
+                    sx={{
+                      width: "6rem",
+                      marginTop: "1rem",
+                      marginLeft: "2rem",
+                      backgroundColor: "#00b4c9",
+                      color: "white",
+                      borderRadius: "0.7rem",
+                      "&:hover": {
+                        color: "#00b4c9",
+                      },
+                    }}
+                  >
+                    匯出
+                  </Button>
+                ) : null}
+
                 <Box
                   sx={{
                     display: "flex",
@@ -1073,8 +1076,6 @@ function PatientList() {
             required
             onChange={changeUpdatePatient}
           />
-
-
         </DialogContent>
         <DialogActions>
           <Button
