@@ -157,8 +157,19 @@ function PatientList() {
   const addPatientDialogHide = () => {
     setAddPatientStatus(false);
   };
-  const changeAddPatient = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddPatient({ ...addPatient!, [e.target.name]: e.target.value });
+  const changeAddPatient = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (name === "otherDisease") {
+      setAddPatient((prevState) => ({
+        ...prevState,
+        [name]: [...prevState[name], value],
+      }));
+    } else {
+      setAddPatient((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
   const submitAddPatient = async () => {
     console.log("submitAddPatient", addPatient);
@@ -195,11 +206,19 @@ function PatientList() {
   const updatePatientDialogHide = () => {
     setUpdatePatientStatus(false);
   };
-  const changeUpdatePatient = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdatePatient({
-      ...updatePatient!,
-      [e.target.name]: e.target.value,
-    });
+  const changeUpdatePatient = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (name === "otherDisease" || name === "otherMedicine") {
+      setUpdatePatient((prevState) => ({
+        ...prevState,
+        [name]: [...prevState[name], value],
+      }));
+    } else {
+      setUpdatePatient((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
   const submitUpdatePatient = async () => {
     await api
