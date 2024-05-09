@@ -1,10 +1,11 @@
 .inquiry-right-all {
   overflow: scroll;
-  max-height: 85vh;
+  max-height: 83.5vh;
   max-width: 70vw;
   display: flex;
   flex-direction: column;
   scrollbar-width: none;
+  margin-left: 2vw;
 }
 
 .inquiry-right-set {
@@ -14,13 +15,17 @@
   margin-bottom: 4rem;
 }
 
+.inquiry-right-set:nth-child(4) {
+  margin-bottom: 0.2rem;
+}
+
 .inquiry-right-each {
   width: 25rem;
   height: 27.5rem;
   display: flex;
   flex-direction: column;
   background-color: rgb(255, 255, 255);
-  border-radius: 1rem;
+  border-radius: 1.2rem;
 }
 
 .inquiry-right-table-chart-container,
@@ -64,8 +69,8 @@
 
 .inquiry-right-to-table-button:hover {
   transform: translateY(-0.2rem);
-  background-color: #9e9fa5;
-  outline: 0.15rem solid #9e9fa5;
+  background-color: #61677a;
+  outline: 0.15rem solid #61677a;
   color: white;
 }
 

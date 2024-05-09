@@ -105,7 +105,6 @@ const EMGChart = ({
           <div
             style={{
               height: "100%",
-              margin: "3vh",
             }}
           >
             <Tabs value={value} onChange={handleChange}>

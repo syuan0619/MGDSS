@@ -4,12 +4,9 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-left: 2vw;
 }
 
-.inquiry-left {
-  height: 81vh;
-  width: 30vw;
-}
 .inquiry-components-left {
   width: 95%;
   height: 100%;
@@ -123,7 +120,7 @@
 
 .inquiry-components-edit-button {
   width: 3rem;
-  height: 2.3rem;
+  height: 2.8rem;
   margin-right: 1.3rem;
   font-size: 1rem;
   border-radius: 0.6rem;
@@ -131,14 +128,14 @@
   padding-inline: 0.5rem;
   cursor: pointer;
   background-color: white;
-  outline: 0.15rem solid #61677a;
-  color: #61677a;
+  outline: 0.15rem solid #5d94e7;
+  color: #5d94e7;
 }
 
 .inquiry-components-edit-button:hover {
   cursor: pointer;
   transform: translateY(-0.2rem);
-  background-color: #9e9fa5;
-  outline: 0.15rem solid #9e9fa5;
+  background-color: #5d94e7;
+  outline: 0.15rem solid #5d94e7;
   color: white;
 }

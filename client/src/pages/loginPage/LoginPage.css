@@ -11,7 +11,7 @@
 }
 
 .loginbox {
-  width: 30vw;
+  width: 27vw;
   height: 65vh;
   max-width: 500px;
   max-height: 700px;
@@ -22,16 +22,32 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  border-radius: 20px;
+  border-radius: 2rem;
   background-color: #338cc1;
   flex-direction: column;
   color: white;
   box-sizing: border-box;
   padding: 5rem;
-  gap: 1rem;
+  gap: 3vh;
 }
 
-.text {
+.loginbox > img {
+  margin-top: 2vh;
+  margin-bottom: 0.5vh;
+}
+
+.loginbox > h1 {
+  margin-top: 2vh;
+  margin-top: -1vh;
+}
+
+.loginbox > Button {
+  margin-top: 1vh;
+  border-radius: 0.9rem;
+}
+
+.register-text {
+  margin-top: -1vh;
   font-size: 2vh;
   color: white;
 }
@@ -43,29 +59,6 @@
   align-items: center;
 }
 
-/* .spinnerwapper {
-  background-image: url("../assets/bgim2.png");
-  display: flex;
-  background-size: cover;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+.register-text:hover {
+  color: rgb(255, 248, 149);
 }
-.spinner {
-  width: 5vh;
-  height: 5vh;
-  border: 5px solid;
-  border-color: white transparent white transparent;
-  border-radius: 50%;
-  animation: spin 1.3s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-} */

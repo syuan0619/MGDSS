@@ -7,7 +7,7 @@
 }
 
 .inquiry-table-QOL-bg {
-  width: 100%;
+  width: 90%;
   height: 100%;
   display: flex;
   align-items: flex-start;
@@ -15,13 +15,14 @@
 }
 
 .inquiry-table-QOL {
+  width: 97%;
+  height: 98%;
+
+  background-color: rgb(255, 255, 255);
+  border-radius: 1.8rem;
+  display: flex;
   flex-direction: column;
-  height: 95%;
-  width: 95%;
-  background-color: white;
-  border-radius: 20px;
-  overflow-y: auto;
-  box-sizing: border-box;
+  margin-left: 8vw;
 }
 
 .inquiry-table-QOL-head {
@@ -124,8 +125,12 @@
   flex-direction: column;
 }
 
+.inquiry-table-QOL-content-row input[type="range"] {
+  width: 16vw;
+  margin: 0;
+}
 .QOL-datalist {
-  width: 20vw;
+  width: 17vw;
 }
 
 .inquiry-table-QOL-content-block-textfield {
@@ -179,7 +184,7 @@
 }
 .inquiry-table-QOL-submit button {
   width: 10vw;
-  height: 5vh;
+  height: 6vh;
   background-color: #cae7f8;
   color: #0c537b;
   font-size: 1.3rem;

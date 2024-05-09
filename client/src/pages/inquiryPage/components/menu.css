@@ -61,7 +61,7 @@
 .inquiry-menu-button:nth-child(3) {
   width: 7rem;
   height: 2.6rem;
-  background-color: grey;
+  background-color: rgb(147, 141, 141);
   border-radius: 0.9rem;
   font-weight: bold;
   border: none;
@@ -78,7 +78,7 @@
 }
 
 .inquiry-menu-button:nth-child(3):hover {
-  background-color: #ce0000;
+  background-color: #ad0000;
 }
 
 .inquiry-menu-input {
@@ -91,6 +91,7 @@
   background-color: rgb(255, 255, 255);
   margin: 0 0.5vw 0 0.5vw;
   padding-left: 0.75rem;
+  cursor: pointer;
 }
 .inquiry-menu-input:focus {
   outline: 0.15rem solid #7c7b7b;

@@ -148,18 +148,9 @@ const LoginPage = () => {
   return (
     <>
       <div className="background">
-        <div className="spinnerwapper">
-          <div className="spinner"></div>
-        </div>
-
         <div className="loginbox">
-          <div>
-            <img src={fjuicon} width={"60rem"}></img>
-          </div>
-          <h1>
-            <b>登入</b>
-          </h1>
-
+          <img src={fjuicon} width={"70rem"}></img>
+          <h1>登入</h1>
           <CssTextField
             inputProps={{
               sx: { ...inputTextColor },
@@ -218,7 +209,7 @@ const LoginPage = () => {
 
           <div className="loginboxbottom">
             <Link to="/register" style={{ textDecoration: "none" }}>
-              <h3 className="text">註冊</h3>
+              <h3 className="register-text">註冊</h3>
             </Link>
           </div>
         </div>

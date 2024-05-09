@@ -1,16 +1,17 @@
 .inquiry-table-ADL-all {
-  width: 68vw;
-  height: 85vh;
+  width: 62vw;
+  height: 86vh;
   display: flex;
 }
 .inquiry-table-ADL-bg {
-  width: 100%;
-  height: 95%;
+  width: 97%;
+  height: 97%;
   margin-left: 1rem;
   background-color: rgb(255, 255, 255);
-  border-radius: 1rem;
+  border-radius: 1.8rem;
   display: flex;
   flex-direction: column;
+  margin-left: 5.2vw;
 }
 
 .ADL-backToRight {
@@ -48,7 +49,7 @@
   align-items: center;
 }
 .inquiry-table-ADL-content-row {
-  width: 58vw;
+  width: 53vw;
   height: 12vh;
   font-size: 1.6rem;
   display: flex;
@@ -157,7 +158,7 @@ option {
 }
 .inquiry-table-ADL-submit button {
   width: 10vw;
-  height: 5vh;
+  height: 6vh;
   background-color: #cae7f8;
   color: #0c537b;
   font-size: 1.3rem;

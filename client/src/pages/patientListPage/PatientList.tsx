@@ -31,7 +31,6 @@ import {
   TextField,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import "./PatientList.css";
 import SearchIcon from "@mui/icons-material/Search";
@@ -442,18 +441,15 @@ function PatientList() {
                 </TableCell>
                 {role === "nurse" ? (
                   <>
-                    <TableCell
-                      align="center"
-                      sx={{ color: "#9E9FA5" }}
-                    ></TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ color: "#9E9FA5" }}
-                    ></TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ color: "#9E9FA5" }}
-                    ></TableCell>
+                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                      修改
+                    </TableCell>
+                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                      電生理
+                    </TableCell>
+                    <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                      抽血
+                    </TableCell>
                   </>
                 ) : null}
                 <TableCell align="center" sx={{ color: "#9E9FA5" }}></TableCell>
@@ -536,25 +532,37 @@ function PatientList() {
                                 setUpdatePatient(patient.info);
                                 updatePatientDialogOpen();
                               }}
-                            >
-                              <EditIcon />
-                            </InfoIcon>
+                              sx={{
+                                fill: "#808080a6",
+                                "&:hover": {
+                                  fill: "black",
+                                },
+                              }}
+                            ></InfoIcon>
                           </Box>
                         </TableCell>
                         <TableCell align="center">
                           <FindInPageRoundedIcon
                             onClick={() => handleEMGDialogOpen()}
-                          >
-                            <EditIcon />
-                          </FindInPageRoundedIcon>
+                            sx={{
+                              fill: "#808080a6",
+                              "&:hover": {
+                                fill: "black",
+                              },
+                            }}
+                          ></FindInPageRoundedIcon>
                         </TableCell>
                         <TableCell align="center">
                           <Box>
                             <VaccinesRoundedIcon
                               onClick={() => handleBloodTestDialogOpen()}
-                            >
-                              <EditIcon />
-                            </VaccinesRoundedIcon>
+                              sx={{
+                                fill: "#808080a6",
+                                "&:hover": {
+                                  fill: "black",
+                                },
+                              }}
+                            ></VaccinesRoundedIcon>
                           </Box>
                         </TableCell>
                       </>
@@ -563,7 +571,14 @@ function PatientList() {
                       onClick={() => deletePatient(patient._id)}
                       align="center"
                     >
-                      <DeleteOutlineOutlinedIcon />
+                      <DeleteOutlineOutlinedIcon
+                        sx={{
+                          fill: "#808080a6",
+                          "&:hover": {
+                            fill: "black",
+                          },
+                        }}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}
@@ -579,7 +594,7 @@ function PatientList() {
         sx={{
           "& .MuiPaper-root": {
             borderRadius: "1rem",
-            width: "40vh",
+            width: "36vh",
             height: "70vh",
             paddingTop: "2vh",
             paddingBottom: "1vh",
@@ -599,7 +614,7 @@ function PatientList() {
           },
         }}
       >
-        <DialogTitle sx={{}}>新增病患</DialogTitle>
+        <DialogTitle>新增病患</DialogTitle>
         <DialogContent sx={{ margingTop: "5vh" }}>
           <TextField
             label="病歷號"
@@ -611,6 +626,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -625,6 +641,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -642,7 +659,7 @@ function PatientList() {
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
               },
-              width: "100%",
+              width: "15vw",
             }}
             required
             onChange={changeAddPatient}
@@ -660,7 +677,7 @@ function PatientList() {
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
               },
-              width: "100%",
+              width: "15vw",
             }}
           >
             <MenuItem value="男">男</MenuItem>
@@ -677,6 +694,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -691,6 +709,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -708,7 +727,7 @@ function PatientList() {
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
               },
-              width: "100%",
+              width: "15vw",
             }}
             required
             onChange={changeAddPatient}
@@ -726,7 +745,7 @@ function PatientList() {
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
               },
-              width: "100%",
+              width: "15vw",
             }}
           >
             <MenuItem value="眼肌型">眼肌型</MenuItem>
@@ -743,6 +762,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -760,7 +780,7 @@ function PatientList() {
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
               },
-              width: "100%",
+              width: "15vw",
             }}
             required
             onChange={(e) => {
@@ -784,7 +804,7 @@ function PatientList() {
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
               },
-              width: "100%",
+              width: "15vw",
             }}
             required
             onChange={(e) => {
@@ -811,6 +831,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -826,6 +847,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -836,8 +858,8 @@ function PatientList() {
             onClick={addPatientDialogHide}
             sx={{
               position: "absolute",
-              right: 8,
-              top: 8,
+              right: 16,
+              top: 16,
             }}
           >
             <CloseIcon />
@@ -849,7 +871,7 @@ function PatientList() {
           >
             新增
           </Button>
-        </DialogActions>{" "}
+        </DialogActions>
       </Dialog>
 
       <Dialog
@@ -859,8 +881,8 @@ function PatientList() {
         sx={{
           "& .MuiPaper-root": {
             borderRadius: "1rem",
-            width: "40vh",
-            height: "90vh",
+            width: "36vh",
+            height: "70vh",
             paddingTop: "2vh",
             paddingBottom: "1vh",
             paddingLeft: "5vh",
@@ -880,19 +902,19 @@ function PatientList() {
         }}
       >
         <DialogTitle>
-          <Box
+          修改基本資料
+          <IconButton
+            onClick={updatePatientDialogHide}
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
+              position: "absolute",
+              right: 16,
+              top: 16,
             }}
           >
-            修改基本資料
-            <IconButton onClick={updatePatientDialogHide}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
+            <CloseIcon />
+          </IconButton>
         </DialogTitle>
-        <DialogContent sx={{ marginTop: "5vh" }}>
+        <DialogContent sx={{ marginTop: "1vh" }}>
           <TextField
             label="姓名"
             variant="outlined"
@@ -903,6 +925,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -919,8 +942,8 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
-              width: "100%",
             }}
             required
             onChange={changeUpdatePatient}
@@ -937,8 +960,8 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "11.8vw",
               },
-              width: "100%",
             }}
           >
             <MenuItem value="male">男</MenuItem>
@@ -955,6 +978,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -969,6 +993,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -982,6 +1007,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -997,8 +1023,8 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "11.8vw",
               },
-              width: "100%",
             }}
           >
             <MenuItem value="眼肌型">眼肌型</MenuItem>
@@ -1018,8 +1044,8 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
-              width: "100%",
             }}
             required
             onChange={(e) => {
@@ -1042,8 +1068,8 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
-              width: "100%",
             }}
             required
             onChange={(e) => {
@@ -1070,6 +1096,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -1085,6 +1112,7 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
             }}
           />
@@ -1101,8 +1129,8 @@ function PatientList() {
             sx={{
               "& .MuiOutlinedInput-input": {
                 background: "#E0F4FF",
+                width: "13vw",
               },
-              width: "100%",
             }}
             required
             onChange={changeUpdatePatient}
@@ -1128,14 +1156,13 @@ function PatientList() {
         onClose={handleEMGDialogClose}
         sx={{
           "& .MuiPaper-root": {
-            borderRadius: "1rem",
-            maxWidth: "100vw",
+            borderRadius: "2rem",
+            maxWidth: "90vw",
             height: "85vh",
             paddingTop: "2vh",
             paddingBottom: "1vh",
-            paddingLeft: "5vh",
-            paddingRight: "5vh",
-            marginTop: 5,
+
+            paddingRight: "11vh",
           },
           "& .MuiSvgIcon-root": {
             fill: "white",
@@ -1160,8 +1187,8 @@ function PatientList() {
               position: "absolute",
               right: "1.3rem",
               top: "1.3rem",
-              width: "3rem",
-              height: "3.5rem",
+              width: "3.3rem",
+              height: "3.3rem",
             }}
           >
             <CloseIcon sx={{ fontSize: "1.4rem" }} />
@@ -1175,13 +1202,12 @@ function PatientList() {
         aria-labelledby="新增病患抽血資訊"
         sx={{
           "& .MuiPaper-root": {
-            borderRadius: "1rem",
-            maxWidth: "80vw",
-            maxHeight: "100vh",
+            borderRadius: "2rem",
+            maxWidth: "60vw",
+            maxHeight: "85vh",
             paddingTop: "2vh",
             paddingBottom: "1vh",
-            paddingLeft: "5vh",
-            paddingRight: "5vh",
+            paddingRight: "20vh",
             marginTop: 5,
           },
           "& .MuiSvgIcon-root": {

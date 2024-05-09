@@ -247,7 +247,7 @@ const TableBloodTest = ({
                 display: " flex",
                 flexDirection: "row",
                 justifyContent: "flex-start",
-                marginLeft: "10%",
+                marginLeft: "7%",
               }}
             >
               <div className="inquiry-table-BloodTest-content-row-ANA">

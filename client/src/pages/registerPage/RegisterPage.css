@@ -11,8 +11,8 @@
 }
 
 .registerbox {
-  width: 30vw;
-  height: 85vh;
+  width: 27vw;
+  height: 65vh;
   max-width: 500px;
   max-height: 700px;
   min-width: 350px;
@@ -22,7 +22,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  border-radius: 20px;
+  border-radius: 2rem;
   background-color: #338cc1;
   flex-direction: column;
   color: white;
@@ -31,13 +31,26 @@
   padding-right: calc(5rem - 24px);
 }
 
+/* .registerbox > img {
+  margin-top: 4vh;
+  margin-bottom: 0.5vh;
+} */
+
+.registerbox > Button {
+  margin: 0vh;
+}
+
 .registertext {
-  font-size: 2em;
-  margin: 1rem 0 0rem 0;
+  font-size: 1.6rem;
+  margin-top: 1vh;
 }
 
 .registerboxbottom {
-  margin: 0;
-  text-decoration: none;
+  margin-top: -1vh;
   color: white;
+  font-size: 2vh;
+}
+
+.registerboxbottom:hover {
+  color: rgb(255, 248, 149);
 }

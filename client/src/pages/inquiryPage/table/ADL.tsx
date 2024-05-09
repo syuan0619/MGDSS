@@ -247,28 +247,19 @@ const TableADL = ({
             </div>
           </div>
           <div className="inquiry-table-ADL-content-row">
-            <div
-              style={{
-                width: "100%",
-                display: " flex",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                marginLeft: "15%",
-              }}
-            >
-              <div className="inquiry-table-ADL-content-row-talking">
-                <label htmlFor="talking">talking</label>
-                <input
-                  value={ADLscore.talking}
-                  onChange={(e) => handleChange(e, ADLscore.talking)}
-                  type="range"
-                  id="talking"
-                  name="talking"
-                  min="0"
-                  max="3"
-                  step="1"
-                  list="tickmarks"
-                />
+            <div className="inquiry-table-ADL-content-row-talking">
+              <label htmlFor="talking">talking</label>
+              <input
+                value={ADLscore.talking}
+                onChange={(e) => handleChange(e, ADLscore.talking)}
+                type="range"
+                id="talking"
+                name="talking"
+                min="0"
+                max="3"
+                step="1"
+                list="tickmarks"
+              />
 
               <datalist id="tickmarks">
                 <option value="0" label="0"></option>

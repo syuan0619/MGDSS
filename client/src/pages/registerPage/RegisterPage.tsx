@@ -195,11 +195,8 @@ const RegisterPage = () => {
     <>
       <div className="background">
         <div className="registerbox">
-          <div>
-            <img src={fjuicon} width={"60rem"}></img>
-          </div>
           <div className="registertext">註冊</div>
-          <div>
+          <div className="register-tab">
             <StyledTabs value={value} onChange={handleChange}>
               <StyledTab
                 icon={<InventoryRoundedIcon />}
@@ -316,10 +313,11 @@ const RegisterPage = () => {
                 onClick={onSubmit}
                 sx={{
                   backgroundColor: "#73cfff",
+                  marginTop: "-2vh",
                   "&:hover": {
                     backgroundColor: "#99DBFF",
                   },
-                  borderRadius: "10px",
+                  borderRadius: "0.9rem",
                 }}
               >
                 以醫生身分註冊
@@ -430,10 +428,11 @@ const RegisterPage = () => {
                 onClick={onSubmit}
                 sx={{
                   backgroundColor: "#73cfff",
+                  marginTop: "-2vh",
                   "&:hover": {
                     backgroundColor: "#99DBFF",
                   },
-                  borderRadius: "10px",
+                  borderRadius: "0.9rem",
                 }}
               >
                 以護士身分註冊

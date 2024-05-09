@@ -2,18 +2,19 @@ input[type="range"]::-webkit-slider-thumb {
   border: 12px solid black;
 }
 .inquiry-table-MG-all {
-  width: 68vw;
-  height: 85vh;
+  width: 62vw;
+  height: 86vh;
   display: flex;
 }
 .inquiry-table-MG-bg {
-  width: 100%;
-  height: 95%;
+  width: 97%;
+  height: 97%;
   margin-left: 1rem;
   background-color: rgb(255, 255, 255);
-  border-radius: 1rem;
+  border-radius: 1.8rem;
   display: flex;
   flex-direction: column;
+  margin-left: 5.2vw;
 }
 
 .inquiry-table-MG-return {
@@ -70,7 +71,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .inquiry-table-MG-content-row {
-  width: 58vw;
+  width: 50vw;
   height: 20vh;
   font-size: 1.6rem;
   display: flex;
@@ -173,13 +174,14 @@ option {
 }
 .inquiry-table-MG-submit button {
   width: 10vw;
-  height: 5vh;
+  height: 6vh;
   background-color: #cae7f8;
   color: #0c537b;
   font-size: 1.3rem;
   font-weight: bold;
   border-radius: 1.2rem;
   border: 0;
+  margin-top: 4vh;
 }
 .inquiry-table-MG-submit button:hover {
   background-color: white;
