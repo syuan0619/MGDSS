@@ -89,7 +89,18 @@ const TableVisit = ({
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+
+    if (type === "radio") {
+      setvisitscore({
+        ...visitscore,
+        examination: {
+          ...visitscore.examination,
+          [name]: checked ? parseFloat(value) : 0,
+        },
+      });
+      return;
+    }
     const numericValue = value.trim() !== "" ? parseFloat(value) : 0;
 
     if (name in maxValues && numericValue > maxValues[name]) {
@@ -452,27 +463,24 @@ const TableVisit = ({
                 <div className="radio-yes">
                   <input
                     type="radio"
-                    id="ptosis"
+                    id="ptosis-yes"
                     name="ptosis"
                     value={1}
+                    checked={visitscore.examination.ptosis === 1}
                     onChange={handleChange}
                   />
-                  <label className="visit-radio-label" htmlFor="ptosis">
-                    是
-                  </label>
+                  <label htmlFor="ptosis-yes">是</label>
                 </div>
                 <div className="radio-no">
                   <input
                     type="radio"
-                    id="ptosis"
+                    id="ptosis-no"
                     name="ptosis"
                     value={0}
+                    checked={visitscore.examination.ptosis === 0}
                     onChange={handleChange}
-                    checked
                   />
-                  <label className="visit-radio-label" htmlFor="ptosis">
-                    否
-                  </label>
+                  <label htmlFor="ptosis-no">否</label>{" "}
                 </div>
               </div>
             </div>
@@ -482,27 +490,24 @@ const TableVisit = ({
                 <div className="radio-yes">
                   <input
                     type="radio"
-                    id="diplopia"
+                    id="diplopia-yes"
                     name="diplopia"
                     value={1}
+                    checked={visitscore.examination.diplopia === 1}
                     onChange={handleChange}
                   />
-                  <label className="visit-radio-label" htmlFor="diplopia">
-                    是
-                  </label>
+                  <label htmlFor="diplopia-yes">是</label>{" "}
                 </div>
                 <div className="radio-no">
                   <input
                     type="radio"
-                    id="diplopia"
+                    id="diplopia-no"
                     name="diplopia"
                     value={0}
+                    checked={visitscore.examination.diplopia === 0}
                     onChange={handleChange}
-                    checked
                   />
-                  <label className="visit-radio-label" htmlFor="diplopia">
-                    否
-                  </label>
+                  <label htmlFor="diplopia-no">否</label>{" "}
                 </div>
               </div>
             </div>
@@ -513,27 +518,24 @@ const TableVisit = ({
                 <div className="radio-yes">
                   <input
                     type="radio"
-                    id="dysphagia"
+                    id="dysphagia-yes"
                     name="dysphagia"
                     value={1}
+                    checked={visitscore.examination.dysphagia === 1}
                     onChange={handleChange}
                   />
-                  <label className="visit-radio-label" htmlFor="dysphagia">
-                    是
-                  </label>
+                  <label htmlFor="dysphagia-yes">是</label>{" "}
                 </div>
                 <div className="radio-no">
                   <input
                     type="radio"
-                    id="dysphagia"
+                    id="dysphagia-no"
                     name="dysphagia"
-                    value={0}
+                    value={1}
+                    checked={visitscore.examination.dysphagia === 0}
                     onChange={handleChange}
-                    checked
                   />
-                  <label className="visit-radio-label" htmlFor="dysphagia">
-                    否
-                  </label>
+                  <label htmlFor="dysphagia-no">否</label>{" "}
                 </div>
               </div>
             </div>
@@ -543,27 +545,24 @@ const TableVisit = ({
                 <div className="radio-yes">
                   <input
                     type="radio"
-                    id="dysarthria"
+                    id="dysarthria-yes"
                     name="dysarthria"
                     value={1}
+                    checked={visitscore.examination.dysarthria === 1}
                     onChange={handleChange}
                   />
-                  <label className="visit-radio-label" htmlFor="dysarthria">
-                    是
-                  </label>
+                  <label htmlFor="dysarthria-yes">是</label>{" "}
                 </div>
                 <div className="radio-no">
                   <input
                     type="radio"
-                    id="dysarthria"
+                    id="dysarthria-no"
                     name="dysarthria"
                     value={0}
+                    checked={visitscore.examination.dysarthria === 0}
                     onChange={handleChange}
-                    checked
                   />
-                  <label className="visit-radio-label" htmlFor="dysarthria">
-                    否
-                  </label>
+                  <label htmlFor="dysarthria-no">否</label>{" "}
                 </div>
               </div>
             </div>
@@ -573,27 +572,24 @@ const TableVisit = ({
                 <div className="radio-yes">
                   <input
                     type="radio"
-                    id="dyspnea"
+                    id="dyspnea-yes"
                     name="dyspnea"
                     value={1}
+                    checked={visitscore.examination.dyspnea === 1}
                     onChange={handleChange}
                   />
-                  <label className="visit-radio-label" htmlFor="dyspnea">
-                    是
-                  </label>
+                  <label htmlFor="dyspnea-yes">是</label>{" "}
                 </div>
                 <div className="radio-no">
                   <input
                     type="radio"
-                    id="dyspnea"
+                    id="dyspnea-no"
                     name="dyspnea"
                     value={0}
+                    checked={visitscore.examination.dyspnea === 0}
                     onChange={handleChange}
-                    checked
                   />
-                  <label className="visit-radio-label" htmlFor="dyspnea">
-                    否
-                  </label>
+                  <label htmlFor="dyspnea-no">否</label>{" "}
                 </div>
               </div>
             </div>
@@ -603,27 +599,24 @@ const TableVisit = ({
                 <div className="radio-yes">
                   <input
                     type="radio"
-                    id="limpWeakness"
+                    id="limpWeakness-yes"
                     name="limpWeakness"
                     value={1}
+                    checked={visitscore.examination.limpWeakness === 1}
                     onChange={handleChange}
                   />
-                  <label className="visit-radio-label" htmlFor="limpWeakness">
-                    是
-                  </label>
+                  <label htmlFor="limpWeakness-yes">是</label>{" "}
                 </div>
                 <div className="radio-no">
                   <input
                     type="radio"
-                    id="limpWeakness"
+                    id="limpWeakness-no"
                     name="limpWeakness"
-                    value={0}
+                    value={1}
+                    checked={visitscore.examination.limpWeakness === 0}
                     onChange={handleChange}
-                    checked
                   />
-                  <label className="visit-radio-label" htmlFor="limpWeakness">
-                    否
-                  </label>
+                  <label htmlFor="limpWeakness-no">否</label>{" "}
                 </div>
               </div>
             </div>
