@@ -217,41 +217,41 @@ const RegisterPage = () => {
           </div>
 
           <CustomTabPanel value={value} index={0}>
-            <CssTextField
-              inputProps={{
-                sx: { color: "white" },
-              }}
-              InputLabelProps={{
-                sx: { color: "white" },
-              }}
-              fullWidth
-              label="姓名"
-              variant="outlined"
-              name="name"
-              size="small"
-              value={form.name}
-              onChange={loginInput}
-              sx={{ marginBottom: "1rem" }}
-            />
-            <CssTextField
-              inputProps={{
-                sx: { color: "white" },
-              }}
-              InputLabelProps={{
-                sx: { color: "white" },
-              }}
-              fullWidth
-              type="email"
-              label="電子郵件"
-              variant="outlined"
-              size="small"
-              name="email"
-              value={form.email}
-              onChange={loginInput}
-              sx={{ marginBottom: "1rem" }} //這個CustomTabPanel的間距很難改所以用sx硬寫比較快
-            />
-            <ThemeProvider theme={fromControltheme}>
-              <form>
+            <form>
+              <CssTextField
+                inputProps={{
+                  sx: { color: "white" },
+                }}
+                InputLabelProps={{
+                  sx: { color: "white" },
+                }}
+                fullWidth
+                label="姓名"
+                variant="outlined"
+                name="name"
+                size="small"
+                value={form.name}
+                onChange={loginInput}
+                sx={{ marginBottom: "1rem" }}
+              />
+              <CssTextField
+                inputProps={{
+                  sx: { color: "white" },
+                }}
+                InputLabelProps={{
+                  sx: { color: "white" },
+                }}
+                fullWidth
+                type="email"
+                label="電子郵件"
+                variant="outlined"
+                size="small"
+                name="email"
+                value={form.email}
+                onChange={loginInput}
+                sx={{ marginBottom: "1rem" }} //這個CustomTabPanel的間距很難改所以用sx硬寫比較快
+              />
+              <ThemeProvider theme={fromControltheme}>
                 <FormControl
                   fullWidth
                   variant="outlined"
@@ -291,79 +291,79 @@ const RegisterPage = () => {
                     label="Password"
                   />
                 </FormControl>
-              </form>
-            </ThemeProvider>
-            <CssTextField
-              inputProps={{
-                sx: { color: "white" },
-              }}
-              InputLabelProps={{
-                sx: { color: "white" },
-              }}
-              fullWidth
-              label="醫師授權碼"
-              variant="outlined"
-              name="authCode"
-              size="small"
-              value={form.authCode}
-              onChange={loginInput}
-              sx={{ marginBottom: "2rem" }}
-            />
-            <Link to="/">
-              <Button
-                fullWidth
-                variant="contained"
-                onClick={onSubmit}
-                sx={{
-                  backgroundColor: "#73cfff",
-                  "&:hover": {
-                    backgroundColor: "#99DBFF",
-                  },
-                  borderRadius: "10px",
+              </ThemeProvider>
+              <CssTextField
+                inputProps={{
+                  sx: { color: "white" },
                 }}
-              >
-                以醫生身分註冊
-              </Button>
-            </Link>
+                InputLabelProps={{
+                  sx: { color: "white" },
+                }}
+                fullWidth
+                label="醫師授權碼"
+                variant="outlined"
+                name="authCode"
+                size="small"
+                value={form.authCode}
+                onChange={loginInput}
+                sx={{ marginBottom: "2rem" }}
+              />
+              <Link to="/">
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={onSubmit}
+                  sx={{
+                    backgroundColor: "#73cfff",
+                    "&:hover": {
+                      backgroundColor: "#99DBFF",
+                    },
+                    borderRadius: "10px",
+                  }}
+                >
+                  以醫生身分註冊
+                </Button>
+              </Link>{" "}
+            </form>
           </CustomTabPanel>
 
           <CustomTabPanel value={value} index={1}>
-            <CssTextField
-              inputProps={{
-                sx: { color: "white" },
-              }}
-              InputLabelProps={{
-                sx: { color: "white" },
-              }}
-              fullWidth
-              label="姓名"
-              variant="outlined"
-              size="small"
-              name="name"
-              value={form.name}
-              onChange={loginInput}
-              sx={{ marginBottom: "1rem" }}
-            />
-            <CssTextField
-              inputProps={{
-                sx: { color: "white" },
-              }}
-              InputLabelProps={{
-                sx: { color: "white" },
-              }}
-              fullWidth
-              label="電子郵件"
-              type="email"
-              variant="outlined"
-              size="small"
-              name="email"
-              value={form.email}
-              onChange={loginInput}
-              sx={{ marginBottom: "1rem" }}
-            />
+            <form>
+              <CssTextField
+                inputProps={{
+                  sx: { color: "white" },
+                }}
+                InputLabelProps={{
+                  sx: { color: "white" },
+                }}
+                fullWidth
+                label="姓名"
+                variant="outlined"
+                size="small"
+                name="name"
+                value={form.name}
+                onChange={loginInput}
+                sx={{ marginBottom: "1rem" }}
+              />
+              <CssTextField
+                inputProps={{
+                  sx: { color: "white" },
+                }}
+                InputLabelProps={{
+                  sx: { color: "white" },
+                }}
+                fullWidth
+                label="電子郵件"
+                type="email"
+                variant="outlined"
+                size="small"
+                name="email"
+                value={form.email}
+                onChange={loginInput}
+                sx={{ marginBottom: "1rem" }}
+              />
 
-            <ThemeProvider theme={fromControltheme}>
-              <form>
+              <ThemeProvider theme={fromControltheme}>
                 <FormControl
                   fullWidth
                   variant="outlined"
@@ -403,42 +403,42 @@ const RegisterPage = () => {
                     label="Password"
                   />
                 </FormControl>
-              </form>
-            </ThemeProvider>
+              </ThemeProvider>
 
-            <CssTextField
-              inputProps={{
-                sx: { color: "white" },
-              }}
-              InputLabelProps={{
-                sx: { color: "white" },
-              }}
-              fullWidth
-              label="護士授權碼"
-              variant="outlined"
-              name="authCode"
-              size="small"
-              value={form.authCode}
-              onChange={loginInput}
-              sx={{ marginBottom: "2rem" }}
-            />
-
-            <Link to="/">
-              <Button
-                fullWidth
-                variant="contained"
-                onClick={onSubmit}
-                sx={{
-                  backgroundColor: "#73cfff",
-                  "&:hover": {
-                    backgroundColor: "#99DBFF",
-                  },
-                  borderRadius: "10px",
+              <CssTextField
+                inputProps={{
+                  sx: { color: "white" },
                 }}
-              >
-                以護士身分註冊
-              </Button>
-            </Link>
+                InputLabelProps={{
+                  sx: { color: "white" },
+                }}
+                fullWidth
+                label="護士授權碼"
+                variant="outlined"
+                name="authCode"
+                size="small"
+                value={form.authCode}
+                onChange={loginInput}
+                sx={{ marginBottom: "2rem" }}
+              />
+
+              <Link to="/">
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={onSubmit}
+                  sx={{
+                    backgroundColor: "#73cfff",
+                    "&:hover": {
+                      backgroundColor: "#99DBFF",
+                    },
+                    borderRadius: "10px",
+                  }}
+                >
+                  以護士身分註冊
+                </Button>
+              </Link>
+            </form>
           </CustomTabPanel>
           <Link to="/" style={{ textDecoration: "none" }}>
             <div className="registerboxbottom">返回登入</div>
