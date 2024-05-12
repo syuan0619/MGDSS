@@ -21,7 +21,7 @@ router = APIRouter(prefix="/patients", tags=["patients"])
 
 
 # GET /patients/ -> return all patients
-@router.get("/{date}", tags=["patients"], summary="取得所有病患資料")
+@router.get("", tags=["patients"], summary="取得所有病患資料")
 async def get_patients(date: Optional[str] = None):
     try:
         if date:

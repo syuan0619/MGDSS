@@ -1,15 +1,24 @@
-import { Box, FormControl, InputLabel, Select } from "@mui/material";
+import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { useState } from "react";
 
-function PatientStatus({ status }: { status: string }) {
-    //   const [status, setStatus] = useState<string>(status);
+function PatientStatus({
+    patientId,
+    status,
+}: {
+    patientId: string;
+    status: string;
+}) {
+    const [currentStatus, setCurrentStatus] = useState<string>(status);
     //   const [isChange, setIsChange] = useState<boolean>(false);
 
-    //   const statusChange = (
-    //     event: React.ChangeEvent<{ value: string | unknown }>
-    //   ) => {
-    //     setIsChange(true);
-    //     setStatus(event.target.value as string);
-    //   };
+    const handleStatusChange = (
+        event: React.ChangeEvent<{ value: string | unknown }>
+    ) => {
+        const newStatus = event.target.value as string;
+        setCurrentStatus(newStatus);
+        console.log("PatientId: ", patientId);
+        console.log("New Status: ", newStatus);
+    };
 
     return (
         <Box>
@@ -34,18 +43,17 @@ function PatientStatus({ status }: { status: string }) {
             >
                 <InputLabel htmlFor="status-native-simple"></InputLabel>
                 <Select
-                    native
-                    value={status!}
-                    //   onChange={statusChange}
+                    value={currentStatus}
+                    onChange={handleStatusChange}
                     sx={{
                         border: "none",
                         "&:before, &:after": { border: "none" },
                     }}
                 >
-                    <>
-                        <option value="候診">候診</option>
-                        <option value="取消">取消</option>
-                    </>
+                    <MenuItem value="候診">候診</MenuItem>
+                    <MenuItem value="無">
+                        {currentStatus === "候診" ? "取消候診" : "無"}
+                    </MenuItem>
                 </Select>
             </FormControl>
         </Box>

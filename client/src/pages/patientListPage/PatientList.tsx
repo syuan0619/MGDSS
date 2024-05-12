@@ -58,7 +58,7 @@ function PatientList() {
     const [fixedPatients, setFixedPatients] =
         useState<{ _id: string; info: Info; status: string }[]>();
     const data = async (date: string) => {
-        const response = await api.get(`/patients/${date}`);
+        const response = await api.get(`/patients?date=${date}`);
         setPatients(response.data);
         setFixedPatients(response.data);
     };
@@ -94,12 +94,11 @@ function PatientList() {
     const handleSelectedDate = (e: ChangeEvent<HTMLInputElement>) => {
         setSelectedDate(e.target.value);
     };
-    useEffect(() => {
-        setSelectedDate;
-    }, []);
+    // useEffect(() => {
+    //     setSelectedDate;
+    // }, []);
 
     useEffect(() => {
-        console.log("call data()");
         data(selectedDate);
     }, [selectedDate]);
 
@@ -396,11 +395,16 @@ function PatientList() {
                                                 color: "#00b4c9",
                                             },
                                         }}
+                                        onClick={download}
                                     >
                                         匯出
                                     </Button>
                                 ) : null}
-
+                                <a
+                                    href={downloadLink}
+                                    ref={downloadRef}
+                                    style={{ display: "none" }}
+                                ></a>
                                 <Box
                                     sx={{
                                         display: "flex",
@@ -503,6 +507,7 @@ function PatientList() {
                                     >
                                         <TableCell align="center">
                                             <PatientStatus
+                                                patientId={patient._id}
                                                 status={patient.status}
                                             />
                                         </TableCell>
