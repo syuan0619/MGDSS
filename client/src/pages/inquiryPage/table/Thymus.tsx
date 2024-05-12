@@ -116,7 +116,7 @@ const TableThymus = ({
                   name="thymusStatus1"
                   value={1}
                 />
-                <label>胸腺委縮</label>
+                <label>胸腺萎縮</label>
               </div>
               <div className="thymus-radio">
                 <input

@@ -116,7 +116,6 @@ const LoginPage = () => {
 
   const onSubmit = async () => {
     try {
-      const newDate = new Date().toISOString().slice(0, 10);
       const response = await api.post("/account/login", null, {
         params: {
           email: form.account,
@@ -169,55 +168,57 @@ const LoginPage = () => {
               sx: { ...inputLabelcolor },
             }}
             fullWidth
-            label="帳號"
+            label="電子郵件"
+            type="email"
             variant="outlined"
             size="small"
             name="account"
             value={form.account}
             onChange={loginInput}
           />
-
-          <ThemeProvider theme={fromControltheme}>
-            <FormControl fullWidth variant="outlined" size="small">
-              <InputLabel
-                htmlFor="outlined-adornment-password"
-                sx={{ ...inputLabelcolor }}
-              >
-                密碼
-              </InputLabel>
-              <OutlinedInput
-                name="password"
-                value={form.password}
-                onChange={loginInput}
-                inputProps={{
-                  sx: { ...inputTextColor },
-                }}
-                type={showPassword ? "text" : "password"}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      sx={{ ...inputLabelcolor }}
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-              />
-            </FormControl>
-          </ThemeProvider>
-
+          <form>
+            <ThemeProvider theme={fromControltheme}>
+              <FormControl fullWidth variant="outlined" size="small">
+                <InputLabel
+                  htmlFor="outlined-adornment-password"
+                  sx={{ ...inputLabelcolor }}
+                >
+                  密碼
+                </InputLabel>
+                <OutlinedInput
+                  name="password"
+                  autoComplete="new-password"
+                  value={form.password}
+                  onChange={loginInput}
+                  inputProps={{
+                    sx: { ...inputTextColor },
+                  }}
+                  type={showPassword ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        sx={{ ...inputLabelcolor }}
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
+            </ThemeProvider>
+          </form>
           <ColorButton onClick={onSubmit} fullWidth variant="contained">
             登入
           </ColorButton>
 
           <div className="loginboxbottom">
             <Link to="/register" style={{ textDecoration: "none" }}>
-              <p className="text">註冊</p>
+              <h3 className="text">註冊</h3>
             </Link>
           </div>
         </div>

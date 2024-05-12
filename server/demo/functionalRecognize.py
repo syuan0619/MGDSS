@@ -40,17 +40,15 @@ target_words_muscle_name = ["Nasalis", "Trapezius", "Abd"]
 
 def functionalRecognize(uploadImage):
     white_part, weight = full_image_to_white_part(uploadImage)
-    recognized_muscle_index = get_tested_muscle_index(image_processing(white_part))
-    if len(recognized_muscle_index[0]) < 2:
+    recognized_muscle, recognized_muscle_index = get_tested_muscle_index(
+        image_processing(white_part)
+    )
+    if len(recognized_muscle_index) < 2:
         print("只有一個受測肌肉或根本辨識不出來")
         return "error"
-    recognized_muscle, recognized_index = (
-        recognized_muscle_index[0],
-        recognized_muscle_index[1],
-    )
-    crop_dimensions_data = determine_recognize_area(recognized_index, weight)
+    crop_dimensions_data = determine_recognize_area(recognized_muscle_index, weight)
     result_of_recognizition = recognize_result(
-        recognized_muscle, crop_dimensions_data, white_part, weight
+        recognized_muscle, crop_dimensions_data, image_processing(white_part), weight
     )
     return (
         result_of_recognizition,
@@ -64,8 +62,16 @@ def functionalRecognize(uploadImage):
 def full_image_to_white_part(uploadImage):
     origin_image = Image.open(uploadImage)
     image_array = np.array(origin_image)
+    cv2.imshow("img", image_array)
+    cv2.waitKey(0)
     screen_size_height, screen_size_width, screen_size_color = image_array.shape
     weight = round(screen_size_width / 1920, 4)
+
+    startP = (int(750 * weight), int(400 * weight))
+    endP = (int(1350 * weight), int(1020 * weight))
+    temp = cv2.rectangle(image_array, startP, endP, (0, 0, 255), 2)
+    cv2.imshow("img", temp)
+    cv2.waitKey(0)
     cropped_image = cv2.resize(
         image_array[
             int(400 * weight) : int(1020 * weight),
@@ -77,8 +83,8 @@ def full_image_to_white_part(uploadImage):
         fy=2,
         interpolation=cv2.INTER_NEAREST,
     )
-    # cv2.imshow("img", cropped_image)
-    # cv2.waitKey(0)
+    cv2.imshow("img", cropped_image)
+    cv2.waitKey(0)
 
     return cropped_image, weight
 
@@ -102,28 +108,18 @@ def get_tested_muscle_index(white_part):
         if int(data["conf"][idx]) > 70 and text in target_words_muscle_name:
             recognized_muscle.append(data["text"][idx - 1] + " " + text)
             recognized_muscle_index.append(top)
-            ######################## 快速找座標 #########################
-        # if text == "3.2%":
-        #     print("text=" + text,
-        #         "left: ",
-        #         left,
-        #         ",top: ",
-        #         top,
-        #         ",width:  ",
-        #         width,
-        #         ",height: ",
-        #         height,
-        #         ",text: ",
-        #         text,
-        #         ",,,conf: ",
-        #         conf,
-        #     )
+            (x, y, w, h) = (left, top, width, height)
+            img = cv2.rectangle(white_part, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            cv2.imshow("img", img)
+            cv2.waitKey(0)
     return recognized_muscle, recognized_muscle_index
 
 
 # 藉由兩個受測肌肉座標判斷第一個受測肌肉分別有幾個橫排，來決定要辨識的重點範圍
-def determine_recognize_area(recognized_index, weight):
-    if int(recognized_index[1]) - int(recognized_index[0]) > int(600 * weight):
+def determine_recognize_area(recognized_muscle_index, weight):
+    if int(recognized_muscle_index[1]) - int(recognized_muscle_index[0]) > int(
+        600 * weight
+    ):
         return crop_dimensions_data_two_row
     return crop_dimensions_data_one_row
 
@@ -142,6 +138,11 @@ def recognize_result(recognized_muscle, crop_dimensions_data, white_part, weight
                 resize_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC
             )
             ########### 可以打開這個看每一張小圖經過圖像處理後的差別 ###########
+            img = cv2.rectangle(
+                white_part, (x, y), (x + width, y + height), (0, 0, 255), 2
+            )
+            cv2.imshow("img", img)
+            cv2.waitKey(0)
             # cv2.imshow("img", enlarge_resize_image)
             # cv2.waitKey(0)
             # cv2.imshow("img", image_processing(enlarge_resize_image))
@@ -165,15 +166,19 @@ def recognize_result(recognized_muscle, crop_dimensions_data, white_part, weight
 
 # 每張圖片通用的影像處理函式，分別是灰階，降噪，銳化
 def image_processing(image):
-    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    blur_image = cv2.GaussianBlur(gray_image, (5, 5), 0)
+    # gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blur_image = cv2.GaussianBlur(image, (5, 5), 0)
     sharpened_image = cv2.filter2D(blur_image, -1, kernel_two)
     return sharpened_image
 
 
 # Update with the path to your test image
-# image_path = r"C:\Users\User\Desktop\MDDGSS\server\images\1.png"
-# functionalRecognize(image_path)
+image_path = r"/Users/kevinlakao/Desktop/MDGSS/server/images/1.png"
+functionalRecognize(image_path)
+image_path = r"/Users/kevinlakao/Desktop/MDGSS/server/images/9.png"
+functionalRecognize(image_path)
+# startP = (775, 395)
+# endP = (1375, 1010)
 
 # 單純列出所有字
 # word = pytesseract.image_to_string(white_part)

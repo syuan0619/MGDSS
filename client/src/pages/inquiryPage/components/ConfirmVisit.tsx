@@ -25,7 +25,7 @@ type flatVisit = {
   dysarthria: number;
   dyspnea: number;
   limpWeakness: number;
-  MGFAclassification: number;
+  MGFAclassification: string;
 };
 
 const ConfirmVisit = ({
@@ -39,38 +39,27 @@ const ConfirmVisit = ({
   const handleChange = () => {
     setExpanded(!expanded);
   };
-  const flattenObject: flatVisit = {
-    testDate: "",
-    treat: 0,
-    SBP: 0,
-    DBP: 0,
-    selfAssessment: 0,
-    note: "",
-    pyridostigmine: 0,
-    compesolone: 0,
-    cellcept: 0,
-    imuran: 0,
-    prograf: 0,
-    ptosis: 0,
-    diplopia: 0,
-    dysphagia: 0,
-    dysarthria: 0,
-    dyspnea: 0,
-    limpWeakness: 0,
-    MGFAclassification: 0,
-  };
 
-  if (initialData) {
-    for (const [key, value] of Object.entries(initialData)) {
-      if (typeof value === "object") {
-        for (const [k, v] of Object.entries(value)) {
-          flattenObject[k] = v;
-        }
-      } else {
-        flattenObject[key] = value;
-      }
-    }
-  }
+  const flattenObject: flatVisit = {
+    testDate: initialData.testDate,
+    treat: initialData.treat,
+    SBP: initialData.SBP,
+    DBP: initialData.DBP,
+    selfAssessment: initialData.selfAssessment,
+    note: initialData.note,
+    pyridostigmine: initialData.prescription.pyridostigmine,
+    compesolone: initialData.prescription.compesolone,
+    cellcept: initialData.prescription.cellcept,
+    imuran: initialData.prescription.imuran,
+    prograf: initialData.prescription.prograf,
+    ptosis: initialData.examination.ptosis,
+    diplopia: initialData.examination.diplopia,
+    dysphagia: initialData.examination.dysphagia,
+    dysarthria: initialData.examination.dysarthria,
+    dyspnea: initialData.examination.dyspnea,
+    limpWeakness: initialData.examination.limpWeakness,
+    MGFAclassification: initialData.MGFAclassification,
+  };
 
   return (
     initialData && (
@@ -84,15 +73,13 @@ const ConfirmVisit = ({
             <Typography>{title}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <div>
-              {Object.entries(flattenObject).map(([name, value], index) => (
-                <div key={index} style={{ marginBottom: "0.6rem" }}>
-                  <Typography>
-                    {name}: {value}
-                  </Typography>
-                </div>
-              ))}
-            </div>
+            {Object.entries(flattenObject).map(([name, value], index) => (
+              <div key={index} style={{ marginBottom: "0.6rem" }}>
+                <Typography>
+                  {name}: {value}
+                </Typography>
+              </div>
+            ))}
           </AccordionDetails>
         </Accordion>
       </div>
