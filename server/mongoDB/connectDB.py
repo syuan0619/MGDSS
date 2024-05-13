@@ -9,14 +9,15 @@ client = pymongo.MongoClient(
     "mongodb+srv://testMember:1234@schoolproject.tsw5n6e.mongodb.net/?retryWrites=true&w=majority"
 )
 db = client["SchoolProject"]
-patientCollection = db["Patient"]
+patient_collection = db["Patient"]
 accountCollection = db["Account"]
+waiting_list_collection = db["WaitingList"]
 
 ### Patient ###
 
 
 def getAllPatients():
-    patients = patientCollection.find()
+    patients = patient_collection.find()
     response = []
     for patient in patients:
         response.append(
@@ -30,7 +31,7 @@ def getAllPatients():
 
 
 def get_patient_by_id(patientId):
-    patient = patientCollection.find_one({"_id": ObjectId(patientId)})
+    patient = patient_collection.find_one({"_id": ObjectId(patientId)})
     patient["_id"] = str(patient["_id"])
     # for emg in patient["EMG"]:
     #     if "image" in emg:
@@ -63,7 +64,7 @@ def get_table_by_date(patient_id: str, table_name: str, date: str):
 
 
 def update_patient_info(patientId: str, updatedInfo: dict):
-    updatedPatient = patientCollection.find_one_and_update(
+    updatedPatient = patient_collection.find_one_and_update(
         {"_id": ObjectId(patientId)},
         {"$set": {"info": updatedInfo}},
         return_document=pymongo.ReturnDocument.AFTER,
@@ -73,13 +74,13 @@ def update_patient_info(patientId: str, updatedInfo: dict):
 
 
 async def delete_patient(patient_id: str):
-    return patientCollection.find_one_and_delete({"_id": ObjectId(patient_id)})
+    return patient_collection.find_one_and_delete({"_id": ObjectId(patient_id)})
 
 
 # return dict with _id
 def addNewPatient(newPatientInfo: dict):
     newPatient = models.Patient(info=newPatientInfo).model_dump(by_alias=True)
-    newPatientId = patientCollection.insert_one(newPatient).inserted_id
+    newPatientId = patient_collection.insert_one(newPatient).inserted_id
     newPatient["_id"] = str(newPatientId)
     return newPatient
 
@@ -91,7 +92,7 @@ def add_new_table(patient_id: str, table_name: str, table: dict):
     for old_table in old_patient[table_name]:
         if old_table["testDate"] == table["testDate"]:
             old_table.update(table)
-            updated_patient = patientCollection.find_one_and_update(
+            updated_patient = patient_collection.find_one_and_update(
                 {"_id": ObjectId(patient_id)},
                 {"$set": {table_name: old_patient[table_name]}},
                 return_document=pymongo.ReturnDocument.AFTER,
@@ -104,7 +105,7 @@ def add_new_table(patient_id: str, table_name: str, table: dict):
     # if no table with the same date, append the new table
     old_patient[table_name].append(table)
     old_patient[table_name].sort(key=lambda x: date.fromisoformat(x["testDate"]))
-    updated_patient = patientCollection.find_one_and_update(
+    updated_patient = patient_collection.find_one_and_update(
         {"_id": ObjectId(patient_id)},
         {"$set": {table_name: old_patient[table_name]}},
         return_document=pymongo.ReturnDocument.AFTER,
@@ -114,7 +115,7 @@ def add_new_table(patient_id: str, table_name: str, table: dict):
 
 
 def update_entire_patient(patientId: str, updatedPatient: dict):
-    patientCollection.find_one_and_update(
+    patient_collection.find_one_and_update(
         {"_id": ObjectId(patientId)}, {"$set": updatedPatient}
     )
     updatedPatient["_id"] = str(updatedPatient["_id"])
@@ -128,7 +129,7 @@ def update_patient_by_date(patient_id: str, table_name: str, table: dict, date: 
         if old_table["testDate"] == date:
             old_table.update(table)
             old_table["testDate"] = date
-            updated_patient = patientCollection.find_one_and_update(
+            updated_patient = patient_collection.find_one_and_update(
                 {"_id": ObjectId(patient_id)},
                 {"$set": {table_name: old_patient[table_name]}},
                 return_document=pymongo.ReturnDocument.AFTER,
@@ -191,8 +192,8 @@ def deleteAccount(accountId: str):
 
 
 def all_patients_to_csv() -> pd.DataFrame:
-    # patients = list(patientCollection.find({"_id": ObjectId("65e43cbafe46cf205a0e4886")})) # 測試用
-    patients = list(patientCollection.find())
+    # patients = list(patient_collection.find({"_id": ObjectId("65e43cbafe46cf205a0e4886")})) # 測試用
+    patients = list(patient_collection.find())
     records_list = []
     for patient in patients:
         patient_info = {
