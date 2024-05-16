@@ -2,10 +2,11 @@ from .connectDB import waiting_list_collection, patient_collection
 from fastapi import HTTPException
 from bson.objectid import ObjectId
 from datetime import datetime
+import models
 
 
 def get_waiting_list(date_to_get: datetime) -> dict:
-    waiting_list = waiting_list_collection.find_one({"date": date_to_get})
+    waiting_list = waiting_list_collection.find_one({"date": date_to_get}, {"_id": 0})
     if waiting_list is None:
         waiting_list_collection.insert_one({"date": date_to_get, "list": []})
         return {"date": date_to_get, "list": []}
@@ -13,32 +14,32 @@ def get_waiting_list(date_to_get: datetime) -> dict:
         return waiting_list
 
 
-def add_to_waiting_list(date_to_add: str, patient_id: str):
+def add_to_waiting_list(date_to_add: str, waiting: dict):
     date = datetime.strptime(date_to_add, "%Y-%m-%d")
-    waiting_list = waiting_list_collection.find_one({"date": date})
-    # if date not exists, create a new date
-    if waiting_list is None:
-        waiting_list_collection.insert_one({"date": date, "list": []})
-        waiting_list_collection.update_one(
-            {"date": date},
-            {"$push": {"list": {"patient_id": patient_id, "isChecked": False}}},
-        )
+    patient_id = waiting["patientId"]
+
+    # if patient not exists, raise 404
+    patient = patient_collection.find_one({"_id": ObjectId(patient_id)})
+    if patient is None:
+        raise HTTPException(status_code=404, detail="Patient not found")
+
     else:
-        patient = patient_collection.find_one({"_id": ObjectId(patient_id)})
-        # if patient not exists, raise 404
-        if patient is None:
-            raise HTTPException(status_code=404, detail="Patient not found")
+        # if patient_id in waiting_list["list"], update patient
+        if waiting_list_collection.find_one(
+            {"date": date, "list.patientId": patient_id}
+        ):
+            waiting_list_collection.update_one(
+                {"date": date, "list.patientId": patient_id},
+                {"$set": {"list.$": waiting}},
+            )
+            return f"Succeed update {patient_id} in {date.date()}'s waiting list"
+        # if date not exists, create a new date
+        # if patient_id not in waiting_list["list"], add patient
         else:
-            # if patient already in waiting list, raise 400
-            if patient_id in waiting_list["list"]:
-                raise HTTPException(
-                    status_code=400, detail="Patient already in waiting list"
-                )
-            else:
-                waiting_list_collection.update_one(
-                    {"date": date},
-                    {"$push": {"list": {"patient_id": patient_id, "isChecked": False}}},
-                )
+            waiting_list_collection.update_one(
+                {"date": date}, {"$push": {"list": waiting}}, upsert=True
+            )
+            return f"Succeed add {patient_id} to {date.date()}'s waiting list"
 
 
 def get_all_patients(date: datetime | None = None) -> list[dict]:

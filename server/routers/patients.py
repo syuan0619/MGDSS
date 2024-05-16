@@ -21,8 +21,8 @@ router = APIRouter(prefix="/patients", tags=["patients"])
 
 
 # GET /patients/ -> return all patients
-@router.get("", tags=["patients"], summary="取得所有病患資料")
-async def get_patients(date: Optional[str] = None):
+@router.get("/{:date}", tags=["patients"], summary="取得所有病患資料")
+async def get_patients(date: str | None = None):
     try:
         if date:
             date = datetime.strptime(date, "%Y-%m-%d")
@@ -108,21 +108,23 @@ async def get_waiting_list_by_date(date: str):
         date = datetime.strptime(date, "%Y-%m-%d")
         response = get_waiting_list(date)
         response["date"] = response["date"].strftime("%Y-%m-%d")
-        response.pop("_id")
         return response
     except Exception as e:
         print("Exception: ", str(e))
         return Response(status_code=500, content={"Exception": str(e)})
 
 
-# POST /patients/waitinglist/{date}/{patient_id} -> add patient to waiting list
-@router.post(
-    "/waitinglist/{date}/{patient_id}", tags=["patients"], summary="新增病患到候診名單"
+# PUT /patients/waitinglist/{date} -> add patient to waiting list
+@router.put(
+    "/waitinglist/{date}",
+    tags=["patients"],
+    summary="新增病患到指定日期候診名單，若已存在則更新",
+    description="isChecked: 0:候診, 1:已看診",
 )
-async def post_patient_to_waiting_list(date: str, patient_id: str):
+async def put_patients_waitinglist_date(date: str, waiting: models.Waiting):
     try:
-        add_to_waiting_list(date, patient_id)
-        return {"message": f"Success add {patient_id} to {date} waiting list"}
+        response = add_to_waiting_list(date, waiting.model_dump())
+        return {"message": response}
     except HTTPException as e:
         raise e
     except Exception as e:
