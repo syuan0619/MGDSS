@@ -11,8 +11,8 @@ from mongoDB import (
     all_patients_to_csv,
     get_waiting_list,
     add_to_waiting_list,
+    remove_from_waiting_list,
 )
-from typing import Optional
 import models
 import io
 
@@ -21,15 +21,12 @@ router = APIRouter(prefix="/patients", tags=["patients"])
 
 
 # GET /patients/ -> return all patients
-@router.get("/{:date}", tags=["patients"], summary="取得所有病患資料")
-async def get_patients(date: str | None = None):
+@router.get("/{date}/{:doctor_id}", tags=["patients"], summary="取得所有病患資料")
+async def get_patients(date: str, doctor_id: str | None = None):
     try:
-        if date:
-            date = datetime.strptime(date, "%Y-%m-%d")
-            patients = get_all_patients(date)
-        else:
-            patients = get_all_patients()
-        return patients
+        date = datetime.strptime(date, "%Y-%m-%d")
+        patients = get_all_patients(date, doctor_id)
+        return {"patients": patients}
     except Exception as e:
         print("error: ", str(e))
         return Response(status_code=500, content={"message": str(e)})
@@ -116,14 +113,35 @@ async def get_waiting_list_by_date(date: str):
 
 # PUT /patients/waitinglist/{date} -> add patient to waiting list
 @router.put(
-    "/waitinglist/{date}",
+    "/waitinglist/{date}/{patient_id}",
     tags=["patients"],
     summary="新增病患到指定日期候診名單，若已存在則更新",
     description="isChecked: 0:候診, 1:已看診",
 )
-async def put_patients_waitinglist_date(date: str, waiting: models.Waiting):
+async def put_patients_waitinglist_date(
+    date: str, patient_id: str, waiting: models.Waiting
+):
     try:
-        response = add_to_waiting_list(date, waiting.model_dump())
+        response = add_to_waiting_list(
+            date, patient_id, waiting.model_dump(exclude_none=True)
+        )
+        return {"message": response}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        print("Exception: ", str(e))
+        return JSONResponse(status_code=500, content={"Exception": str(e)})
+
+
+# DELETE /patients/waitinglist/{date}/{patient_id} -> remove patient from waiting list
+@router.delete(
+    "/waitinglist/{date}/{patient_id}",
+    tags=["patients"],
+    summary="刪除候診名單中的病患(取消候診)",
+)
+async def delete_patient_waitinglist_date(date: str, patient_id: str):
+    try:
+        response = remove_from_waiting_list(date, patient_id)
         return {"message": response}
     except HTTPException as e:
         raise e

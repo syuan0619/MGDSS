@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Optional
 
 
 class Waiting(BaseModel):
-    patientId: str
-    doctorId: str
-    nurseId: str
-    isChecked: bool = False
+    doctorId: Optional[str] = None
+    nurseId: Optional[str] = None
+    isChecked: Optional[bool] = None
