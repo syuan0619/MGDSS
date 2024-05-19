@@ -17,4 +17,8 @@ type returnAccount = {
     isVerified: boolean;
 };
 
-export type { Account, returnAccount };
+type doctorInList = {
+    _id: string;
+    name: string;
+};
+export type { Account, returnAccount, doctorInList };

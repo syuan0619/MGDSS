@@ -10,7 +10,7 @@ client = pymongo.MongoClient(
 )
 db = client["SchoolProject"]
 patient_collection = db["Patient"]
-accountCollection = db["Account"]
+account_collection = db["Account"]
 waiting_list_collection = db["WaitingList"]
 
 ### Patient ###
@@ -145,7 +145,7 @@ def update_patient_by_date(patient_id: str, table_name: str, table: dict, date: 
 
 
 def getAllAccounts():
-    accounts = accountCollection.find()
+    accounts = account_collection.find()
     response = []
     for account in accounts:
         if account["role"] != "admin":
@@ -155,16 +155,16 @@ def getAllAccounts():
 
 
 def createAccount(newAccount: dict):
-    if accountCollection.find_one({"email": newAccount["email"]}):
+    if account_collection.find_one({"email": newAccount["email"]}):
         raise Exception("Email already exists")
 
-    accountId = accountCollection.insert_one(newAccount).inserted_id()
+    accountId = account_collection.insert_one(newAccount).inserted_id()
     accountId = str(accountId)
     return accountId
 
 
 def update_account(accountId: str, updatedAccount: dict):
-    updatedAccount = accountCollection.find_one_and_update(
+    updatedAccount = account_collection.find_one_and_update(
         {"_id": ObjectId(accountId)},
         {"$set": updatedAccount},
         return_document=pymongo.ReturnDocument.AFTER,
@@ -174,7 +174,7 @@ def update_account(accountId: str, updatedAccount: dict):
 
 
 def loginWithEmailandPassword(email: str, password: str):
-    account = accountCollection.find_one({"email": email, "password": password})
+    account = account_collection.find_one({"email": email, "password": password})
     if account:
         account["_id"] = str(account["_id"])
         return account
@@ -185,7 +185,7 @@ def loginWithEmailandPassword(email: str, password: str):
 
 
 def deleteAccount(accountId: str):
-    return accountCollection.delete_one({"_id": ObjectId(accountId)})
+    return account_collection.delete_one({"_id": ObjectId(accountId)})
 
 
 ### Analyze ###

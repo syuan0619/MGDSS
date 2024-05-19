@@ -26,14 +26,14 @@ async def get_patients(date: str, doctor_id: str | None = None):
     try:
         date = datetime.strptime(date, "%Y-%m-%d")
         patients = get_all_patients(date, doctor_id)
-        return {"patients": patients}
+        return patients
     except Exception as e:
         print("error: ", str(e))
         return Response(status_code=500, content={"message": str(e)})
 
 
 # POST /patients/ -> add new patient
-@router.post("/", tags=["patients"], summary="新增病患")
+@router.post("", tags=["patients"], summary="新增病患")
 async def add_new_patient(newPatientInfo: models.Info):
     try:
         newPatient = addNewPatient(newPatientInfo.model_dump(by_alias=True))

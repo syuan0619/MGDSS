@@ -15,7 +15,8 @@ import VaccinesRoundedIcon from "@mui/icons-material/VaccinesRounded";
 import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
 import { Button, InputBase } from "@mui/material";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
-import { Info } from "../../types/Patient";
+import { Info, PatientInList } from "../../types/Patient";
+import { doctorInList } from "../../types/Account";
 import api from "../../api";
 import * as React from "react";
 import PatientStatus from "./components/PatientStatus";
@@ -53,14 +54,26 @@ function PatientList() {
     const role = userData ? userData.role : null;
 
     //get patients
-    const [patients, setPatients] =
-        useState<{ _id: string; info: Info; status: string }[]>();
-    const [fixedPatients, setFixedPatients] =
-        useState<{ _id: string; info: Info; status: string }[]>();
+    const [patients, setPatients] = useState<[PatientInList]>();
+    const [fixedPatients, setFixedPatients] = useState<[PatientInList]>();
+    const [doctorList, setDoctorList] = useState<[doctorInList]>();
     const data = async (date: string) => {
-        const response = await api.get(`/patients?date=${date}`);
-        setPatients(response.data);
-        setFixedPatients(response.data);
+        if (role === "nurse") {
+            const response = await api.get(`/patients/${date}`);
+            console.log("data: ", response.data);
+            setPatients(response.data);
+            setFixedPatients(response.data);
+            const doctorListResponse = await api.get("/account/doctorlist");
+            setDoctorList(doctorListResponse.data);
+            console.log("doctorList: ", doctorListResponse.data);
+        } else if (role === "doctor") {
+            const response = await api.get(
+                `/patients/${date}?doctor_id=${userData._id}`
+            );
+            console.log("data: ", response.data);
+            setPatients(response.data);
+            setFixedPatients(response.data);
+        }
     };
 
     //sort & search patients
@@ -174,10 +187,14 @@ function PatientList() {
     };
     const changeAddPatient = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        if (name === "otherDisease") {
+        if (name === "otherDisease" || name === "otherMedicine") {
+            // setAddPatient((prevState) => ({
+            //     ...prevState,
+            //     [name]: [...prevState[name], value],
+            // }));
             setAddPatient((prevState) => ({
                 ...prevState,
-                [name]: [...prevState[name], value],
+                [name]: [value],
             }));
         } else {
             setAddPatient((prevState) => ({
@@ -188,11 +205,12 @@ function PatientList() {
     };
     const submitAddPatient = async () => {
         console.log("submitAddPatient", addPatient);
-        await api.post(`/patients/`, addPatient).then((res) => {
+        await api.post(`/patients`, addPatient).then((res) => {
             console.log(res.data);
             data(selectedDate);
         });
         setAddPatientStatus(false);
+        selectedDate;
     };
 
     //修改病患dialog
@@ -506,10 +524,32 @@ function PatientList() {
                                         hover={true}
                                     >
                                         <TableCell align="center">
-                                            <PatientStatus
-                                                patientId={patient._id}
-                                                status={patient.status}
-                                            />
+                                            {role === "nurse" ? (
+                                                <PatientStatus
+                                                    role="nurse"
+                                                    setSelectedDate={
+                                                        setSelectedDate
+                                                    }
+                                                    patientId={patient._id}
+                                                    isChecked={
+                                                        patient.isChecked
+                                                    }
+                                                    doctorId={patient.doctorId!}
+                                                    nurseId={userData._id}
+                                                    doctorList={doctorList}
+                                                />
+                                            ) : (
+                                                <PatientStatus
+                                                    role="doctor"
+                                                    setSelectedDate={
+                                                        setSelectedDate
+                                                    }
+                                                    isChecked={
+                                                        patient.isChecked
+                                                    }
+                                                    patientId={patient._id}
+                                                />
+                                            )}
                                         </TableCell>
                                         <TableCell
                                             onClick={() =>

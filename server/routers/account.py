@@ -1,7 +1,8 @@
 import models
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from mongoDB.connectDB import (
+from mongoDB import (
+    get_doctor_list,
     getAllAccounts,
     createAccount,
     deleteAccount,
@@ -40,6 +41,15 @@ def delete_account(accountId: str):
     try:
         deleteAccount(accountId)
         return {"message": "Success delete account!"}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"message": str(e)})
+
+
+@router.get("/doctorlist")
+def get_doctorlist():
+    try:
+        doctors = get_doctor_list()
+        return doctors
     except Exception as e:
         return JSONResponse(status_code=500, content={"message": str(e)})
 
