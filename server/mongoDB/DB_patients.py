@@ -69,13 +69,12 @@ def get_all_patients(date: datetime, doctor_id: str | None = None) -> list[dict]
             for x in get_waiting_list(date)["list"]
             if x["doctorId"] == doctor_id
         ]
-        patients = patient_collection.find(
-            {"_id": {"$in": [ObjectId(x["_id"]) for x in waitinglist]}}, {"info": 1}
-        )
         for waiting in waitinglist:
-            waiting["info"] = next(
-                (x["info"] for x in patients if str(x["_id"]) == waiting["_id"])
+            patient = patient_collection.find_one(
+                {"_id": ObjectId(waiting["_id"])}, {"_id": 0, "info": 1}
             )
+            if patient:
+                waiting["info"] = patient["info"]
         return waitinglist
     else:
         waitinglist: list = get_waiting_list(date)["list"]
@@ -87,7 +86,7 @@ def get_all_patients(date: datetime, doctor_id: str | None = None) -> list[dict]
                 "isChecked": False,
                 "info": x["info"],
             }
-            for x in patient_collection.find()
+            for x in patient_collection.find({}, {"_id": 1, "info": 1})
         ]
         for i, waiting in enumerate(waitinglist):
             for j, patient in enumerate(patients):
