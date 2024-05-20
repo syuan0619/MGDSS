@@ -157,7 +157,7 @@ const Left = ({ info }: { info: Info }) => {
                 className="inquiry-components-left-footer-basicdata-context-left"
                 style={{ letterSpacing: " 0.25vw", paddingRight: "0.25vw" }}
               >
-                其他就醫時數:
+                其他就醫次數:
               </div>
               <div className="inquiry-components-left-footer-basicdata-context-right">
                 <input
