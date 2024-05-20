@@ -565,7 +565,9 @@ function PatientList() {
                                             }
                                             align="center"
                                         >
-                                            {patient.info.sex}
+                                            {patient.info.sex === "female"
+                                                ? "女"
+                                                : "男"}
                                         </TableCell>
                                         <TableCell
                                             onClick={() =>
