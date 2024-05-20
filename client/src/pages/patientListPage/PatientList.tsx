@@ -54,10 +54,12 @@ function PatientList() {
     const role = userData ? userData.role : null;
 
     //get patients
-    const [patients, setPatients] = useState<[PatientInList]>();
-    const [fixedPatients, setFixedPatients] = useState<[PatientInList]>();
+    const [patients, setPatients] = useState<[PatientInList] | []>();
+    const [fixedPatients, setFixedPatients] = useState<[PatientInList] | []>();
     const [doctorList, setDoctorList] = useState<[doctorInList]>();
     const data = async (date: string) => {
+        setPatients([]);
+        setFixedPatients([]);
         if (role === "nurse") {
             const response = await api.get(`/patients/${date}`);
             console.log("data: ", response.data);
@@ -65,7 +67,6 @@ function PatientList() {
             setFixedPatients(response.data);
             const doctorListResponse = await api.get("/account/doctorlist");
             setDoctorList(doctorListResponse.data);
-            console.log("doctorList: ", doctorListResponse.data);
         } else if (role === "doctor") {
             const response = await api.get(
                 `/patients/${date}?doctor_id=${userData._id}`
@@ -113,7 +114,7 @@ function PatientList() {
 
     useEffect(() => {
         data(selectedDate);
-    }, [selectedDate]);
+    }, [selectedDate, setSelectedDate]);
 
     //download
     const [downloadLink, setDownloadLink] = useState<string>();
@@ -137,15 +138,15 @@ function PatientList() {
 
     //delete patient
     const deletePatient = async (id: string) => {
-        const confirmLogout = window.confirm("確定要刪除嗎?");
-        if (confirmLogout) {
+        const confirmDelete = window.confirm("確定要刪除嗎?");
+        if (confirmDelete) {
             const doubleCheckDelete =
                 window.confirm("此操作無法復原，確定要刪除嗎?");
             if (doubleCheckDelete) {
-                // await api.delete(`/patients/${id}`).then((res) => {
-                //   console.log(res.data);
-                // });
-                console.log(id);
+                await api.delete(`/patients/${id}`).then((res) => {
+                    console.log(res.data);
+                });
+                data(selectedDate);
             }
         }
     };
@@ -524,12 +525,11 @@ function PatientList() {
                                         hover={true}
                                     >
                                         <TableCell align="center">
-                                            {role === "nurse" ? (
+                                            {doctorList && role === "nurse" ? (
                                                 <PatientStatus
                                                     role="nurse"
-                                                    setSelectedDate={
-                                                        setSelectedDate
-                                                    }
+                                                    selectedDate={selectedDate}
+                                                    data={data}
                                                     patientId={patient._id}
                                                     isChecked={
                                                         patient.isChecked
@@ -538,18 +538,18 @@ function PatientList() {
                                                     nurseId={userData._id}
                                                     doctorList={doctorList}
                                                 />
-                                            ) : (
+                                            ) : doctorList &&
+                                              role === "doctor" ? (
                                                 <PatientStatus
                                                     role="doctor"
-                                                    setSelectedDate={
-                                                        setSelectedDate
-                                                    }
+                                                    selectedDate={selectedDate}
+                                                    data={data}
                                                     isChecked={
                                                         patient.isChecked
                                                     }
                                                     patientId={patient._id}
                                                 />
-                                            )}
+                                            ) : null}
                                         </TableCell>
                                         <TableCell
                                             onClick={() =>

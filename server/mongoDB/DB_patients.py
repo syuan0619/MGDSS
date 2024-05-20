@@ -46,10 +46,9 @@ def add_to_waiting_list(date_to_add: str, patient_id: str, waiting: dict):
             return f"Succeed add {patient_id} to {date.date()}'s waiting list"
 
 
-def remove_from_waiting_list(date_to_remove: str, patient_id: str):
-    date = datetime.strptime(date_to_remove, "%Y-%m-%d")
+def remove_from_waiting_list(date_to_remove: datetime, patient_id: str):
     waiting_list = waiting_list_collection.find_one(
-        {"date": date, "list.patientId": patient_id}, {"_id": 0}
+        {"date": date_to_remove, "list.patientId": patient_id}, {"_id": 0}
     )
     if waiting_list is None:
         raise HTTPException(
@@ -57,9 +56,11 @@ def remove_from_waiting_list(date_to_remove: str, patient_id: str):
         )
     else:
         waiting_list_collection.update_one(
-            {"date": date}, {"$pull": {"list": {"patientId": patient_id}}}
+            {"date": date_to_remove}, {"$pull": {"list": {"patientId": patient_id}}}
         )
-        return f"Succeed remove {patient_id} from {date.date()}'s waiting list"
+        return (
+            f"Succeed remove {patient_id} from {date_to_remove.date()}'s waiting list"
+        )
 
 
 def get_all_patients(date: datetime, doctor_id: str | None = None) -> list[dict]:
@@ -75,6 +76,8 @@ def get_all_patients(date: datetime, doctor_id: str | None = None) -> list[dict]
             )
             if patient:
                 waiting["info"] = patient["info"]
+            else:
+                remove_from_waiting_list(date, waiting["_id"])
         return waitinglist
     else:
         waitinglist: list = get_waiting_list(date)["list"]
@@ -89,15 +92,25 @@ def get_all_patients(date: datetime, doctor_id: str | None = None) -> list[dict]
             for x in patient_collection.find({}, {"_id": 1, "info": 1})
         ]
         for i, waiting in enumerate(waitinglist):
-            for j, patient in enumerate(patients):
-                if waiting["patientId"] == patient["_id"]:
-                    waitinglist[i] = {
-                        "_id": waiting["patientId"],
-                        "doctorId": waiting["doctorId"],
-                        "nurseId": waiting["nurseId"],
-                        "isChecked": waiting["isChecked"],
-                        "info": patient["info"],
-                    }
-                    break
+            if waiting["patientId"] not in [x["_id"] for x in patients]:
+                remove_from_waiting_list(date, waiting["patientId"])
+                waitinglist.pop(i)
+            else:
+                for j, patient in enumerate(patients):
+                    if waiting["patientId"] == patient["_id"]:
+                        waitinglist[i] = {
+                            "_id": waiting["patientId"],
+                            "doctorId": waiting["doctorId"],
+                            "nurseId": waiting["nurseId"],
+                            "isChecked": waiting["isChecked"],
+                            "info": patient["info"],
+                        }
+                        patients.pop(j)
+                        break
+
         waitinglist.extend(patients)
         return waitinglist
+
+
+async def delete_patient(patient_id: str):
+    return patient_collection.find_one_and_delete({"_id": ObjectId(patient_id)})

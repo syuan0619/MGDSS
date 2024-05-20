@@ -16,20 +16,6 @@ waiting_list_collection = db["WaitingList"]
 ### Patient ###
 
 
-def getAllPatients():
-    patients = patient_collection.find()
-    response = []
-    for patient in patients:
-        response.append(
-            {
-                "_id": str(patient["_id"]),
-                "info": patient["info"],
-                "visit": patient["visit"],
-            }
-        )
-    return response
-
-
 def get_patient_by_id(patientId):
     patient = patient_collection.find_one({"_id": ObjectId(patientId)})
     patient["_id"] = str(patient["_id"])
@@ -71,10 +57,6 @@ def update_patient_info(patientId: str, updatedInfo: dict):
     )
     updatedPatient["_id"] = str(updatedPatient["_id"])
     return {"_id": updatedPatient["_id"], "info": updatedPatient["info"]}
-
-
-async def delete_patient(patient_id: str):
-    return patient_collection.find_one_and_delete({"_id": ObjectId(patient_id)})
 
 
 # return dict with _id

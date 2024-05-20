@@ -2,8 +2,6 @@ import models
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from pydantic import ValidationError
-from mongoDB.connectDB import getAllPatients, addNewPatient, update_patient_info
 from routers import inquiry, account, prediction, patients
 
 app = FastAPI()
@@ -13,15 +11,15 @@ app.include_router(account.router)
 app.include_router(prediction.router)
 app.include_router(patients.router)
 
+
 @app.get("/")
 async def root():
     content = {"message": "Hello World"}
     headers = {}
     return JSONResponse(content=content, headers=headers)
 
-origins = [
-    'http://localhost:5173'
-]
+
+origins = ["http://localhost:5173"]
 
 app.add_middleware(
     CORSMiddleware,

@@ -141,6 +141,7 @@ async def put_patients_waitinglist_date(
 )
 async def delete_patient_waitinglist_date(date: str, patient_id: str):
     try:
+        date = datetime.strptime(date, "%Y-%m-%d")
         response = remove_from_waiting_list(date, patient_id)
         return {"message": response}
     except HTTPException as e:
