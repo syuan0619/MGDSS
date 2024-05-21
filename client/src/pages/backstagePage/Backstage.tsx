@@ -62,6 +62,23 @@ const AccountsPage = () => {
     data();
   }, []);
 
+  //只留下剛審核通過的帳號
+  const [openBtn, setOpenBtn] = useState(false);
+  const showAutoPassedAccount = () => {
+    const AutoPassedAccount: returnAccount[] = [];
+    fixedAccount?.forEach((eachAccount) => {
+      if (eachAccount.role === "doctor") {
+        AutoPassedAccount.push(eachAccount);
+      }
+    });
+    setAccount(AutoPassedAccount);
+    setOpenBtn(true);
+  };
+  const hideAutoPassedAccount = () => {
+    setAccount(fixedAccount);
+    setOpenBtn(false);
+  };
+
   //搜尋病患
   const [search, setSearch] = useState("");
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -248,11 +265,43 @@ const AccountsPage = () => {
           <Box
             sx={{
               display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-end",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              alignContent: "center",
               marginBottom: "5vh",
             }}
           >
+            {openBtn ? (
+              <button
+                style={{
+                  height: "2.5rem",
+                  width: "8rem",
+                  border: "none",
+                  borderRadius: "0.75rem",
+                  backgroundColor: "rgb(117,117,117)",
+                  color: "white",
+                  cursor: "pointer",
+                }}
+                onClick={hideAutoPassedAccount}
+              >
+                返回帳號清單總覽
+              </button>
+            ) : (
+              <button
+                style={{
+                  height: "2.5rem",
+                  width: "8rem",
+                  border: "none",
+                  borderRadius: "0.75rem",
+                  backgroundColor: "rgb(117,117,117)",
+                  color: "white",
+                  cursor: "pointer",
+                }}
+                onClick={showAutoPassedAccount}
+              >
+                自動審核通過帳號
+              </button>
+            )}
             <Paper
               component="form"
               sx={{
@@ -266,7 +315,6 @@ const AccountsPage = () => {
                   backgroundColor: "#DDDDDD",
                 },
                 marginLeft: "2.5rem",
-                marginTop: "-0.6rem",
                 backgroundColor: "#F3F3F3",
                 boxShadow: "0",
               }}
