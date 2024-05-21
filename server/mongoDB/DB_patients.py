@@ -78,6 +78,9 @@ def get_all_patients(date: datetime, doctor_id: str | None = None) -> list[dict]
                 waiting["info"] = patient["info"]
             else:
                 remove_from_waiting_list(date, waiting["_id"])
+            # if waiting["isChecked"] == True:
+            #     waitinglist.remove(waiting)
+            #     waitinglist.append(waiting)
         return waitinglist
     else:
         waitinglist: list = get_waiting_list(date)["list"]

@@ -56,10 +56,14 @@ function PatientList() {
     //get patients
     const [patients, setPatients] = useState<[PatientInList] | []>();
     const [fixedPatients, setFixedPatients] = useState<[PatientInList] | []>();
-    const [doctorList, setDoctorList] = useState<[doctorInList]>();
+    const [doctorList, setDoctorList] = useState<[doctorInList] | []>();
     const data = async (date: string) => {
         setPatients([]);
         setFixedPatients([]);
+        setDoctorList([]);
+        if (!date) {
+            return;
+        }
         if (role === "nurse") {
             const response = await api.get(`/patients/${date}`);
             console.log("data: ", response.data);
@@ -538,8 +542,7 @@ function PatientList() {
                                                     nurseId={userData._id}
                                                     doctorList={doctorList}
                                                 />
-                                            ) : doctorList &&
-                                              role === "doctor" ? (
+                                            ) : role === "doctor" ? (
                                                 <PatientStatus
                                                     role="doctor"
                                                     selectedDate={selectedDate}
@@ -674,6 +677,9 @@ function PatientList() {
                                 ))}
                         </TableBody>
                     </Table>
+                    {/* {patients && patients.length === 0 ? (
+                       
+                    ) : null} */}
                 </Box>
             </TableContainer>
 

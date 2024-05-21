@@ -272,7 +272,10 @@ const InquiryPage = () => {
           } else {
             await api
               .post(`/inquiry/${routeParams.id}/${each}`, eval(`${each}score`))
-              .then((res) => {
+              .then(async (res) => {
+                await api.put(`/patients/waitinglist/${selectedDate}/${routeParams.id}`, {
+                    isChecked: true,
+                })
                 console.log(each, ":\n", res.data);
               })
               .catch((e) => {

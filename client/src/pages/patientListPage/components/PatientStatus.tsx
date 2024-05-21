@@ -26,7 +26,7 @@ function PatientStatus({
     nurseId = undefined,
     doctorList = [],
 }: PatientStatusProps) {
-    const [currentStatus, setCurrentStatus] = useState<string>("無");
+    const [currentStatus, setCurrentStatus] = useState<string>("");
 
     useEffect(() => {
         if (role === "nurse") {
@@ -42,6 +42,7 @@ function PatientStatus({
                 setCurrentStatus("候診");
             }
         }
+        console.log("status", currentStatus);
     }, [patientId]);
 
     const handleStatusChange = async (
