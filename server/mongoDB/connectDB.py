@@ -4,6 +4,8 @@ import pandas as pd
 from bson.objectid import ObjectId
 from bson.binary import Binary
 from datetime import date
+import smtplib
+from email.message import EmailMessage
 
 client = pymongo.MongoClient(
     "mongodb+srv://testMember:1234@schoolproject.tsw5n6e.mongodb.net/?retryWrites=true&w=majority"
@@ -12,6 +14,7 @@ db = client["SchoolProject"]
 patient_collection = db["Patient"]
 account_collection = db["Account"]
 waiting_list_collection = db["WaitingList"]
+verified_authCode_collection = db["VerifiedAuthCode"]
 
 ### Patient ###
 
@@ -170,6 +173,14 @@ def deleteAccount(accountId: str):
     return account_collection.delete_one({"_id": ObjectId(accountId)})
 
 
+def autoVerifiedAccount(authCode: str) -> bool:
+    isVerified = verified_authCode_collection.find_one({"authCode": authCode})
+    if isVerified:
+        return True
+    else:
+        return False
+
+
 ### Analyze ###
 
 
@@ -231,3 +242,21 @@ def all_patients_to_csv() -> pd.DataFrame:
 
     records_df = pd.DataFrame(records_list)
     return records_df
+
+
+### Email ###
+
+
+def sendPlainEmail(subject, body, to):
+    msg = EmailMessage()
+    msg.set_content(body)
+    msg["subject"] = subject
+    msg["to"] = to
+    user = "kevin920429@gmail.com"
+    msg["from"] = user
+    password = "ipmg aoye hyrk gauq"
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login(user, password)
+    server.send_message(msg)
+    server.quit()

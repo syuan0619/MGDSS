@@ -1,5 +1,5 @@
 import models
-from fastapi import APIRouter
+from fastapi import APIRouter, BackgroundTasks
 from fastapi.responses import JSONResponse
 from mongoDB import (
     get_doctor_list,
@@ -8,6 +8,8 @@ from mongoDB import (
     deleteAccount,
     loginWithEmailandPassword,
     update_account,
+    autoVerifiedAccount,
+    sendPlainEmail,
 )
 
 router = APIRouter(prefix="/account", tags=["account"])
@@ -55,14 +57,40 @@ def get_doctorlist():
 
 
 @router.post("/register")
-def create_account(newAccount: models.Account):
+async def create_account(newAccount: models.Account, background_tasks: BackgroundTasks):
     try:
-        accountId = createAccount(newAccount.model_dump(by_alias=True))
+        dictAccount = newAccount.model_dump(by_alias=True)
+        if autoVerifiedAccount(dictAccount["authCode"]):
+            dictAccount["isVerified"] = True
+            background_tasks.add_task(
+                sendPlainEmail(
+                    "帳號驗證通過！",
+                    "您於MGDSS系統註冊的帳號已經通過驗證囉!",
+                    dictAccount["email"],
+                )
+            )
+        accountId = createAccount(dictAccount)
         accountId = str(accountId)
-        return {"message": "Success create account!", "accountId": accountId}
+        return {
+            "message": "Success create an account!",
+            "dictAccount": accountId,
+        }
     except Exception as e:
         print("Exception:", str(e))
         return JSONResponse(status_code=400, content={"message": str(e)})
+
+
+@router.post("/testVerified")
+def test_verified(authCode: str):
+    try:
+        verifiedResult = autoVerifiedAccount(authCode)
+        return {
+            "message": "Success verify!",
+            "autoVerifiedAccount": verifiedResult,
+        }
+    except Exception as e:
+        print("Exception:", str(e))
+        return JSONResponse(status_code=500, content={"message": str(e)})
 
 
 @router.post(
@@ -78,6 +106,21 @@ def login(email: str, password: str):
             return JSONResponse(
                 status_code=400, content={"message": "Invalid email or password"}
             )
+    except Exception as e:
+        print("Exception", str(e))
+        return JSONResponse(status_code=500, content={"message": str(e)})
+
+
+### Email ###
+@router.post("/sendEmail")
+async def sendEmail(
+    subject: str, body: str, to: str, background_tasks: BackgroundTasks
+):
+    try:
+        background_tasks.add_task(sendPlainEmail(subject, body, to))
+        return {
+            "message": "Success verify!",
+        }
     except Exception as e:
         print("Exception", str(e))
         return JSONResponse(status_code=500, content={"message": str(e)})
