@@ -16,6 +16,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
+import UndoIcon from "@mui/icons-material/Undo";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -67,7 +68,7 @@ const AccountsPage = () => {
   const showAutoPassedAccount = () => {
     const AutoPassedAccount: returnAccount[] = [];
     fixedAccount?.forEach((eachAccount) => {
-      if (eachAccount.role === "doctor") {
+      if (eachAccount.isAutoVerified) {
         AutoPassedAccount.push(eachAccount);
       }
     });
@@ -120,14 +121,26 @@ const AccountsPage = () => {
   //check
   const handleCheck = async (item: returnAccount) => {
     const checkAccount: Account = {
-      name: item.name,
-      email: item.email,
-      password: item.password,
-      role: item.role,
-      authCode: item.authCode,
+      ...item,
       isVerified: !item.isVerified,
     };
     const confirm = window.confirm("確定要審核通過嗎?");
+    if (confirm) {
+      await api.put(`/account/${item._id}`, checkAccount).then((res) => {
+        console.log(res.data);
+        data();
+      });
+    }
+  };
+
+  //undo check
+  const undoCheck = async (item: returnAccount) => {
+    const checkAccount: Account = {
+      ...item,
+      isVerified: false,
+      isAutoVerified: false,
+    };
+    const confirm = window.confirm("確定要撤回驗證嗎?");
     if (confirm) {
       await api.put(`/account/${item._id}`, checkAccount).then((res) => {
         console.log(res.data);
@@ -146,6 +159,38 @@ const AccountsPage = () => {
       });
     }
   };
+
+  //verifyList
+  const [verifyListStatus, setVerifyListStatus] = useState<boolean>(false);
+  const [verifyList, setVerifyList] = useState<string[]>(["1", "2"]);
+  const verifyListDialogOpen = () => {
+    setVerifyListStatus(true);
+  };
+  const verifyListDialogHide = () => {
+    setVerifyListStatus(false);
+  };
+  const handleVerifyListChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    console.log(e.target.value, index);
+    if (verifyList) {
+      const temp = verifyList;
+      temp[index] = e.target.value;
+      setVerifyList(temp);
+    }
+  };
+  const sendVerifyList = async () => {
+    console.log(verifyList);
+  };
+  // const getVerifyList = async () => {
+  //   await api.get("/account/verifiedList").then((res) => {
+  //     setVerifyList(res.data["verifiedList"]);
+  //   });
+  // };
+  // useEffect(() => {
+  //   getVerifyList();
+  // }, []);
 
   //revise
   const [reviseStatus, setReviseStatus] = useState<boolean>(false);
@@ -271,6 +316,21 @@ const AccountsPage = () => {
               marginBottom: "5vh",
             }}
           >
+            <button
+              style={{
+                height: "2.5rem",
+                width: "8rem",
+                border: "none",
+                borderRadius: "0.75rem",
+                backgroundColor: "rgb(52,52,52)",
+                color: "white",
+                cursor: "pointer",
+                marginRight: "2rem",
+              }}
+              onClick={() => verifyListDialogOpen()}
+            >
+              自動驗證帳號清單
+            </button>
             {openBtn ? (
               <button
                 style={{
@@ -278,7 +338,7 @@ const AccountsPage = () => {
                   width: "8rem",
                   border: "none",
                   borderRadius: "0.75rem",
-                  backgroundColor: "rgb(117,117,117)",
+                  backgroundColor: "rgb(160,160,160)",
                   color: "white",
                   cursor: "pointer",
                 }}
@@ -293,7 +353,7 @@ const AccountsPage = () => {
                   width: "8rem",
                   border: "none",
                   borderRadius: "0.75rem",
-                  backgroundColor: "rgb(117,117,117)",
+                  backgroundColor: "rgb(160,160,160)",
                   color: "white",
                   cursor: "pointer",
                 }}
@@ -369,6 +429,9 @@ const AccountsPage = () => {
                   審核
                 </TableCell>
                 <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  撤回認證
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
                   發送電子郵件
                 </TableCell>
                 <TableCell align="center" sx={{ color: "#9E9FA5" }}>
@@ -393,12 +456,25 @@ const AccountsPage = () => {
                       {item.authCode}
                     </TableCell>
                     <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                      {!item.isVerified ? "等待審核" : "審核通過"}
+                      {!item.isVerified
+                        ? "等待審核"
+                        : item.isAutoVerified
+                        ? "自動審核通過"
+                        : "審核通過"}
                     </TableCell>
                     <TableCell align="center">
                       {!item.isVerified ? (
                         <IconButton onClick={() => handleCheck(item)}>
                           <DoneIcon fontSize="large" />
+                        </IconButton>
+                      ) : (
+                        ""
+                      )}
+                    </TableCell>
+                    <TableCell align="center">
+                      {item.isVerified ? (
+                        <IconButton onClick={() => undoCheck(item)}>
+                          <UndoIcon fontSize="large" />
                         </IconButton>
                       ) : (
                         ""
@@ -540,6 +616,69 @@ const AccountsPage = () => {
           </IconButton>
           <Button variant="contained" color="primary" onClick={sendRevise}>
             發送
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* 自動驗證帳號清單 */}
+      <Dialog
+        open={verifyListStatus}
+        onClose={verifyListDialogHide}
+        aria-labelledby="自動驗證帳號清單"
+      >
+        <DialogTitle>自動驗證帳號清單</DialogTitle>
+        <DialogContent sx={{}}>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow sx={{ height: "5vh" }}>
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  驗證碼
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
+                  刪除
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody sx={{ cursor: "pointer" }}>
+              {verifyList &&
+                verifyList.map((item, index) => (
+                  <TableRow key={index} hover={true}>
+                    <TableCell align="center" sx={{ fontSize: "2vh" }}>
+                      <input
+                        type="text"
+                        style={{ border: "none", borderRadius: "0.2rem" }}
+                        value={item}
+                        onChange={(e) => handleVerifyListChange(e, index)}
+                      />
+                    </TableCell>
+                    <TableCell align="center">
+                      <IconButton
+                        onClick={() => {
+                          console.log("delete: ", index);
+                        }}
+                      >
+                        <DeleteIcon fontSize="large" />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </DialogContent>
+        <DialogActions>
+          <IconButton
+            aria-label="close"
+            onClick={verifyListDialogHide}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <Button variant="contained" color="primary" onClick={sendVerifyList}>
+            修改
           </Button>
         </DialogActions>
       </Dialog>

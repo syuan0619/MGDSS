@@ -181,6 +181,15 @@ def autoVerifiedAccount(authCode: str) -> bool:
         return False
 
 
+def getVerifiedList():
+    verified_authCode = verified_authCode_collection.find()
+    response = []
+    for authCode in verified_authCode:
+        authCode["_id"] = str(authCode["_id"])
+        response = authCode["authCode"]
+    return response
+
+
 ### Analyze ###
 
 

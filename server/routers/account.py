@@ -10,6 +10,7 @@ from mongoDB import (
     update_account,
     autoVerifiedAccount,
     sendPlainEmail,
+    getVerifiedList,
 )
 
 router = APIRouter(prefix="/account", tags=["account"])
@@ -62,6 +63,7 @@ async def create_account(newAccount: models.Account, background_tasks: Backgroun
         dictAccount = newAccount.model_dump(by_alias=True)
         if autoVerifiedAccount(dictAccount["authCode"]):
             dictAccount["isVerified"] = True
+            dictAccount["isAutoVerified"] = True
             background_tasks.add_task(
                 sendPlainEmail(
                     "帳號驗證通過！",
@@ -78,19 +80,6 @@ async def create_account(newAccount: models.Account, background_tasks: Backgroun
     except Exception as e:
         print("Exception:", str(e))
         return JSONResponse(status_code=400, content={"message": str(e)})
-
-
-@router.post("/testVerified")
-def test_verified(authCode: str):
-    try:
-        verifiedResult = autoVerifiedAccount(authCode)
-        return {
-            "message": "Success verify!",
-            "autoVerifiedAccount": verifiedResult,
-        }
-    except Exception as e:
-        print("Exception:", str(e))
-        return JSONResponse(status_code=500, content={"message": str(e)})
 
 
 @router.post(
@@ -113,7 +102,7 @@ def login(email: str, password: str):
 
 ### Email ###
 @router.post("/sendEmail")
-async def sendEmail(
+async def Send_Email(
     subject: str, body: str, to: str, background_tasks: BackgroundTasks
 ):
     try:
@@ -123,4 +112,28 @@ async def sendEmail(
         }
     except Exception as e:
         print("Exception", str(e))
+        return JSONResponse(status_code=500, content={"message": str(e)})
+
+
+### verified ###
+@router.post("/testVerified")
+def Test_Verified(authCode: str):
+    try:
+        verifiedResult = autoVerifiedAccount(authCode)
+        return {
+            "message": "Success verify!",
+            "autoVerifiedAccount": verifiedResult,
+        }
+    except Exception as e:
+        print("Exception:", str(e))
+        return JSONResponse(status_code=500, content={"message": str(e)})
+
+
+@router.get("/verifiedList")
+def Get_Verified_Account_List():
+    try:
+        res = getVerifiedList()
+        return {"message": "success get verify list!", "verifiedList": res}
+    except Exception as e:
+        print("Exception:", str(e))
         return JSONResponse(status_code=500, content={"message": str(e)})
