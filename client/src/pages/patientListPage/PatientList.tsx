@@ -677,9 +677,20 @@ function PatientList() {
                                 ))}
                         </TableBody>
                     </Table>
-                    {/* {patients && patients.length === 0 ? (
-                       
-                    ) : null} */}
+                    {patients && patients.length === 0 ? (
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                height: "10rem",
+                            }}
+                        >
+                            <Typography sx={{ fontSize: "1.2rem" }}>
+                                本日無約診病患！
+                            </Typography>
+                        </Box>
+                    ) : null}
                 </Box>
             </TableContainer>
 
