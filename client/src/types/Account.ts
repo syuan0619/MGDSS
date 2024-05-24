@@ -8,7 +8,7 @@ type Account = {
   isAutoVerified: boolean;
 };
 
-type returnAccount = {
+type ReturnAccount = {
   _id: string;
   name: string;
   email: string;
@@ -19,8 +19,15 @@ type returnAccount = {
   isAutoVerified: boolean;
 };
 
-type doctorInList = {
+type DoctorInList = {
   _id: string;
   name: string;
 };
-export type { Account, returnAccount, doctorInList };
+
+type Email = {
+  subject: string;
+  body: string;
+  to: string;
+};
+
+export type { Account, ReturnAccount, DoctorInList, Email };

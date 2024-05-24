@@ -9,3 +9,7 @@ class Account(BaseModel):
     authCode: str = Field(default="authCode")
     isVerified: bool = Field(default=False)
     isAutoVerified: bool = Field(default=False)
+
+
+class AuthCode(BaseModel):
+    authCode: list[str]

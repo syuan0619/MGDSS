@@ -27,7 +27,8 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { Account, returnAccount } from "../../types/Account";
+import { Account, ReturnAccount } from "../../types/Account";
+import VerifyListDialog from "./VerifyListDialog";
 import api from "../../api";
 
 const AccountsPage = () => {
@@ -51,8 +52,8 @@ const AccountsPage = () => {
     }
   };
 
-  const [account, setAccount] = useState<returnAccount[]>();
-  const [fixedAccount, setFixedAccount] = useState<returnAccount[]>();
+  const [account, setAccount] = useState<ReturnAccount[]>();
+  const [fixedAccount, setFixedAccount] = useState<ReturnAccount[]>();
   const data = async () => {
     const response = await api.get("/account");
     setAccount(response.data);
@@ -66,7 +67,7 @@ const AccountsPage = () => {
   //只留下剛審核通過的帳號
   const [openBtn, setOpenBtn] = useState(false);
   const showAutoPassedAccount = () => {
-    const AutoPassedAccount: returnAccount[] = [];
+    const AutoPassedAccount: ReturnAccount[] = [];
     fixedAccount?.forEach((eachAccount) => {
       if (eachAccount.isAutoVerified) {
         AutoPassedAccount.push(eachAccount);
@@ -87,7 +88,7 @@ const AccountsPage = () => {
   };
   const SearchName = (e: React.FormEvent) => {
     e.preventDefault();
-    const searchedAccount: returnAccount[] = [];
+    const searchedAccount: ReturnAccount[] = [];
     fixedAccount?.forEach((eachAccount) => {
       if (
         eachAccount.authCode.includes(search) ||
@@ -119,7 +120,7 @@ const AccountsPage = () => {
   };
 
   //check
-  const handleCheck = async (item: returnAccount) => {
+  const handleCheck = async (item: ReturnAccount) => {
     const checkAccount: Account = {
       ...item,
       isVerified: !item.isVerified,
@@ -134,7 +135,7 @@ const AccountsPage = () => {
   };
 
   //undo check
-  const undoCheck = async (item: returnAccount) => {
+  const undoCheck = async (item: ReturnAccount) => {
     const checkAccount: Account = {
       ...item,
       isVerified: false,
@@ -162,35 +163,40 @@ const AccountsPage = () => {
 
   //verifyList
   const [verifyListStatus, setVerifyListStatus] = useState<boolean>(false);
-  const [verifyList, setVerifyList] = useState<string[]>(["1", "2"]);
+  const [verifyList, setVerifyList] = useState<string[]>();
+  const [verifyListId, setVerifyListId] = useState<string>();
+  const [isVerifyListRevised, setIsVerifyListRevised] =
+    useState<boolean>(false);
   const verifyListDialogOpen = () => {
     setVerifyListStatus(true);
   };
   const verifyListDialogHide = () => {
-    setVerifyListStatus(false);
-  };
-  const handleVerifyListChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    console.log(e.target.value, index);
-    if (verifyList) {
-      const temp = verifyList;
-      temp[index] = e.target.value;
-      setVerifyList(temp);
+    if (isVerifyListRevised) {
+      const res = confirm("資料修改過但尚未送出，請確認是否送出!");
+      if (res) {
+        sendVerifyList();
+      } else {
+        setVerifyListStatus(false);
+        getVerifyList();
+      }
+    } else {
+      setVerifyListStatus(false);
     }
   };
   const sendVerifyList = async () => {
     console.log(verifyList);
+    setVerifyListStatus(false);
+    setIsVerifyListRevised(false);
   };
-  // const getVerifyList = async () => {
-  //   await api.get("/account/verifiedList").then((res) => {
-  //     setVerifyList(res.data["verifiedList"]);
-  //   });
-  // };
-  // useEffect(() => {
-  //   getVerifyList();
-  // }, []);
+  const getVerifyList = async () => {
+    await api.get("/account/verifiedList").then((res) => {
+      setVerifyList(res.data["verifiedList"]["authCode"]);
+      setVerifyListId(res.data["verifiedList"]["_id"]);
+    });
+  };
+  useEffect(() => {
+    getVerifyList();
+  }, []);
 
   //revise
   const [reviseStatus, setReviseStatus] = useState<boolean>(false);
@@ -208,7 +214,7 @@ const AccountsPage = () => {
       isVerified: false,
     },
   });
-  const reviseDialogOpen = (item: returnAccount) => {
+  const reviseDialogOpen = (item: ReturnAccount) => {
     setReviseStatus(true);
     setRevise({
       id: item._id,
@@ -260,15 +266,16 @@ const AccountsPage = () => {
   //email
   const [emailStatus, setEmailStatus] = useState<boolean>(false);
   const [email, setEmail] = useState<{
-    email: string;
     subject: string;
-    text: string;
+    body: string;
+    to: string;
   }>({
-    email: "",
     subject: "",
-    text: "",
+    body: "",
+    to: "",
   });
-  const emailDialogOpen = () => {
+  const emailDialogOpen = (email: str) => {
+    setEmail({ ...email, to: email });
     setEmailStatus(true);
   };
   const emailDialogHide = () => {
@@ -277,21 +284,18 @@ const AccountsPage = () => {
   const changeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail({ ...email, [e.target.name]: e.target.value });
   };
-  const waitingForEmailSending = async () => {
-    console.log("waiting for email sending...");
-  };
   const sendEmail = async () => {
-    const confirm = window.confirm("確定要發送嗎?");
-    if (confirm) {
-      console.log(email);
-      waitingForEmailSending();
-      setEmail({
-        email: "",
-        subject: "",
-        text: "",
+    console.log(email);
+    await api
+      .post("/account/sendEmail", {
+        subject: email.subject,
+        body: email.body,
+        to: email.to,
+      })
+      .then((res) => {
+        console.log(res);
       });
-      setEmailStatus(false);
-    }
+    setEmailStatus(false);
   };
 
   return (
@@ -481,7 +485,7 @@ const AccountsPage = () => {
                       )}
                     </TableCell>
                     <TableCell align="center">
-                      <IconButton onClick={emailDialogOpen}>
+                      <IconButton onClick={() => emailDialogOpen(item.email)}>
                         <EmailIcon fontSize="large" />
                       </IconButton>
                     </TableCell>
@@ -513,8 +517,8 @@ const AccountsPage = () => {
           <TextField
             label="收件者"
             variant="outlined"
-            name="email"
-            value={"email"}
+            name="to"
+            value={email.to}
             onChange={changeEmail}
           />
           <p />
@@ -522,15 +526,15 @@ const AccountsPage = () => {
             label="主旨"
             variant="outlined"
             name="subject"
-            value={"subject"}
+            value={email.subject}
             onChange={changeEmail}
           />
           <p />
           <TextField
             label="內文"
             variant="outlined"
-            name="text"
-            value={"text"}
+            name="body"
+            value={email.body}
             onChange={changeEmail}
           />
           <p />
@@ -621,67 +625,16 @@ const AccountsPage = () => {
       </Dialog>
 
       {/* 自動驗證帳號清單 */}
-      <Dialog
-        open={verifyListStatus}
-        onClose={verifyListDialogHide}
-        aria-labelledby="自動驗證帳號清單"
-      >
-        <DialogTitle>自動驗證帳號清單</DialogTitle>
-        <DialogContent sx={{}}>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow sx={{ height: "5vh" }}>
-                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
-                  驗證碼
-                </TableCell>
-                <TableCell align="center" sx={{ color: "#9E9FA5" }}>
-                  刪除
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody sx={{ cursor: "pointer" }}>
-              {verifyList &&
-                verifyList.map((item, index) => (
-                  <TableRow key={index} hover={true}>
-                    <TableCell align="center" sx={{ fontSize: "2vh" }}>
-                      <input
-                        type="text"
-                        style={{ border: "none", borderRadius: "0.2rem" }}
-                        value={item}
-                        onChange={(e) => handleVerifyListChange(e, index)}
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <IconButton
-                        onClick={() => {
-                          console.log("delete: ", index);
-                        }}
-                      >
-                        <DeleteIcon fontSize="large" />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </DialogContent>
-        <DialogActions>
-          <IconButton
-            aria-label="close"
-            onClick={verifyListDialogHide}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <Button variant="contained" color="primary" onClick={sendVerifyList}>
-            修改
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {verifyList && (
+        <VerifyListDialog
+          verifyListStatus={verifyListStatus}
+          verifyListDialogHide={verifyListDialogHide}
+          verifyList={verifyList}
+          setVerifyList={setVerifyList}
+          setIsVerifyListRevised={setIsVerifyListRevised}
+          sendVerifyList={sendVerifyList}
+        />
+      )}
     </>
   );
 };

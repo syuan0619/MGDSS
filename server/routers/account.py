@@ -11,6 +11,7 @@ from mongoDB import (
     autoVerifiedAccount,
     sendPlainEmail,
     getVerifiedList,
+    updateVerifiedList,
 )
 
 router = APIRouter(prefix="/account", tags=["account"])
@@ -136,4 +137,18 @@ def Get_Verified_Account_List():
         return {"message": "success get verify list!", "verifiedList": res}
     except Exception as e:
         print("Exception:", str(e))
+        return JSONResponse(status_code=500, content={"message": str(e)})
+
+
+@router.put("/updateVerifiedList")
+def Update_Verified_List(verifiedListId: str, newVerifiedList: models.AuthCode):
+    try:
+        newVerifiedList = updateVerifiedList(
+            verifiedListId, newVerifiedList.model_dump(by_alias=True)
+        )
+        return {
+            "message": "Success update verifiedList!",
+            "updatedAccount": newVerifiedList,
+        }
+    except Exception as e:
         return JSONResponse(status_code=500, content={"message": str(e)})

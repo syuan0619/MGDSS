@@ -186,8 +186,18 @@ def getVerifiedList():
     response = []
     for authCode in verified_authCode:
         authCode["_id"] = str(authCode["_id"])
-        response = authCode["authCode"]
+        response = authCode
     return response
+
+
+def updateVerifiedList(verifiedListId: int, newVerifiedList: dict):
+    newVerifiedList = verified_authCode_collection.find_one_and_update(
+        {"_id": ObjectId(verifiedListId)},
+        {"$set": newVerifiedList},
+        return_document=pymongo.ReturnDocument.AFTER,
+    )
+    newVerifiedList["_id"] = str(newVerifiedList["_id"])
+    return newVerifiedList
 
 
 ### Analyze ###
