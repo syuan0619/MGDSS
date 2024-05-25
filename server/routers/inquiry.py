@@ -1,7 +1,7 @@
 import json
 import io
 import datetime
-from fastapi import APIRouter, Response, UploadFile, File, Header
+from fastapi import APIRouter, Response, UploadFile, File, Header, HTTPException
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import ValidationError
 from mongoDB.connectDB import (
@@ -10,13 +10,14 @@ from mongoDB.connectDB import (
     getPatientByDate,
     get_table_by_date,
     update_patient_by_date,
-    update_patient_info
+    update_patient_info,
 )
 from OCR.functionalRecognize import functionalRecognize
 from models import *
 
 
 router = APIRouter(prefix="/inquiry", tags=["inquiry"])
+
 
 # GET /inquiry/{patient_id} -> get patient by id
 @router.get("/{patient_id}", summary="Get patient by id")
@@ -30,6 +31,7 @@ async def get_patient_with_patient_id(patient_id: str):
             status_code=500, content={"message": "Internal server error"}
         )
 
+
 # GET /inquiry/{patientId}/{date} -> get all table on date
 @router.get(
     "/{patientId}/{date}",
@@ -42,33 +44,64 @@ async def get_patient_date(patientId: str, date: datetime.date):
         return {"message": f"Success get tables in {date}", "tables": tables}
     except Exception as e:
         print("error: ", str(e))
+        if str(e) == "No visit record at this date":
+            raise HTTPException(status_code=404, detail="No visit record at this date")
         return JSONResponse(status_code=500, content={"message": str(e)})
+
 
 # GET /inquiry/{patient_id}/{table_name}/{date} -> get specific table on date
 @router.get("/{patient_id}/{table_name}/{date}", summary="取得指定日期之單一table")
 async def get_table_with_date(patient_id: str, table_name: str, date: str):
-    if table_name not in ["visit", "thymus", "bloodTest", "QOL", "QMG", "MG", "ADL", "EMG"]:
+    if table_name not in [
+        "visit",
+        "thymus",
+        "bloodTest",
+        "QOL",
+        "QMG",
+        "MG",
+        "ADL",
+        "EMG",
+    ]:
         return JSONResponse(status_code=400, content={"message": "Invalid table name"})
     else:
         try:
             table = get_table_by_date(patient_id, table_name, date)
             if table:
-                return {"message": f"Success get {table_name} table on {date}", "table": table}
+                return {
+                    "message": f"Success get {table_name} table on {date}",
+                    "table": table,
+                }
             else:
-                return JSONResponse(status_code=404, content={"message": f"No {table_name} table on {date}"})
+                return JSONResponse(
+                    status_code=404,
+                    content={"message": f"No {table_name} table on {date}"},
+                )
         except Exception as e:
             print("Exception: ", str(e))
             return JSONResponse(status_code=500, content={"message": str(e)})
 
+
 # POST /inquiry/{patient_id}/info -> update patient info
-@router.post("/{patient_id}/info", summary="更新（覆蓋）info", description="request body: 病患資料")
-async def inquiry_update_patient_info(patient_id: str, new_info = Info):
+@router.post(
+    "/{patient_id}/info",
+    summary="更新（覆蓋）info",
+    description="request body: 病患資料",
+)
+async def inquiry_update_patient_info(patient_id: str, new_info=Info):
     try:
-        updated_patient = update_patient_info(patient_id, new_info.model_dump(by_alias=True))
-        return {"message": "Success update patient info!", "updatedPatient": updated_patient}
+        updated_patient = update_patient_info(
+            patient_id, new_info.model_dump(by_alias=True)
+        )
+        return {
+            "message": "Success update patient info!",
+            "updatedPatient": updated_patient,
+        }
     except Exception as e:
         print("Exception: ", str(e))
-        return JSONResponse(status_code=500, content={"message": "Internal server error"})
+        return JSONResponse(
+            status_code=500, content={"message": "Internal server error"}
+        )
+
 
 @router.post(
     "/{patientId}/visit",
@@ -263,18 +296,45 @@ async def recognize_text(file: UploadFile = File(...)):
         media_type="image/*",
     )
 
+
 # PUT /inquiry/{patient_id}/{table_name}/{date} -> update table on date
-@router.put("/{patient_id}/{table_name}/{date}", summary="更新(覆蓋)指定日期之table", description="date: 日期, tabe_name: visit、QOL等, request body: 更新的table\n 例如: /inquiry/123/visit/2021-01-01, 更新123病患2021-01-01的visit table")
-async def update_table_on_date(patient_id: str, table_name: str, date: str, updated_table: Visit| Thymus| BloodTest| QOL| QMG| MG| ADL| EMG):
-    if table_name not in ["visit", "thymus", "bloodTest", "QOL", "QMG", "MG", "ADL", "EMG"]:
+@router.put(
+    "/{patient_id}/{table_name}/{date}",
+    summary="更新(覆蓋)指定日期之table",
+    description="date: 日期, tabe_name: visit、QOL等, request body: 更新的table\n 例如: /inquiry/123/visit/2021-01-01, 更新123病患2021-01-01的visit table",
+)
+async def update_table_on_date(
+    patient_id: str,
+    table_name: str,
+    date: str,
+    updated_table: Visit | Thymus | BloodTest | QOL | QMG | MG | ADL | EMG,
+):
+    if table_name not in [
+        "visit",
+        "thymus",
+        "bloodTest",
+        "QOL",
+        "QMG",
+        "MG",
+        "ADL",
+        "EMG",
+    ]:
         return JSONResponse(status_code=400, content={"message": "Invalid table name"})
     else:
         try:
-            updated_patient = update_patient_by_date(patient_id, table_name, updated_table.model_dump(by_alias=True), date)
+            updated_patient = update_patient_by_date(
+                patient_id, table_name, updated_table.model_dump(by_alias=True), date
+            )
             if updated_patient:
-                return {"message": f"Success update {table_name} table on {date}", "updatedPatient": updated_patient}
+                return {
+                    "message": f"Success update {table_name} table on {date}",
+                    "updatedPatient": updated_patient,
+                }
             else:
-                return JSONResponse(status_code=404, content={"message": f"No {table_name} table on {date}"})
+                return JSONResponse(
+                    status_code=404,
+                    content={"message": f"No {table_name} table on {date}"},
+                )
         except Exception as e:
             print("Exception: ", str(e))
             return JSONResponse(status_code=500, content={"message": str(e)})

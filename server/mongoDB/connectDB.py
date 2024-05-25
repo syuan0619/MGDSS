@@ -34,13 +34,22 @@ def getPatientByDate(patientId: str, date: str):
     # tablesAtDate["_id"] = patient["_id"]
     tablesAtDate["info"] = patient["info"]
     tablesAtDate["thymus"] = patient["thymus"][-1]
+    for visit in patient["visit"]:
+        if visit["testDate"] == date:
+            tablesAtDate["visit"] = visit
+            break
+
+    if "visit" not in tablesAtDate:
+        raise Exception("No visit record at this date")
+
     for key in patient:
         if key != "_id" and key != "info":
             for table in patient[key]:
                 if table["testDate"] == date:
                     tablesAtDate[key] = table
                     break
-            tablesAtDate[key] = patient[key][-1]
+                else:
+                    tablesAtDate[key] = patient[key][-1]
     return tablesAtDate
 
 
