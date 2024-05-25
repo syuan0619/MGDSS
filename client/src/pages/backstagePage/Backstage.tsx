@@ -142,6 +142,7 @@ const AccountsPage = () => {
       isAutoVerified: false,
     };
     const confirm = window.confirm("確定要撤回驗證嗎?");
+
     if (confirm) {
       await api.put(`/account/${item._id}`, checkAccount).then((res) => {
         console.log(res.data);
@@ -163,7 +164,7 @@ const AccountsPage = () => {
 
   //verifyList
   const [verifyListStatus, setVerifyListStatus] = useState<boolean>(false);
-  const [verifyList, setVerifyList] = useState<string[]>();
+  const [verifyList, setVerifyList] = useState<string[]>(["1", "2"]);
   const [verifyListId, setVerifyListId] = useState<string>();
   const [isVerifyListRevised, setIsVerifyListRevised] =
     useState<boolean>(false);
@@ -176,6 +177,7 @@ const AccountsPage = () => {
       if (res) {
         sendVerifyList();
       } else {
+        setIsVerifyListRevised(false);
         setVerifyListStatus(false);
         getVerifyList();
       }
@@ -196,7 +198,7 @@ const AccountsPage = () => {
   };
   useEffect(() => {
     getVerifyList();
-  }, []);
+  }, [isVerifyListRevised]);
 
   //revise
   const [reviseStatus, setReviseStatus] = useState<boolean>(false);
@@ -274,8 +276,8 @@ const AccountsPage = () => {
     body: "",
     to: "",
   });
-  const emailDialogOpen = (email: str) => {
-    setEmail({ ...email, to: email });
+  const emailDialogOpen = (e: string) => {
+    setEmail({ ...email, to: e });
     setEmailStatus(true);
   };
   const emailDialogHide = () => {
@@ -285,7 +287,6 @@ const AccountsPage = () => {
     setEmail({ ...email, [e.target.name]: e.target.value });
   };
   const sendEmail = async () => {
-    console.log(email);
     await api
       .post("/account/sendEmail", {
         subject: email.subject,
@@ -633,6 +634,7 @@ const AccountsPage = () => {
           setVerifyList={setVerifyList}
           setIsVerifyListRevised={setIsVerifyListRevised}
           sendVerifyList={sendVerifyList}
+          isVerifyListRevised={isVerifyListRevised}
         />
       )}
     </>

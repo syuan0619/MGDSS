@@ -12,4 +12,10 @@ class Account(BaseModel):
 
 
 class AuthCode(BaseModel):
-    authCode: list[str]
+    authCode: list
+
+
+class Email(BaseModel):
+    subject: str
+    body: str
+    to: str

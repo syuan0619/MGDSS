@@ -11,5 +11,5 @@ from .patient import (
     ADL,
     EMG,
 )
-from .account import Account, AuthCode
+from .account import Account, AuthCode, Email
 from .Waiting import Waiting

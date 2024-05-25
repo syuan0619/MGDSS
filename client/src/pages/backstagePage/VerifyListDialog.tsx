@@ -26,7 +26,7 @@ const VerifyListDialog = ({
   verifyListStatus: boolean;
   verifyListDialogHide: () => void;
   verifyList: string[];
-  setVerifyList: React.Dispatch<React.SetStateAction<string[] | undefined>>;
+  setVerifyList: React.Dispatch<React.SetStateAction<string[]>>;
   setIsVerifyListRevised: React.Dispatch<React.SetStateAction<boolean>>;
   sendVerifyList: () => Promise<void>;
 }) => {
@@ -41,7 +41,7 @@ const VerifyListDialog = ({
   };
   useEffect(() => {
     setComponentVerifyList(verifyList);
-  }, []);
+  }, [verifyListStatus]);
 
   return (
     <Dialog

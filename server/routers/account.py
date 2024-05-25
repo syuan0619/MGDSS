@@ -103,11 +103,9 @@ def login(email: str, password: str):
 
 ### Email ###
 @router.post("/sendEmail")
-async def Send_Email(
-    subject: str, body: str, to: str, background_tasks: BackgroundTasks
-):
+async def Send_Email(email: models.Email, background_tasks: BackgroundTasks):
     try:
-        background_tasks.add_task(sendPlainEmail(subject, body, to))
+        background_tasks.add_task(sendPlainEmail(email.subject, email.body, email.to))
         return {
             "message": "Success verify!",
         }
@@ -151,4 +149,5 @@ def Update_Verified_List(verifiedListId: str, newVerifiedList: models.AuthCode):
             "updatedAccount": newVerifiedList,
         }
     except Exception as e:
+        print(str(e))
         return JSONResponse(status_code=500, content={"message": str(e)})
