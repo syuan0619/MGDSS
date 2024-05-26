@@ -149,24 +149,3 @@ async def delete_patient_waitinglist_date(date: str, patient_id: str):
     except Exception as e:
         print("Exception: ", str(e))
         return JSONResponse(status_code=500, content={"Exception": str(e)})
-
-
-# GET /patients/csv -> download all patients as csv
-@router.get(
-    "/csv",
-    tags=["patients"],
-    summary="匯出全部病患資料",
-    description="下載之後還要右鍵->編輯->另存新檔->編碼選帶有BOM的UTF-8 再用excel開啟才不會亂碼",
-)
-async def get_all_patients_to_csv():
-    records_df = all_patients_to_csv()
-    records_csv = records_df.to_csv(index=False, encoding="utf-8-sig").encode(
-        "utf-8-sig"
-    )
-    file_stream = io.BytesIO(records_csv)
-    headers = {
-        "Content-Disposition": "attachment; filename=patients.csv",
-        "Content-Type": "text/csv; charset=utf-8-sig",
-    }
-
-    return Response(file_stream.getvalue(), headers=headers)

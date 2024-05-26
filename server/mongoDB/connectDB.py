@@ -221,7 +221,7 @@ def all_patients_to_csv() -> pd.DataFrame:
             "ID": patient["info"]["ID#"],
             "姓名": patient["info"]["name"],
             "生日": patient["info"]["DOB"],
-            "性別": patient["info"]["sex"],
+            "性別": "男" if patient["info"]["sex"] == "male" else "女",
             "身高": patient["info"]["height"],
             "體重": patient["info"]["weight"],
             "特殊註記": patient["info"]["other"],
@@ -237,7 +237,7 @@ def all_patients_to_csv() -> pd.DataFrame:
             record.update(
                 {
                     "看診日期": visit["testDate"],
-                    "治療": visit["treat"],
+                    "治療方式": visit["treat"],
                     "SBP": visit["SBP"],
                     "DBP": visit["DBP"],
                     "自覺嚴重程度": visit["selfAssessment"],
@@ -256,6 +256,13 @@ def all_patients_to_csv() -> pd.DataFrame:
                     "MGFA分級": visit["MGFAclassification"],
                 }
             )
+            temp = {
+                "ID": record.pop("ID"),
+                "姓名": record.pop("姓名"),
+                "看診日期": record.pop("看診日期"),
+            }
+            temp.update(record)
+            record = temp
             records_list.append(record)
         for table in ["thymus", "bloodTest", "QOL", "QMG", "MG", "ADL"]:
             for record in patient[table]:
@@ -267,7 +274,6 @@ def all_patients_to_csv() -> pd.DataFrame:
                     for key, value in record.items():
                         if key != "testDate":
                             matching_record[f"{table}_{key}"] = value
-
     records_df = pd.DataFrame(records_list)
     return records_df
 

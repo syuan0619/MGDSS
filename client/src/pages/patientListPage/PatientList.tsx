@@ -124,7 +124,7 @@ function PatientList() {
     const [downloadLink, setDownloadLink] = useState<string>();
     const downloadRef = React.useRef<HTMLAnchorElement>(null);
     const download = async () => {
-        const res = await api.get("/patients/csv", { responseType: "blob" });
+        const res = await api.get("/csv", { responseType: "blob" });
         const newLink = URL.createObjectURL(res.data);
         setDownloadLink(newLink);
     };
@@ -427,6 +427,7 @@ function PatientList() {
                                     href={downloadLink}
                                     ref={downloadRef}
                                     style={{ display: "none" }}
+                                    download={"patients.csv"}
                                 ></a>
                                 <Box
                                     sx={{
