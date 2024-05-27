@@ -85,7 +85,7 @@ const Left = ({ info }: { info: Info }) => {
                   name="sex"
                   onChange={changeInput}
                   readOnly={readOnly}
-                  defaultValue={info.sex}
+                  defaultValue={info.sex === "female" ? "女" : "男"}
                 ></input>
               </div>
             </div>
