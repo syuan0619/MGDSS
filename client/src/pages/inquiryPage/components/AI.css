@@ -19,15 +19,6 @@
     margin-top: 1rem;
   }
 
-  svg {
-    color: white;
-    font-size: 4rem;
-  }
-  svg:hover {
-    background-color: transparent;
-    color: rgba(41, 71, 118, 0.976);
-  }
-
   button {
     border-radius: 0.9rem;
     background-color: #40a2d8;
@@ -74,4 +65,20 @@
     overflow: auto;
     height: 30vh;
   }
+}
+
+table {
+  font-size: 1.5rem;
+  width: 100%;
+  text-align: center;
+  vertical-align: baseline;
+  color: black;
+}
+
+thead {
+  height: 5rem;
+}
+
+tr {
+  height: 5rem;
 }

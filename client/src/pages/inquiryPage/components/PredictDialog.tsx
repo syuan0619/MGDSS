@@ -40,7 +40,7 @@ const PredictDialog = ({
         open={predictStatus}
         onClose={predictDialogHide}
       >
-        <DialogTitle sx={{ fontSize: "1.5rem" }}>確認病患資訊</DialogTitle>
+        <DialogTitle sx={{ fontSize: "1.5rem" }}>預測資料確認</DialogTitle>
         <DialogContent className="predictDialog-content">
           <ConfirmPanel patients={patients} />
         </DialogContent>

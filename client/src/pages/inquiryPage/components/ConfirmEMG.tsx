@@ -32,14 +32,56 @@ const ConfirmEMG = ({
             <Typography>{title}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <div>
-              {/* {Object.entries(initialData).map(([name, value], index) => (
-                <div key={index} style={{ marginBottom: "0.6rem" }}>
-                  <Typography>
-                    {name}: {value}
-                  </Typography>
-                </div>
-              ))} */}
+            <div style={{ marginBottom: "0.6rem" }}>
+              <Typography>testDate: {initialData.testDate}</Typography>
+              {initialData.abd.preActivation !== 0 || null ? (
+                <Typography>
+                  abd-preActivation: {initialData.abd.preActivation}
+                </Typography>
+              ) : (
+                ""
+              )}
+              {Object.keys(initialData.abd.postActivation).length !== 0 ||
+              null ? (
+                <Typography>
+                  abd-postActivation: {initialData.abd.postActivation}
+                </Typography>
+              ) : (
+                ""
+              )}
+              <br />
+              {initialData.nasalis.preActivation !== 0 || null ? (
+                <Typography>
+                  nasalis-preActivation: {initialData.nasalis.preActivation}
+                </Typography>
+              ) : (
+                ""
+              )}
+              {Object.keys(initialData.nasalis.postActivation).length !== 0 ||
+              null ? (
+                <Typography>
+                  nasalis-postActivation: {initialData.nasalis.postActivation}
+                </Typography>
+              ) : (
+                ""
+              )}
+              <br />
+              {initialData.trapezius.preActivation !== 0 || null ? (
+                <Typography>
+                  trapezius-preActivation: {initialData.trapezius.preActivation}
+                </Typography>
+              ) : (
+                ""
+              )}
+              {Object.keys(initialData.trapezius.postActivation).length !== 0 ||
+              null ? (
+                <Typography>
+                  trapezius-postActivation:{" "}
+                  {initialData.trapezius.postActivation.join(", ")}
+                </Typography>
+              ) : (
+                ""
+              )}
             </div>
           </AccordionDetails>
         </Accordion>

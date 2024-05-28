@@ -11,7 +11,7 @@ const ConfirmPanel = ({ patients }: { patients: tablePatient | undefined }) => {
         <div className="row-of-confirm-panel">
           <Confirm title="ADL" initialData={patients.ADL} />
           <Confirm title="BloodTest" initialData={patients.bloodTest} />
-          <ConfirmEMG title="BloodTest" initialData={patients.EMG} />
+          <ConfirmEMG title="EMG" initialData={patients.EMG} />
           <Confirm title="MG" initialData={patients.MG} />
         </div>
         <div className="row-of-confirm-panel">
