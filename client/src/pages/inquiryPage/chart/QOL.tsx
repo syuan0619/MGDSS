@@ -223,6 +223,7 @@ const QOLChart = ({
               height={500}
               series={a}
               xAxis={[{ scaleType: "point", data: QOLChart_xLabels }]}
+              yAxis={[{ scaleType: "point", data: [2, 1, 0] }]}
             />
           </div>
           <div className="chart-footer-checkbox">
