@@ -103,40 +103,40 @@ const TableThymus = ({
                   onChange={handleChange}
                   type="radio"
                   id="thymusStatus0"
-                  name="thymusStatus0"
-                  value={0}
+                  name="thymusStatus"
+                  value={"0"}
                 />
-                <label>胸腺正常</label>
+                <label htmlFor="thymusStatus0">胸腺正常</label>
               </div>
               <div className="thymus-radio">
                 <input
                   onChange={handleChange}
                   type="radio"
                   id="thymusStatus1"
-                  name="thymusStatus1"
-                  value={1}
+                  name="thymusStatus"
+                  value={"1"}
                 />
-                <label>胸腺萎縮</label>
+                <label htmlFor="thymusStatus1">胸腺萎縮</label>
               </div>
               <div className="thymus-radio">
                 <input
                   onChange={handleChange}
                   type="radio"
                   id="thymusStatus2"
-                  name="thymusStatus2"
-                  value={2}
+                  name="thymusStatus"
+                  value={"2"}
                 />
-                <label>胸腺增生</label>
+                <label htmlFor="thymusStatus2">胸腺增生</label>
               </div>
               <div className="thymus-radio">
                 <input
                   onChange={handleChange}
                   type="radio"
                   id="thymusStatus3"
-                  name="thymusStatus3"
-                  value={3}
+                  name="thymusStatus"
+                  value={"3"}
                 />
-                <label>胸腺瘤</label>
+                <label htmlFor="thymusStatus3">胸腺瘤</label>
               </div>
             </div>
           </div>
