@@ -2,3 +2,24 @@
   margin-bottom: -1px;
   padding: 16.3px;
 }
+
+.PatientList-hero {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
+.PatientList-hero-text {
+  font-size: 1.25rem;
+  color: #0181c9;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.PatientList-hero-text > img {
+  width: 2rem;
+  border-radius: 50%;
+  background-color: #0181c9;
+}

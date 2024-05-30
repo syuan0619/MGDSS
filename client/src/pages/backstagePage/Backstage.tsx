@@ -165,7 +165,6 @@ const AccountsPage = () => {
   //verifyList
   const [verifyListStatus, setVerifyListStatus] = useState<boolean>(false);
   const [verifyList, setVerifyList] = useState<string[]>(["1", "2"]);
-  const [verifyListId, setVerifyListId] = useState<string>();
   const [isVerifyListRevised, setIsVerifyListRevised] =
     useState<boolean>(false);
   const verifyListDialogOpen = () => {
@@ -193,7 +192,6 @@ const AccountsPage = () => {
   const getVerifyList = async () => {
     await api.get("/account/verifiedList").then((res) => {
       setVerifyList(res.data["verifiedList"]["authCode"]);
-      setVerifyListId(res.data["verifiedList"]["_id"]);
     });
   };
   useEffect(() => {
@@ -214,6 +212,7 @@ const AccountsPage = () => {
       role: "doctor",
       authCode: "",
       isVerified: false,
+      isAutoVerified: false,
     },
   });
   const reviseDialogOpen = (item: ReturnAccount) => {
@@ -227,6 +226,7 @@ const AccountsPage = () => {
         role: item.role,
         authCode: item.authCode,
         isVerified: item.isVerified,
+        isAutoVerified: item.isAutoVerified,
       },
     });
   };
@@ -241,6 +241,7 @@ const AccountsPage = () => {
         role: "doctor",
         authCode: "",
         isVerified: false,
+        isAutoVerified: false,
       },
     });
   };
@@ -634,7 +635,6 @@ const AccountsPage = () => {
           setVerifyList={setVerifyList}
           setIsVerifyListRevised={setIsVerifyListRevised}
           sendVerifyList={sendVerifyList}
-          isVerifyListRevised={isVerifyListRevised}
         />
       )}
     </>
