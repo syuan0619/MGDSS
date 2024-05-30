@@ -204,13 +204,13 @@ const RegisterPage = () => {
               <StyledTab
                 icon={<InventoryRoundedIcon />}
                 iconPosition="start"
-                label="醫生"
+                label="醫師"
                 onClick={() => selectRole("doctor")}
               />
               <StyledTab
                 icon={<LocalHospitalRoundedIcon />}
                 iconPosition="start"
-                label="護士"
+                label="護理師"
                 onClick={() => selectRole("nurse")}
               />
             </StyledTabs>
@@ -321,7 +321,7 @@ const RegisterPage = () => {
                     borderRadius: "10px",
                   }}
                 >
-                  以醫生身分註冊
+                  以醫師身分註冊
                 </Button>
               </Link>{" "}
             </form>
@@ -413,7 +413,7 @@ const RegisterPage = () => {
                   sx: { color: "white" },
                 }}
                 fullWidth
-                label="護士授權碼"
+                label="護理師授權碼"
                 variant="outlined"
                 name="authCode"
                 size="small"
@@ -435,7 +435,7 @@ const RegisterPage = () => {
                     borderRadius: "10px",
                   }}
                 >
-                  以護士身分註冊
+                  以護理師身分註冊
                 </Button>
               </Link>
             </form>

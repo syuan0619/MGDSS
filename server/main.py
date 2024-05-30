@@ -43,7 +43,7 @@ async def get_all_patients_to_csv():
     return Response(file_stream.getvalue(), headers=headers)
 
 
-origins = ["http://localhost:5173"]
+origins = ["http://localhost:5173", "https://mgdss-client.onrender.com"]
 
 app.add_middleware(
     CORSMiddleware,
