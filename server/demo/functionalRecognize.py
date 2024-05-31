@@ -173,9 +173,9 @@ def image_processing(image):
 
 
 # Update with the path to your test image
-image_path = r"/Users/kevinlakao/Desktop/MDGSS/server/images/1.png"
+image_path = r"/Users/skywu/Coding/MGDSS/server/images/1.png"
 functionalRecognize(image_path)
-image_path = r"/Users/kevinlakao/Desktop/MDGSS/server/images/9.png"
+image_path = r"/Users/skywu/Coding/MGDSS/server/images/9.png"
 functionalRecognize(image_path)
 # startP = (775, 395)
 # endP = (1375, 1010)
