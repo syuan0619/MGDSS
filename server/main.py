@@ -6,6 +6,7 @@ from routers import inquiry, account, prediction, patients
 from fastapi.responses import Response
 from mongoDB import all_patients_to_csv
 import io
+import uvicorn
 
 app = FastAPI()
 # routers/inquiry.py
